@@ -67,7 +67,7 @@
 											"top": 287,
 											"width": 228.66796875,
 											"height": 13,
-											"text": "Partita"
+											"text": "Game"
 										},
 										{
 											"_type": "LabelView",
@@ -147,7 +147,7 @@
 											"top": 310,
 											"width": 228.66796875,
 											"height": 13,
-											"text": "-numeroGiocatori: int",
+											"text": "-playersNumber: int",
 											"horizontalAlignment": 0
 										}
 									],
@@ -7681,7 +7681,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Partita",
+					"name": "Game",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -7780,7 +7780,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NE+opoZ6Yg="
 							},
-							"name": "numeroGiocatori",
+							"name": "playersNumber",
 							"visibility": "private",
 							"type": "int"
 						}
@@ -8921,7 +8921,8 @@
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
 							"name": "immagine",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -8930,7 +8931,8 @@
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
 							"name": "descrizione",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -8939,7 +8941,8 @@
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
 							"name": "altezza",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -8948,7 +8951,8 @@
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
 							"name": "larghezza",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
