@@ -528,7 +528,7 @@
 											"top": 148,
 											"width": 245.298828125,
 											"height": 13,
-											"text": "+Giocatore(String nome)",
+											"text": "+Player(String name)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -546,7 +546,7 @@
 											"top": 163,
 											"width": 245.298828125,
 											"height": 13,
-											"text": "+getNome(): String",
+											"text": "+getName(): String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -564,7 +564,7 @@
 											"top": 178,
 											"width": 245.298828125,
 											"height": 13,
-											"text": "+getPunti(): int",
+											"text": "+getPoints(): int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1343,7 +1343,7 @@
 											"top": 782,
 											"width": 246.03515625,
 											"height": 13,
-											"text": "-dimensioneX: final int",
+											"text": "-dimensionX: final int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1361,7 +1361,7 @@
 											"top": 797,
 											"width": 246.03515625,
 											"height": 13,
-											"text": "-dimensioneY: final int",
+											"text": "-dimensionY: final int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2972,7 +2972,7 @@
 											"top": 462,
 											"width": 322.61962890625,
 											"height": 13,
-											"text": "+dimensioneX: final int",
+											"text": "+dimensionX: final int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2990,7 +2990,7 @@
 											"top": 477,
 											"width": 322.61962890625,
 											"height": 13,
-											"text": "+dimensioneY: final int",
+											"text": "+dimensionY: final int",
 											"horizontalAlignment": 0
 										}
 									],
@@ -6723,7 +6723,7 @@
 											"top": 462,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "-immagine",
+											"text": "-image",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6740,7 +6740,7 @@
 											"top": 477,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "-descrizione",
+											"text": "-description",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6757,7 +6757,7 @@
 											"top": 492,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "-altezza",
+											"text": "-height",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6774,7 +6774,7 @@
 											"top": 507,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "-larghezza",
+											"text": "-weight",
 											"horizontalAlignment": 0
 										}
 									],
@@ -6808,7 +6808,7 @@
 											"top": 530,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "+getImmagine()",
+											"text": "+getImage()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6825,7 +6825,7 @@
 											"top": 545,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "+getDescrizione()",
+											"text": "+getDescription()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6842,7 +6842,7 @@
 											"top": 560,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "+getAltezza()",
+											"text": "+getHeight()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6859,7 +6859,7 @@
 											"top": 575,
 											"width": 102.2353515625,
 											"height": 13,
-											"text": "+getLarghezza()",
+											"text": "+getWeight()",
 											"horizontalAlignment": 0
 										}
 									],
@@ -7996,7 +7996,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NGO/5pDnug="
 							},
-							"name": "Giocatore",
+							"name": "Player",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -8004,8 +8004,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGG0QIbDBYFTrM="
 									},
-									"name": "String nome",
-									"type": ""
+									"name": "String name"
 								}
 							]
 						},
@@ -8015,7 +8014,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NGO/5pDnug="
 							},
-							"name": "getNome",
+							"name": "getName",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -8034,7 +8033,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NGO/5pDnug="
 							},
-							"name": "getPunti",
+							"name": "getPoints",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -8161,7 +8160,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NHJgppudgU="
 							},
-							"name": "dimensioneX",
+							"name": "dimensionX",
 							"visibility": "private",
 							"type": "final int"
 						},
@@ -8171,7 +8170,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NHJgppudgU="
 							},
-							"name": "dimensioneY",
+							"name": "dimensionY",
 							"visibility": "private",
 							"type": "final int"
 						},
@@ -8684,7 +8683,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NynUv5r54w="
 							},
-							"name": "dimensioneX",
+							"name": "dimensionX",
 							"type": "final int"
 						},
 						{
@@ -8693,7 +8692,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NynUv5r54w="
 							},
-							"name": "dimensioneY",
+							"name": "dimensionY",
 							"type": "final int"
 						}
 					],
@@ -8949,7 +8948,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGG2znBK6DiWeQ="
 									},
-									"name": "Library lib"
+									"name": "Library lib",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -9271,9 +9271,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "immagine",
-							"visibility": "private",
-							"type": ""
+							"name": "image",
+							"visibility": "private"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -9281,9 +9280,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "descrizione",
-							"visibility": "private",
-							"type": ""
+							"name": "description",
+							"visibility": "private"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -9291,9 +9289,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "altezza",
-							"visibility": "private",
-							"type": ""
+							"name": "height",
+							"visibility": "private"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -9301,9 +9298,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "larghezza",
-							"visibility": "private",
-							"type": ""
+							"name": "weight",
+							"visibility": "private"
 						}
 					],
 					"operations": [
@@ -9313,7 +9309,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "getImmagine"
+							"name": "getImage"
 						},
 						{
 							"_type": "UMLOperation",
@@ -9321,7 +9317,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "getDescrizione"
+							"name": "getDescription"
 						},
 						{
 							"_type": "UMLOperation",
@@ -9329,7 +9325,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "getAltezza"
+							"name": "getHeight"
 						},
 						{
 							"_type": "UMLOperation",
@@ -9337,7 +9333,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG2ztZ6LER6RY="
 							},
-							"name": "getLarghezza"
+							"name": "getWeight"
 						}
 					]
 				},
