@@ -992,7 +992,7 @@
 											"top": 815,
 											"width": 246.03515625,
 											"height": 13,
-											"text": "Grid"
+											"text": "main.java.it.polimi.ingsw.model.Grid"
 										},
 										{
 											"_type": "LabelView",
@@ -1158,7 +1158,7 @@
 											"top": 906,
 											"width": 246.03515625,
 											"height": 13,
-											"text": "+Grid(int numPlayers)",
+											"text": "+main.java.it.polimi.ingsw.model.Grid(int numPlayers)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8720,7 +8720,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Grid",
+					"name": "main.java.it.polimi.ingsw.model.Grid",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -8832,7 +8832,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NHJgppudgU="
 							},
-							"name": "Grid",
+							"name": "main.java.it.polimi.ingsw.model.Grid",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
