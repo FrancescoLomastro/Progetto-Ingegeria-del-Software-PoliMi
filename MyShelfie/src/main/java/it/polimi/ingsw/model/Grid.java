@@ -60,7 +60,7 @@ public class Grid {
     {
         return !notAvailablePositions.contains(position);
     }
-    private boolean anySurrounding(Position position)
+    private boolean hasNeighbours(Position position)
     {
         int x = position.getX();
         int y = position.getY();
