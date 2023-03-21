@@ -3298,25 +3298,7 @@
 											"top": 545,
 											"width": 476.2646484375,
 											"height": 13,
-											"text": "+checkColumnAvailable(ObjectCard[] cards, int chosenColumn): boolean",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGG5U2uZbe5+HE=",
-											"_parent": {
-												"$ref": "AAAAAAGG0NynU/50nXI="
-											},
-											"model": {
-												"$ref": "AAAAAAGG5U2uSbeqt6c="
-											},
-											"fillColor": "#d8d800",
-											"font": "Arial;13;0",
-											"left": 373,
-											"top": 560,
-											"width": 476.2646484375,
-											"height": 13,
-											"text": "+countAdjacentPoints(): int",
+											"text": "+checkColumn(ObjectCard[] cards, int chosenColumn): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3331,7 +3313,7 @@
 											"fillColor": "#d8d800",
 											"font": "Arial;13;0",
 											"left": 373,
-											"top": 575,
+											"top": 560,
 											"width": 476.2646484375,
 											"height": 13,
 											"text": "+isCommonGoalCardSatisfied(CommonGoalCard commonGoalCard): boolean",
@@ -3349,7 +3331,7 @@
 											"fillColor": "#d8d800",
 											"font": "Arial;13;0",
 											"left": 373,
-											"top": 590,
+											"top": 575,
 											"width": 476.2646484375,
 											"height": 13,
 											"text": "-isCellEmpty(int row, int column): boolean",
@@ -3357,12 +3339,30 @@
 										},
 										{
 											"_type": "UMLOperationView",
-											"_id": "AAAAAAGG/yZ/T9RUO3Q=",
+											"_id": "AAAAAAGHBAHw4IIq5gE=",
 											"_parent": {
 												"$ref": "AAAAAAGG0NynU/50nXI="
 											},
 											"model": {
-												"$ref": "AAAAAAGG/yZ/PdRFeoc="
+												"$ref": "AAAAAAGHBAHwz4Ib93I="
+											},
+											"fillColor": "#d8d800",
+											"font": "Arial;13;0",
+											"left": 373,
+											"top": 590,
+											"width": 476.2646484375,
+											"height": 13,
+											"text": "-compareColor(ObjectCard objectCard1, ObjectCard objectCard2): boolean",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGHBAJ7V4cyF5U=",
+											"_parent": {
+												"$ref": "AAAAAAGG0NynU/50nXI="
+											},
+											"model": {
+												"$ref": "AAAAAAGHBAJ7Qocj5Bc="
 											},
 											"fillColor": "#d8d800",
 											"font": "Arial;13;0",
@@ -3370,25 +3370,7 @@
 											"top": 605,
 											"width": 476.2646484375,
 											"height": 13,
-											"text": "-findLastRowWithSameColorInSameColumn(int startRow, int startColumn): int",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGG4RtANqTydrU=",
-											"_parent": {
-												"$ref": "AAAAAAGG0NynU/50nXI="
-											},
-											"model": {
-												"$ref": "AAAAAAGG4RtAJaTj0LY="
-											},
-											"fillColor": "#d8d800",
-											"font": "Arial;13;0",
-											"left": 373,
-											"top": 620,
-											"width": 476.2646484375,
-											"height": 13,
-											"text": "-insertCardsInLibrary(ObjectCard[] cards, int firstAvailableRow, int chosenColumn)",
+											"text": "-checkIfColorIsTheSame(int startRow, int startColumn, String direction): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3403,10 +3385,46 @@
 											"fillColor": "#d8d800",
 											"font": "Arial;13;0",
 											"left": 373,
-											"top": 635,
+											"top": 620,
 											"width": 476.2646484375,
 											"height": 13,
 											"text": "-countSameColorNeighbours(int startRow, int startColumn): int",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGHBAPFMK4vdkQ=",
+											"_parent": {
+												"$ref": "AAAAAAGG0NynU/50nXI="
+											},
+											"model": {
+												"$ref": "AAAAAAGHBAPFKq4gBcw="
+											},
+											"fillColor": "#d8d800",
+											"font": "Arial;13;0",
+											"left": 373,
+											"top": 635,
+											"width": 476.2646484375,
+											"height": 13,
+											"text": "-addAdjacentPoints(int sameColorNeighbours): int",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGG5U2uZbe5+HE=",
+											"_parent": {
+												"$ref": "AAAAAAGG0NynU/50nXI="
+											},
+											"model": {
+												"$ref": "AAAAAAGG5U2uSbeqt6c="
+											},
+											"fillColor": "#d8d800",
+											"font": "Arial;13;0",
+											"left": 373,
+											"top": 650,
+											"width": 476.2646484375,
+											"height": 13,
+											"text": "+countAdjacentPoints(): int",
 											"horizontalAlignment": 0
 										}
 									],
@@ -3415,7 +3433,7 @@
 									"left": 368,
 									"top": 495,
 									"width": 486.2646484375,
-									"height": 158
+									"height": 173
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -11253,7 +11271,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NynUv5r54w="
 							},
-							"name": "checkColumnAvailable",
+							"name": "checkColumn",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -11261,8 +11279,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGG4Rb0mlI8PaA="
 									},
-									"name": "ObjectCard[] cards",
-									"type": ""
+									"name": "ObjectCard[] cards"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11270,8 +11287,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGG4Rb0mlI8PaA="
 									},
-									"name": "int chosenColumn",
-									"type": ""
+									"name": "int chosenColumn"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11280,25 +11296,6 @@
 										"$ref": "AAAAAAGG4Rb0mlI8PaA="
 									},
 									"type": "boolean",
-									"direction": "return"
-								}
-							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGG5U2uSbeqt6c=",
-							"_parent": {
-								"$ref": "AAAAAAGG0NynUv5r54w="
-							},
-							"name": "countAdjacentPoints",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGG5U5wy7j1sUQ=",
-									"_parent": {
-										"$ref": "AAAAAAGG5U2uSbeqt6c="
-									},
-									"type": "int",
 									"direction": "return"
 								}
 							]
@@ -11371,77 +11368,86 @@
 						},
 						{
 							"_type": "UMLOperation",
-							"_id": "AAAAAAGG/yZ/PdRFeoc=",
+							"_id": "AAAAAAGHBAHwz4Ib93I=",
 							"_parent": {
 								"$ref": "AAAAAAGG0NynUv5r54w="
 							},
-							"name": "findLastRowWithSameColorInSameColumn",
+							"name": "compareColor",
 							"visibility": "private",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAGG/yapJtXGTzI=",
+									"_id": "AAAAAAGHBAJIvYPtT/c=",
 									"_parent": {
-										"$ref": "AAAAAAGG/yZ/PdRFeoc="
+										"$ref": "AAAAAAGHBAHwz4Ib93I="
 									},
-									"name": "int startRow",
+									"name": "ObjectCard objectCard1",
 									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAGG/yapJtXH3g0=",
+									"_id": "AAAAAAGHBAJIvYPu5FU=",
 									"_parent": {
-										"$ref": "AAAAAAGG/yZ/PdRFeoc="
+										"$ref": "AAAAAAGHBAHwz4Ib93I="
 									},
-									"name": "int startColumn",
+									"name": "ObjectCard objectCard2",
 									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAGG/ydgcNZzD2I=",
+									"_id": "AAAAAAGHBAJIvYPvX7o=",
 									"_parent": {
-										"$ref": "AAAAAAGG/yZ/PdRFeoc="
+										"$ref": "AAAAAAGHBAHwz4Ib93I="
 									},
-									"type": "int",
+									"type": "boolean",
 									"direction": "return"
 								}
 							]
 						},
 						{
 							"_type": "UMLOperation",
-							"_id": "AAAAAAGG4RtAJaTj0LY=",
+							"_id": "AAAAAAGHBAJ7Qocj5Bc=",
 							"_parent": {
 								"$ref": "AAAAAAGG0NynUv5r54w="
 							},
-							"name": "insertCardsInLibrary",
+							"name": "checkIfColorIsTheSame",
 							"visibility": "private",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAGG4RtsWaYubwI=",
+									"_id": "AAAAAAGHBAKhaYj1OAg=",
 									"_parent": {
-										"$ref": "AAAAAAGG4RtAJaTj0LY="
+										"$ref": "AAAAAAGHBAJ7Qocj5Bc="
 									},
-									"name": "ObjectCard[] cards",
+									"name": "int startRow",
 									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAGG4RtsWqYvl1w=",
+									"_id": "AAAAAAGHBAKhaYj2ZJ8=",
 									"_parent": {
-										"$ref": "AAAAAAGG4RtAJaTj0LY="
+										"$ref": "AAAAAAGHBAJ7Qocj5Bc="
 									},
-									"name": "int firstAvailableRow",
+									"name": "int startColumn",
 									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAGG/xhtXMFPywU=",
+									"_id": "AAAAAAGHBAKhaYj3Ces=",
 									"_parent": {
-										"$ref": "AAAAAAGG4RtAJaTj0LY="
+										"$ref": "AAAAAAGHBAJ7Qocj5Bc="
 									},
-									"name": "int chosenColumn",
+									"name": "String direction",
 									"type": ""
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGHBAKhaYj4sYk=",
+									"_parent": {
+										"$ref": "AAAAAAGHBAJ7Qocj5Bc="
+									},
+									"type": "boolean",
+									"direction": "return"
 								}
 							]
 						},
@@ -11477,6 +11483,54 @@
 									"_id": "AAAAAAGG/ySYD80xCzU=",
 									"_parent": {
 										"$ref": "AAAAAAGG/yQhvstZ4So="
+									},
+									"type": "int",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGHBAPFKq4gBcw=",
+							"_parent": {
+								"$ref": "AAAAAAGG0NynUv5r54w="
+							},
+							"name": "addAdjacentPoints",
+							"visibility": "private",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGHBAQC1a/yhPQ=",
+									"_parent": {
+										"$ref": "AAAAAAGHBAPFKq4gBcw="
+									},
+									"name": "int sameColorNeighbours",
+									"type": ""
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGHBAQC1a/z2ck=",
+									"_parent": {
+										"$ref": "AAAAAAGHBAPFKq4gBcw="
+									},
+									"type": "int",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGG5U2uSbeqt6c=",
+							"_parent": {
+								"$ref": "AAAAAAGG0NynUv5r54w="
+							},
+							"name": "countAdjacentPoints",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGG5U5wy7j1sUQ=",
+									"_parent": {
+										"$ref": "AAAAAAGG5U2uSbeqt6c="
 									},
 									"type": "int",
 									"direction": "return"
