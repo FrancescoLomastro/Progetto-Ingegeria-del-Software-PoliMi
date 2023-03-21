@@ -91,45 +91,97 @@ public class Library {
         return  columnIsAvailable;
     }
 
-    public int findLastRowWithSameColorInSameColumn(int startRow, int startColumn) {
+    private boolean compareColor(ObjectCard objectCard1,ObjectCard objectCard2) {
+        if (objectCard1.getColor().equals(objectCard2.getColor())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        String color = library[startRow][startColumn].getColor();
-        int finalSameColorRow = startRow;
-        int column = startColumn;
+    private boolean checkIfColorIsTheSame(int startRow, int startColumn, String direction) {
 
-        //Check if neighbour cell on the same column have same color, up to the last cell with same color
-        for(int row=startRow+1;row<getNumberOfRows();row++) {
-            if(library[row][startColumn].getColor().equals(color)) {
-                finalSameColorRow = row;
-            } else {
+        boolean answer = false;
+
+        switch (direction) {
+            case "Up": {
+                if(compareColor(library[startRow][startColumn],library[startRow+1][startColumn])) {
+                    answer = true;
+                }
+                break;
+            }
+            case "Right": {
+                if(compareColor(library[startRow][startColumn],library[startRow][startColumn+1])) {
+                    answer = true;
+                }
+                break;
+            }
+            case "Left": {
+                if(compareColor(library[startRow][startColumn],library[startRow][startColumn-1])) {
+                    answer = true;
+                }
+                break;
+            }
+            case "Down": {
+                if(compareColor(library[startRow][startColumn],library[startRow-1][startColumn])) {
+                    answer = true;
+                }
                 break;
             }
         }
 
-        return finalSameColorRow;
+        return answer;
     }
-
-    private int findLastColumnWithSameColorInSameRow(int row, int startColumn) {
-
-        getCheckedCells().add(row+"_"+startColumn);
-
-        for(int column=startColumn;column<getNumberOfColumns();column++) {
-            if (getLibrary()[lastCellSameColorInSameColumn_row])
-        }
-    }
-
     private int countSameColorNeighbours(int startRow, int startColumn) {
 
         int numberOfSameColorNeighbours = 0;
-        int lastCellSameColorInSameColumn_row = findLastRowWithSameColorInSameColumn(startRow,startColumn);
-
-        for(int row=lastCellSameColorInSameColumn_row;row>=startRow;row--) {
-            getCheckedCells().add(lastCellSameColorInSameColumn_row+"_"+startColumn)
-            int finalSameColorRow = findLastColumnWithSameColorInSameRow(row,startColumn);
-
+        //int lastCellSameColorInSameColumn_row = findLastRowWithSameColorInSameColumn(startRow,startColumn);
+        if(checkIfColorIsTheSame(startRow,startColumn,"Up")) {
+            if (!checkedCells.contains((startRow+1)+"_"+startColumn)) {
+                checkedCells.add((startRow+1)+"_"+startColumn);
+                return 1 + countSameColorNeighbours(startRow+1,startColumn);
+            } else {
+                return 1;
+            }
+        } else if (checkIfColorIsTheSame(startRow,startColumn,"Right")) {
+            if (!checkedCells.contains(startRow+"_"+(startColumn+1))) {
+                checkedCells.add(startRow+"_"+(startColumn+1));
+                return 1 + countSameColorNeighbours(startRow,startColumn+1);
+            } else {
+                return 1;
+            }
+        } else if (checkIfColorIsTheSame(startRow,startColumn,"Left")) {
+            if (!checkedCells.contains(startRow + "_" + (startColumn - 1))) {
+                checkedCells.add(startRow+"_"+(startColumn-1));
+                return 1 + countSameColorNeighbours(startRow, startColumn - 1);
+            } else {
+                return 1;
+            }
+        } else if (checkIfColorIsTheSame(startRow,startColumn,"Down")) {
+            if (!checkedCells.contains((startRow-1) + "_" + startColumn)) {
+                checkedCells.add((startRow-1)+"_"+(startColumn));
+                return 1 + countSameColorNeighbours(startRow-1, startColumn);
+            } else {
+                return 1;
+            }
+        } else {
+            return 1;
         }
     }
 
+    private int addAdjacentPoints(int sameColorNeighbours) {
+        if (sameColorNeighbours==3) {
+            return 2;
+        } else if (sameColorNeighbours==4) {
+            return 3;
+        } else if (sameColorNeighbours==5) {
+            return 5;
+        } else if (sameColorNeighbours>=6) {
+            return 8;
+        } else {
+            return 0;
+        }
+    }
     public int countAdjacentPoints() {
         // La stringa "row_col" identifica univocamente una cella per questo uso checked_cells
         int row = 0;
@@ -138,8 +190,10 @@ public class Library {
 
         while (row<getNumberOfRows()) {
             while ((column <getNumberOfColumns()) && (!checkedCells.contains(row+"_"+ column))) {
+                checkedCells.add(row+"_"+column);
                 int sameColorNeighbours = countSameColorNeighbours(row, column);
                 /* da implementare la verifica dei punti da aggiungere in base al numero di sameColorNeighbours*/
+                numberOfAdjacentPoints += addAdjacentPoints(sameColorNeighbours);
                 column++;
             }
             column=0;
