@@ -1402,7 +1402,7 @@
 											"top": 2462,
 											"width": 308.8642578125,
 											"height": 13,
-											"text": "-dimensionX: final int",
+											"text": "-numRows: final int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1422,7 +1422,7 @@
 											"top": 2477,
 											"width": 308.8642578125,
 											"height": 13,
-											"text": "-dimensionY: final int",
+											"text": "-numColumns: final int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1454,6 +1454,7 @@
 											"model": {
 												"$ref": "AAAAAAGG4NCYKaeGhcY="
 											},
+											"visible": false,
 											"lineColor": "#ffffff",
 											"fillColor": "#000000",
 											"fontColor": "#ffffff",
@@ -1473,7 +1474,7 @@
 									"left": 1128,
 									"top": 2457,
 									"width": 318.8642578125,
-									"height": 68
+									"height": 53
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -1499,7 +1500,7 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2530,
+											"top": 2515,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "+Grid(int numPlayers)",
@@ -1519,7 +1520,7 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2545,
+											"top": 2530,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "+refill(): void",
@@ -1539,7 +1540,7 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2560,
+											"top": 2545,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "+needRefill(): boolean",
@@ -1559,7 +1560,7 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2575,
+											"top": 2560,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "+isDrawAvailable(Position[] drawn): boolean",
@@ -1579,7 +1580,7 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2590,
+											"top": 2575,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "+draw(Position[] drawn): ObjectCard[.]",
@@ -1599,7 +1600,7 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2605,
+											"top": 2590,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "-isInside(Position position): boolean",
@@ -1619,7 +1620,7 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2620,
+											"top": 2605,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "-isAvailable(Position position): boolean",
@@ -1639,10 +1640,30 @@
 											"fontColor": "#ffffff",
 											"font": "Arial;13;0",
 											"left": 1133,
-											"top": 2635,
+											"top": 2620,
 											"width": 308.8642578125,
 											"height": 13,
 											"text": "-hasNeighbours(Position position): boolean",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGHE9caMe754F8=",
+											"_parent": {
+												"$ref": "AAAAAAGG0NbHOqJ9uXU="
+											},
+											"model": {
+												"$ref": "AAAAAAGHE9caHe7zrQ8="
+											},
+											"lineColor": "#ffffff",
+											"fillColor": "#000000",
+											"fontColor": "#ffffff",
+											"font": "Arial;13;0",
+											"left": 1133,
+											"top": 2635,
+											"width": 308.8642578125,
+											"height": 13,
+											"text": "-hasSameInt(int [] vectors): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1651,9 +1672,9 @@
 									"fontColor": "#ffffff",
 									"font": "Arial;13;0",
 									"left": 1128,
-									"top": 2525,
+									"top": 2510,
 									"width": 318.8642578125,
-									"height": 128
+									"height": 143
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -14487,7 +14508,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NHJgppudgU="
 							},
-							"name": "dimensionX",
+							"name": "numRows",
 							"visibility": "private",
 							"type": "final int"
 						},
@@ -14497,7 +14518,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGG0NHJgppudgU="
 							},
-							"name": "dimensionY",
+							"name": "numColumns",
 							"visibility": "private",
 							"type": "final int"
 						},
@@ -14720,6 +14741,34 @@
 									"_id": "AAAAAAGG9syBCkUtn90=",
 									"_parent": {
 										"$ref": "AAAAAAGG9sdEpxET6UE="
+									},
+									"type": "boolean",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGHE9caHe7zrQ8=",
+							"_parent": {
+								"$ref": "AAAAAAGG0NHJgppudgU="
+							},
+							"name": "hasSameInt",
+							"visibility": "private",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGHE9dKOPFuUQU=",
+									"_parent": {
+										"$ref": "AAAAAAGHE9caHe7zrQ8="
+									},
+									"name": "int [] vectors"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGHE9fHD/IcjEE=",
+									"_parent": {
+										"$ref": "AAAAAAGHE9caHe7zrQ8="
 									},
 									"type": "boolean",
 									"direction": "return"
