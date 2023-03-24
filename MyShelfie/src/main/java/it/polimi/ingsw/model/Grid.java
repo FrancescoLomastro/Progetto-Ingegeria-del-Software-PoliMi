@@ -1,26 +1,33 @@
-package main.java.it.polimi.ingsw.model;
+package it.polimi.ingsw.model;
 
-import java.lang.reflect.Array;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
 public class Grid {
 
-    private final int dimensionX;
-    private final int dimensionY;
+    private final int dimensionX=9;
+    private final int dimensionY=9;
     private int numPlayers;
     private int[] objectCardVector; //3*6
     private ObjectCard[][] matrix;
     private Set<Position> notAvailablePositions;
 
-    public Grid(int numPlayers){
-        //legge il file playGround.json da cui ricava i parametri
-        //NOTPosition       celle che non fanno parte del playGround a prescindere dai giocatori
-        //3_NOTPosition     celle da abilitare se i gioatori sono 3
-        //4_NOTposition     celle da abilitare se i giocatori sono 4, bisogna abilitare anche 3_NOTPosition
-        //con questo si inizializza matrix e notAvailablePositions (contenente l'insieme di tutte le NOTPosition)
-        Arrays.fill(objectCardVector,22);
+    public Grid(int numPlayers) throws IOException{
+        this.numPlayers=numPlayers;
+        this.matrix = new ObjectCard[dimensionX][dimensionX];
+        this.objectCardVector= null; ///DA RIVEDERE //Arrays.fill(objectCardVector,22);
+
+        this.notAvailablePositions= retrieveUnavailablePositionsSet(); //lancia una eccezione IOException se non trova il file Grid.json
     }
 
     public void refill(){
@@ -44,7 +51,7 @@ public class Grid {
             for(int j=0; j<dimensionY;j++)
             {
                 position.setXY(i,j);
-                if(matrix[i][j]!=null && isAvailable(position) && anySurrounding(position))
+                if(matrix[i][j]!=null && isAvailable(position) && hasNeighbours(position))
                 {
                     return false;
                 }
@@ -79,8 +86,7 @@ public class Grid {
         return true;
     }
 
-
-    public boolean isDrawAvailable(Position[] move){
+  /*  public boolean isDrawAvailable(Position[] move){
         //move non nulla
         //move lunga max 3 e min 1
         //move in colonna oppure move in riga
@@ -90,7 +96,7 @@ public class Grid {
 
     public ObjectCard[] draw(Couple[] move){
 
-    }
+    }*/
 
     private ObjectCard generateObjectCard()
     {
@@ -120,5 +126,31 @@ public class Grid {
         return true;
     }
 
+
+    private Set<Position> retrieveUnavailablePositionsSet() throws IOException
+    {
+        Set<Position> hashSet = new HashSet<>();
+        Gson gson = new Gson();
+        Reader reader = new FileReader("Grid.json");
+
+        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+
+        JsonArray arrayOfCells = jsonObject.getAsJsonArray("Default_Invalid_Positions");
+        JsonArray cell;
+
+        for (JsonElement cellElement : arrayOfCells) {
+            cell = cellElement.getAsJsonArray();
+            hashSet.add(new Position(cell.get(0).getAsInt(),cell.get(1).getAsInt()));
+        }
+        for(int i=this.numPlayers+1; i<=4; i++)
+        {
+            for (JsonElement vettore : arrayOfCells) {
+                arrayOfCells = jsonObject.getAsJsonArray(i+"_Player_New_Positions");
+                cell = vettore.getAsJsonArray();
+                hashSet.add(new Position(cell.get(0).getAsInt(),cell.get(1).getAsInt()));
+            }
+        }
+        return hashSet;
+    }
 
 }

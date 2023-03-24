@@ -1,4 +1,4 @@
-package main.java.it.polimi.ingsw.model;
+package it.polimi.ingsw.model;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Game {
 
     public Game(int numPlayers){
         this.numPlayers=numPlayers;
-        this.players = new ArrayList<it.polimi.ingsw.model.Player>();
+        this.players = new ArrayList<Player>();
         this.livingRoom = new it.polimi.ingsw.model.LivingRoom();
         winnerPlayer = new it.polimi.ingsw.model.Player(); // devo passargli una string
     }

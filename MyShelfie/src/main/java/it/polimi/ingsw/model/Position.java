@@ -1,4 +1,4 @@
-package main.java.it.polimi.ingsw.model;
+package it.polimi.ingsw.model;
 
 public class Position {
     private int x;
@@ -28,5 +28,16 @@ public class Position {
     public void setXY(int X,int y) {
         this.x = x;
         this.y = y;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Position)) {
+            return false;
+        }
+        Position other = (Position) obj;
+        return this.x == other.x && this.y == other.y;
     }
 }
