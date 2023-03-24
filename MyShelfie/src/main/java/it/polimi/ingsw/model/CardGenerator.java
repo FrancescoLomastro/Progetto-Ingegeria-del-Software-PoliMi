@@ -8,7 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 //TODO devo ancora testarla per vedere se riesce a prendere tutti i dati e a scriverli
-
+//TODO per figio urgente: modifica i vettori a cui accedi per cambiare i valori
 
 public class CardGenerator {
     private final String pathCommonGoal;
