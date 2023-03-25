@@ -8,8 +8,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 //TODO devo ancora testarla per vedere se riesce a prendere tutti i dati e a scriverli
-//TODO per figio urgente: modifica i vettori a cui accedi per cambiare i valori
 
+/**IDEA DEI FILE: ho a disposizione 3 file di base in cui sono salvate tutte le carte e i vettori
+ * con i valori che devono avere inizialemente. Quando faccio partire la partita inizializzo questa
+ * classe passandogli un numero identificativo. Allora questa classe crea 3 file in cui sono
+ * presenti solo i 3 vettori che gestiscono le carte prelevate e ancora da prelevare
+ * Per semplicità i vettori all'interno dei 3 file di base e dei tre file riferiti alla singola
+ * partita hanno lo stesso nome*/
 public class CardGenerator {
     private final String pathCommonGoal;
     private final String gamePathCommon;
@@ -43,7 +48,7 @@ public class CardGenerator {
     /**Casual generation of Common goal card*/
     public CommonGoalCard generateCommonGoalCard() {
         int number;
-        number=casualGenerationOfNumber(pathCommonGoal);
+        number=casualGenerationOfNumber(gamePathCommon);
         CommonGoalCard commonGoalCard = factoryMethodArray[number].apply();
         commonGoalCard.setDescription(getDescriptionFromFile(pathCommonGoal, number));
         return commonGoalCard;
@@ -52,7 +57,7 @@ public class CardGenerator {
     public PersonalGoalCard generatePersonalGoalCard() {
         int number;
         String descrption;
-        number = casualGenerationOfNumber(pathPersonalGoal);
+        number = casualGenerationOfNumber(gamePathPersonal);
         descrption = getDescriptionFromFile(pathPersonalGoal, number);
         ArrayList<Couple> couples = getCouplesFromFile(number);
         return new PersonalGoalCard(descrption, couples);
@@ -61,7 +66,7 @@ public class CardGenerator {
     public ObjectCard generateObjectCard() {
         int number;
         String description;
-        number=casualGenerationOfNumberCounted(pathObjectCard);
+        number=casualGenerationOfNumberCounted(gamePathObject);
         JsonObject jsonObject = getJsonObjectInArray(pathObjectCard, number);
         description = getDescriptionFromFile(pathObjectCard, number);
         try {
