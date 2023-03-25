@@ -33,6 +33,7 @@ public class CardGenerator {
     /**Constructor: create path adding gameNumber. Simultaneously could
      * exsist differnt game, so exsist differt file which could provide information about card */
     public CardGenerator(int gameNumber){
+        //TODO i percorsi sono ancora da sistemare
         this.pathCommonGoal=System.getProperty("user.dir")+"/Resources/json/CommonCards.json";
         this.pathPersonalGoal=System.getProperty("user.dir")+"/Resources/json/ObjectCards.json";
         this.pathObjectCard=System.getProperty("user.dir")+"/Resources/json/PersonalCards.json";
