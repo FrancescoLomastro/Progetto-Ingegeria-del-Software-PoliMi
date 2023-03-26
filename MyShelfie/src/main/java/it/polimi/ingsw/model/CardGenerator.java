@@ -9,6 +9,8 @@ import com.google.gson.JsonObject;
 
 //TODO devo ancora testarla per vedere se riesce a prendere tutti i dati e a scriverli
 
+//TODO IMPORTANTE: NEGLI OGGETTI DI RITORNO FAI SEMPRE UNA COPIA, NON PASSARE RIFERIMETNO
+
 /**IDEA DEI FILE: ho a disposizione 3 file di base in cui sono salvate tutte le carte e i vettori
  * con i valori che devono avere inizialemente. Quando faccio partire la partita inizializzo questa
  * classe passandogli un numero identificativo. Allora questa classe crea 3 file in cui sono
