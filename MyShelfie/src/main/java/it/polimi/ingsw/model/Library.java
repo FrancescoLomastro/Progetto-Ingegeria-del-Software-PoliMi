@@ -145,34 +145,35 @@ public class Library {
         if(checkIfColorIsTheSame(startRow,startColumn,"Up")) {
             if (!checkedCells.contains((startRow+1)+"_"+startColumn)) {
                 checkedCells.add((startRow+1)+"_"+startColumn);
-                return 1 + countSameColorNeighbours(startRow+1,startColumn,"Up");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow+1,startColumn,"Up");
             } else {
-                return 1;
+                numberOfSameColorNeighbours+=1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Right")) {
             if (!checkedCells.contains(startRow+"_"+(startColumn+1))) {
                 checkedCells.add(startRow+"_"+(startColumn+1));
-                return 1 + countSameColorNeighbours(startRow,startColumn+1,"Right");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow,startColumn+1,"Right");
             } else {
-                return 1;
+                numberOfSameColorNeighbours+=1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Left")) {
             if (!checkedCells.contains(startRow + "_" + (startColumn - 1))) {
                 checkedCells.add(startRow+"_"+(startColumn-1));
-                return 1 + countSameColorNeighbours(startRow, startColumn - 1, "Left");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow, startColumn - 1, "Left");
             } else {
-                return 1;
+                numberOfSameColorNeighbours+=1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Down")) {
             if (!checkedCells.contains((startRow-1) + "_" + startColumn)) {
                 checkedCells.add((startRow-1)+"_"+(startColumn));
-                return 1 + countSameColorNeighbours(startRow-1, startColumn, "Down");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow-1, startColumn, "Down");
             } else {
-                return 1;
+                numberOfSameColorNeighbours+=1;
             }
         } else {
-            return 1;
+            numberOfSameColorNeighbours+=1;
         }
+        return numberOfSameColorNeighbours;
     }
 
     private int addAdjacentPoints(int sameColorNeighbours) {
@@ -201,12 +202,10 @@ public class Library {
         while (row<getNumberOfRows()) {
             while ((column <getNumberOfColumns()) && (!checkedCells.contains(row+"_"+ column))) {
                 checkedCells.add(row+"_"+column);
-                int sameColorNeighboursUp = countSameColorNeighbours(row, column, "Up");
-                int sameColorNeighboursRight = countSameColorNeighbours(row, column, "Right") -1; //tolgo uno per non contare due volte la cella iniziale da verificare
-                int numberSameColorNeighbours =  sameColorNeighboursUp + sameColorNeighboursRight;
+                int sameColorNeighbours = countSameColorNeighbours(row, column);
 
                 /* da implementare la verifica dei punti da aggiungere in base al numero di sameColorNeighbours*/
-                numberOfAdjacentPoints += addAdjacentPoints(numberSameColorNeighbours);
+                numberOfAdjacentPoints += addAdjacentPoints(sameColorNeighbours);
                 column++;
             }
             column=0;
