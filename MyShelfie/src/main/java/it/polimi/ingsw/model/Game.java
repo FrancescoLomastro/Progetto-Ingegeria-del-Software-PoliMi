@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /*
-classe Game
+class Game
 *@author Andrea Ferrini
 */
 public class Game {
 
-    private final int gameNumber = 0;
+    private int gameNumber = 0;
     private CardGenerator cardGenerator;
 
 
@@ -33,7 +33,7 @@ public class Game {
         this.numPlayers=numPlayers;
         this.players = new Player[numPlayers];
         this.livingRoom = new LivingRoom(numPlayers, 0, 2);
-        winnerPlayer = new Player("winner"); // devo passargli una string
+        winnerPlayer = new Player("winner", cardGenerator); // devo passargli una string
         this.grid = livingRoom.getGrid();
     }
 
