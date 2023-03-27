@@ -13,22 +13,36 @@ import java.util.Set;
 
 //import java.util.Random;
 
+/**
+ * This class represents the grid of the living room.
+ * In this grid will be positioned the object card that will be drawn by the players on the different turns.
+ * In the grid will be managed all the logic that involves the draws and the refills.
+ */
 public class Grid {
-
-    private final int numColumns =9;
-    private final int numRows =9;
+    private final int numColumns = 9;
+    private final int numRows = 9;
     private int numPlayers;
-    //private int[] objectCardVector; //3*6
     private ObjectCard[][] matrix;
     private Set<Position> notAvailablePositions;
 
+    /**
+     * The constructor of the grid. After the call of this constructor, the matrix will contain the right number of
+     * object cards in the right position and the set notAvailablePosition will contain all the unavailable positions.
+     * @param numPlayers the grid need the number of players that will play with it, in order to prepare the game field.
+     * @throws IOException propagates to the caller the exception thrown by retrieveUnavailablePositionsSet.
+     */
     public Grid(int numPlayers) throws IOException{
         this.numPlayers=numPlayers;
         this.matrix = new ObjectCard[numRows][numColumns];
-        //this.objectCardVector= null; ///DA RIVEDERE //Arrays.fill(objectCardVector,22);
         this.notAvailablePositions= retrieveUnavailablePositionsSet(); //lancia una eccezione IOException se non trova il file Grid.json
+        refill();
     }
 
+    /**
+     * The method refill simply refills the grid with object cards.
+     * It checks all the empty positions that are also available in the grid and creates an object card in those positions
+     * In case the grid is not completely empty when the method is called, it will maintain the already present cards.
+     */
     public void refill(){
         Position position = new Position(0,0);
         for(int r = 0; r< numRows; r++)
@@ -44,6 +58,11 @@ public class Grid {
         }
     }
 
+    /**
+     * This method check if the grid needs to be refilled
+     * @return {@code true} if the player that will draw in this turn is forced to draw a single card.
+     * This case realizes when the grid is completely empty or each of the remaining card are surrounded by empty spaces.
+     */
     public boolean needRefill(){
         Position position = new Position(0,0);
         for(int r = 0; r< numRows; r++)
@@ -60,6 +79,12 @@ public class Grid {
         return true;
     }
 
+    /**
+     * Method that checks if a drawn is correctly formed and performable.
+     * @param drawn is a vector of positions
+     * @return {@code true} if the vector is not null, has the correct length, has not empty cells in it, is a straight
+     * drawn, is formed by connected positions and finally if all the object cards have a free side before the drawn.
+     */
     public boolean isDrawAvailable(Position[] drawn){
         int columns[]= new int[drawn.length];
         int rows[]= new int[drawn.length];
@@ -73,7 +98,7 @@ public class Grid {
         //Mossa senza buchi
         for(int i=0; i< drawn.length;i++)
         {
-            if(drawn[i]==null)
+            if((drawn[i]==null)||(matrix[drawn[i].getX()][drawn[i].getY()]==null))
             {
                 return false;
             }
@@ -106,11 +131,10 @@ public class Grid {
             if((drawn[i].getX()!=0)&&(drawn[i].getX()!=numColumns)&&(drawn[i].getY()!=0)&&(drawn[i].getY()!=numRows))
             {
                 if((matrix[drawn[i].getX()+1][drawn[i].getY()]!=null)&&
-                   (matrix[drawn[i].getX()-1][drawn[i].getY()]!=null)&&
-                   (matrix[drawn[i].getX()][drawn[i].getY()+1]!=null)&&
-                   (matrix[drawn[i].getX()][drawn[i].getY()-1]!=null)&&
-                   (matrix[drawn[i].getX()][drawn[i].getY()]!=null))
-                        return false;
+                        (matrix[drawn[i].getX()-1][drawn[i].getY()]!=null)&&
+                        (matrix[drawn[i].getX()][drawn[i].getY()+1]!=null)&&
+                        (matrix[drawn[i].getX()][drawn[i].getY()-1]!=null))
+                    return false;
             }
         }
         return true;
@@ -123,8 +147,6 @@ public class Grid {
 
 /////////////////////////////////////////////////////////////METTITI DACCORDO CON FIGIO/////////////////////////////////////////////////////
 /*
-
-
     /*private ObjectCard generateObjectCard()
     {
         Random random = new Random();
@@ -155,9 +177,18 @@ public class Grid {
     }*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * The method opens a Json file called Grid.json.
+     * Inside the file are stored some vectors containing some positions.
+     * {@code Default_Invalid_Positions} contains all the position that are not utilizable by default.
+     * {@code i_Player_New_Positions} contains all the the position utilizable when the {@code i} players are playing.
+     * @return a set of position containing {@code Default_Invalid_Positions} and {@code i_Player_New_Positions}, when
+     * {@code i} goes from numPlayers+1 to 4
+     * @throws IOException if the file Grid.json can't be retrieved.
+     */
     private Set<Position> retrieveUnavailablePositionsSet() throws IOException
     {
-        Set<Position> gettedPositions = new HashSet<>();
+        Set<Position> setOfPositions = new HashSet<>();
         Gson gson = new Gson();
         Reader reader = new FileReader("Grid.json");
         JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
@@ -167,30 +198,45 @@ public class Grid {
 
         for (JsonElement jsonCellElement : arrayOfJsonCells) {
             jsonCell = jsonCellElement.getAsJsonArray();
-            gettedPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
+            setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
         }
 
         for(int i=numPlayers; i<4; i++)
         {
-            for (JsonElement vettore : arrayOfJsonCells) {
+            for (JsonElement jsonCellElement : arrayOfJsonCells) {
                 arrayOfJsonCells = jsonObject.getAsJsonArray((i+1)+"_Player_New_Positions");
-                jsonCell = vettore.getAsJsonArray();
-                gettedPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
+                jsonCell = jsonCellElement.getAsJsonArray();
+                setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
             }
         }
-        return gettedPositions;
+        return setOfPositions;
     }
 
+    /**
+     * @param position is the position to be checked
+     * @return {@code true} if the position is inside the numRows x numColumns matrix
+     */
     private boolean isInside(Position position)
     {
         return position.getX()>=0 && position.getX()< numColumns &&
-                position.getY()>=0 && position.getY()< numRows &&
-                !notAvailablePositions.contains(position);
+                position.getY()>=0 && position.getY()< numRows ;
     }
+
+    /**
+     * @param position is the position that will be checked
+     * @return {@code true} if {@code position} is a not available position
+     */
     private boolean isAvailable(Position position)
     {
         return !notAvailablePositions.contains(position);
     }
+
+    /**
+     * Check if {@code position} has cards near it.
+     * @param position is the position to be checked
+     * @return {@code true} if the position is in the matrix and around the {@code position} are there only empty spaces.
+     * Note: The method ignores card positioned in diagonal, that's because they can't be picked in the same drawn.
+     */
     private boolean hasNeighbours(Position position)
     {
         int x = position.getX();
@@ -209,6 +255,12 @@ public class Grid {
         }
         return true;
     }
+
+    /**
+     * Method created to check if a vector contains the same value in all of its cells.
+     * @param vector Is the vector to check
+     * @return {@code true} if all the cells of the vector contains the same value.
+     */
     private boolean hasSameInt(int[] vector) {
         for(int i=1; i<vector.length;i++)
         {
