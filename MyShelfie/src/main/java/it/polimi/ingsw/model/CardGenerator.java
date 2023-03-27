@@ -33,8 +33,11 @@ public class CardGenerator {
                     CommonGoalCard5::new, CommonGoalCard6::new, CommonGoalCard7::new, CommonGoalCard8::new, CommonGoalCard9::new,
                     CommonGoalCard10::new, CommonGoalCard11::new};
 
-    /**Constructor: create path adding gameNumber. Simultaneously could
-     * exsist differnt game, so exsist differt file which could provide information about card */
+    /**Constructor: create path, adding gameNumber in those associated with specific game.
+     * Simultaneously can exist different game, so exist different file which can provide
+     * information about card
+     * @author Riccardo Figini
+     * @param gameNumber ID number of game*/
     public CardGenerator(int gameNumber){
         this.pathCommonGoal=System.getProperty("user.dir")+"/risorse/CommonCards.json";
         this.pathPersonalGoal=System.getProperty("user.dir")+"/risorse/PersonalCards.json";
@@ -48,7 +51,11 @@ public class CardGenerator {
         initArray(pathPersonalGoal, gamePathPersonal);
         initArray(pathObjectCard, gamePathObject);
     }
-    /**Casual generation of Common goal card*/
+    /**Casual generation of Common goal card. Attribute number is associated with free
+     * commond goal card, that it's not already in the game. Allocate with factoryMethod
+     * and return the CommondGoalCard chosen.
+     * @author Riccardo Figini
+     * @return commonGoalCard*/
     public CommonGoalCard generateCommonGoalCard() {
         int number;
         number=casualGenerationOfNumber(gamePathCommon);
@@ -56,7 +63,11 @@ public class CardGenerator {
         commonGoalCard.setDescription(getDescriptionFromFile(pathCommonGoal, number));
         return commonGoalCard;
     }
-    /**Casual generation of personal goal card*/
+    /**Casual generation of personal goal card. Attribute number is associated with
+     * free personal goal card (like generateCommonGoalCard). Get description
+     * and couple from PersonalGoalCards.json. Return personalGoalCard
+     * @author Riccardo Figini
+     * @return PersonalGoalCard*/
     public PersonalGoalCard generatePersonalGoalCard() {
         int number;
         String descrption;
@@ -65,7 +76,12 @@ public class CardGenerator {
         ArrayList<Couple> couples = getCouplesFromFile(number);
         return new PersonalGoalCard(descrption, couples);
     }
-    /**Casual generation of object card (for grid)*/
+    /**Casual generation of object card, in "actual game exsist 132 card, 22 for color.
+     * Every color have 3 different type (8 cards type 1, 7 cards type 2, 7 cards type 3).
+     * return object card
+     * @uthor Riccardo Figini
+     * @return ObjectCard
+     * @exception RuntimeException*/
     public ObjectCard generateObjectCard() {
         int number;
         String description;
@@ -80,8 +96,13 @@ public class CardGenerator {
             throw new RuntimeException("Error in enum",e);
         }
     }
-    /**Casual generation of number with limit. This method and casualGenerationOfNumber are diffent because
-     * in this case it's possible select a specific card numerous time */
+    /**Casual generation of number with limit. This method read a jsonArray from json game file
+     *  and generate available number (number isn't available if in the position "number" of jsonarray
+     *  is 0)
+     *  @author Riccardo Figini
+     *  @param path string contained path of game's file
+     *  @return number integer
+     *  @exception RuntimeException*/
     private int casualGenerationOfNumberCounted(String path)  {
         int number;
         Random random = new Random();
@@ -113,13 +134,17 @@ public class CardGenerator {
             file.close();
             reader.close();
         } catch (IOException e) {
-            throw new RuntimeException("Error in effectively write in file json, info path: " +path,e);
+            throw new RuntimeException("Error in effectively write in file json, " +
+                    "info path: " +path,e);
         }
-
         return number;
     }
     /**Casual generation number. This number is associated with a card, so this method
-     * provides to a casual generation of card usable and available */
+     * provides to a casual generation of card usable and available
+     * @author Riccardo Figini
+     * @param path string contained path of game's file
+     * @return number integer
+     * @exception RuntimeException*/
     private int casualGenerationOfNumber(String path) {
         int number;
         Random random = new Random();
@@ -152,10 +177,13 @@ public class CardGenerator {
         } catch (IOException e) {
             throw new RuntimeException("Error in effectively write in file json, info path: " +path,e);
         }
-
         return number;
     }
-    /**Read Personal goal card from json file and write value in couple*/
+    /**Read Personal goal card from json file and write value in couple
+     * @author Riccardo Figini
+     * @param number integer associated with card
+     * @return couples
+     * @exception RuntimeException*/
     private ArrayList<Couple> getCouplesFromFile(int number){
         JsonObject obj4 = getJsonObjectInArray(pathPersonalGoal, number);
         JsonArray colorArray = obj4.getAsJsonArray("color");
@@ -172,8 +200,12 @@ public class CardGenerator {
         return couples;
     }
 
-    /**SPIEGAZIONE: this method return jsonObject conteined in jsonarray.
-     * jsonarray is a container of cards (Can be any card type)*/
+    /**This method return jsonObject conteined in jsonarray.
+     * jsonarray is a container of cards (Can be any card type)
+     * @author Riccardo Figini
+     * @param path path of json file with information
+     * @param number integer used to get card's object from file
+     * @throws  RuntimeException*/
     private JsonObject getJsonObjectInArray(String path, int number){
         Gson gson = new Gson();
         FileReader fileReader;
@@ -193,7 +225,11 @@ public class CardGenerator {
         return obj3.get(number).getAsJsonObject();
     }
 
-    /**return description of specific card*/
+    /**return description of specific card
+     * @author Riccardo figini
+     * @param path path of json file with information
+     * @param number integer used to get card's description from file
+     * @exception RuntimeException*/
     private String getDescriptionFromFile(String path, int number) {
         Gson gson = new Gson();
         JsonObject jsonObject;
@@ -216,7 +252,12 @@ public class CardGenerator {
         }
         return jsonObject.get("description").getAsString();
     }
-
+    /**Create game file with initial array.
+     * This method reads controllerArray from a file and writes it into another.
+     * @author Riccardo Figini
+     * @param from file's path which contain initial controllerArray
+     * @param into destination file which will contain controllerArray
+     * @exception RuntimeException*/
     private void initArray(String from, String into) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileWriter writer0;
@@ -244,12 +285,16 @@ public class CardGenerator {
             throw new RuntimeException("Error in closing", e);
         }
     }
-
+    /**Delete game file
+     * @author Riccardo Figini
+     * */
     public void deleteFileGame(){
         if(!(deleteFile(gamePathPersonal) && deleteFile(gamePathCommon) && deleteFile(gamePathObject)))
             System.err.println("Delete doesn't work");
     }
-
+    /**Delete specific file and return if it works
+     * @param path
+     * @return boolean */
     private boolean deleteFile(String path){
         File file = new File(path);
         return file.delete();

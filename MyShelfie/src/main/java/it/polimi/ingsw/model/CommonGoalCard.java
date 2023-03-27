@@ -1,57 +1,27 @@
 package it.polimi.ingsw.model;
 public abstract class CommonGoalCard extends Card{
-    private int points;
-    private int numPlayers = 0;
+    private ScorePointCard scorePointCard;
+    /**Constructor
+     * @author Riccardo Figini
+     * @param description description of common goal file (get from json file)
+     * @param game current game
+     * */
     public CommonGoalCard(String description, Game game){
-
         super(description);
-        points = 8;
-        this.numPlayers = game.getNumPlayers();
+        scorePointCard = new ScorePointCard(game.getNumPlayers());
     }
-    public CommonGoalCard() {
-    }
+    /**Abstract function. Each subclass implements code to verify if
+     * someone has reached the common goal
+     * @author Riccardo Figini
+     * @param lib player's library
+     * @return boolean: true if the library respect common goal features */
     public abstract boolean isSatisfied(Library lib);
 
+    /**This method get current common goal point
+     * @author Riccardo Figini
+     * @return scorePointCard.getScore() int score point*/
     public int getPoints(){
-
-        return points;
-    }
-
-    // PROBLEMA: I PUNTI VARIANO IN BASE AL NUMERO DI GIOCATORI: RISOLTO
-    public void changePoints(){ // da chiamare ogni volta che l'obiettivo è soddisfatto
-
-        switch(numPlayers){
-
-            case 2 -> {
-
-                switch (points){
-
-                    case 8 -> points = 4;
-                    case 4 -> points = 2;
-                }
-            }
-
-            case 3 -> {
-
-                switch(points){
-
-                    case 8 -> points = 6;
-                    case 6 -> points = 4;
-                    case 4 -> points = 0;
-                }
-            }
-
-            case 4 -> {
-
-                switch(points){
-
-                    case 8 -> points = 6;
-                    case 6 -> points = 4;
-                    case 4 -> points = 2;
-                    case 2 -> points = 0;
-                }
-            }
-        }
+        return scorePointCard.getScore();
     }
 
 }
