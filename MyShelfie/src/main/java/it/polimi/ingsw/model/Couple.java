@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model;
+
 /*TODO non capisco perché couple ha due oggetti generici, tanto sappiamo esattamente che si andrà
 *  sicuramente colore posizioni, tanto vale segnarle direttamente
 *  In personalCard ho dovuto far un cast esplicito (non che crei problemi)*/

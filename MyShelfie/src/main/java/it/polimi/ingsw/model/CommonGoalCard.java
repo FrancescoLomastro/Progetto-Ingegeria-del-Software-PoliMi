@@ -1,5 +1,4 @@
 package it.polimi.ingsw.model;
-
 public abstract class CommonGoalCard extends Card{
     private int point;
     public CommonGoalCard(String descrption) {
