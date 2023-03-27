@@ -1,5 +1,7 @@
-package main.java.it.polimi.ingsw.model;
-
+package it.polimi.ingsw.model;
+/*TODO non capisco perché couple ha due oggetti generici, tanto sappiamo esattamente che si andrà
+*  sicuramente colore posizioni, tanto vale segnarle direttamente
+*  In personalCard ho dovuto far un cast esplicito (non che crei problemi)*/
 public class Couple<E1,E2>{
     private E1 first;
     private E2 second;
@@ -30,6 +32,7 @@ public class Couple<E1,E2>{
     }
     public boolean equalCoordinates(Integer x, Integer y)
     {
+
         return x.equals(this.first) && y.equals(this.second);
     }
 }
