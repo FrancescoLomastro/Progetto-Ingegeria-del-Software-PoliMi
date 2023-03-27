@@ -244,4 +244,14 @@ public class CardGenerator {
             throw new RuntimeException("Error in closing", e);
         }
     }
+
+    public void deleteFileGame(){
+        if(!(deleteFile(gamePathPersonal) && deleteFile(gamePathCommon) && deleteFile(gamePathObject)))
+            System.err.println("Delete doesn't work");
+    }
+
+    private boolean deleteFile(String path){
+        File file = new File(path);
+        return file.delete();
+    }
 }
