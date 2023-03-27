@@ -138,7 +138,7 @@ public class Grid {
         }
         return true;
     }
-    public ObjectCard[] draw(Couple[] move){
+    public ObjectCard[] draw(Position[] move){
         return null;
     }
 
