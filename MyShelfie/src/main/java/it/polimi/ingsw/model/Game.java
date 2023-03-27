@@ -5,16 +5,21 @@ import java.util.ArrayList;
 
 public class Game {
 
+    private final int gameNumber = 0;
+
+    private CardGenerator cardGenerator;
     private final int numPlayers;
     private int i;
     private Player[] players;
-
     private Grid grid;
     private LivingRoom livingRoom;
-
     private Player winnerPlayer; // lo uso nel metodo winner come valore di return
 
-    public Game(int numPlayers){
+    public Game(int numPlayers, /* dal controller: */ int gameNumber){
+
+        this.gameNumber = gameNumber;
+        this.cardGenerator = new CardGenerator(gameNumber);
+
         this.numPlayers=numPlayers;
         this.players = new Player[numPlayers];
         this.livingRoom = new LivingRoom(numPlayers, 0, 2);
@@ -32,6 +37,7 @@ public class Game {
 
             // la mossa viene eseguita da Library, all'interno del metodo checkColumn
 
+            // TUTTO QUELLO QUI SOTTO E' INUTILE PERCHE' L'HA FATTO ALBERTO IN LIBRARY
             /*
             TUTTO CIO' E' INUTILE PERCHE' L'HA FATTO ALBERTO IN LIBRARY
 
@@ -48,12 +54,10 @@ public class Game {
             player.getLibrary().insertCardsInLibrary(toInsertCards, firstAvailableRow, column);
             */
 
-
             // alla fine del turno
             checkCommonGoal(player, livingRoom.getCommonGoalCards());
-
-
-        }else{
+        }
+        else{
 
             //mossa non lecita
             //gestire gli output e le azioni successive
