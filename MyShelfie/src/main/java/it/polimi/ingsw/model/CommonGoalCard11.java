@@ -7,18 +7,11 @@ package it.polimi.ingsw.model;
  */
 public class CommonGoalCard11 extends CommonGoalCard {
 
-    private int c, i, j;
-    private Library library;
-    private ObjectCard[][] lib;
-
     /**
      * constructor of the class CommonGoalCard11
-     * @param library the turn player's library
      */
-    public CommonGoalCard11(Library library){
-        this.library = library;
-
-        this.lib = this.library.getLibrary();
+    public CommonGoalCard11(){
+        super();
     }
 
     /**
@@ -28,7 +21,8 @@ public class CommonGoalCard11 extends CommonGoalCard {
      */
     @Override
     public boolean isSatisfied(Library library) {
-
+        ObjectCard[][] lib = library.getLibrary();
+        int c;
         for (c = 0; c < library.getNumberOfColumns(); c++) { // controllo la prima riga, così se non è vuota evito il controllo
 
             if (!(lib[0][c].equals(null))) {
@@ -42,6 +36,8 @@ public class CommonGoalCard11 extends CommonGoalCard {
 
 
         // caso da sinistra
+        int i;
+        int j;
         if(!(lib[1][0].equals(null))){
 
             for (i = 1; i < library.getNumberOfRows(); i++) {

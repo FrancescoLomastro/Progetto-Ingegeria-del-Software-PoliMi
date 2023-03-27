@@ -11,7 +11,9 @@ public abstract class Card{
     public Card(String description){
         this.description=description;
     }
-    /**constructor*/
+    /**constructor
+     * @author Riccardo Figini*/
+    public Card(){}
 
     /**Return card's height
      * @author Riccardo Figini

@@ -28,7 +28,7 @@ public class Game {
     public Game(int numPlayers, /* dal controller: */ int gameNumber){
 
         this.gameNumber = gameNumber;
-        this.cardGenerator = new CardGenerator(gameNumber);
+        this.cardGenerator = new CardGenerator(gameNumber,numPlayers);
 
         this.numPlayers=numPlayers;
         this.players = new Player[numPlayers];
@@ -90,13 +90,11 @@ public class Game {
         if(commonGoalCards[0].isSatisfied(player.getLibrary())){
 
             player.addPoints(commonGoalCards[0].getPoints());
-            commonGoalCards[0].changePoints();
         }
 
         if(commonGoalCards[1].isSatisfied(player.getLibrary())){
 
             player.addPoints(commonGoalCards[1].getPoints());
-            commonGoalCards[1].changePoints();
         }
 
 

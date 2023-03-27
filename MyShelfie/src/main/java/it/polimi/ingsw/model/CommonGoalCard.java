@@ -3,12 +3,10 @@ public abstract class CommonGoalCard extends Card{
     private ScorePointCard scorePointCard;
     /**Constructor
      * @author Riccardo Figini
-     * @param description description of common goal file (get from json file)
-     * @param game current game
      * */
-    public CommonGoalCard(String description, Game game){
-        super(description);
-        scorePointCard = new ScorePointCard(game.getNumPlayers());
+
+    public CommonGoalCard(){
+        super();
     }
     /**Abstract function. Each subclass implements code to verify if
      * someone has reached the common goal
@@ -16,6 +14,10 @@ public abstract class CommonGoalCard extends Card{
      * @param lib player's library
      * @return boolean: true if the library respect common goal features */
     public abstract boolean isSatisfied(Library lib);
+
+    public void setScorePointCard(ScorePointCard scorePointCard) {
+        this.scorePointCard = scorePointCard;
+    }
 
     /**This method get current common goal point
      * @author Riccardo Figini

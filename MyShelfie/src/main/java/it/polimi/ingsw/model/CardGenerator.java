@@ -27,7 +27,7 @@ public class CardGenerator {
     private final String gamePathObject;
     private final String generalArray;
     private final String controllerArray;
-
+    private final int gameNumber, numberOfPlayer;
     private final CustomizedFunction<CommonGoalCard>[] factoryMethodArray =
             new CustomizedFunction[]{CommonGoalCard0::new, CommonGoalCard1::new, CommonGoalCard2::new, CommonGoalCard3::new, CommonGoalCard4::new,
                     CommonGoalCard5::new, CommonGoalCard6::new, CommonGoalCard7::new, CommonGoalCard8::new, CommonGoalCard9::new,
@@ -37,8 +37,9 @@ public class CardGenerator {
      * Simultaneously can exist different game, so exist different file which can provide
      * information about card
      * @author Riccardo Figini
-     * @param gameNumber ID number of game*/
-    public CardGenerator(int gameNumber){
+     * @param gameNumber ID number of game
+     * @param numberOfPleyer number of player in the game*/
+    public CardGenerator(int gameNumber, int numberOfPleyer){
         this.pathCommonGoal=System.getProperty("user.dir")+"/risorse/CommonCards.json";
         this.pathPersonalGoal=System.getProperty("user.dir")+"/risorse/PersonalCards.json";
         this.pathObjectCard=System.getProperty("user.dir")+"/risorse/ObjectCards.json";
@@ -50,6 +51,8 @@ public class CardGenerator {
         initArray(pathCommonGoal, gamePathCommon);
         initArray(pathPersonalGoal, gamePathPersonal);
         initArray(pathObjectCard, gamePathObject);
+        this.gameNumber=gameNumber;
+        this.numberOfPlayer=numberOfPleyer;
     }
     /**Casual generation of Common goal card. Attribute number is associated with free
      * commond goal card, that it's not already in the game. Allocate with factoryMethod
@@ -61,6 +64,7 @@ public class CardGenerator {
         number=casualGenerationOfNumber(gamePathCommon);
         CommonGoalCard commonGoalCard = factoryMethodArray[number].apply();
         commonGoalCard.setDescription(getDescriptionFromFile(pathCommonGoal, number));
+        commonGoalCard.setScorePointCard(new ScorePointCard(numberOfPlayer));
         return commonGoalCard;
     }
     /**Casual generation of personal goal card. Attribute number is associated with
@@ -79,7 +83,7 @@ public class CardGenerator {
     /**Casual generation of object card, in "actual game exsist 132 card, 22 for color.
      * Every color have 3 different type (8 cards type 1, 7 cards type 2, 7 cards type 3).
      * return object card
-     * @uthor Riccardo Figini
+     * @author Riccardo Figini
      * @return ObjectCard
      * @exception RuntimeException*/
     public ObjectCard generateObjectCard() {
