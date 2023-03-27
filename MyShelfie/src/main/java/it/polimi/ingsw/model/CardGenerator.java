@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -19,15 +20,16 @@ import com.google.gson.JsonObject;
  * Per semplicità i vettori all'interno dei 3 file di base e dei tre file riferiti alla singola
  * partita hanno lo stesso nome*/
 public class CardGenerator {
-    private final String pathCommonGoal;
-    private final String gamePathCommon;
-    private final String pathPersonalGoal;
-    private final String gamePathPersonal;
-    private final String pathObjectCard;
-    private final String gamePathObject;
+    private final String pathCommonGoalFile;
+    private final String pathPersonalGoalFile;
+    private final String pathObjectCardFile;
     private final String generalArray;
     private final String controllerArray;
-    private final int gameNumber, numberOfPlayer;
+    private final int numberOfPlayer;
+    private final String personalCardArray="personalCardArray";
+    private final String commonCardArray="commonCardArray";
+    private final String objectCardArray="objectCardArray";
+    private final String gamePath;
     private final CustomizedFunction<CommonGoalCard>[] factoryMethodArray =
             new CustomizedFunction[]{CommonGoalCard0::new, CommonGoalCard1::new, CommonGoalCard2::new, CommonGoalCard3::new, CommonGoalCard4::new,
                     CommonGoalCard5::new, CommonGoalCard6::new, CommonGoalCard7::new, CommonGoalCard8::new, CommonGoalCard9::new,
@@ -40,19 +42,14 @@ public class CardGenerator {
      * @param gameNumber ID number of game
      * @param numberOfPleyer number of player in the game*/
     public CardGenerator(int gameNumber, int numberOfPleyer){
-        this.pathCommonGoal=System.getProperty("user.dir")+"/risorse/CommonCards.json";
-        this.pathPersonalGoal=System.getProperty("user.dir")+"/risorse/PersonalCards.json";
-        this.pathObjectCard=System.getProperty("user.dir")+"/risorse/ObjectCards.json";
+        this.pathCommonGoalFile =System.getProperty("user.dir")+"/risorse/CommonCards.json";
+        this.pathPersonalGoalFile =System.getProperty("user.dir")+"/risorse/PersonalCards.json";
+        this.pathObjectCardFile =System.getProperty("user.dir")+"/risorse/ObjectCards.json";
         this.generalArray = "generalArray";
         this.controllerArray = "controllerArray";
-        this.gamePathCommon=System.getProperty("user.dir")+"/risorse/CommonCards"+gameNumber+".json";
-        this.gamePathObject=System.getProperty("user.dir")+"/risorse/ObjectCards"+gameNumber+".json";
-        this.gamePathPersonal=System.getProperty("user.dir")+"/risorse/PersonalCards"+gameNumber+".json";
-        initArray(pathCommonGoal, gamePathCommon);
-        initArray(pathPersonalGoal, gamePathPersonal);
-        initArray(pathObjectCard, gamePathObject);
-        this.gameNumber=gameNumber;
+        this.gamePath=System.getProperty("user.dir")+"/risorse/Game"+gameNumber+".json";
         this.numberOfPlayer=numberOfPleyer;
+        initFileWithArray();
     }
     /**Casual generation of Common goal card. Attribute number is associated with free
      * commond goal card, that it's not already in the game. Allocate with factoryMethod
@@ -61,9 +58,9 @@ public class CardGenerator {
      * @return commonGoalCard*/
     public CommonGoalCard generateCommonGoalCard() {
         int number;
-        number=casualGenerationOfNumber(gamePathCommon);
+        number=casualGenerationOfNumber(commonCardArray);
         CommonGoalCard commonGoalCard = factoryMethodArray[number].apply();
-        commonGoalCard.setDescription(getDescriptionFromFile(pathCommonGoal, number));
+        commonGoalCard.setDescription(getDescriptionFromFile(pathCommonGoalFile, number));
         commonGoalCard.setScorePointCard(new ScorePointCard(numberOfPlayer));
         return commonGoalCard;
     }
@@ -75,8 +72,8 @@ public class CardGenerator {
     public PersonalGoalCard generatePersonalGoalCard() {
         int number;
         String descrption;
-        number = casualGenerationOfNumber(gamePathPersonal);
-        descrption = getDescriptionFromFile(pathPersonalGoal, number);
+        number = casualGenerationOfNumber(personalCardArray);
+        descrption = getDescriptionFromFile(pathPersonalGoalFile, number);
         ArrayList<Couple> couples = getCouplesFromFile(number);
         return new PersonalGoalCard(descrption, couples);
     }
@@ -89,9 +86,9 @@ public class CardGenerator {
     public ObjectCard generateObjectCard() {
         int number;
         String description;
-        number=casualGenerationOfNumberCounted(gamePathObject);
-        JsonObject jsonObject = getJsonObjectInArray(pathObjectCard, number);
-        description = getDescriptionFromFile(pathObjectCard, number);
+        number=casualGenerationOfNumberCounted(objectCardArray);
+        JsonObject jsonObject = getJsonObjectInArray(pathObjectCardFile, number);
+        description = getDescriptionFromFile(pathObjectCardFile, number);
         try {
             String color = jsonObject.get("Color").getAsString();
             String type = jsonObject.get("Type").getAsString();
@@ -111,16 +108,11 @@ public class CardGenerator {
         int number;
         Random random = new Random();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Reader reader;
+        Reader reader = getReader(gamePath);
 
-        try {
-            reader = new FileReader(path);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Error in opening json file" +
-                    ", info path: " + path,e);
-        }
-
-        JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+        JsonArray jsonArray = jsonObject.getAsJsonArray(path);
+        checkIsEmpty(jsonArray);
 
         do{
             number = random.nextInt(jsonArray.size());
@@ -130,18 +122,48 @@ public class CardGenerator {
         input.addProperty("numero", jsonArray.get(number).getAsInt() -1 );
         jsonArray.set(number, input.get("numero"));
 
-        FileWriter file;
+        FileWriter file = getWriter(gamePath);
         try {
-            file = new FileWriter(path);
-            file.write(gson.toJson(jsonArray));
+            file.write(gson.toJson(jsonObject));
             file.flush();
-            file.close();
-            reader.close();
         } catch (IOException e) {
-            throw new RuntimeException("Error in effectively write in file json, " +
-                    "info path: " +path,e);
+            throw new RuntimeException(e);
         }
+        closeFunctionWriter(file);
+        closeFunctionReader(reader);
         return number;
+    }
+
+    /**Return true if jsonArray contains only 0
+    @author Riccardo Figini
+    @param jsonArray this jsonarray contains the number of card available for each object card
+    * */
+    private void checkIsEmpty(JsonArray jsonArray){
+        for(int i=0; i<jsonArray.size();i++)
+            if(jsonArray.get(i).getAsInt() > 0)
+                return;
+        refill();
+    }
+    /**This method refill Object card's controllerArray
+     * @author: Ricccardo Figini
+     * */
+    private void refill(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Reader reader0 = getReader(pathObjectCardFile);
+        Reader reader1 = getReader(gamePath);
+        JsonObject jsonObject0 = gson.fromJson(reader0, JsonObject.class);
+        JsonObject jsonObject1 = gson.fromJson(reader1, JsonObject.class);
+        JsonArray jsonArray = jsonObject0.getAsJsonArray(controllerArray);
+        jsonObject1.remove(objectCardArray);
+        jsonObject1.add(objectCardArray, jsonArray);
+        closeFunctionReader(reader0);
+        closeFunctionReader(reader1);
+        Writer writer = getWriter(gamePath);
+        try {
+            writer.write(gson.toJson(jsonObject1));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     /**Casual generation number. This number is associated with a card, so this method
      * provides to a casual generation of card usable and available
@@ -153,15 +175,10 @@ public class CardGenerator {
         int number;
         Random random = new Random();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Reader reader;
-        JsonArray jsonArray;
-        try {
-            reader = new FileReader(path);
-            jsonArray= gson.fromJson(reader, JsonArray.class);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Error in opening json file" +
-                    ", info path: " + path,e);
-        }
+        Reader reader = getReader(gamePath);
+
+        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+        JsonArray jsonArray= jsonObject.getAsJsonArray(path);
 
         do{
             number = random.nextInt(jsonArray.size());
@@ -171,25 +188,26 @@ public class CardGenerator {
         input.addProperty("this", true);
         jsonArray.set(number, input.get("this"));
 
-        FileWriter file;
+        FileWriter file = getWriter(gamePath);
         try {
-            file = new FileWriter(path);
-            file.write(gson.toJson(jsonArray));
+            file.write(gson.toJson(jsonObject));
             file.flush();
             file.close();
-            reader.close();
         } catch (IOException e) {
-            throw new RuntimeException("Error in effectively write in file json, info path: " +path,e);
+            throw new RuntimeException("Error in effectively write in file json, " +
+                    "info path: " +gamePath,e);
         }
+        closeFunctionReader(reader);
+        closeFunctionWriter(file);
         return number;
     }
     /**Read Personal goal card from json file and write value in couple
      * @author Riccardo Figini
      * @param number integer associated with card
      * @return couples
-     * @exception RuntimeException*/
+     * */
     private ArrayList<Couple> getCouplesFromFile(int number){
-        JsonObject obj4 = getJsonObjectInArray(pathPersonalGoal, number);
+        JsonObject obj4 = getJsonObjectInArray(pathPersonalGoalFile, number);
         JsonArray colorArray = obj4.getAsJsonArray("color");
         JsonArray xCoordinate =  obj4.getAsJsonArray("x");
         JsonArray yCoordinate =  obj4.getAsJsonArray("y");
@@ -209,23 +227,15 @@ public class CardGenerator {
      * @author Riccardo Figini
      * @param path path of json file with information
      * @param number integer used to get card's object from file
-     * @throws  RuntimeException*/
+     * */
     private JsonObject getJsonObjectInArray(String path, int number){
         Gson gson = new Gson();
-        FileReader fileReader;
-        try {
-            fileReader = new FileReader(path);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("File not found in getJsonObject (file with card information)" +
-                    "Info path: " + path + ", info number: " + number,e);
-        }
+        FileReader fileReader = getReader(path);
+
         JsonObject obj2 = gson.fromJson(fileReader, JsonObject.class);
         JsonArray obj3 = obj2.getAsJsonArray(generalArray);
-        try{
-            fileReader.close();
-        }catch (IOException e){
-            throw new RuntimeException("Error in closing", e);
-        }
+        closeFunctionReader(fileReader);
+
         return obj3.get(number).getAsJsonObject();
     }
 
@@ -233,67 +243,52 @@ public class CardGenerator {
      * @author Riccardo figini
      * @param path path of json file with information
      * @param number integer used to get card's description from file
-     * @exception RuntimeException*/
+     * */
     private String getDescriptionFromFile(String path, int number) {
         Gson gson = new Gson();
         JsonObject jsonObject;
-        Reader reader;
-        try {
-            reader = new FileReader(path);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Error in getting descrption from file, info path:"
-                    + path + ", info number " + number, e);
-        }
+        Reader reader = getReader(path);
+
         jsonObject = gson.fromJson(reader, JsonObject.class);
         JsonArray jsonArray = jsonObject.getAsJsonArray(generalArray);
         jsonObject = jsonArray.get(number).getAsJsonObject();
-        try {
-            reader.close();
-        }
-        catch (IOException e){
-            throw new RuntimeException("Error in closing", e);
 
-        }
+        closeFunctionReader(reader);
+
         return jsonObject.get("description").getAsString();
     }
     /**Create game file with initial array.
-     * This method reads controllerArray from a file and writes it into another.
+     * This method reads controllerArrays from a file and writes them into another.
      * @author Riccardo Figini
-     * @param from file's path which contain initial controllerArray
-     * @param into destination file which will contain controllerArray
      * @exception RuntimeException*/
-    private void initArray(String from, String into) {
+    private void initFileWithArray() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        FileWriter writer0;
-        Reader reader0;
-        try{
-            writer0 = new FileWriter(into);
-            reader0 = new FileReader(from);
-        } catch (IOException e){
+        Reader reader0 = getReader(pathCommonGoalFile);
+        Reader reader1 = getReader(pathObjectCardFile);
+        Reader reader2 = getReader(pathPersonalGoalFile);
+        JsonObject jsonObject0 = gson.fromJson(reader0, JsonObject.class);
+        JsonObject jsonObject1 = gson.fromJson(reader1, JsonObject.class);
+        JsonObject jsonObject2 = gson.fromJson(reader2, JsonObject.class);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add(commonCardArray, jsonObject0.getAsJsonArray(controllerArray));
+        jsonObject.add(objectCardArray, jsonObject1.getAsJsonArray(controllerArray));
+        jsonObject.add(personalCardArray, jsonObject2.getAsJsonArray(controllerArray));
+        closeFunctionReader(reader0);
+        closeFunctionReader(reader1);
+        closeFunctionReader(reader2);
+        Writer writer = getWriter(gamePath);
+        try {
+            writer.write(gson.toJson(jsonObject));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        JsonObject object0 = gson.fromJson(reader0, JsonObject.class);
-        JsonArray jsonArray = object0.getAsJsonArray(controllerArray);
-        try {
-            writer0.write(gson.toJson(jsonArray));
-        }
-        catch (IOException e){
-            throw new RuntimeException("Error in getting descrption from file, info path:"
-                    + from, e);
-        }
-        try {
-            writer0.close();
-            reader0.close();
-        }
-        catch (IOException e){
-            throw new RuntimeException("Error in closing", e);
-        }
+        closeFunctionWriter(writer);
     }
     /**Delete game file
      * @author Riccardo Figini
      * */
     public void deleteFileGame(){
-        if(!(deleteFile(gamePathPersonal) && deleteFile(gamePathCommon) && deleteFile(gamePathObject)))
+        if(!(deleteFile(gamePath)))
             System.err.println("Delete doesn't work");
     }
     /**Delete specific file and return if it works
@@ -303,4 +298,50 @@ public class CardGenerator {
         File file = new File(path);
         return file.delete();
     }
+
+    /**Create filewriter and handle exception
+     * @author: Riccardo Figini
+     * @param path file's writer path
+     * @return FileWriter*/
+    private FileWriter getWriter(String path){
+        try{
+            return new FileWriter(path);
+        }
+        catch(IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+    /**Create fileReader and handle exception
+     * @author: Riccardo Figini
+     * @param path file's reader path
+     * @return fileReader*/
+    private FileReader getReader(String path){
+        try{
+            return new FileReader(path);
+        }
+        catch(IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+    /**Close Reader and handle exception
+     * @author: Riccarod Figini
+     * @param file reader*/
+    private void closeFunctionReader(Reader file){
+        try {
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /**Close Wrtier and handle exception
+     * @author Riccardo Figini
+     * @param file writer*/
+    private void closeFunctionWriter(Writer file){
+        try {
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
