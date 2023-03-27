@@ -3,11 +3,16 @@ package it.polimi.ingsw.model;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/*
+classe Game
+*@author Andrea Ferrini
+*/
 public class Game {
 
     private final int gameNumber = 0;
-
     private CardGenerator cardGenerator;
+
+
     private final int numPlayers;
     private int i;
     private Player[] players;
@@ -15,6 +20,11 @@ public class Game {
     private LivingRoom livingRoom;
     private Player winnerPlayer; // lo uso nel metodo winner come valore di return
 
+    /**
+     * constructor of the class Game
+     * @param numPlayers: the number of the players in that game
+     * @param gameNumber: to identify multiple games
+     */
     public Game(int numPlayers, /* dal controller: */ int gameNumber){
 
         this.gameNumber = gameNumber;
@@ -31,6 +41,11 @@ public class Game {
         return numPlayers;
     }
 
+    /**
+     * @param player: the turn player
+     * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
+     * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
+     */
     public void manageTurn(Player player, Position[] move, int column){
 
         if(checkMove(player, move, column)){ //se la mossa è lecita
@@ -64,6 +79,10 @@ public class Game {
         }
     }
 
+    /**
+     * @param player: the turn player
+     * @param commonGoalCards: the two common goal cards that are in the living room
+     */
     private void checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards){
 
         // da gestire come scegliere l'algoritmo giusto tra i 12
@@ -92,6 +111,11 @@ public class Game {
         // avvisare se il player ha riempito la libreria
     }
 
+    /**
+     * @param player: the turn player
+     * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
+     * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
+     */
     private boolean checkMove(Player player, Position[] move, int column){
 
         if(livingRoom.getGrid().isDrawAvailable(move)){
@@ -105,6 +129,9 @@ public class Game {
         }
     }
 
+    /**
+     * @return Player: the winner player
+     */
     public Player findWinner(){
 
         // c'è un problema
@@ -124,6 +151,10 @@ public class Game {
         return winnerPlayer;
     }
 
+    /**
+     * @param library: the turn player's library
+     * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
+     */
     public int getFirstAvailableRow(Library library, int column){
 
         for(i = library.getNumberOfColumns(); i > 0; i++){
