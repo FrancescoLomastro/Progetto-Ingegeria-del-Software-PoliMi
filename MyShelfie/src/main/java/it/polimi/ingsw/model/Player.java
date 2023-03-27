@@ -45,7 +45,11 @@ public class Player {
     }
 
     private PersonalGoalCard generatePersonalGoalCard() {
-        Card.casualGenerationOfNumber()
+        Card.casualGenerationOfNumber();
         this.personalGoalCard = new PersonalGoalCard("Ciao",10,10); // da valutare poi come creare effettivamente sta carta
+    }
+
+    public boolean isCommonGoalCardSatisfied(CommonGoalCard commonGoalCard) {
+        return commonGoalCard.isSatisfied(getLibrary()); // da verificare
     }
 }

@@ -84,7 +84,7 @@ public class Library {
     public boolean checkColumn(ObjectCard[] cards,int chosenColumn) {
         // Assuming that cards contain the chosen cards from the grid, inserted in the order of insertion into the selected column
         boolean columnIsAvailable = false;
-        int numberOfChosenCards = cards.length(); //da decidere insieme quando controlliamo che il numero di carte sia minore o uguale a 3, in caso contrario lancio eccezione o mossa non valida
+        int numberOfChosenCards = cards.length; //da decidere insieme quando controlliamo che il numero di carte sia minore o uguale a 3, in caso contrario lancio eccezione o mossa non valida
         int numberOfAvailableCellsOnColumn = findNumberOfFreeCells(column);
 
         if (numberOfAvailableCellsOnColumn >= numberOfChosenCards) {
@@ -138,7 +138,7 @@ public class Library {
         return answer;
     }
 
-    private int countSameColorNeighbours(int startRow, int startColumn,String direction) {
+    private int countSameColorNeighbours(int startRow, int startColumn) {
 
         int numberOfSameColorNeighbours = 0;
         //int lastCellSameColorInSameColumn_row = findLastRowWithSameColorInSameColumn(startRow,startColumn);
@@ -213,10 +213,6 @@ public class Library {
         }
 
         return numberOfAdjacentPoints;
-    }
-
-    public boolean isCommonGoalCardSatisfied(CommonGoalCard commonGoalCard) {
-        commonGoalCard.checkCommonObjective(library); // da verificare
     }
 
 }
