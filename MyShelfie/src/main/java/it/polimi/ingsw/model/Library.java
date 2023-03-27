@@ -1,7 +1,12 @@
 package main.java.it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Library class
+ * @author Alberto Aniballi
+ */
 public class Library {
     private final int numberOfRows;
     private final int numberOfColumns;
@@ -132,35 +137,36 @@ public class Library {
 
         return answer;
     }
-    private int countSameColorNeighbours(int startRow, int startColumn) {
+
+    private int countSameColorNeighbours(int startRow, int startColumn,String direction) {
 
         int numberOfSameColorNeighbours = 0;
         //int lastCellSameColorInSameColumn_row = findLastRowWithSameColorInSameColumn(startRow,startColumn);
         if(checkIfColorIsTheSame(startRow,startColumn,"Up")) {
             if (!checkedCells.contains((startRow+1)+"_"+startColumn)) {
                 checkedCells.add((startRow+1)+"_"+startColumn);
-                return 1 + countSameColorNeighbours(startRow+1,startColumn);
+                return 1 + countSameColorNeighbours(startRow+1,startColumn,"Up");
             } else {
                 return 1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Right")) {
             if (!checkedCells.contains(startRow+"_"+(startColumn+1))) {
                 checkedCells.add(startRow+"_"+(startColumn+1));
-                return 1 + countSameColorNeighbours(startRow,startColumn+1);
+                return 1 + countSameColorNeighbours(startRow,startColumn+1,"Right");
             } else {
                 return 1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Left")) {
             if (!checkedCells.contains(startRow + "_" + (startColumn - 1))) {
                 checkedCells.add(startRow+"_"+(startColumn-1));
-                return 1 + countSameColorNeighbours(startRow, startColumn - 1);
+                return 1 + countSameColorNeighbours(startRow, startColumn - 1, "Left");
             } else {
                 return 1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Down")) {
             if (!checkedCells.contains((startRow-1) + "_" + startColumn)) {
                 checkedCells.add((startRow-1)+"_"+(startColumn));
-                return 1 + countSameColorNeighbours(startRow-1, startColumn);
+                return 1 + countSameColorNeighbours(startRow-1, startColumn, "Down");
             } else {
                 return 1;
             }
@@ -182,6 +188,10 @@ public class Library {
             return 0;
         }
     }
+
+    /*
+    To be tested: cosa succede se abbiamo due possibili strade da poter seguire dalla cella iniziale?
+     */
     public int countAdjacentPoints() {
         // La stringa "row_col" identifica univocamente una cella per questo uso checked_cells
         int row = 0;
@@ -191,9 +201,12 @@ public class Library {
         while (row<getNumberOfRows()) {
             while ((column <getNumberOfColumns()) && (!checkedCells.contains(row+"_"+ column))) {
                 checkedCells.add(row+"_"+column);
-                int sameColorNeighbours = countSameColorNeighbours(row, column);
+                int sameColorNeighboursUp = countSameColorNeighbours(row, column, "Up");
+                int sameColorNeighboursRight = countSameColorNeighbours(row, column, "Right") -1; //tolgo uno per non contare due volte la cella iniziale da verificare
+                int numberSameColorNeighbours =  sameColorNeighboursUp + sameColorNeighboursRight;
+
                 /* da implementare la verifica dei punti da aggiungere in base al numero di sameColorNeighbours*/
-                numberOfAdjacentPoints += addAdjacentPoints(sameColorNeighbours);
+                numberOfAdjacentPoints += addAdjacentPoints(numberSameColorNeighbours);
                 column++;
             }
             column=0;
@@ -204,9 +217,7 @@ public class Library {
     }
 
     public boolean isCommonGoalCardSatisfied(CommonGoalCard commonGoalCard) {
-        /*
-        To be implemented
-         */
+        commonGoalCard.checkCommonObjective(library); // da verificare
     }
 
 }
