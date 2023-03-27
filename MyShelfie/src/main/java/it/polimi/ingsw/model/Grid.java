@@ -138,6 +138,10 @@ public class Grid {
         }
         return true;
     }
+
+    public ObjectCard[][] getMatrix(){
+        return matrix;
+    }
     public ObjectCard[] draw(Position[] move){
         return null;
     }

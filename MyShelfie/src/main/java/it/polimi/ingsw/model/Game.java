@@ -30,7 +30,23 @@ public class Game {
 
         if(checkMove(player, move, column)){ //se la mossa è lecita
 
-            //esegui la mossa
+            // la mossa viene eseguita da Library, all'interno del metodo checkColumn
+
+            /*
+            TUTTO CIO' E' INUTILE PERCHE' L'HA FATTO ALBERTO IN LIBRARY
+
+            private ObjectCard[] toInsertCards = new ObjectCard[move.length];
+
+            for(i = 0; i < toInsertCards.length; i++){
+
+                toInsertCards[i] = this.grid.getMatrix()[move[i].getX()][move[i].getY()];
+            }
+
+
+            firstAvailableRow = getFirstAvailableRow(player.getLibrary(), column);
+
+            player.getLibrary().insertCardsInLibrary(toInsertCards, firstAvailableRow, column);
+            */
 
 
             // alla fine del turno
@@ -102,6 +118,18 @@ public class Game {
         }
 
         return winnerPlayer;
+    }
+
+    public int getFirstAvailableRow(Library library, int column){
+
+        for(i = library.getNumberOfColumns(); i > 0; i++){
+
+            if(library.getLibrary()[i][column].equals(null)){
+
+                return i;
+            }
+        }
+        return -1; // gestire l'eccezione (sempre se non è gia stato fatto un controllo prima)
     }
 }
 
