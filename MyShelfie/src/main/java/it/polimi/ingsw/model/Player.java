@@ -5,10 +5,13 @@ public class Player {
     private int points;
     private Library library;
     private PersonalGoalCard personalGoalCard;
-    public Player(String name) {
+    private CardGenerator personalGoadCardGenerator;
+
+    public Player(String name,CardGenerator personalGoadCardGenerator) {
         this.name = name;
         this.points = 0;
         this.library = new Library(20,20); // Ipotizzo dimensione 20x20 al momento, da valutare insiem
+        this.personalGoadCardGenerator = personalGoadCardGenerator;
         personalGoalCard = generatePersonalGoalCard(); // non so se ha senso chiamare un metodo per generare (come da UML) o istanziare direttamente la carta qui
     }
 
@@ -45,7 +48,10 @@ public class Player {
     }
 
     private PersonalGoalCard generatePersonalGoalCard() {
-        Card.casualGenerationOfNumber()
-        this.personalGoalCard = new PersonalGoalCard("Ciao",10,10); // da valutare poi come creare effettivamente sta carta
+        return personalGoadCardGenerator.generatePersonalGoalCard();
+    }
+
+    public boolean isCommonGoalCardSatisfied(CommonGoalCard commonGoalCard) {
+        return commonGoalCard.isSatisfied(getLibrary()); // da verificare
     }
 }
