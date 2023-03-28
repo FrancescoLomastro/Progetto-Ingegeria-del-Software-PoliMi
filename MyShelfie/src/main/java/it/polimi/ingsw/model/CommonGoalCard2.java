@@ -3,13 +3,12 @@ package it.polimi.ingsw.model;
 public class CommonGoalCard2 extends CommonGoalCard {
     @Override
     public boolean isSatisfied(Library lib) {
-        String color = library[0][0].getColor();
-        if (color.equals(library[0][4].getColor())
-                && color.equals(library[5][4].getColor())
-                && color.equals(library[5][0].getColor())) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Quattro gruppi separati formati ciascuno da quattro tessere adiacenti dello stesso tipo (non necessariamente come mostrato in figura). Le tessere di un gruppo possono essere diverse da quelle di un altro gruppo";
+    }
+
 }

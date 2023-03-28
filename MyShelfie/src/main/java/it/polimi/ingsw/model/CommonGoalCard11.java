@@ -6,24 +6,12 @@ package it.polimi.ingsw.model;
  * @author Andrea Ferrini
  */
 public class CommonGoalCard11 extends CommonGoalCard {
-    private int c, i, j;
-    private Library library;
-    private ObjectCard[][] lib;
-
-    private int checkOneOrTwoResult;
-
-    private int isOne = 1;
-    private int isTwo = 1;
-
 
     /**
      * constructor of the class CommonGoalCard11
-     * @param library the turn player's library
      */
-    public CommonGoalCard11(Library library){
-        this.library = library;
-
-        this.lib = this.library.getLibrary();
+    public CommonGoalCard11(){
+        super();
     }
 
     /**
@@ -33,39 +21,50 @@ public class CommonGoalCard11 extends CommonGoalCard {
      */
     @Override
     public boolean isSatisfied(Library library) {
+        ObjectCard[][] lib = library.getLibrary();
+        int c;
+        for (c = 0; c < library.getNumberOfColumns(); c++) { // controllo la prima riga, così se non è vuota evito il controllo
 
-        checkOneOrTwoResult = checkOneOrTwo(lib);
+            if (!(lib[0][c].equals(null))) {
 
-        if(checkOneOrTwoResult == 1){
+                return false;
+            }
+        }
 
-            // 1-5 o 5-1
+        // se è andato tutto bene proseguo il controllo
+        // N.B.: d'ora in poi scorrerò a partire da i = 1, perché la riga 0(zero) l'ho appena controllata
 
-            // caso da sinistra (5-1)
-            if(!(lib[1][0].equals(null))){
 
-                for (i = 1; i < library.getNumberOfRows(); i++) {
-                    for (j = 0; j < library.getNumberOfColumns(); j++) {
+        // caso da sinistra
+        int i;
+        int j;
+        if(!(lib[1][0].equals(null))){
 
-                        if (j < i) {  // le posizioni in cui deve esserci una tessera
+            for (i = 1; i < library.getNumberOfRows(); i++) {
+                for (j = 0; j < library.getNumberOfColumns(); j++) {
 
-                            if (lib[i][j].equals(null)) { // se non c'è una tessera ritorno false
-                                return false;
-                            }
-                        } else { // le posizioni in cui non deve esserci una tessera
+                    if (j < i) {  // le posizioni in cui deve esserci una tessera
 
-                            if (!(lib[i][j].equals(null))) {  // se c'è una tessera ritorno false
-                                return false;
-                            }
+                        if (lib[i][j].equals(null)) { // se non c'è una tessera ritorno false
+                            return false;
+                        }
+                    } else { // le posizioni in cui non deve esserci una tessera
+
+                        if (!(lib[i][j].equals(null))) {  // se c'è una tessera ritorno false
+                            return false;
                         }
                     }
                 }
             }
+        }
 
-            // caso da destra (1-5)
-            else if(!(lib[1][library.getNumberOfColumns() - 1]).equals(null)){
+        // caso da destra
+        else if(!(lib[1][library.getNumberOfColumns() - 1]).equals(null)){
 
 
-                for (i = 1; i < library.getNumberOfRows(); i++) {
+            for (i = 1; i < library.getNumberOfRows(); i++) {
+                for (j = library.getNumberOfColumns() - 1; j >= 0; j--) {
+
                     for (j = 0; j < library.getNumberOfColumns(); j++) {
 
                         if (library.getNumberOfColumns() - 1 - j < i) {  // le posizioni in cui deve esserci una tessera
@@ -73,36 +72,6 @@ public class CommonGoalCard11 extends CommonGoalCard {
                             if (lib[i][j].equals(null)) {  // se non c'è una tessera ritorno false
                                 return false;
                             }
-                        }
-                        else{ // le posizioni in cui non deve esserci una tessera
-
-                            if (!(lib[i][j].equals(null))) {  // se c'è una tessera ritorno false
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-            else return false;
-
-            return true;
-        }
-        else if(checkOneOrTwoResult == 2){
-
-            // 2-6 o 6-2
-
-
-            // caso da sinistra (6-2)
-            if(!(lib[0][0].equals(null))){
-
-                for (i = 0; i < library.getNumberOfRows(); i++) {
-                    for (j = 0; j < library.getNumberOfColumns(); j++) {
-
-                        if (j <= i) {  // le posizioni in cui deve esserci una tessera
-
-                            if (lib[i][j].equals(null)) { // se non c'è una tessera ritorno false
-                                return false;
-                            }
                         } else { // le posizioni in cui non deve esserci una tessera
 
                             if (!(lib[i][j].equals(null))) {  // se c'è una tessera ritorno false
@@ -110,72 +79,17 @@ public class CommonGoalCard11 extends CommonGoalCard {
                             }
                         }
                     }
+
                 }
             }
-            //else if
-
-            // caso da destra (2-6)
-            else if(!(lib[1][library.getNumberOfColumns() - 1]).equals(null)){
-
-
-                for (i = 0; i < library.getNumberOfRows(); i++) {
-                    for (j = 0; j < library.getNumberOfColumns(); j++) {
-
-                        if (library.getNumberOfColumns() - 1 - j <= i) {  // le posizioni in cui deve esserci una tessera
-
-                            if (lib[i][j].equals(null)) {  // se non c'è una tessera ritorno false
-                                return false;
-                            }
-                        }
-                        else{ // le posizioni in cui non deve esserci una tessera
-
-                            if (!(lib[i][j].equals(null))) {  // se c'è una tessera ritorno false
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-            else return false;
-
-            return true;
         }
         else return false;
+
+        return true;
     }
 
-
-    /**
-     * this method selects 3 different cases:
-     * 1: I'll check the 1-5 or 5-1 columns
-     * 2: I'll check the 2-6 or 6-2 columns
-     * 3: I'll return "false"
-     * @param lib the player's library
-     * @return an int from 0 to 2, that identifies the 3 cases
-     *
-     */
-    public int checkOneOrTwo(ObjectCard[][] lib){
-
-
-        for (c = 0; c < library.getNumberOfColumns(); c++) { // controllo la prima riga, così se non è vuota evito il controllo
-
-            if (!(lib[0][c].equals(null))) { // se la prima riga non è vuota
-
-                isOne = 0;
-            }
-            if(lib[library.getNumberOfRows() - 1][c].equals(null) || lib[library.getNumberOfRows() - 2][c].equals(null)){ // se le due righe più in basso non sono piene
-
-                isTwo = 0;
-            }
-        }
-        if(isOne == 1){
-
-            return 1;
-        }
-        else if(isTwo == 1){
-
-            return 2;
-        }
-        else return 0;
+    @Override
+    public String getDescription() {
+        return "Cinque colonne di altezza crescente o decrescente: a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più. Le tessere possono essere di qualsiasi tipo";
     }
-
 }

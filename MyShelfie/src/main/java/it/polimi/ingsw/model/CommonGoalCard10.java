@@ -87,6 +87,11 @@ public class CommonGoalCard10 extends CommonGoalCard {
         return  false;
     }
 
+    @Override
+    public String getDescription() {
+        return "Cinque tessere dello stesso tipo che formano una X";
+    }
+
     /**
      * controls if the check is finished, so i can avoid useless iterations
      * @param types an array of int, one cell for each type of object card
