@@ -84,7 +84,7 @@ public class Library {
         // Assuming that cards contain the chosen cards from the grid, inserted in the order of insertion into the selected column
         boolean columnIsAvailable = false;
         int numberOfChosenCards = cards.length; //da decidere insieme quando controlliamo che il numero di carte sia minore o uguale a 3, in caso contrario lancio eccezione o mossa non valida
-        int numberOfAvailableCellsOnColumn = findNumberOfFreeCells(column);
+        int numberOfAvailableCellsOnColumn = findNumberOfFreeCells(chosenColumn);
 
         if (numberOfAvailableCellsOnColumn >= numberOfChosenCards) {
             columnIsAvailable = true;
@@ -144,28 +144,28 @@ public class Library {
         if(checkIfColorIsTheSame(startRow,startColumn,"Up")) {
             if (!checkedCells.contains((startRow+1)+"_"+startColumn)) {
                 checkedCells.add((startRow+1)+"_"+startColumn);
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow+1,startColumn,"Up");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow+1,startColumn);
             } else {
                 numberOfSameColorNeighbours+=1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Right")) {
             if (!checkedCells.contains(startRow+"_"+(startColumn+1))) {
                 checkedCells.add(startRow+"_"+(startColumn+1));
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow,startColumn+1,"Right");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow,startColumn+1);
             } else {
                 numberOfSameColorNeighbours+=1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Left")) {
             if (!checkedCells.contains(startRow + "_" + (startColumn - 1))) {
                 checkedCells.add(startRow+"_"+(startColumn-1));
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow, startColumn - 1, "Left");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow, startColumn - 1);
             } else {
                 numberOfSameColorNeighbours+=1;
             }
         } else if (checkIfColorIsTheSame(startRow,startColumn,"Down")) {
             if (!checkedCells.contains((startRow-1) + "_" + startColumn)) {
                 checkedCells.add((startRow-1)+"_"+(startColumn));
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow-1, startColumn, "Down");
+                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow-1, startColumn);
             } else {
                 numberOfSameColorNeighbours+=1;
             }
