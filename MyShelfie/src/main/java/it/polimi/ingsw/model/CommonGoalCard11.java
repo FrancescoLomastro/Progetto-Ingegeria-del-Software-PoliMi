@@ -114,7 +114,7 @@ public class CommonGoalCard11 extends CommonGoalCard {
             }
             //else if
 
-            // caso da destra (1-5)
+            // caso da destra (2-6)
             else if(!(lib[1][library.getNumberOfColumns() - 1]).equals(null)){
 
 
