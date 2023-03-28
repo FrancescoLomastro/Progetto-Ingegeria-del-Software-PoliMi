@@ -7,7 +7,7 @@ public class PersonalGoalCard extends Card {
         super(descrption);
         this.goalVector=goalVector;
     }
-    public int countPersonalGoalCard(Library lib){
+    public int countPersonalGoalCardPoints(Library lib){
         int count=0;
         Position tmp;
         for(int i=0; i<Color.values().length; i++){

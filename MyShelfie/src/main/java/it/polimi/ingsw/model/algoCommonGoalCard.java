@@ -7,7 +7,7 @@ import java.util.HashSet;
 
 public class algoCommonGoalCard {
 
-    public boolean algo1() {
+    public boolean algo0() {
         /*
         riflettere sul concetto di separati
          */
@@ -49,7 +49,7 @@ public class algoCommonGoalCard {
         return false;
     }
 
-    public boolean algo2() {
+    public boolean algo1() {
         ArrayList<Position> arr = ArrayList<Position>(new Position(0,0),new Position(1,0),new Position(5,0),new Position(4,0));
 
         boolean ans = false;
@@ -91,7 +91,7 @@ public class algoCommonGoalCard {
         return ans;
     }
 
-    public boolean algo3() {
+    public boolean algo2() {
         String color = library[0][0].getColor();
         if (color.equals(library[0][4].getColor())
             && color.equals(library[5][4].getColor())
@@ -102,7 +102,7 @@ public class algoCommonGoalCard {
         }
     }
 
-    public boolean algo4() {
+    public boolean algo3() {
         int count_row = 0;
         for(int row=0;row<6;row++) {
             HashSet<String> s = new HashSet<>();
@@ -119,7 +119,7 @@ public class algoCommonGoalCard {
         }
     }
 
-    public boolean algo5() {
+    public boolean algo4() {
         /*
         Vedi Library countAdjacentPoints() ma ti fermi a 4 ed incrementi contatore:
         riflettere sul concetto di separati: cosa succede se abbiamo due strade possibili? cosa succede se ne ho 8 vicine?
@@ -165,7 +165,7 @@ public class algoCommonGoalCard {
         return false;
     }
 
-    public boolean algo6() {
+    public boolean algo5() {
         int count_col = 0;
         for(int col=0;col<5;col++) {
             HashSet<String> s = new HashSet<>();
@@ -182,7 +182,7 @@ public class algoCommonGoalCard {
         }
     }
 
-    public boolean algo7() {
+    public boolean algo6() {
         /*
         due gruppi separati di 4 tessere dello stesso tipo.
         Idea:
@@ -225,7 +225,7 @@ public class algoCommonGoalCard {
         return false;
     }
 
-    public boolean algo8() {
+    public boolean algo7() {
         int count_row = 0;
         for(int row=0;row<6;row++) {
             HashSet<String> s = new HashSet<>();
@@ -242,7 +242,7 @@ public class algoCommonGoalCard {
         }
     }
 
-    public boolean algo9() {
+    public boolean algo8() {
         int count_col = 0;
         for(int col=0;col<5;col++) {
             HashSet<String> s = new HashSet<>();
@@ -259,7 +259,7 @@ public class algoCommonGoalCard {
         }
     }
 
-    public boolean algo10() {
+    public boolean algo9() {
         /*
         Cinque tessere delle stesso tipo che formano una x.
         Idea:

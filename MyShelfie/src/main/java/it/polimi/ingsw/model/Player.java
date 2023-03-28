@@ -37,7 +37,7 @@ public class Player {
 
     public int countFinalPoints() {
         // count points comparing the personal goal card configuration with the final library disposition
-        int countPersonalGoalCardPoints = this.personalGoalCard.countPersonalCardPoints(getLibrary());
+        int countPersonalGoalCardPoints = this.personalGoalCard.countPersonalGoalCardPoints(getLibrary());
 
         // count points counting adjacent cards of the same color in the final library configuration
         int countLibraryAdjacentPoints = library.countAdjacentPoints();

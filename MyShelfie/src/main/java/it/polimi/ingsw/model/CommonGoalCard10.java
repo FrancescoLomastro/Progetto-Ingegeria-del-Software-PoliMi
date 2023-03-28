@@ -10,21 +10,18 @@ public class CommonGoalCard10 extends CommonGoalCard {
     private int i, j;
 
     private int iterations = 0; // conto le celle controllate, così dopo 8 iterazioni inizio il controllo periodico per vedere se ho finito
-    private Library library;
-    private ObjectCard[][] lib;
+
 
     private int[] types; // lungo 6, per contare simultaneamente le occorrenze per ogni tipo
 
     /**
-     * constructor of the class CommonGoalCard10
-     * @param library the turn player's library
+     * Constructor
+     *
+     * @param description description of common goal file (get from json file)
+     * @param game        current game
+     * @author Andrea Ferrini
      */
-    public CommonGoalCard10(Library library){
 
-        this.library = library;
-
-        this.lib = library.getLibrary();
-    }
 
     /**
      * the main algorithm that checks this common goal
@@ -33,7 +30,7 @@ public class CommonGoalCard10 extends CommonGoalCard {
      */
     @Override
     public boolean isSatisfied(Library library) {
-
+        ObjectCard[][] lib = library.getLibrary();
         // istanzio e inizializzo l'array delle occorrenze
         types = new int[6];
         for(i = 0; i < 6; i++){
