@@ -89,13 +89,9 @@ public class CardGenerator {
         number=casualGenerationOfNumberCounted(objectCardArray);
         JsonObject jsonObject = getJsonObjectInArray(pathObjectCardFile, number);
         description = getDescriptionFromFile(pathObjectCardFile, number);
-        try {
-            String color = jsonObject.get("Color").getAsString();
-            String type = jsonObject.get("Type").getAsString();
-            return new ObjectCard(description, Color.valueOf(color) , Type.valueOf(type));
-        } catch (Exception e) {
-            throw new RuntimeException("Error in enum",e);
-        }
+        return new ObjectCard(description,
+                Color.valueOf(jsonObject.get("Color").getAsString()) ,
+                Type.valueOf(jsonObject.get("Type").getAsString()));
     }
     /**Casual generation of number with limit. This method read a jsonArray from json game file
      *  and generate available number (number isn't available if in the position "number" of jsonarray
