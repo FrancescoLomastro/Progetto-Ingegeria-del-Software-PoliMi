@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Utility.*;
 import it.polimi.ingsw.model.CardGenerator.*;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -29,6 +30,7 @@ public class Grid {
     private ObjectCard[][] matrix;
     private Set<Position> notAvailablePositions;
     private CardGenerator cardGenerator;
+    private final String filePath= "src/main/resources/json/Grid.json";
 
     /**
      * The constructor of the grid. After the call of this constructor, the matrix will contain the right number of
@@ -36,7 +38,7 @@ public class Grid {
      * @param numPlayers the grid need the number of players that will play with it, in order to prepare the game field.
      * @throws IOException propagates to the caller the exception thrown by retrieveUnavailablePositionsSet.
      */
-    public Grid(int numPlayers, CardGenerator cardGenerator) throws IOException{
+    public Grid(int numPlayers, CardGenerator cardGenerator) throws RuntimeException{
         this.cardGenerator=cardGenerator;
         this.numPlayers=numPlayers;
         this.matrix = new ObjectCard[numRows][numColumns];
@@ -153,54 +155,26 @@ public class Grid {
         return null;
     }
 
-
-
-/////////////////////////////////////////////////////////////METTITI DACCORDO CON FIGIO/////////////////////////////////////////////////////
-/*
-    /*private ObjectCard generateObjectCard()
-    {
-        Random random = new Random();
-        int randomNumber;
-
-        //cardFinished e returna subito
-        do {
-            randomNumber = random.nextInt(6) + 1;
-            if(objectCardVector[randomNumber] == 0)
-            {
-                if(cardFinished())
-                {
-                    return null;
-                }
-            }
-        }while(objectCardVector[randomNumber] > 0);
-        return new ObjectCard(randomNumber);
-    }*/
-
-    /*private boolean cardFinished()
-    {
-        for(int i : objectCardVector)
-        {
-            if(i!=0)
-                return false;
-        }
-        return true;
-    }*/
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     /**
-     * The method opens a Json file called Grid.json.
+     * The method opens a Json.
      * Inside the file are stored some vectors containing some positions.
      * {@code Default_Invalid_Positions} contains all the position that are not utilizable by default.
      * {@code i_Player_New_Positions} contains all the the position utilizable when the {@code i} players are playing.
      * @return a set of position containing {@code Default_Invalid_Positions} and {@code i_Player_New_Positions}, when
-     * {@code i} goes from numPlayers+1 to 4
-     * @throws IOException if the file Grid.json can't be retrieved.
+     * {@code i} goes from numPlayers+1 to 4. If the file is missing this set is empty.
      */
-    private Set<Position> retrieveUnavailablePositionsSet() throws IOException
+    private Set<Position> retrieveUnavailablePositionsSet()
     {
         Set<Position> setOfPositions = new HashSet<>();
         Gson gson = new Gson();
-        Reader reader = new FileReader("Grid.json");
+        Reader reader = null;
+        try {
+            reader = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            System.out.println("Non ho trovato alcun file per la configurazione della griglia");
+            System.out.println("Dunque si giocherà su una griglia dritta di dimensione"+this.numColumns+"x"+numPlayers);
+            return setOfPositions;
+        }
         JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
 
         JsonArray arrayOfJsonCells = jsonObject.getAsJsonArray("Default_Invalid_Positions");
@@ -219,7 +193,12 @@ public class Grid {
                 setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
             }
         }
-        reader.close();
+        try {
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Non sono riuscito a chiudere il file "+filePath);
+        }
+
         return setOfPositions;
     }
 
