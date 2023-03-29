@@ -6,10 +6,11 @@ import it.polimi.ingsw.model.Utility.*;
 
 import java.util.ArrayList;
 
+
 public class PersonalGoalCard extends Card {
     private final ArrayList<Couple> goalVector;
-    public PersonalGoalCard(String descrption, ArrayList<Couple> goalVector){
-        super(descrption);
+    public PersonalGoalCard(ArrayList<Couple> goalVector){
+        super();
         this.goalVector=goalVector;
     }
     public int countPersonalGoalCardPoints(Library lib){
@@ -39,5 +40,10 @@ public class PersonalGoalCard extends Card {
     public ArrayList<Couple> getGoalVector() {
 
         return goalVector;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Carta obiettivo personale";
     }
 }

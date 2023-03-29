@@ -7,44 +7,50 @@ import it.polimi.ingsw.model.Enums.*;
 import java.io.IOException;
 import java.util.Random;
 
-//TODO devo ancora testarla per vedere se riesce a prendere tutti i dati e a scriverli
-
-//TODO IMPORTANTE: NEGLI OGGETTI DI RITORNO FAI SEMPRE UNA COPIA, NON PASSARE RIFERIMETNO
-
-/**IDEA DEI FILE: ho a disposizione 3 file di base in cui sono salvate tutte le carte e i vettori
- * con i valori che devono avere inizialemente. Quando faccio partire la partita inizializzo questa
- * classe passandogli un numero identificativo. Allora questa classe crea 3 file in cui sono
- * presenti solo i 3 vettori che gestiscono le carte prelevate e ancora da prelevare
- * Per semplicità i vettori all'interno dei 3 file di base e dei tre file riferiti alla singola
- * partita hanno lo stesso nome*/
+/**
+ * The class CardGenerator is a complete manager on all game card in a single Game.
+ * This class manages the generation of each type of card and avoid generating already generated cards.
+ * CardGenerator has 3 sub-managers that are dedicated to each type of card
+ * @author: Francesco Lo Mastro
+ */
 public class CardGenerator {
-
     private ObjectCardManager objectCardManager;
     private CommonCardManager commonCardManager;
     private PersonalCardManager personalCardManager;
-    //private PersonalCardManager personalCardManager;
 
-    public CardGenerator() throws IOException {
+    /**
+     * Creates 3 istancesc of submanagers
+     * @author: Francesco Lo Mastro
+     */
+    public CardGenerator(){
         objectCardManager= new ObjectCardManager();
         commonCardManager = new CommonCardManager();
         personalCardManager = new PersonalCardManager();
     }
 
+    /**
+     * This method generates an ObjectCard keeping trace of the already generated Cards.
+     * @return null if all card have been already generated, otherwise it generates a random new ObjectCard
+     * @author: Francesco Lo Mastro
+     */
     public ObjectCard generateObjectCard()
     {
-        Random rndColor= new Random();
-        Random rndType= new Random();
+        Random rnd= new Random();
         int generatedColorCode;
         int generatedTypeCode;
         do {
             if(objectCardManager.isEmpty())
                 return null;
-            generatedColorCode=rndColor.nextInt(Color.numOfValues +1);
-            generatedTypeCode=rndType.nextInt(Type.numOfValues);
+            generatedColorCode=rnd.nextInt(objectCardManager.getNumColors());
+            generatedTypeCode=rnd.nextInt(objectCardManager.getNumTypes());
         }while(!objectCardManager.isCardDrawable(Color.getEnumFromRelativeInt(generatedColorCode),Type.getEnumFromRelativeInt(generatedTypeCode)));
         return objectCardManager.draw(Color.getEnumFromRelativeInt(generatedColorCode),Type.getEnumFromRelativeInt(generatedTypeCode));
     }
-
+    /**
+     * This method generates a CommonGoalCard keeping trace of the already generated Cards.
+     * @return null if all card have been already generated, otherwise it generates a random new CommonGoalCard
+     * @author: Francesco Lo Mastro
+     */
     public CommonGoalCard generateCommonGoalCard()
     {
         Random rndNumber= new Random();
@@ -56,9 +62,12 @@ public class CardGenerator {
         }while(!commonCardManager.isCardDrawable(generatedCardCode));
         return commonCardManager.draw(generatedCardCode);
     }
-
-    public PersonalGoalCard generatePersonalGoalCard()
-    {
+    /**
+     * This method generates a PersonalGoalCard keeping trace of the already generated Cards.
+     * @return null if all card have been already generated, otherwise it generates a random new PersonalGoalCard
+     * @author: Francesco Lo Mastro
+     */
+    public PersonalGoalCard generatePersonalGoalCard() {
         Random rndNumber= new Random();
         int generatedCardCode;
         do {
