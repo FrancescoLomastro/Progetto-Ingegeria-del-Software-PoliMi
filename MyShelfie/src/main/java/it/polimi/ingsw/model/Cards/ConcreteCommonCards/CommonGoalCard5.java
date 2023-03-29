@@ -22,18 +22,21 @@ public class CommonGoalCard5 extends CommonGoalCard {
     @Override
     public boolean isSatisfied(Library library) {
         int count_col = 0;
-        for(int col=0;col<5;col++) {
-            HashSet<Color> s = new HashSet<>();
-            for(int row=0;row<6;row++) {
-                s.add(library.getLibrary()[row][col].getColor());
+        for(int col=0;col<library.getNumberOfColumns();col++) {
+            if (columnIsFull(library.getLibrary(), col)) {
+                HashSet<Color> s = new HashSet<>();
+                for (int row = 0; row < library.getNumberOfRows(); row++) {
+                    s.add(library.getLibrary()[row][col].getColor());
+                }
+                count_col = (s.size() == 6) ? count_col + 1 : count_col;
             }
-            count_col = (s.size()==6) ? count_col+1 : count_col;
         }
-
-        if (count_col==2) {
-            return true;
-        } else {
-            return false;
-        }
+        return count_col == 2;
+    }
+    private boolean columnIsFull(ObjectCard[][] objectCards, int colum){
+        for(int i=0; i<objectCards.length; i++)
+            if(objectCards[i][colum]==null)
+                return false;
+        return true;
     }
 }

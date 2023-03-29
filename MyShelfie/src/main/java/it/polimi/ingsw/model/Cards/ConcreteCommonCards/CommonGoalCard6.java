@@ -31,6 +31,7 @@ public class CommonGoalCard6 extends CommonGoalCard {
         - Una volta che ho trovato una sequenza, incremento il contatore di 1 per tale tipo/colore. Se uno raggiunge 2, mi fermo (anche prima di giungere al termine).
          */
         HashSet<String> checkedCells = new HashSet<>();
+        /*
         HashMap<Color,Integer> propertySatisfiedCounter = new HashMap<>();
         propertySatisfiedCounter.put(Color.PINK,0);
         propertySatisfiedCounter.put(Color.BLUE,0);
@@ -38,10 +39,12 @@ public class CommonGoalCard6 extends CommonGoalCard {
         propertySatisfiedCounter.put(Color.GREEN,0);
         propertySatisfiedCounter.put(Color.LIGHTBLUE,0);
         propertySatisfiedCounter.put(Color.YELLOW,0);
+        */
+        int counter=0;
 
-        for(int row=0;row<6;row++) {
-            for(int col=0;col<5;col++) {
-                if ((library.getLibrary()[row][col]!=null) && !checkedCells.contains((row)+"_"+(col))) {
+        for(int row=0;row<library.getNumberOfRows()-1;row++) {
+            for(int col=0;col<library.getNumberOfColumns()-1;col++) {
+                if (library.getLibrary()[row][col]!=null && (library.getLibrary()[row][col]!=null) && !checkedCells.contains((row)+"_"+(col))) {
                     checkedCells.add((row)+"_"+(col));
                     Color colorToCheck = library.getLibrary()[row][col].getColor();
                     if ((library.getLibrary()[row+1][col] != null) && (library.getLibrary()[row+1][col].getColor().equals(colorToCheck))) {
@@ -50,16 +53,17 @@ public class CommonGoalCard6 extends CommonGoalCard {
                                 checkedCells.add((row+1)+"_"+(col));
                                 checkedCells.add((row+1)+"_"+(col+1));
                                 checkedCells.add((row)+"_"+(col+1));
-                                propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
-
-                                if (propertySatisfiedCounter.get(colorToCheck)==2) {
+                                //propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
+                                counter++;
+                                if (counter==2) {
                                     return true;
                                 }
                             }
                         }
                     }
-
                 }
+                else
+                    checkedCells.add((row)+"_"+(col));
             }
         }
         return false;

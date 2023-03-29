@@ -48,18 +48,7 @@ public class CommonGoalCard4Test {
         ObjectCard objectCards = new ObjectCard("", color , type);
         library.insertCardInObjectCards(objectCards, row,col);
     }
-    /**It fills empty cell
-     * @author: Riccardo Figini
-     * */
-    private void fillEmptyPart(){
-        Random random = new Random();
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for (int j=0; j<library.getNumberOfColumns(); j++){
-                if(library.getLibrary()[i][j]==null)
-                    insertElement(i, j, Color.getEnumFromRelativeInt(random.nextInt(5)));
-            }
-        }
-    }
+
 
     @Test
     public void isSatisfied_correctInput_trueInOutput(){
@@ -78,6 +67,7 @@ public class CommonGoalCard4Test {
     }
     @Test
     public void isSatisfied_correctInput_falseInOutput(){
+
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
