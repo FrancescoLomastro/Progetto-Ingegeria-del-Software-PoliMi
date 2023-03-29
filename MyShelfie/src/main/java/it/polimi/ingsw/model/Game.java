@@ -1,7 +1,12 @@
 package it.polimi.ingsw.model;
 
-import javax.swing.*;
-import java.util.ArrayList;
+import it.polimi.ingsw.model.Cards.*;
+import it.polimi.ingsw.model.LivingRoom.*;
+import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.Utility.*;
+import it.polimi.ingsw.model.CardGenerator.*;
+
+import java.io.IOException;
 
 /*
 class Game
@@ -10,30 +15,26 @@ class Game
 public class Game {
 
     private int gameNumber = 0;
-    private CardGenerator cardGenerator;
-
-
     private final int numPlayers;
     private int i;
     private Player[] players;
     private Grid grid;
     private LivingRoom livingRoom;
     private Player winnerPlayer; // lo uso nel metodo winner come valore di return
+    private CardGenerator cardGenerator;
 
     /**
      * constructor of the class Game
      * @param numPlayers: the number of the players in that game
      * @param gameNumber: to identify multiple games
      */
-    public Game(int numPlayers, /* dal controller: */ int gameNumber){
-
+    public Game(int numPlayers, /* dal controller: */ int gameNumber) throws IOException {
+        this.cardGenerator=new CardGenerator();
         this.gameNumber = gameNumber;
-        this.cardGenerator = new CardGenerator(gameNumber,numPlayers);
-
         this.numPlayers=numPlayers;
         this.players = new Player[numPlayers];
-        this.livingRoom = new LivingRoom(numPlayers, 0, 2);
-        winnerPlayer = new Player("winner", cardGenerator); // devo passargli una string
+        this.livingRoom = new LivingRoom(numPlayers, 0, 2,cardGenerator);
+        this.winnerPlayer = new Player("winner", cardGenerator); // devo passargli una string
         this.grid = livingRoom.getGrid();
     }
 

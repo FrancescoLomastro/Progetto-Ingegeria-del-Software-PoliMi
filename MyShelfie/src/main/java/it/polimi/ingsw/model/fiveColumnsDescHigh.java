@@ -5,9 +5,8 @@ package it.polimi.ingsw.model;
 
 // AVVERTENZE: QUANDO SCRIVO lib[i][j] devo specificare che accedo al campo del tipo della tessera, roba da aggiungere quando avrò l'implementazione di ObjectCard
 
-import it.polimi.ingsw.model.Library;
-import it.polimi.ingsw.model.ObjectCard;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Cards.*;
+import it.polimi.ingsw.model.Player.*;
 
 public class fiveColumnsDescHigh {
     private int c, i, j;

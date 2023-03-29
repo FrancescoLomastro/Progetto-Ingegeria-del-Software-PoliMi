@@ -1,30 +1,40 @@
-package it.polimi.ingsw.model;
-
-// AVVERTENZE: LEGGERE AVVERTENZE NELLA CLASSE fiveColumnsDescHigh
+package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
+// sarebbe la mia classe eightCellsSameType
 
 import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Enums.*;
 import it.polimi.ingsw.model.Player.*;
 
-public class eightCellsSameType {
+/**
+ * class for the 11^th of 12 algorithms to check common goal cards
+ * @author Andrea Ferrini
+ */
+public class CommonGoalCard10 extends CommonGoalCard {
 
     private int i, j;
 
     private int iterations = 0; // conto le celle controllate, così dopo 8 iterazioni inizio il controllo periodico per vedere se ho finito
-    private Library library;
-    private ObjectCard[][] lib;
+
 
     private int[] types; // lungo 6, per contare simultaneamente le occorrenze per ogni tipo
 
-    public eightCellsSameType(Library library){
+    /**
+     * Constructor
+     *
+     * @param description description of common goal file (get from json file)
+     * @param game        current game
+     * @author Andrea Ferrini
+     */
 
-        this.library = library;
 
-        this.lib = library.getLibrary();
-    }
-
-    public boolean checkEightCellsSameType(){
-
+    /**
+     * the main algorithm that checks this common goal
+     * @param library the turn player's library
+     * @return boolean : true if satisfied, false if not satisfied
+     */
+    @Override
+    public boolean isSatisfied(Library library) {
+        ObjectCard[][] lib = library.getLibrary();
         // istanzio e inizializzo l'array delle occorrenze
         types = new int[6];
         for(i = 0; i < 6; i++){
@@ -81,7 +91,16 @@ public class eightCellsSameType {
         return  false;
     }
 
-    // serve per evitare di controllare ancora dopo aver già trovato 8 celle dello stesso tipo
+    @Override
+    public String getDescription() {
+        return "Cinque tessere dello stesso tipo che formano una X";
+    }
+
+    /**
+     * controls if the check is finished, so i can avoid useless iterations
+     * @param types an array of int, one cell for each type of object card
+     * @return boolean: true if the check is finished, false if it's not finished
+     */
     public boolean checkFinishEightType(int[] types){
 
         for(int i : types){
