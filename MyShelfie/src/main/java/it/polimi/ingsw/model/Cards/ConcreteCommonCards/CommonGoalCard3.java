@@ -21,19 +21,29 @@ public class CommonGoalCard3 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
+        /*Alberto, se guardi questa classe l'ho modificata. Non hai escluso il caso in cui
+        * alcune righe non fossero completamente riempiete, queste non possono essere considerate
+        * quando fai la somma*/
         int count_row = 0;
-        for(int row=0;row<6;row++) {
-            HashSet<Color> s = new HashSet<>();
-            for(int col=0;col<5;col++) {
-                s.add(library.getLibrary()[row][col].getColor());
+        for(int row=0;row<library.getNumberOfRows();row++) {
+            if(rowIsFull(library.getLibrary()[row])) {
+                HashSet<Color> s = new HashSet<>();
+                for (int col = 0; col < library.getNumberOfColumns(); col++) {
+                    if (library.getLibrary()[row][col] != null)
+                        s.add(library.getLibrary()[row][col].getColor());
+                }
+                count_row = (s.size()<=3) ? count_row+1 : count_row;
             }
-            count_row = (s.size()<=3) ? count_row+1 : count_row;
         }
 
-        if (count_row>=4) {
-            return true;
-        } else {
-            return false;
-        }
+        return count_row >= 4;
     }
+
+    private boolean rowIsFull(ObjectCard[] objectCards){
+        for (ObjectCard objectCard : objectCards)
+            if (objectCard == null)
+                return false;
+        return true;
+    }
+
 }

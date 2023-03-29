@@ -25,41 +25,53 @@ public class CommonGoalCard1 extends CommonGoalCard {
             if (!ans) {
                 if (i==0) {
                     boolean partial_ans = true;
-                    Color color = library.getLibrary()[0][0].getColor();
-                    for(int diag=0;diag<5;diag++) {
-                        if (!(library.getLibrary()[diag][diag].getColor().equals(color))) {
-                            partial_ans = false;
-                            break;
+                    Color color;
+                    if(library.getLibrary()[0][0]!=null) {
+                            color = library.getLibrary()[0][0].getColor();
+                        for(int diag=0;diag<5;diag++) {
+                            if (!(library.getLibrary()[diag][diag].getColor().equals(color))) {
+                                partial_ans = false;
+                                break;
+                            }
                         }
+                        ans = ans || partial_ans;
                     }
-                    ans = ans || partial_ans;
                 } else if (i==1) {
                     boolean partial_ans = true;
-                    Color color = library.getLibrary()[1][0].getColor();
-                    for(int diag=0;diag<5;diag++) {
-                        if (!(library.getLibrary()[1+diag][diag].getColor().equals(color))) {
-                            break;
+                    Color color;
+                    if(library.getLibrary()[1][0]!=null) {
+                        color = library.getLibrary()[1][0].getColor();
+                        for (int diag = 0; diag < 5; diag++) {
+                            if (!(library.getLibrary()[1 + diag][diag].getColor().equals(color))) {
+                                break;
+                            }
                         }
+                        ans = ans || partial_ans;
                     }
-                    ans = ans || partial_ans;
                 } else if (i==2) {
                     boolean partial_ans = true;
-                    Color color = library.getLibrary()[5][0].getColor();
-                    for(int diag=0;diag<5;diag++) {
-                        if (!(library.getLibrary()[5-diag][diag].getColor().equals(color))) {
-                            break;
+                    Color color;
+                    if(library.getLibrary()[5][0]!=null) {
+                        color = library.getLibrary()[5][0].getColor();
+                        for (int diag = 0; diag < 5; diag++) {
+                            if (!(library.getLibrary()[5 - diag][diag].getColor().equals(color))) {
+                                break;
+                            }
                         }
+                        ans = ans || partial_ans;
                     }
-                    ans = ans || partial_ans;
                 } else if (i==3) {
                     boolean partial_ans = true;
-                    Color color = library.getLibrary()[4][0].getColor();
-                    for(int diag=0;diag<5;diag++) {
-                        if (!(library.getLibrary()[4-diag][diag].getColor().equals(color))) {
-                            break;
+                    Color color;
+                    if(library.getLibrary()[4][0]!=null) {
+                        color = library.getLibrary()[4][0].getColor();
+                        for (int diag = 0; diag < 5; diag++) {
+                            if (!(library.getLibrary()[4 - diag][diag].getColor().equals(color))) {
+                                break;
+                            }
                         }
+                        ans = ans || partial_ans;
                     }
-                    ans = ans || partial_ans;
                 }
             } else {
                 break;

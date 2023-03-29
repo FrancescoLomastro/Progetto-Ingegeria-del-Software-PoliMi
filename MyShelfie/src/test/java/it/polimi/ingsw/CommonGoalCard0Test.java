@@ -14,14 +14,12 @@ import java.io.IOException;
 
 public class CommonGoalCard0Test {
     CommonGoalCard commonGoalCard;
-    CardGenerator cardGenerator;
     Type type = Type.FIRST;
 
     Library library;
 
     public CommonGoalCard0Test() throws IOException {
         commonGoalCard = new CommonGoalCard0();
-        cardGenerator = new CardGenerator();
         library = new Library(5,6);
     }
 
@@ -37,9 +35,14 @@ public class CommonGoalCard0Test {
         }
     }
 
+    /**Method used to insert ObjectCard in matrix
+     * @author: Riccardo Figini
+     * @param row
+     * @param col column
+     * @param color*/
     private void insertElement(int row, int col, Color color){
         ObjectCard objectCards = new ObjectCard("", color , type);
-        library.insertCardInObjectCards( objectCards, row,col);
+        library.insertCardInObjectCards(objectCards, row,col);
     }
 
     @Test
@@ -64,7 +67,7 @@ public class CommonGoalCard0Test {
     }
 
     @Test
-    public void isSatisfied_correctInputNearBlock_trueInOutput(){
+    public void isSatisfied_correctInputAdjancetCard_trueInOutput(){
         insertElement(0,1,Color.GREEN);
         insertElement(1,1, Color.GREEN);
         insertElement(2, 1, Color.GREEN);

@@ -19,13 +19,16 @@ public class CommonGoalCard4 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
-        Color color = library.getLibrary()[0][0].getColor();
-        if (color.equals(library.getLibrary()[0][4].getColor())
-                && color.equals(library.getLibrary()[5][4].getColor())
-                && color.equals(library.getLibrary()[5][0].getColor())) {
-            return true;
-        } else {
-            return false;
+        if(library.getLibrary()[0][0]!=null) {
+            Color color = library.getLibrary()[0][0].getColor();
+            return library.getLibrary()[0][0] != null
+                    && library.getLibrary()[0][4] != null
+                    && library.getLibrary()[5][0] != null
+                    && library.getLibrary()[5][4] != null
+                    && color.equals(library.getLibrary()[0][4].getColor())
+                    && color.equals(library.getLibrary()[5][4].getColor())
+                    && color.equals(library.getLibrary()[5][0].getColor());
         }
+        return false;
     }
 }
