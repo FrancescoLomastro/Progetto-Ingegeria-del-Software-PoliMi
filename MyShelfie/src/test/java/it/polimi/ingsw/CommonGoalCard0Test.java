@@ -1,0 +1,138 @@
+package it.polimi.ingsw;
+
+import it.polimi.ingsw.model.CardGenerator.CardGenerator;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Cards.ConcreteCommonCards.CommonGoalCard0;
+import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Enums.Type;
+import it.polimi.ingsw.model.Player.Library;
+import org.junit.*;
+import org.junit.Assert;
+
+import java.io.IOException;
+
+public class CommonGoalCard0Test {
+    CommonGoalCard commonGoalCard;
+    CardGenerator cardGenerator;
+    Type type = Type.FIRST;
+
+    Library library;
+
+    public CommonGoalCard0Test() throws IOException {
+        commonGoalCard = new CommonGoalCard0();
+        cardGenerator = new CardGenerator();
+        library = new Library(5,6);
+    }
+
+    /**Library's set up with null
+     * @author: Riccardo Figini
+     * */
+    @Before
+    public void setUp(){
+        for(int i=0; i<library.getNumberOfRows(); i++){
+            for(int j=0; j<library.getNumberOfColumns(); j++){
+                library.insertCardInObjectCards(null, i,j);
+            }
+        }
+    }
+
+    private void insertElement(int row, int col, Color color){
+        ObjectCard objectCards = new ObjectCard("", color , type);
+        library.insertCardInObjectCards( objectCards, row,col);
+    }
+
+    @Test
+    public void isSatisfied_correctInputSeparateBlock_trueInOutput(){
+        insertElement(0,0,Color.BEIGE);
+        insertElement(1,0, Color.BEIGE);
+        insertElement(0, 4, Color.BEIGE);
+        insertElement(1, 4, Color.BEIGE);
+        insertElement(0, 2, Color.BEIGE);
+        insertElement(1, 2, Color.BEIGE);
+        insertElement(2, 1, Color.BEIGE);
+        insertElement(3, 1, Color.BEIGE);
+        insertElement(2, 3, Color.BEIGE);
+        insertElement(3, 3, Color.BEIGE);
+        insertElement(4, 2, Color.BEIGE);
+        insertElement(5, 2, Color.BEIGE);
+        insertElement(0, 1, Color.BLUE);
+        insertElement(1, 1, Color.PINK);
+        insertElement(5, 1, Color.GREEN);
+        insertElement(5, 4, Color.YELLOW);
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
+    @Test
+    public void isSatisfied_correctInputNearBlock_trueInOutput(){
+        insertElement(0,1,Color.GREEN);
+        insertElement(1,1, Color.GREEN);
+        insertElement(2, 1, Color.GREEN);
+        insertElement(3, 1, Color.GREEN);
+        insertElement(4, 1, Color.GREEN);
+        insertElement(5, 1, Color.GREEN);
+
+        insertElement(0, 0, Color.GREEN);
+        insertElement(1, 0, Color.GREEN);
+        insertElement(2, 0, Color.GREEN);
+        insertElement(3, 0, Color.GREEN);
+        insertElement(4, 0, Color.GREEN);
+        insertElement(5, 0, Color.GREEN);
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
+    @Test
+    public void isSatisfied_correctInput_falseInOutput(){
+        insertElement(0, 0, Color.GREEN);
+        insertElement(1, 0, Color.YELLOW);
+        insertElement(2, 0, Color.BLUE);
+        insertElement(3, 0, Color.LIGHTBLUE);
+        insertElement(4, 0, Color.PINK);
+        insertElement(5, 0, Color.BEIGE);
+
+        insertElement(0,1, Color.YELLOW);
+        insertElement(1, 1, Color.BLUE);
+        insertElement(2, 1, Color.LIGHTBLUE);
+        insertElement(3, 1, Color.PINK);
+        insertElement(4, 1, Color.BEIGE);
+        insertElement(5,1,Color.GREEN);
+
+        insertElement(0, 2, Color.BLUE);
+        insertElement(1, 2, Color.LIGHTBLUE);
+        insertElement(2, 2, Color.PINK);
+        insertElement(3, 2, Color.BEIGE);
+        insertElement(4,2,Color.GREEN);
+        insertElement(5,2, Color.YELLOW);
+
+        insertElement(0, 3, Color.LIGHTBLUE);
+        insertElement(1, 3, Color.PINK);
+        insertElement(2, 3, Color.BEIGE);
+        insertElement(3,3,Color.GREEN);
+        insertElement(4,3, Color.YELLOW);
+        insertElement(5, 3, Color.BLUE);
+
+        insertElement(0, 4, Color.PINK);
+        insertElement(1, 4, Color.BEIGE);
+        insertElement(2,4,Color.GREEN);
+        insertElement(3,4, Color.YELLOW);
+        insertElement(4, 4, Color.BLUE);
+        insertElement(5, 4, Color.LIGHTBLUE);
+
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+    }
+
+    @Test
+    public void isSatisfied_correctInputEmptyTable_falseInOutput(){
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+    }
+
+
+    @After
+    public void tearDown() {
+        for(int i=0; i<library.getNumberOfRows(); i++){
+            for(int j=0; j<library.getNumberOfColumns(); j++){
+                library.insertCardInObjectCards(null, i,j);
+            }
+        }
+    }
+}

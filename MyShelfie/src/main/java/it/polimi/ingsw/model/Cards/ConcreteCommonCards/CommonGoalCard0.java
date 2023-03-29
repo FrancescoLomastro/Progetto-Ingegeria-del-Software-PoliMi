@@ -41,7 +41,7 @@ public class CommonGoalCard0 extends CommonGoalCard {
                     checkedCells.add((row)+"_"+(col));
                     Color colorToCheck = (library.getLibrary())[row][col].getColor();
 
-                    if ((library.getLibrary()[row+1][col]!=null) && library.getLibrary()[row+1][col].getColor().equals(colorToCheck)) {
+                    if (row!=5 && (library.getLibrary()[row+1][col]!=null) && library.getLibrary()[row+1][col].getColor().equals(colorToCheck)) {
                         checkedCells.add((row+1)+"_"+(col));
                         propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
                         if (propertySatisfiedCounter.get(colorToCheck)==6) {
@@ -50,7 +50,7 @@ public class CommonGoalCard0 extends CommonGoalCard {
                         continue;
                     }
 
-                    if ((library.getLibrary()[row][col+1]!=null) && library.getLibrary()[row][col+1].getColor().equals(colorToCheck)) {
+                    if (col!=4&&(library.getLibrary()[row][col+1]!=null) && library.getLibrary()[row][col+1].getColor().equals(colorToCheck)) {
                         checkedCells.add((row)+"_"+(col+1));
                         propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
                         if (propertySatisfiedCounter.get(colorToCheck)==6) {

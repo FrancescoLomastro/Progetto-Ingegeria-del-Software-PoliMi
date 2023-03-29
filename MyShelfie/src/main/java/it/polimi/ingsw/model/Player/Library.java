@@ -115,13 +115,17 @@ public class Library {
      * @param firstAvailableRow     the first available row of the specific column
      * @param chosenColumn          the specific column where we insert cards
      */
-    private void insertCardsInLibrary(ObjectCard[] cards,int firstAvailableRow,int chosenColumn) { // TO BE DISCUSSED
+    public void insertCardsInLibrary(ObjectCard[] cards,int firstAvailableRow,int chosenColumn) { // TO BE DISCUSSED
         int insertionRow = firstAvailableRow;
 
         for(ObjectCard card : cards) {
             library[insertionRow][chosenColumn] = card;
             insertionRow++;
         }
+    }
+
+    public void insertCardInObjectCards(ObjectCard card,int x,int y){
+        library[x][y] = card;
     }
 
     /**
