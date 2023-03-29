@@ -1,20 +1,29 @@
 package it.polimi.ingsw.model;
 
-import java.util.ArrayList;
-
+/**
+ * This class contains the algorithm to verify if the second common goal algorithm is satisfied.
+ * The goal is the following: Five tiles of the same type forming a diagonal.
+ *
+ * @author: Alberto Aniballi
+ * */
 public class CommonGoalCard1 extends CommonGoalCard {
+    /**
+     * It verifies if the library satisfies the goal of this specific common goal card
+     *
+     * @param library   the library on which we will verify if the goal is satisfied or not
+     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * */
     @Override
-    public boolean isSatisfied(Library lib) {
-        ArrayList<Position> arr = ArrayList<Position>(new Position(0,0),new Position(1,0),new Position(5,0),new Position(4,0));
+    public boolean isSatisfied(Library library) {
 
         boolean ans = false;
-        for(int i=0;i<arr.size();i++) {
+        for(int i=0;i<4;i++) {
             if (!ans) {
                 if (i==0) {
                     boolean partial_ans = true;
-                    String color = library[0][0].getColor();
-                    for(int z=1;z<5;z++) {
-                        if (!(library[z][z].getColor().equals(color))) {
+                    Color color = library.getLibrary()[0][0].getColor();
+                    for(int diag=0;diag<5;diag++) {
+                        if (!(library.getLibrary()[diag][diag].getColor().equals(color))) {
                             partial_ans = false;
                             break;
                         }
@@ -22,18 +31,27 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     ans = ans || partial_ans;
                 } else if (i==1) {
                     boolean partial_ans = true;
-                    String color = library[1][0].getColor();
-                    for(int z=1;z<5;z++) {
-                        if (!(library[1+z][z].getColor().equals(color))) {
+                    Color color = library.getLibrary()[1][0].getColor();
+                    for(int diag=0;diag<5;diag++) {
+                        if (!(library.getLibrary()[1+diag][diag].getColor().equals(color))) {
                             break;
                         }
                     }
                     ans = ans || partial_ans;
                 } else if (i==2) {
                     boolean partial_ans = true;
-                    String color = library[1][0].getColor();
-                    for(int z=1;z<5;z++) {
-                        if (!(library[1+z][z].getColor().equals(color))) {
+                    Color color = library.getLibrary()[5][0].getColor();
+                    for(int diag=0;diag<5;diag++) {
+                        if (!(library.getLibrary()[5-diag][diag].getColor().equals(color))) {
+                            break;
+                        }
+                    }
+                    ans = ans || partial_ans;
+                } else if (i==3) {
+                    boolean partial_ans = true;
+                    Color color = library.getLibrary()[4][0].getColor();
+                    for(int diag=0;diag<5;diag++) {
+                        if (!(library.getLibrary()[4-diag][diag].getColor().equals(color))) {
                             break;
                         }
                     }
