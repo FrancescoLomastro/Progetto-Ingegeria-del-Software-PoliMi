@@ -57,7 +57,7 @@ public class CommonGoalCard1Test {
         for(int i=0; i<library.getNumberOfRows(); i++){
             for (int j=0; j<library.getNumberOfColumns(); j++){
                 if(library.getLibrary()[i][j]==null)
-                    insertElement(i, j, Color.getEnumFromRelativeInt(random.nextInt(5)));
+                    insertElement(i, j, Color.getEnumFromRelativeInt(random.nextInt(6)));
             }
         }
     }

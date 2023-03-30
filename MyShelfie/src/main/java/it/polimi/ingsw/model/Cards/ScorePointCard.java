@@ -26,8 +26,13 @@ public class ScorePointCard {
                     }
                 }
                 break;
-            case 6: score = 4;break;
-            case 4: score =2;break;
+            case 6: score=4;break;
+            case 4:{
+                if(numberOfPlayer==2 || numberOfPlayer == 3)
+                    score = 0 ;
+                else
+                    score =2;
+                break;}
             case 2: score = 0;break;
             default:break;
         }
@@ -36,9 +41,13 @@ public class ScorePointCard {
      * score of common goal card (calling changeScore)
      * @author Riccardo Figini
      * @return number score of card*/
-    public int getScore() {
+    public int getScoreWithDecrease() {
         int number = score;
         changeScore();
         return number;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

@@ -13,12 +13,16 @@ public class PersonalGoalCard extends Card {
         super();
         this.goalVector=goalVector;
     }
+    /**This method counts point of personal goal card
+     * @author: Riccardo Figini
+     * @param lib player's library, which will be tested
+     * @return count score point*/
     public int countPersonalGoalCardPoints(Library lib){
         int count=0;
         Position tmp;
         for(int i = 0; i< Color.values().length; i++){
             tmp = (Position) goalVector.get(i).getFirst();
-            if(lib.getLibrary()[tmp.getX()][tmp.getY()].getColor()==
+            if(lib.getLibrary()[tmp.getRow()][tmp.getColumn()].getColor()==
                     goalVector.get(i).getSecond()){
                 count++;
             }
@@ -36,9 +40,10 @@ public class PersonalGoalCard extends Card {
         }
         return count;
     }
-
+    /**Return goalvector
+     * @author: Riccardo Figini
+     * */
     public ArrayList<Couple> getGoalVector() {
-
         return goalVector;
     }
 

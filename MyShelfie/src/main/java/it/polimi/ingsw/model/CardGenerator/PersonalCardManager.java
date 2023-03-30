@@ -104,7 +104,7 @@ public class PersonalCardManager {
     public PersonalGoalCard draw(int personalGoalCardId)
     {
         JsonObject json_Card;
-        JsonArray json_colorArray, json_xCoordinate, json_yCoordinate;
+        JsonArray json_colorArray, json_rowCoordinate, json_columnCoordinate;
         ArrayList<Couple> couples;
         Couple <Position, Color> couple;
         if(isCardDrawable(personalGoalCardId))
@@ -112,16 +112,16 @@ public class PersonalCardManager {
             usedCards[personalGoalCardId]=true;
             json_Card= jsonArrayOfCards.get(personalGoalCardId).getAsJsonObject();
             json_colorArray = json_Card.getAsJsonArray("color");
-            json_xCoordinate =  json_Card.getAsJsonArray("x");
-            json_yCoordinate =  json_Card.getAsJsonArray("y");
+            json_rowCoordinate =  json_Card.getAsJsonArray("row");
+            json_columnCoordinate =  json_Card.getAsJsonArray("ycolumn");
 
-            if(json_colorArray==null || json_xCoordinate == null || json_yCoordinate == null)
+            if(json_colorArray==null || json_rowCoordinate == null || json_columnCoordinate == null)
                 throw new RuntimeException("Non sono stati trovati i parametri corretti per colore/matrice della carta "+personalGoalCardId+" in "+filePath);
 
             couples = new ArrayList<>();
             for(int i=0; i<json_colorArray.size(); i++){
                 couple = new Couple(
-                        new Position(json_xCoordinate.get(i).getAsInt(), json_yCoordinate.get(i).getAsInt()),
+                        new Position(json_rowCoordinate.get(i).getAsInt(), json_columnCoordinate.get(i).getAsInt()),
                         Color.valueOf(json_colorArray.get(i).getAsString())
                 );
                 couples.add(couple);

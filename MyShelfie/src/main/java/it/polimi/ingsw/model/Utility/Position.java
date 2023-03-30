@@ -2,33 +2,33 @@ package it.polimi.ingsw.model.Utility;
 
 
 public class Position {
-    private int x;
-    private int y;
+    private int row;
+    private int column;
 
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Position(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 
-    public int getX() {
-        return x;
+    public int getRow() {
+        return row;
     }
 
-    public int getY() {
-        return y;
+    public int getColumn() {
+        return column;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setColumn(int column) {
+        this.column = column;
     }
 
-    public void setXY(int X,int y) {
-        this.x = x;
-        this.y = y;
+    public void setXY(int row,int column) {
+        this.row = row;
+        this.column = column;
     }
     @Override
     public boolean equals(Object obj) {
@@ -39,6 +39,6 @@ public class Position {
             return false;
         }
         Position other = (Position) obj;
-        return this.x == other.x && this.y == other.y;
+        return this.row == other.row && this.column == other.column;
     }
 }

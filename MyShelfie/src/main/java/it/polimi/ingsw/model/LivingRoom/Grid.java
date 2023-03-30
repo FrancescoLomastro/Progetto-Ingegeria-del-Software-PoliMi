@@ -106,12 +106,12 @@ public class Grid {
         //Mossa senza buchi
         for(int i=0; i< drawn.length;i++)
         {
-            if((drawn[i]==null)||(matrix[drawn[i].getX()][drawn[i].getY()]==null))
+            if((drawn[i]==null)||(matrix[drawn[i].getRow()][drawn[i].getColumn()]==null))
             {
                 return false;
             }
-            columns[i]=drawn[i].getX();
-            rows[i]=drawn[i].getY();
+            columns[i]=drawn[i].getRow();
+            rows[i]=drawn[i].getColumn();
         }
         //Mossa allineata e contigua (tutte le mosse distanti 1)
         if(drawn.length>1)
@@ -136,12 +136,12 @@ public class Grid {
         //almeno un lato libero
         for(int i=1; i<drawn.length;i++)
         {
-            if((drawn[i].getX()!=0)&&(drawn[i].getX()!=numColumns)&&(drawn[i].getY()!=0)&&(drawn[i].getY()!=numRows))
+            if((drawn[i].getRow()!=0)&&(drawn[i].getRow()!=numColumns)&&(drawn[i].getColumn()!=0)&&(drawn[i].getColumn()!=numRows))
             {
-                if((matrix[drawn[i].getX()+1][drawn[i].getY()]!=null)&&
-                        (matrix[drawn[i].getX()-1][drawn[i].getY()]!=null)&&
-                        (matrix[drawn[i].getX()][drawn[i].getY()+1]!=null)&&
-                        (matrix[drawn[i].getX()][drawn[i].getY()-1]!=null))
+                if((matrix[drawn[i].getRow()+1][drawn[i].getColumn()]!=null)&&
+                        (matrix[drawn[i].getRow()-1][drawn[i].getColumn()]!=null)&&
+                        (matrix[drawn[i].getRow()][drawn[i].getColumn()+1]!=null)&&
+                        (matrix[drawn[i].getRow()][drawn[i].getColumn()-1]!=null))
                     return false;
             }
         }
@@ -208,8 +208,8 @@ public class Grid {
      */
     private boolean isInside(Position position)
     {
-        return position.getX()>=0 && position.getX()< numColumns &&
-                position.getY()>=0 && position.getY()< numRows ;
+        return position.getRow()>=0 && position.getRow()< numColumns &&
+                position.getColumn()>=0 && position.getColumn()< numRows ;
     }
 
     /**
@@ -229,8 +229,8 @@ public class Grid {
      */
     private boolean hasNeighbours(Position position)
     {
-        int x = position.getX();
-        int y = position.getY();
+        int x = position.getRow();
+        int y = position.getColumn();
 
         if(!isInside(position))
         {
