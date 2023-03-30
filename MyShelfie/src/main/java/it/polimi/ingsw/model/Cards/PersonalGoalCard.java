@@ -24,9 +24,10 @@ public class PersonalGoalCard extends Card {
         for(int i = 0; i< Color.values().length; i++){
             tmp = (Position) goalVector.get(i).getFirst();
             tmpColor = (Color) goalVector.get(i).getSecond();
-            if(lib.getLibrary()[tmp.getRow()][tmp.getColumn()]!=null &&
-                    lib.getLibrary()[tmp.getRow()][tmp.getColumn()].getColor()==
-                    tmpColor){
+            if(
+                    lib.getLibrary()[tmp.getRow()][tmp.getColumn()]!=null &&
+                    lib.getLibrary()[tmp.getRow()][tmp.getColumn()].getColor()== tmpColor
+            ){
                 count++;
             }
         }

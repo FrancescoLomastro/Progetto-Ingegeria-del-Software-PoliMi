@@ -113,7 +113,7 @@ public class PersonalCardManager {
             json_Card= jsonArrayOfCards.get(personalGoalCardId).getAsJsonObject();
             json_colorArray = json_Card.getAsJsonArray("color");
             json_rowCoordinate =  json_Card.getAsJsonArray("row");
-            json_columnCoordinate =  json_Card.getAsJsonArray("ycolumn");
+            json_columnCoordinate =  json_Card.getAsJsonArray("column");
 
             if(json_colorArray==null || json_rowCoordinate == null || json_columnCoordinate == null)
                 throw new RuntimeException("Non sono stati trovati i parametri corretti per colore/matrice della carta "+personalGoalCardId+" in "+filePath);

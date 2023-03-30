@@ -57,7 +57,7 @@ public class Grid {
         {
             for(int c = 0; c< numColumns; c++)
             {
-                position.setXY(r,c);
+                position.setRowColumn(r,c);
                 if(matrix[r][c]==null && isAvailable(position))
                 {
                     //genera la carta
@@ -77,7 +77,7 @@ public class Grid {
         {
             for(int c = 0; c< numColumns; c++)
             {
-                position.setXY(r,c);
+                position.setRowColumn(r,c);
                 if(matrix[r][c]!=null && hasNeighbours(position))
                 {
                     return false;

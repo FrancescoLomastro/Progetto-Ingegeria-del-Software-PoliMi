@@ -65,7 +65,7 @@ public class PersonalGoalCardTest {
     @Test
     public void countPersonalGoalCardPoints_correctInput5match_correctOutput(){
         Position position;
-        for(int i=0; i<personalGoalCard.getGoalVector().size()-1; i++) {
+        for(int i=0; i<personalGoalCard.getGoalVector().size(); i++) {
             if(i<5) {
                 position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
                 library.insertCardInObjectCards(
@@ -74,20 +74,22 @@ public class PersonalGoalCardTest {
                         position.getColumn()
                 );
             }
-            position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
-            library.insertCardInObjectCards(
-                    new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i).getSecond(), type),
-                    position.getRow(),
-                    position.getColumn()
-            );
+            else {
+                position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
+                library.insertCardInObjectCards(
+                        new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i - 1).getSecond(), type),
+                        position.getRow(),
+                        position.getColumn()
+                );
+            }
         }
         fillEmptyPart();
-        Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 9);
+        Assert.assertEquals(9,personalGoalCard.countPersonalGoalCardPoints(library));
     }
     @Test
     public void countPersonalGoalCardPoints_correctInput4match_correctOutput(){
         Position position;
-        for(int i=0; i<personalGoalCard.getGoalVector().size()-2; i++) {
+        for(int i=0; i<personalGoalCard.getGoalVector().size(); i++) {
             if(i<4) {
                 position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
                 library.insertCardInObjectCards(
@@ -96,20 +98,22 @@ public class PersonalGoalCardTest {
                         position.getColumn()
                 );
             }
-            position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
-            library.insertCardInObjectCards(
-                    new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i-1).getSecond(), type),
-                    position.getRow(),
-                    position.getColumn()
-            );
+            else {
+                position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
+                library.insertCardInObjectCards(
+                        new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i - 1).getSecond(), type),
+                        position.getRow(),
+                        position.getColumn()
+                );
+            }
         }
         fillEmptyPart();
-        Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 6);
+        Assert.assertEquals(6,personalGoalCard.countPersonalGoalCardPoints(library));
     }
     @Test
     public void countPersonalGoalCardPoints_correctInput3match_correctOutput(){
         Position position;
-        for(int i=0; i<personalGoalCard.getGoalVector().size()-3; i++) {
+        for(int i=0; i<personalGoalCard.getGoalVector().size(); i++) {
             if(i<3) {
                 position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
                 library.insertCardInObjectCards(
@@ -118,12 +122,14 @@ public class PersonalGoalCardTest {
                         position.getColumn()
                 );
             }
-            position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
-            library.insertCardInObjectCards(
-                    new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i-1).getSecond(), type),
-                    position.getRow(),
-                    position.getColumn()
-            );
+            else {
+                position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
+                library.insertCardInObjectCards(
+                        new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i - 1).getSecond(), type),
+                        position.getRow(),
+                        position.getColumn()
+                );
+            }
         }
         fillEmptyPart();
         Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 4);
@@ -131,7 +137,7 @@ public class PersonalGoalCardTest {
     @Test
     public void countPersonalGoalCardPoints_correctInput2match_correctOutput(){
         Position position;
-        for(int i=0; i<personalGoalCard.getGoalVector().size()-4; i++) {
+        for(int i=0; i<personalGoalCard.getGoalVector().size(); i++) {
             if(i<2) {
                 position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
                 library.insertCardInObjectCards(
@@ -140,12 +146,14 @@ public class PersonalGoalCardTest {
                         position.getColumn()
                 );
             }
-            position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
-            library.insertCardInObjectCards(
-                    new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i-1).getSecond(), type),
-                    position.getRow(),
-                    position.getColumn()
-            );
+            else {
+                position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
+                library.insertCardInObjectCards(
+                        new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i - 1).getSecond(), type),
+                        position.getRow(),
+                        position.getColumn()
+                );
+            }
         }
         fillEmptyPart();
         Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 2);
@@ -162,19 +170,21 @@ public class PersonalGoalCardTest {
                         position.getColumn()
                 );
             }
-            position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
-            library.insertCardInObjectCards(
-                    new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i-1).getSecond(), type),
-                    position.getRow(),
-                    position.getColumn()
-            );
+            else {
+                position = (Position) personalGoalCard.getGoalVector().get(i).getFirst();
+                library.insertCardInObjectCards(
+                        new ObjectCard("", (Color) personalGoalCard.getGoalVector().get(i - 1).getSecond(), type),
+                        position.getRow(),
+                        position.getColumn()
+                );
+            }
         }
         fillEmptyPart();
         Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 1);
     }
     @Test
     public void countPersonalGoalCardPoints_correctInput0match_correctOutput(){
-        Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 12);
+        Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 0);
     }
 
     @After
