@@ -26,7 +26,7 @@ public class Position {
         this.column = column;
     }
 
-    public void setXY(int row,int column) {
+    public void setRowColumn(int row,int column) {
         this.row = row;
         this.column = column;
     }

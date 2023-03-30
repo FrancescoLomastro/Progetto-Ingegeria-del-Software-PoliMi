@@ -20,10 +20,13 @@ public class PersonalGoalCard extends Card {
     public int countPersonalGoalCardPoints(Library lib){
         int count=0;
         Position tmp;
+        Color tmpColor;
         for(int i = 0; i< Color.values().length; i++){
             tmp = (Position) goalVector.get(i).getFirst();
-            if(lib.getLibrary()[tmp.getRow()][tmp.getColumn()].getColor()==
-                    goalVector.get(i).getSecond()){
+            tmpColor = (Color) goalVector.get(i).getSecond();
+            if(lib.getLibrary()[tmp.getRow()][tmp.getColumn()]!=null &&
+                    lib.getLibrary()[tmp.getRow()][tmp.getColumn()].getColor()==
+                    tmpColor){
                 count++;
             }
         }
