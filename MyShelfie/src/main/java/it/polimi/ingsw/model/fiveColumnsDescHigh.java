@@ -171,5 +171,4 @@ public class fiveColumnsDescHigh {
         }
         else return 0;
     }
-
 }
