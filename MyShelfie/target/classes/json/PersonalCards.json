@@ -13,7 +13,7 @@
     },
     {
       "color": ["BLUE", "LIGHTBLUE", "YELLOW", "BEIGE", "PINK", "GREEN"],
-      "row": [2,3,0,1,2,4],
+      "row": [3,5,0,1,2,4],
       "column": [2,3,0,1,2,4]
     },
     {

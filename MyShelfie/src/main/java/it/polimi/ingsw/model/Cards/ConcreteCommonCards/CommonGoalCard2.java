@@ -23,6 +23,7 @@ public class CommonGoalCard2 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
+        /*
         HashSet<String> checkedCells = new HashSet<>();
         HashMap<Color,Integer> propertySatisfiedCounter = new HashMap<>();
         propertySatisfiedCounter.put(Color.PINK,0);
@@ -53,14 +54,14 @@ public class CommonGoalCard2 extends CommonGoalCard {
                         }
                     }
                 }
-
-                /* da implementare la verifica dei punti da aggiungere in base al numero di sameColorNeighbours*/
+        */
+                /* da implementare la verifica dei punti da aggiungere in base al numero di sameColorNeighbours
                 numberOfAdjacentPoints += addAdjacentPoints(sameColorNeighbours);
                 column++;
             }
             column=0;
             row++;
-        }
+        } */
         return false;
     }
 }

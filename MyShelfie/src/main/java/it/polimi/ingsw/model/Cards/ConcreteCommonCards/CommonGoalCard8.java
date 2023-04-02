@@ -7,8 +7,8 @@ import it.polimi.ingsw.model.Player.*;
 import java.util.HashSet;
 /**
  * This class contains the algorithm to verify if the following common goal is satisfied.
- * The goal is: Three columns each formed by 6 tiles Five tiles of the same type forming an X.
-*               of maximum three different types. One column can show the same or a different combination of another column.
+ * The goal is: Three columns each formed by 6 tiles of maximum three different types.
+ *              One column can show the same or a different combination of another column.
  *
  * @author: Alberto Aniballi
  * */
@@ -25,12 +25,14 @@ public class CommonGoalCard8 extends CommonGoalCard {
         for(int col=0;col<5;col++) {
             HashSet<Color> s = new HashSet<>();
             for(int row=0;row<6;row++) {
-                s.add(library.getLibrary()[row][col].getColor());
+                if (library.getLibrary()[row][col] != null) {
+                    s.add(library.getLibrary()[row][col].getColor());
+                }
             }
-            count_col = (s.size()==3) ? count_col+1 : count_col;
+            count_col = (s.size()>=1 && s.size()<=3) ? count_col+1 : count_col;
         }
 
-        if (count_col==3) {
+        if (count_col>=3) {
             return true;
         } else {
             return false;

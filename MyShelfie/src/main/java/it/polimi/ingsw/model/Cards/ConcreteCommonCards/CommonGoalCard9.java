@@ -27,14 +27,23 @@ public class CommonGoalCard9 extends CommonGoalCard {
         - Itero su tutte le celle del riquadro interno cercando la formazione a stella, mi fermo una volta trovata oppure quando sono finite le celle.
         Sarà poi da aggiungere la verifica che la carta sia effettivamente presente (nel senso library[row][col] != null
          */
-        for(int row=1;row<=5;row++) {
-            for (int col=1;col<=4;col++) {
-                Color centralCellColor = library.getLibrary()[row][col].getColor();
-                if (library.getLibrary()[row+1][col-1].getColor().equals(centralCellColor)) {
-                    if (library.getLibrary()[row-1][col-1].getColor().equals(centralCellColor)) {
-                        if (library.getLibrary()[row+1][col+1].getColor().equals(centralCellColor)) {
-                            if (library.getLibrary()[row-1][col+1].getColor().equals(centralCellColor)) {
-                                return true;
+        for(int row=1;row<=4;row++) {
+            for (int col=1;col<=3;col++) {
+                if (library.getLibrary()[row][col] != null) {
+                    Color centralCellColor = library.getLibrary()[row][col].getColor();
+                    if ((library.getLibrary()[row + 1][col - 1]!=null) && library.getLibrary()[row + 1][col - 1].getColor().equals(centralCellColor)) {
+                        if ((library.getLibrary()[row - 1][col - 1]!=null) && library.getLibrary()[row - 1][col - 1].getColor().equals(centralCellColor)) {
+                            if ((library.getLibrary()[row + 1][col + 1]!=null) && library.getLibrary()[row + 1][col + 1].getColor().equals(centralCellColor)) {
+                                if ((library.getLibrary()[row - 1][col + 1]!=null) && library.getLibrary()[row - 1][col + 1].getColor().equals(centralCellColor)) {
+
+                                    // Checking that the other cells inside the square but not in X have different color
+                                    if (!(library.getLibrary()[row - 1][col].getColor().equals(centralCellColor)) &&
+                                            !(library.getLibrary()[row + 1][col].getColor().equals(centralCellColor)) &&
+                                            !(library.getLibrary()[row][col - 1].getColor().equals(centralCellColor)) &&
+                                            !(library.getLibrary()[row][col + 1].getColor().equals(centralCellColor))) {
+                                        return true;
+                                    }
+                                }
                             }
                         }
                     }
