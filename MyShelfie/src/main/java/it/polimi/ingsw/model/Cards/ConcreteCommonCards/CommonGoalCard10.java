@@ -5,27 +5,15 @@ import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Enums.*;
 import it.polimi.ingsw.model.Player.*;
 
+import java.util.HashMap;
+
 /**
- * class for the 11^th of 12 algorithms to check common goal cards
- * @author Andrea Ferrini
- */
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: Eight tiles of the same type. There’s no restriction about the position of these tiles.
+ *
+ * @author: Andrea Ferrini
+ * */
 public class CommonGoalCard10 extends CommonGoalCard {
-
-    private int i, j;
-
-    private int iterations = 0; // conto le celle controllate, così dopo 8 iterazioni inizio il controllo periodico per vedere se ho finito
-
-
-    private int[] types; // lungo 6, per contare simultaneamente le occorrenze per ogni tipo
-
-    /**
-     * Constructor
-     *
-     * @param description description of common goal file (get from json file)
-     * @param game        current game
-     * @author Andrea Ferrini
-     */
-
 
     /**
      * the main algorithm that checks this common goal
@@ -36,76 +24,22 @@ public class CommonGoalCard10 extends CommonGoalCard {
     public boolean isSatisfied(Library library) {
         ObjectCard[][] lib = library.getLibrary();
         // istanzio e inizializzo l'array delle occorrenze
-        types = new int[6];
-        for(i = 0; i < 6; i++){
-            types[i] = 0;
-        }
+        HashMap<Color,Integer> occurencesTypeCounter = new HashMap<>();
 
-        // associo ogni cella a un tipo
-        // verde -> 0
-        // blu -> 1
-        // azzurro -> 2
-        // bianco -> 3
-        // rosa -> 4
-        // giallo -> 5
+        for(int row = 0; row<library.getNumberOfRows(); row++) {
+            for (int col = 0; col<library.getNumberOfColumns(); col++) {
+                if (lib[row][col]!=null) {
+                    Color color = lib[row][col].getColor();
 
-        for(i = 0;i < library.getNumberOfRows(); i++){
-            for(j = 0; j < library.getNumberOfColumns(); j++){
-
-                if(lib[i][j].getColor() == Color.GREEN){
-
-                    // verde
-                    types[0]++;
-                }else if(lib[i][j].getColor() == Color.BLUE){
-
-                    //blu
-                    types[1]++;
-                }else if(lib[i][j].getColor() == Color.LIGHTBLUE){
-
-                    //azzurro
-                    types[2]++;
-                }else if(lib[i][j].getColor() == Color.BEIGE){
-
-                    //beige
-                    types[3]++;
-                }else if(lib[i][j].getColor() == Color.PINK){
-
-                    //rosa
-                    types[4]++;
-                }else if(lib[i][j].getColor() == Color.YELLOW){
-
-                    //giallo
-                    types[5]++;
+                    if(occurencesTypeCounter.get(color) == null) {
+                        occurencesTypeCounter.put(color,1);
+                    } else {
+                        occurencesTypeCounter.put(color,occurencesTypeCounter.get(color)+1);
+                        if (occurencesTypeCounter.get(color) >= 8) {
+                            return true;
+                        }
+                    }
                 }
-            }
-
-            iterations ++; // ad ogni cella controllata aumento questo contatore
-
-            if(iterations > 7){
-
-                if(checkFinishEightType(types)){
-                    return true;
-                }
-            }
-        }
-        return  false;
-    }
-
-    @Override
-    public String getDescription() {
-        return "Cinque tessere dello stesso tipo che formano una X";
-    }
-
-    /**
-     * controls if the check is finished, so i can avoid useless iterations
-     * @param types an array of int, one cell for each type of object card
-     * @return boolean: true if the check is finished, false if it's not finished
-     */
-    public boolean checkFinishEightType(int[] types){
-
-        for(int i : types){
-            if(i >= 8){
-                return true;
             }
         }
         return false;
