@@ -13,10 +13,10 @@ public class PersonalGoalCard extends Card {
         super();
         this.goalVector=goalVector;
     }
-    /**This method counts point of personal goal card
+    /**This method counts and returns point of personal goal card. It will be called at the end of the game.
      * @author: Riccardo Figini
      * @param lib player's library, which will be tested
-     * @return count score point*/
+     * @return {@code int} count score point*/
     public int countPersonalGoalCardPoints(Library lib){
         int count=0;
         Position tmp;
@@ -46,8 +46,10 @@ public class PersonalGoalCard extends Card {
     }
     /**Return goalvector
      * @author: Riccardo Figini
+     * @return {@code ArrayList<Couple>} it returns arraylist containing information about cells (position and color)
      * */
     public ArrayList<Couple> getGoalVector() {
+
         return goalVector;
     }
 

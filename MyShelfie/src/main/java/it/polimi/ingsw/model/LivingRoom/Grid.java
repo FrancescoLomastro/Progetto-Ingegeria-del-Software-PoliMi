@@ -60,7 +60,7 @@ public class Grid {
                 position.setRowColumn(r,c);
                 if(matrix[r][c]==null && isAvailable(position))
                 {
-                    //genera la carta
+                    matrix[r][c]=cardGenerator.generateObjectCard();
                 }
             }
         }
@@ -133,6 +133,10 @@ public class Grid {
                     return false;
             }
         }
+        //Non fa parte delle zone che non sono disponibili
+        for (Position position : drawn)
+            if (!isAvailable(position))
+                return false;
         //almeno un lato libero
         for(int i=1; i<drawn.length;i++)
         {
@@ -151,15 +155,26 @@ public class Grid {
     public ObjectCard[][] getMatrix(){
         return matrix;
     }
+    /**This method remove cards from matrix and return an ObjectCard's array with them
+     * @author: Riccardo Figini
+     * @param move {@code Position[]} Vector with position to remove
+     * @return {@code ObjectCard[]} return removed cards*/
     public ObjectCard[] draw(Position[] move){
-        return null;
+        if(move==null || !isDrawAvailable(move))
+            return null;
+        ObjectCard[] objectCards= new ObjectCard[move.length];
+        for(int i=0; i<move.length;i++){
+            objectCards[i] = matrix[move[i].getRow()][move[i].getColumn()];
+            matrix[move[i].getRow()][move[i].getColumn()]=null;
+        }
+        return objectCards;
     }
 
     /**
      * The method opens a Json.
      * Inside the file are stored some vectors containing some positions.
      * {@code Default_Invalid_Positions} contains all the position that are not utilizable by default.
-     * {@code i_Player_New_Positions} contains all the the position utilizable when the {@code i} players are playing.
+     * {@code i_Player_New_Positions} contains all the position utilizable when the {@code i} players are playing.
      * @return a set of position containing {@code Default_Invalid_Positions} and {@code i_Player_New_Positions}, when
      * {@code i} goes from numPlayers+1 to 4. If the file is missing this set is empty.
      */
@@ -206,8 +221,7 @@ public class Grid {
      * @param position is the position to be checked
      * @return {@code true} if the position is inside the numRows x numColumns matrix
      */
-    private boolean isInside(Position position)
-    {
+    private boolean isInside(Position position) {
         return position.getRow()>=0 && position.getRow()< numColumns &&
                 position.getColumn()>=0 && position.getColumn()< numRows ;
     }
