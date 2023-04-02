@@ -29,11 +29,14 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getLibrary()[0][0]!=null) {
                             color = library.getLibrary()[0][0].getColor();
                         for(int diag=0;diag<5;diag++) {
-                            if (!(library.getLibrary()[diag][diag].getColor().equals(color))) {
+                            if (!(library.getLibrary()[diag][diag].getColor().equals(color)) || library.getLibrary()[diag][diag]==null) {
                                 partial_ans = false;
                                 break;
                             }
                         }
+                        ans = ans || partial_ans;
+                    } else {
+                        partial_ans = false;
                         ans = ans || partial_ans;
                     }
                 } else if (i==1) {
@@ -42,10 +45,14 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getLibrary()[1][0]!=null) {
                         color = library.getLibrary()[1][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getLibrary()[1 + diag][diag].getColor().equals(color))) {
+                            if (!(library.getLibrary()[1 + diag][diag].getColor().equals(color)) || library.getLibrary()[1+diag][diag]==null) {
+                                partial_ans = false;
                                 break;
                             }
                         }
+                        ans = ans || partial_ans;
+                    } else {
+                        partial_ans = false;
                         ans = ans || partial_ans;
                     }
                 } else if (i==2) {
@@ -54,10 +61,14 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getLibrary()[5][0]!=null) {
                         color = library.getLibrary()[5][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getLibrary()[5 - diag][diag].getColor().equals(color))) {
+                            if (!(library.getLibrary()[5 - diag][diag].getColor().equals(color)) || library.getLibrary()[5-diag][diag]==null) {
+                                partial_ans = false;
                                 break;
                             }
                         }
+                        ans = ans || partial_ans;
+                    } else {
+                        partial_ans = false;
                         ans = ans || partial_ans;
                     }
                 } else if (i==3) {
@@ -66,10 +77,14 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getLibrary()[4][0]!=null) {
                         color = library.getLibrary()[4][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getLibrary()[4 - diag][diag].getColor().equals(color))) {
+                            if (!(library.getLibrary()[4 - diag][diag].getColor().equals(color)) || library.getLibrary()[4-diag][diag]==null) {
+                                partial_ans = false;
                                 break;
                             }
                         }
+                        ans = ans || partial_ans;
+                    } else {
+                        partial_ans = false;
                         ans = ans || partial_ans;
                     }
                 }

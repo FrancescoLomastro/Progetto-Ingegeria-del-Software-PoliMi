@@ -107,7 +107,7 @@ public class CommonGoalCard1Test {
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
     @Test
-    public void isSatisfied_correctInput_falseInOutput(){
+    public void isSatisfied_wrongInput_falseInOutput(){
         insertElement(1,4,Color.BEIGE);
         insertElement(2,3,Color.BEIGE);
         insertElement(3,2,Color.BEIGE);
@@ -129,7 +129,7 @@ public class CommonGoalCard1Test {
         insertElement(4,0, Color.LIGHTBLUE);
         insertElement(5,0, Color.LIGHTBLUE);
         fillEmptyPart();
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
     @After
