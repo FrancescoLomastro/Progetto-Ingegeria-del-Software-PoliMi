@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * This class contains the algorithm to verify if the second common goal algorithm is satisfied.
- * The goal is the following: Two groups each containing 4 tiles of the same type in a 2x2 square.
- *                            The tiles of one square can be different from those of the other square.
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: Two groups each containing 4 tiles of the same type in a 2x2 square.
+ *              The tiles of one square can be different from those of the other square.
  *
  * @author: Alberto Aniballi
  * */

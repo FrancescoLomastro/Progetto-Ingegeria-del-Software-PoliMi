@@ -6,9 +6,9 @@ import it.polimi.ingsw.model.Player.*;
 
 import java.util.HashSet;
 /**
- * This class contains the algorithm to verify if the second common goal algorithm is satisfied.
- * The goal is the following: Four lines each formed by 5 tiles of maximum three different types.
- *                            One line can show the same or a different combination of another line
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: Four lines each formed by 5 tiles of maximum three different types.
+ *              One line can show the same or a different combination of another line
  *
  * @author: Alberto Aniballi
  * */
