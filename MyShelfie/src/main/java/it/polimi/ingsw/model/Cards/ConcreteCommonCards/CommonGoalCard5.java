@@ -7,8 +7,8 @@ import it.polimi.ingsw.model.Player.*;
 import java.util.HashSet;
 
 /**
- * This class contains the algorithm to verify if the second common goal algorithm is satisfied.
- * The goal is the following: Two columns each formed by 6 different types of tiles.
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: Two columns each formed by 6 different types of tiles.
  *
  * @author: Alberto Aniballi
  * */

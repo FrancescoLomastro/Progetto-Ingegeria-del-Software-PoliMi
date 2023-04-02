@@ -5,8 +5,8 @@ import it.polimi.ingsw.model.Enums.*;
 import it.polimi.ingsw.model.Player.*;
 
 /**
- * This class contains the algorithm to verify if the second common goal algorithm is satisfied.
- * The goal is the following: Five tiles of the same type forming a diagonal.
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: Five tiles of the same type forming a diagonal.
  *
  * @author: Alberto Aniballi
  * */

@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * This class contains the algorithm to verify if the second common goal algorithm is satisfied.
- * The goal is the following: Four groups each containing at least 4 tiles of the same type (not necessarily
- * in the depicted shape). The tiles of one group can be different from those of another group.
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: Four groups each containing at least 4 tiles of the same type (not necessarily
+ *              in the depicted shape). The tiles of one group can be different from those of another group.
  *
  * @author: Alberto Aniballi
  * */
