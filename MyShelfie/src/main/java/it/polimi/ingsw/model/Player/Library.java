@@ -61,7 +61,7 @@ public class Library {
      * @param column the specific column to be checked
      * @return: boolean that is true if the cell is empty, otherwise false
      */
-    private boolean isCellEmpty(int row, int column) {
+    public boolean isCellEmpty(int row, int column) {
         if (library[row][column] != null) {
             return false;
         } else {
@@ -124,10 +124,12 @@ public class Library {
         }
     }
 
+    /**
+     * SERVE PER IL TESTING DA ELIMINARE POI
+     */
     public void insertCardInObjectCards(ObjectCard card,int x,int y){
         library[x][y] = card;
     }
-
     /**
      * It verifies if a specific column has enough available cells to insert the cards contained in the array
      *

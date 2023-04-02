@@ -5,12 +5,15 @@ import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Player.*;
 
 /**
- * class for the 12^th of 12 algorithms to check common goal cards
- * @author Andrea Ferrini
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: Five columns of increasing or decreasing height. Starting from the first column on
+ *              the left or on the right, each next column must be made of exactly one more tile.
+ *              Tiles can be of any type.
+ * @author Alberto Aniballi
  */
 public class CommonGoalCard11 extends CommonGoalCard {
 
-
+    /*
     private int c, i, j;
 
     private Library library;
@@ -23,25 +26,73 @@ public class CommonGoalCard11 extends CommonGoalCard {
     private int isOne = 1;
 
     private int isTwo = 1;
-
-
-
-    /**
-     * constructor of the class CommonGoalCard11
-     */
-    public CommonGoalCard11(){
-        super();
-    }
+    */
 
     /**
-     * the main algorithm that checks this common goal
-     * @param library the turn player's library
-     * @return boolean : true if satisfied, false if not satisfied
-     */
+     * It verifies if the library satisfies the goal of this specific common goal card
+     *
+     * @param library   the library on which we will verify if the goal is satisfied or not
+     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * */
     @Override
     public boolean isSatisfied(Library library) {
 
+        /*
+        * Increasing from left to right
+        */
+        boolean answerIncreasing = true;
+        int previousColumnFirstAvailableCell = 0;
+        for(int col = 0; col<library.getNumberOfColumns(); col++) {
+            int currentColumnFirstAvailableCell;
+            if (col==0) {
+                currentColumnFirstAvailableCell = (library.getNumberOfRows()) - library.findNumberOfFreeCells(col);
+                previousColumnFirstAvailableCell = currentColumnFirstAvailableCell;
+                continue;
+            } else {
+                currentColumnFirstAvailableCell = (library.getNumberOfRows()) - library.findNumberOfFreeCells(col);
+                if (currentColumnFirstAvailableCell != (previousColumnFirstAvailableCell+1)) {
+                    answerIncreasing = false;
+                    break;
+                } else {
+                    previousColumnFirstAvailableCell = currentColumnFirstAvailableCell;
+                }
+            }
+        }
 
+        if (answerIncreasing) {
+            return true;
+        }
+
+        /*
+         * Decreasing from left to right
+         */
+
+        boolean answerDecreasing = true;
+        previousColumnFirstAvailableCell = 0;
+        for(int col = 0; col<library.getNumberOfColumns(); col++) {
+            int currentColumnFirstAvailableCell;
+            if (col==0) {
+                currentColumnFirstAvailableCell = (library.getNumberOfRows()) - library.findNumberOfFreeCells(col);
+                previousColumnFirstAvailableCell = currentColumnFirstAvailableCell;
+                continue;
+            } else {
+                currentColumnFirstAvailableCell = (library.getNumberOfRows()) - library.findNumberOfFreeCells(col);
+                if (currentColumnFirstAvailableCell != (previousColumnFirstAvailableCell-1)) {
+                    answerDecreasing = false;
+                    break;
+                } else {
+                    previousColumnFirstAvailableCell = currentColumnFirstAvailableCell;
+                }
+            }
+        }
+
+        if (answerDecreasing) {
+            return true;
+        } else {
+            return false;
+        }
+
+        /*
         checkOneOrTwoResult = checkOneOrTwo(lib);
 
         if(checkOneOrTwoResult == 1){
@@ -149,6 +200,8 @@ public class CommonGoalCard11 extends CommonGoalCard {
             return true;
         }
         else return false;
+
+         */
     }
 
 
@@ -160,6 +213,7 @@ public class CommonGoalCard11 extends CommonGoalCard {
      * @param lib the player's bookshelf
      * @return an int, that identifies the previous 2(3) cases
      */
+    /*
     public int checkOneOrTwo(ObjectCard[][] lib){
 
 
@@ -189,4 +243,5 @@ public class CommonGoalCard11 extends CommonGoalCard {
     public String getDescription() {
         return "Cinque colonne di altezza crescente o decrescente: a partire dalla prima colonna a sinistra o a destra, ogni colonna successiva deve essere formata da una tessera in più. Le tessere possono essere di qualsiasi tipo";
     }
+     */
 }
