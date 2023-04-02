@@ -40,7 +40,7 @@ public class ScorePointCard {
     /**Method that return current common goal's point. Automatically decrease the
      * score of common goal card (calling changeScore)
      * @author Riccardo Figini
-     * @return number score of card*/
+     * @return {@code int}: It return point made with common goal card*/
     public int getScoreWithDecrease() {
         int number = score;
         changeScore();
