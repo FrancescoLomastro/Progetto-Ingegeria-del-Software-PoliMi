@@ -23,45 +23,27 @@ public class CommonGoalCard2 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
-        /*
-        HashSet<String> checkedCells = new HashSet<>();
-        HashMap<Color,Integer> propertySatisfiedCounter = new HashMap<>();
-        propertySatisfiedCounter.put(Color.PINK,0);
-        propertySatisfiedCounter.put(Color.BLUE,0);
-        propertySatisfiedCounter.put(Color.BEIGE,0);
-        propertySatisfiedCounter.put(Color.GREEN,0);
-        propertySatisfiedCounter.put(Color.LIGHTBLUE,0);
-        propertySatisfiedCounter.put(Color.YELLOW,0);
 
-        int row = 0;
-        int column = 0;
-        while (row<library.getNumberOfRows()) {
-            while ((column <library.getNumberOfColumns()) && (!checkedCells.contains(row+"_"+ column))) {
-                checkedCells.add(row+"_"+column);
-                int sameColorNeighboursUp = countSameColorNeighbours(row, column,"Up");
-                String colorToCheck = library[row][col].getColor();
-                if (sameColorNeighboursUp >= 4) {
-                    propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
-                    if (propertySatisfiedCounter.get(colorToCheck==4)) {
-                        return true;
-                    }
-                } else {
-                    int sameColorNeighboursRight = countSameColorNeighbours(row, column,"Right");
-                    if ((sameColorNeighboursUp+sameColorNeighboursRight)>=4) {
-                        propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
-                        if (propertySatisfiedCounter.get(colorToCheck)==4) {
+        HashSet<String> checkedCells = new HashSet<>();
+        int correctGroupCounter = 0;
+
+        for(int row=0;row<6;row++) {
+            for(int col=0;col<5;col++) {
+                if ((library.getLibrary()[row][col]!=null) && !checkedCells.contains((row)+"_"+(col))) {
+
+                    int same_color_neighbours = library.countSameColorNeighbours(row,col,checkedCells);
+
+                    Color colorToCheck = library.getLibrary()[row][col].getColor();
+                    if (same_color_neighbours>=4) {
+                        correctGroupCounter += 1;
+                        if (correctGroupCounter == 4) {
                             return true;
                         }
                     }
                 }
-        */
-                /* da implementare la verifica dei punti da aggiungere in base al numero di sameColorNeighbours
-                numberOfAdjacentPoints += addAdjacentPoints(sameColorNeighbours);
-                column++;
             }
-            column=0;
-            row++;
-        } */
+        }
         return false;
     }
+
 }

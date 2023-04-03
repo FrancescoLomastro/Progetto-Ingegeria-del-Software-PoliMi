@@ -217,7 +217,7 @@ public class Library {
      * @param checkedCells  the set containing the already checked cells, these cells are not available for branching
      * @return:             integer that represents the number of neighbours cells that store an object card of the same color of the initial object card
      */
-    private int countSameColorNeighbours(int startRow, int startColumn, HashSet<String> checkedCells) {
+    public int countSameColorNeighbours(int startRow, int startColumn, HashSet<String> checkedCells) {
 
         int numberOfSameColorNeighbours = 0;
         //int lastCellSameColorInSameColumn_row = findLastRowWithSameColorInSameColumn(startRow,startColumn);

@@ -24,12 +24,14 @@ public class CommonGoalCard8 extends CommonGoalCard {
         int count_col = 0;
         for(int col=0;col<5;col++) {
             HashSet<Color> s = new HashSet<>();
-            for(int row=0;row<6;row++) {
-                if (library.getLibrary()[row][col] != null) {
-                    s.add(library.getLibrary()[row][col].getColor());
+            if (library.getLibrary()[0][col]!=null) {
+                for(int row=0;row<6;row++) {
+                    if (library.getLibrary()[row][col] != null) {
+                        s.add(library.getLibrary()[row][col].getColor());
+                    }
                 }
+                count_col = (s.size()>=1 && s.size()<=3) ? count_col+1 : count_col;
             }
-            count_col = (s.size()>=1 && s.size()<=3) ? count_col+1 : count_col;
         }
 
         if (count_col>=3) {
