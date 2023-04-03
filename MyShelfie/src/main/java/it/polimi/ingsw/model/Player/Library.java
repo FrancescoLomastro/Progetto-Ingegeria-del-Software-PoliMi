@@ -180,7 +180,7 @@ public class Library {
         boolean answer = false;
 
         switch (direction) {
-            case "Up": {
+            case "Down": {
                 if(compareColor(library[startRow][startColumn],library[startRow+1][startColumn])) {
                     answer = true;
                 }
@@ -198,7 +198,7 @@ public class Library {
                 }
                 break;
             }
-            case "Down": {
+            case "Up": {
                 if(compareColor(library[startRow][startColumn],library[startRow-1][startColumn])) {
                     answer = true;
                 }
@@ -220,29 +220,28 @@ public class Library {
     public int countSameColorNeighbours(int startRow, int startColumn, HashSet<String> checkedCells) {
 
         int numberOfSameColorNeighbours = 0;
-        //int lastCellSameColorInSameColumn_row = findLastRowWithSameColorInSameColumn(startRow,startColumn);
-        if(checkIfColorIsTheSame(startRow,startColumn,"Up")) {
+        if(((startRow+1)<=numberOfRows-1) && (library[startRow+1][startColumn]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Down"))) {
             if (!checkedCells.contains((startRow+1)+"_"+startColumn)) {
                 checkedCells.add((startRow+1)+"_"+startColumn);
                 numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow+1,startColumn,checkedCells);
             } else {
                 numberOfSameColorNeighbours+=1;
             }
-        } else if (checkIfColorIsTheSame(startRow,startColumn,"Right")) {
+        } else if (((startColumn+1)<=numberOfColumns-1) && (library[startRow][startColumn+1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Right"))) {
             if (!checkedCells.contains(startRow+"_"+(startColumn+1))) {
                 checkedCells.add(startRow+"_"+(startColumn+1));
                 numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow,startColumn+1,checkedCells);
             } else {
                 numberOfSameColorNeighbours+=1;
             }
-        } else if (checkIfColorIsTheSame(startRow,startColumn,"Left")) {
+        } else if (((startColumn-1)>=0) && (library[startRow][startColumn-1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Left"))) {
             if (!checkedCells.contains(startRow + "_" + (startColumn - 1))) {
                 checkedCells.add(startRow+"_"+(startColumn-1));
                 numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow, startColumn - 1,checkedCells);
             } else {
                 numberOfSameColorNeighbours+=1;
             }
-        } else if (checkIfColorIsTheSame(startRow,startColumn,"Down")) {
+        } else if (((startRow-1)>=0) && (library[startRow-1][startColumn]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Up"))) {
             if (!checkedCells.contains((startRow-1) + "_" + startColumn)) {
                 checkedCells.add((startRow-1)+"_"+(startColumn));
                 numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow-1, startColumn,checkedCells);

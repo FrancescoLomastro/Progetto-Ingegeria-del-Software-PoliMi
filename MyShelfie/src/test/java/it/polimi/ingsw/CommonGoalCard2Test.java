@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
 import it.polimi.ingsw.model.Cards.ConcreteCommonCards.CommonGoalCard0;
+import it.polimi.ingsw.model.Cards.ConcreteCommonCards.CommonGoalCard2;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Enums.Type;
@@ -11,15 +12,14 @@ import org.junit.*;
 import org.junit.Assert;
 
 import java.io.IOException;
-
-public class CommonGoalCard0Test {
+public class CommonGoalCard2Test {
     CommonGoalCard commonGoalCard;
     Type type = Type.FIRST;
 
     Library library;
 
-    public CommonGoalCard0Test() throws IOException {
-        commonGoalCard = new CommonGoalCard0();
+    public CommonGoalCard2Test() throws IOException {
+        commonGoalCard = new CommonGoalCard2();
         library = new Library(5,6);
     }
 
@@ -46,55 +46,63 @@ public class CommonGoalCard0Test {
     }
 
     /**
-     * First test: 6 couples of same color -> answer true
+     * First test: 4 groups of 4 cards of same color -> answer true
      */
     @Test
     public void isSatisfied_correctInputSeparateBlock_1_trueInOutput(){
         insertElement(0,0,Color.BEIGE);
         insertElement(1,0, Color.BEIGE);
-        insertElement(0, 4, Color.BEIGE);
-        insertElement(1, 4, Color.BEIGE);
-        insertElement(0, 2, Color.BEIGE);
-        insertElement(1, 2, Color.BEIGE);
-        insertElement(2, 1, Color.BEIGE);
-        insertElement(3, 1, Color.BEIGE);
-        insertElement(2, 3, Color.BEIGE);
-        insertElement(3, 3, Color.BEIGE);
-        insertElement(4, 2, Color.BEIGE);
-        insertElement(5, 2, Color.BEIGE);
-        insertElement(0, 1, Color.BLUE);
-        insertElement(1, 1, Color.PINK);
-        insertElement(5, 1, Color.GREEN);
-        insertElement(5, 4, Color.YELLOW);
+        insertElement(2,0, Color.BEIGE);
+        insertElement(3,0, Color.BEIGE);
+
+        insertElement(0,2,Color.BEIGE);
+        insertElement(1,2, Color.BEIGE);
+        insertElement(2,2, Color.BEIGE);
+        insertElement(3,2, Color.BEIGE);
+
+        insertElement(0,4,Color.BEIGE);
+        insertElement(1,4, Color.BEIGE);
+        insertElement(2,4, Color.BEIGE);
+        insertElement(3,4, Color.BEIGE);
+
+        insertElement(5,0,Color.BEIGE);
+        insertElement(5,1, Color.BEIGE);
+        insertElement(5,2, Color.BEIGE);
+        insertElement(5,3, Color.BEIGE);
+
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 
     /**
-     * Second test: 6 separate couples of different color -> answer true
+     * Second test: 4 groups of 4 of different color -> answer true
      */
     @Test
     public void isSatisfied_correctInputSeparateBlock_2_trueInOutput(){
         insertElement(0,0,Color.BEIGE);
-        insertElement(1,0, Color.BEIGE);
-        insertElement(0, 4, Color.YELLOW);
-        insertElement(1, 4, Color.YELLOW);
-        insertElement(0, 2, Color.BLUE);
-        insertElement(1, 2, Color.BLUE);
-        insertElement(2, 1, Color.LIGHTBLUE);
-        insertElement(3, 1, Color.LIGHTBLUE);
-        insertElement(2, 3, Color.PINK);
-        insertElement(3, 3, Color.PINK);
-        insertElement(4, 2, Color.GREEN);
-        insertElement(5, 2, Color.GREEN);
-        insertElement(0, 1, Color.BLUE);
-        insertElement(1, 1, Color.PINK);
-        insertElement(5, 1, Color.GREEN);
-        insertElement(5, 4, Color.YELLOW);
+        insertElement(0,1, Color.BEIGE);
+        insertElement(0,2,Color.BEIGE);
+        insertElement(0,3, Color.BEIGE);
+
+        insertElement(2, 0, Color.YELLOW);
+        insertElement(2, 1, Color.YELLOW);
+        insertElement(2, 2, Color.YELLOW);
+        insertElement(2, 3, Color.YELLOW);
+
+        insertElement(4, 0, Color.BLUE);
+        insertElement(4, 1, Color.BLUE);
+        insertElement(4, 2, Color.BLUE);
+        insertElement(4, 3, Color.BLUE);
+
+        insertElement(5, 0, Color.PINK);
+        insertElement(5, 1, Color.PINK);
+        insertElement(5, 2, Color.PINK);
+        insertElement(5, 3, Color.PINK);
+
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 
     /**
-     * Third test: 6 couples but not separate of same color -> answer false
+     * Third test: 3 groups of 4 -> answer false
      */
     @Test
     public void isSatisfied_noCorrectInputSeparateBlock_1_falseInOutput(){
@@ -139,7 +147,7 @@ public class CommonGoalCard0Test {
     }
 
     /**
-     * Fifth test: no couples of same color
+     * Fifth test: no groups of same color
      */
     @Test
     public void isSatisfied_correctInput_falseInOutput(){
