@@ -3465,7 +3465,7 @@
 											"top": 2228,
 											"width": 476.2646484375,
 											"height": 13,
-											"text": "-countSameColorNeighbours(int startRow, int startColumn): int",
+											"text": "+countSameColorNeighbours(int startRow, int startColumn): int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14762,7 +14762,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGHE9caHe7zrQ8="
 									},
-									"name": "int [] vectors"
+									"name": "int [] vectors",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -15796,7 +15797,6 @@
 								"$ref": "AAAAAAGG0NynUv5r54w="
 							},
 							"name": "countSameColorNeighbours",
-							"visibility": "private",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -15804,8 +15804,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGG/yQhvstZ4So="
 									},
-									"name": "int startRow",
-									"type": ""
+									"name": "int startRow"
 								},
 								{
 									"_type": "UMLParameter",
@@ -15813,8 +15812,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGG/yQhvstZ4So="
 									},
-									"name": "int startColumn",
-									"type": ""
+									"name": "int startColumn"
 								},
 								{
 									"_type": "UMLParameter",
