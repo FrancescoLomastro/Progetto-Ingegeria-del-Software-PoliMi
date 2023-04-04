@@ -155,7 +155,7 @@ public class LibraryTest {
     }
 
     /**
-     * Seventh test: one group,forming a X, of 10 same type object cards. Start row (2,2) -> answer 6
+     * Seventh test: one group,forming a X, of 10 same type object cards. Start row (2,2) -> answer 10
      */
     @Test
     public void test7_countSameColorNeighbours_trueInOutput(){
@@ -187,8 +187,64 @@ public class LibraryTest {
         insertElement(2,0, Color.BEIGE);
 
         HashSet<String> checkedCells = new HashSet<>();
+        checkedCells.add((2)+"_"+(0));
         int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,0,checkedCells);
         assertEquals(neighboursWithSameColorCounter,1);
+        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
+    /**
+     * Ninth test: one cube of 9 same type object cards. Start row (2,2) -> answer 9
+     */
+    @Test
+    public void test9_countSameColorNeighbours_trueInOutput(){
+        insertElement(1,1, Color.BEIGE);
+        insertElement(1,2, Color.BEIGE);
+        insertElement(1,3, Color.BEIGE);
+        insertElement(2,1, Color.BEIGE);
+        insertElement(2,2, Color.BEIGE);
+        insertElement(2,3, Color.BEIGE);
+        insertElement(3,1, Color.BEIGE);
+        insertElement(3,2, Color.BEIGE);
+        insertElement(3,3, Color.BEIGE);
+
+
+        HashSet<String> checkedCells = new HashSet<>();
+        checkedCells.add((2)+"_"+(2));
+        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,2,checkedCells);
+        assertEquals(neighboursWithSameColorCounter,9);
+        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
+    /**
+     * Tenth test: two crossing S forming one unique group same type object cards. Start row (2,2) -> answer 19
+     */
+    @Test
+    public void test10_countSameColorNeighbours_trueInOutput(){
+        insertElement(0,0, Color.BEIGE);
+        insertElement(0,1, Color.BEIGE);
+        insertElement(0,2, Color.BEIGE);
+        insertElement(1,2, Color.BEIGE);
+        insertElement(2,2, Color.BEIGE);
+        insertElement(2,1, Color.BEIGE);
+        insertElement(2,0, Color.BEIGE);
+        insertElement(3,0, Color.BEIGE);
+        insertElement(4,0, Color.BEIGE);
+        insertElement(5,0, Color.BEIGE);
+        insertElement(2,3, Color.BEIGE);
+        insertElement(2,4, Color.BEIGE);
+        insertElement(1,4, Color.BEIGE);
+        insertElement(0,4, Color.BEIGE);
+        insertElement(3,2, Color.BEIGE);
+        insertElement(4,2, Color.BEIGE);
+        insertElement(5,2, Color.BEIGE);
+        insertElement(5,3, Color.BEIGE);
+        insertElement(5,4, Color.BEIGE);
+
+        HashSet<String> checkedCells = new HashSet<>();
+        checkedCells.add((2)+"_"+(2));
+        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,2,checkedCells);
+        assertEquals(neighboursWithSameColorCounter,19);
         //Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 }
