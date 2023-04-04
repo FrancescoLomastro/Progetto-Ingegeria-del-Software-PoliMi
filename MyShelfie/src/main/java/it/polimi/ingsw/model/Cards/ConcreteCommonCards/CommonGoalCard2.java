@@ -31,6 +31,7 @@ public class CommonGoalCard2 extends CommonGoalCard {
             for(int col=0;col<5;col++) {
                 if ((library.getLibrary()[row][col]!=null) && !checkedCells.contains((row)+"_"+(col))) {
 
+                    checkedCells.add((row)+"_"+(col));
                     int same_color_neighbours = library.countSameColorNeighbours(row,col,checkedCells);
 
                     Color colorToCheck = library.getLibrary()[row][col].getColor();

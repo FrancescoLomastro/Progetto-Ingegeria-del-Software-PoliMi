@@ -197,6 +197,34 @@ public class CommonGoalCard2Test {
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
+    /**
+     * Seventh test: 4 groups of 4 in S shape or L shape -> answer true
+     **/
+    @Test
+    public void isSatisfied_correctInputSeparateBlock_3_trueInOutput(){
+        insertElement(0,0,Color.BEIGE);
+        insertElement(0,1, Color.BEIGE);
+        insertElement(1,1,Color.BEIGE);
+        insertElement(1,2, Color.BEIGE);
+
+        insertElement(1, 0, Color.YELLOW);
+        insertElement(2, 0, Color.YELLOW);
+        insertElement(2, 1, Color.YELLOW);
+        insertElement(3, 1, Color.YELLOW);
+
+        insertElement(2, 3, Color.BLUE);
+        insertElement(3, 3, Color.BLUE);
+        insertElement(3, 4, Color.BLUE);
+        insertElement(4, 4, Color.BLUE);
+
+        insertElement(5, 1, Color.PINK);
+        insertElement(5, 2, Color.PINK);
+        insertElement(5, 3, Color.PINK);
+        insertElement(4, 3, Color.PINK);
+
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
 
     @After
     public void tearDown() {

@@ -223,35 +223,28 @@ public class Library {
         if(((startRow+1)<=numberOfRows-1) && (library[startRow+1][startColumn]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Down"))) {
             if (!checkedCells.contains((startRow+1)+"_"+startColumn)) {
                 checkedCells.add((startRow+1)+"_"+startColumn);
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow+1,startColumn,checkedCells);
-            } else {
-                numberOfSameColorNeighbours+=1;
+                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow+1,startColumn,checkedCells);
             }
-        } else if (((startColumn+1)<=numberOfColumns-1) && (library[startRow][startColumn+1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Right"))) {
+        }
+        if (((startColumn+1)<=numberOfColumns-1) && (library[startRow][startColumn+1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Right"))) {
             if (!checkedCells.contains(startRow+"_"+(startColumn+1))) {
                 checkedCells.add(startRow+"_"+(startColumn+1));
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow,startColumn+1,checkedCells);
-            } else {
-                numberOfSameColorNeighbours+=1;
+                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow,startColumn+1,checkedCells);
             }
-        } else if (((startColumn-1)>=0) && (library[startRow][startColumn-1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Left"))) {
+        }
+        if (((startColumn-1)>=0) && (library[startRow][startColumn-1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Left"))) {
             if (!checkedCells.contains(startRow + "_" + (startColumn - 1))) {
                 checkedCells.add(startRow+"_"+(startColumn-1));
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow, startColumn - 1,checkedCells);
-            } else {
-                numberOfSameColorNeighbours+=1;
+                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow, startColumn - 1,checkedCells);
             }
-        } else if (((startRow-1)>=0) && (library[startRow-1][startColumn]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Up"))) {
+        }
+        if (((startRow-1)>=0) && (library[startRow-1][startColumn]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Up"))) {
             if (!checkedCells.contains((startRow-1) + "_" + startColumn)) {
                 checkedCells.add((startRow-1)+"_"+(startColumn));
-                numberOfSameColorNeighbours+=1 + countSameColorNeighbours(startRow-1, startColumn,checkedCells);
-            } else {
-                numberOfSameColorNeighbours+=1;
+                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow-1, startColumn,checkedCells);
             }
-        } else {
-            numberOfSameColorNeighbours+=1;
         }
-        return numberOfSameColorNeighbours;
+        return 1+numberOfSameColorNeighbours;
     }
 
     /**
