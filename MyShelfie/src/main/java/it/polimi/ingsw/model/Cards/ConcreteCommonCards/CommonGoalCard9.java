@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Player.Library;
 
 /**
  * This class contains the algorithm to verify if the following common goal is satisfied.
@@ -29,18 +29,18 @@ public class CommonGoalCard9 extends CommonGoalCard {
          */
         for(int row=1;row<=4;row++) {
             for (int col=1;col<=3;col++) {
-                if (library.getLibrary()[row][col] != null) {
-                    Color centralCellColor = library.getLibrary()[row][col].getColor();
-                    if ((library.getLibrary()[row + 1][col - 1]!=null) && library.getLibrary()[row + 1][col - 1].getColor().equals(centralCellColor)) {
-                        if ((library.getLibrary()[row - 1][col - 1]!=null) && library.getLibrary()[row - 1][col - 1].getColor().equals(centralCellColor)) {
-                            if ((library.getLibrary()[row + 1][col + 1]!=null) && library.getLibrary()[row + 1][col + 1].getColor().equals(centralCellColor)) {
-                                if ((library.getLibrary()[row - 1][col + 1]!=null) && library.getLibrary()[row - 1][col + 1].getColor().equals(centralCellColor)) {
+                if (library.getMatrix()[row][col] != null) {
+                    Color centralCellColor = library.getMatrix()[row][col].getColor();
+                    if ((library.getMatrix()[row + 1][col - 1]!=null) && library.getMatrix()[row + 1][col - 1].getColor().equals(centralCellColor)) {
+                        if ((library.getMatrix()[row - 1][col - 1]!=null) && library.getMatrix()[row - 1][col - 1].getColor().equals(centralCellColor)) {
+                            if ((library.getMatrix()[row + 1][col + 1]!=null) && library.getMatrix()[row + 1][col + 1].getColor().equals(centralCellColor)) {
+                                if ((library.getMatrix()[row - 1][col + 1]!=null) && library.getMatrix()[row - 1][col + 1].getColor().equals(centralCellColor)) {
 
                                     // Checking that the other cells inside the square but not in X have different color
-                                    if (!(library.getLibrary()[row - 1][col].getColor().equals(centralCellColor)) &&
-                                            !(library.getLibrary()[row + 1][col].getColor().equals(centralCellColor)) &&
-                                            !(library.getLibrary()[row][col - 1].getColor().equals(centralCellColor)) &&
-                                            !(library.getLibrary()[row][col + 1].getColor().equals(centralCellColor))) {
+                                    if (!(library.getMatrix()[row - 1][col].getColor().equals(centralCellColor)) &&
+                                            !(library.getMatrix()[row + 1][col].getColor().equals(centralCellColor)) &&
+                                            !(library.getMatrix()[row][col - 1].getColor().equals(centralCellColor)) &&
+                                            !(library.getMatrix()[row][col + 1].getColor().equals(centralCellColor))) {
                                         return true;
                                     }
                                 }

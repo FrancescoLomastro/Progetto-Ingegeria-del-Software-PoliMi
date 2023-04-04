@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Player.Library;
+import it.polimi.ingsw.model.Utility.Position;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -24,20 +24,24 @@ public class CommonGoalCard0 extends CommonGoalCard {
     @Override
     public boolean isSatisfied(Library library) {
 
-        HashSet<String> checkedCells = new HashSet<>();
+        Position position;
+        HashSet<Position> checkedCells = new HashSet<>();
         int correctGroupCounter = 0;
 
         for(int row=0;row<6;row++) {
             for(int col=0;col<5;col++) {
-                if ((library.getLibrary()[row][col]!=null) && !checkedCells.contains((row)+"_"+(col))) {
-
-                    int same_color_neighbours = library.countSameColorNeighbours(row,col,checkedCells);
-
-                    Color colorToCheck = library.getLibrary()[row][col].getColor();
-                    if (same_color_neighbours>=2) {
-                        correctGroupCounter += 1;
-                        if (correctGroupCounter == 6) {
-                            return true;
+                position=new Position(row,col);
+                if ((library.getMatrix()[row][col]!=null) && !checkedCells.contains(position))
+                {
+                    if(checkedCells.add(position))
+                    {
+                        int same_color_neighbours = library.countNeighbours(row, col, checkedCells)+1;
+                        Color colorToCheck = library.getMatrix()[row][col].getColor();
+                        if (same_color_neighbours >= 2) {
+                            correctGroupCounter += 1;
+                            if (correctGroupCounter == 6) {
+                                return true;
+                            }
                         }
                     }
                 }

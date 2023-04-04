@@ -1,18 +1,17 @@
 package it.polimi.ingsw;
 
+
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
-import it.polimi.ingsw.model.Cards.ConcreteCommonCards.CommonGoalCard11;
-import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Cards.ConcreteCommonCards.*;
+import it.polimi.ingsw.model.Cards.*;
+import it.polimi.ingsw.model.Enums.*;
+import it.polimi.ingsw.model.Player.*;
 import it.polimi.ingsw.model.Enums.Type;
-import it.polimi.ingsw.model.Player.Library;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * @author: Alberto Aniballi
@@ -29,7 +28,7 @@ public class CommonGoalCard11Test {
      * @throws IOException throws an exception*/
     public CommonGoalCard11Test() throws IOException {
         commonGoalCard = new CommonGoalCard11();
-        library = new Library(5,6);
+
     }
 
     /**Library's set up with null
@@ -37,246 +36,198 @@ public class CommonGoalCard11Test {
      * */
     @Before
     public void setUp(){
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardInObjectCards(null, i,j);
-            }
-        }
-    }
-    /**Method used to insert ObjectCard in matrix
-     * @author: Riccardo Figini
-     * @param row row
-     * @param col column
-     * @param color color*/
-    private void insertElement(int row, int col, Color color){
-        ObjectCard objectCards = new ObjectCard("", color , type);
-        library.insertCardInObjectCards(objectCards, row,col);
-    }
-    /**It fills empty cell
-     * @author: Riccardo Figini
-     * */
-    private void fillEmptyPart(){
-        Random random = new Random();
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for (int j=0; j<library.getNumberOfColumns(); j++){
-                if(library.getLibrary()[i][j]==null)
-                    insertElement(i, j, Color.getEnumFromRelativeInt(random.nextInt(6)));
-            }
-        }
+        library = new Library();
     }
 
-    /**
-     * First Test Increasing: 0,1,2,3,4 -> answer true.
-     * @author: Alberto Aniballi
-     * */
-    @Test
-    public void isSatisfied_IncreasingCorrectInputOtherCellsEmpty_1_trueInOutput(){
-        insertElement(0,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(2,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        insertElement(1,4,Color.BEIGE);
-        insertElement(2,4,Color.BEIGE);
-        insertElement(3,4,Color.BEIGE);
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
 
     /**
      * Second Test Increasing: 1,2,3,4,5 -> answer true.
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_IncreasingCorrectInputOtherCellsEmpty_2_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(1,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(2,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(2,3,Color.BEIGE);
-        insertElement(3,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        insertElement(1,4,Color.BEIGE);
-        insertElement(2,4,Color.BEIGE);
-        insertElement(3,4,Color.BEIGE);
-        insertElement(4,4,Color.BEIGE);
+    public void isSatisfied_IncreasingDisposition_trueInOutput(){
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 
-    /**
-     * Third Test Increasing: 2,3,4,5,6 -> answer true.
-     * @author: Alberto Aniballi
-     * */
     @Test
-    public void isSatisfied_IncreasingCorrectInputOtherCellsEmpty_3_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(1,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(1,1,Color.BEIGE);
-        insertElement(2,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(2,2,Color.BEIGE);
-        insertElement(3,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(2,3,Color.BEIGE);
-        insertElement(3,3,Color.BEIGE);
-        insertElement(4,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        insertElement(1,4,Color.BEIGE);
-        insertElement(2,4,Color.BEIGE);
-        insertElement(3,4,Color.BEIGE);
-        insertElement(4,4,Color.BEIGE);
-        insertElement(5,4,Color.BEIGE);
+    public void isSatisfied_DecreasingDisposition_trueInOutput(){
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
-
-    /**
-     * Fourth Test Increasing: 1,1,2,3,4 -> answer false.
-     * @author: Alberto Aniballi
-     * */
     @Test
-    public void isSatisfied_NoCorrectInputOtherCellsEmpty_1_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(2,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        insertElement(1,4,Color.BEIGE);
-        insertElement(2,4,Color.BEIGE);
-        insertElement(3,4,Color.BEIGE);
+    public void isSatisfied_DecreasingDispositionWithAnEmptyColumn_falseInOutput(){
+
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+    }
+    @Test
+    public void isSatisfied_IncreasingDispositionWithAnEmptyColumn_falseInOutput(){
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+    }
+@Test
+    public void isSatisfied_IncreasingDispositionNotFromStart_falseInOutput(){
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+    }
+    @Test
+    public void isSatisfied_DecreasingDispositionNotFromStart_falseInOutput(){
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
-    /**
-     * Fourth Test Increasing: 1,2,2,3,4 -> answer false.
-     * @author: Alberto Aniballi
-     * */
     @Test
-    public void isSatisfied_NoCorrectInputOtherCellsEmpty_2_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(1,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(2,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        insertElement(1,4,Color.BEIGE);
-        insertElement(2,4,Color.BEIGE);
-        insertElement(3,4,Color.BEIGE);
+    public void isSatisfied_IncreasingDispositionWithABadColumn_trueInOutput(){
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
-    /**
-     * Fifth Test Decreasing: 4,3,2,1,0 -> answer true.
-     * @author: Alberto Aniballi
-     * */
     @Test
-    public void isSatisfied_DecreasingCorrectInputOtherCellsEmpty_1_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(1,0,Color.BEIGE);
-        insertElement(2,0,Color.BEIGE);
-        insertElement(3,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(1,1,Color.BEIGE);
-        insertElement(2,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
+    public void isSatisfied_DecreasingDispositionWithABadColumn_trueInOutput(){
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
 
-    /**
-     * Sixth Test Decreasing: 5,4,3,2,1 -> answer true.
-     * @author: Alberto Aniballi
-     * */
-    @Test
-    public void isSatisfied_DecreasingCorrectInputOtherCellsEmpty_2_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(1,0,Color.BEIGE);
-        insertElement(2,0,Color.BEIGE);
-        insertElement(3,0,Color.BEIGE);
-        insertElement(4,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(1,1,Color.BEIGE);
-        insertElement(2,1,Color.BEIGE);
-        insertElement(3,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(2,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
 
-    /**
-     * Seventh Test Decreasing: 6,5,4,3,2,1 -> answer true.
-     * @author: Alberto Aniballi
-     * */
-    @Test
-    public void isSatisfied_DecreasingCorrectInputOtherCellsEmpty_3_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(1,0,Color.BEIGE);
-        insertElement(2,0,Color.BEIGE);
-        insertElement(3,0,Color.BEIGE);
-        insertElement(4,0,Color.BEIGE);
-        insertElement(5,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(1,1,Color.BEIGE);
-        insertElement(2,1,Color.BEIGE);
-        insertElement(3,1,Color.BEIGE);
-        insertElement(4,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(2,2,Color.BEIGE);
-        insertElement(3,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(2,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        insertElement(1,4,Color.BEIGE);
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
 
-    /**
-     * Eighth Test Decreasing: 6,5,4,3,3 -> answer false.
-     * @author: Alberto Aniballi
-     * */
-    @Test
-    public void isSatisfied_NoCorrectInputOtherCellsEmpty_3_trueInOutput(){
-        insertElement(0,0,Color.BEIGE);
-        insertElement(1,0,Color.BEIGE);
-        insertElement(2,0,Color.BEIGE);
-        insertElement(3,0,Color.BEIGE);
-        insertElement(4,0,Color.BEIGE);
-        insertElement(5,0,Color.BEIGE);
-        insertElement(0,1,Color.BEIGE);
-        insertElement(1,1,Color.BEIGE);
-        insertElement(2,1,Color.BEIGE);
-        insertElement(3,1,Color.BEIGE);
-        insertElement(4,1,Color.BEIGE);
-        insertElement(0,2,Color.BEIGE);
-        insertElement(1,2,Color.BEIGE);
-        insertElement(2,2,Color.BEIGE);
-        insertElement(3,2,Color.BEIGE);
-        insertElement(0,3,Color.BEIGE);
-        insertElement(1,3,Color.BEIGE);
-        insertElement(2,3,Color.BEIGE);
-        insertElement(0,4,Color.BEIGE);
-        insertElement(1,4,Color.BEIGE);
-        insertElement(2,4,Color.BEIGE);
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
@@ -295,16 +246,40 @@ public class CommonGoalCard11Test {
      * */
     @Test
     public void isSatisfied_RandomInputAllRows_falseInOutput(){
-        fillEmptyPart();
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
-    }
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.WHITE,Type.FIRST));
 
-    @After
-    public void tearDown() {
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardInObjectCards(null, i,j);
-            }
-        }
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
+
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
+
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.PINK,Type.FIRST));
+
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 }

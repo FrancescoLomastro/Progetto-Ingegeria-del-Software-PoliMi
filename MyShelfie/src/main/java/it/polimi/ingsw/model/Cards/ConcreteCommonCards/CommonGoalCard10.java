@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 // sarebbe la mia classe eightCellsSameType
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Player.Library;
 
 import java.util.HashMap;
 
@@ -22,7 +23,7 @@ public class CommonGoalCard10 extends CommonGoalCard {
      */
     @Override
     public boolean isSatisfied(Library library) {
-        ObjectCard[][] lib = library.getLibrary();
+        ObjectCard[][] lib = library.getMatrix();
         // istanzio e inizializzo l'array delle occorrenze
         HashMap<Color,Integer> occurencesTypeCounter = new HashMap<>();
 

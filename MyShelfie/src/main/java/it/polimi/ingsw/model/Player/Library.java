@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.Player;
 
-import it.polimi.ingsw.model.Cards.*;
+import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Enums.Direction;
+import it.polimi.ingsw.model.Utility.Position;
 
 import java.util.HashSet;
 
@@ -11,26 +13,24 @@ import java.util.HashSet;
  * @author Alberto Aniballi
  */
 public class Library {
-    private final int numberOfRows;
-    private final int numberOfColumns;
-    private ObjectCard[][] library;
+    private final int numberOfRows=6;
+    private final int numberOfColumns=5;
+    private ObjectCard[][] matrix;
 
     /**
      * Constructor of Library instances
-     *
-     * @param horizontalDimension the library horizontal dimension
-     * @param verticalDimension the library vertical dimension
+     * Creates an empty matrix of ObjectCards
+     *  @author Alberto Aniballi
      */
-    public Library(int horizontalDimension,int verticalDimension) {
-        this.numberOfColumns = horizontalDimension;
-        this.numberOfRows = verticalDimension;
-        library = new ObjectCard[numberOfRows][numberOfColumns];
+    public Library() {
+        matrix = new ObjectCard[numberOfRows][numberOfColumns];
     }
 
     /**
      * It gets the library number of columns
      *
      * @return: number of library columns
+     *  @author Alberto Aniballi
      */
     public int getNumberOfColumns() {
         return numberOfColumns;
@@ -40,19 +40,31 @@ public class Library {
      * It gets the library number of rows
      *
      * @return: number of library rows
+     * @author Alberto Aniballi
      */
     public int getNumberOfRows() {
         return numberOfRows;
     }
 
+
     /**
-     * It gets the matrix of object cards that represent the library
+     * It gets a matrix of object cards that represent the library
      *
      * @return: matrix of object cards that represent the library
+     * @author Lo Mastro Francesco
      */
-    public ObjectCard[][] getLibrary() {
-        return library;
+    public ObjectCard[][] getMatrix() {
+        ObjectCard[][] toReturn= new ObjectCard[numberOfRows][numberOfColumns];
+        for(int row=0; row<numberOfRows;row++)
+        {
+            for(int column=0;column<numberOfColumns;column++)
+            {
+                toReturn[row][column]=matrix[row][column];
+            }
+        }
+        return toReturn;
     }
+
 
     /**
      * It checks if a specific cell of the library is free
@@ -61,8 +73,8 @@ public class Library {
      * @param column the specific column to be checked
      * @return: boolean that is true if the cell is empty, otherwise false
      */
-    public boolean isCellEmpty(int row, int column) {
-        if (library[row][column] != null) {
+    private boolean isCellEmpty(int row, int column) {
+        if (matrix[row][column] != null) {
             return false;
         } else {
             return true;
@@ -73,11 +85,10 @@ public class Library {
      * It checks if the library is full
      *
      * @return: boolean that is true if the library is full, otherwise false
+     *  @author Alberto Aniballi
      */
     public boolean isFull() {
-        //In order to check if the Library is full it is only necessary to check if the highest rows are full
-
-        int highest_row = getNumberOfRows()-1;
+        int highest_row = 0;
         boolean libraryIsFull = true;
 
         for(int col=0;col<getNumberOfColumns();col++) {
@@ -95,62 +106,57 @@ public class Library {
      *
      * @param column the specific column where we have to count the number of free cells
      * @return: an integer that represents the number of free cells in a column
+     * @author Alberto Aniballi
      */
     public int findNumberOfFreeCells(int column) {
         int availableCells = 0;
-        for(int row=0;row<getNumberOfRows();row++) {
-            if (isCellEmpty(row,column)) {
-                availableCells = getNumberOfRows() - row;//once we find the first empty cell also the ones on top of it are free, so we can directly calculate the final result
-                break;
+        if(column>=0 && column<getNumberOfColumns())
+        {
+            for(int row=numberOfRows-1;row>=0;row--) {
+                if (isCellEmpty(row,column)) {
+                    availableCells = row+1;
+                    break;
+                }
             }
         }
-
         return availableCells;
     }
 
     /**
      * It inserts the cards passed as arguments into a specific column starting from the first available cell
-     *
-     * @param cards                 array containing the object cards to be inserted in the order of insertion
-     * @param firstAvailableRow     the first available row of the specific column
+
      * @param chosenColumn          the specific column where we insert cards
+     * @param cards                 array containing the object cards to be inserted in the order of insertion
+     * @return true if the cards array has been succesuflly inserted into the fibrary
+     * @author: Alberto Aniballi, Francesco Lo Mastro
      */
-    public void insertCardsInLibrary(ObjectCard[] cards,int firstAvailableRow,int chosenColumn) { // TO BE DISCUSSED
-        int insertionRow = firstAvailableRow;
-
-        for(ObjectCard card : cards) {
-            library[insertionRow][chosenColumn] = card;
-            insertionRow++;
+    public boolean insertCardsInLibrary(int chosenColumn, ObjectCard... cards) {
+        int row;
+        if(isMoveAvailable(chosenColumn,cards))
+        {
+            row=findNumberOfFreeCells(chosenColumn)-1;
+            for (int i=0; i < cards.length; row--,i++)
+            {
+                matrix[row][chosenColumn] = cards[i];
+            }
+            return true;
         }
+        return false;
     }
 
-    /**
-     * SERVE PER IL TESTING DA ELIMINARE POI
-     */
-    public void insertCardInObjectCards(ObjectCard card,int x,int y){
-        library[x][y] = card;
-    }
-    /**
-     * It verifies if a specific column has enough available cells to insert the cards contained in the array
+    /** Checks if an array of cards can be inserted into a specific column.
      *
-     * @param cards             array containing the object cards to be inserted in the order of insertion
-     * @param chosenColumn      the specific column that we want to verify
-     * @return:                 boolean that is true if the chosen column has enough free cells
+     * @param chosenColumn the column to be checked
+     * @param cards the array of cards to be controlled
+     * @return true if the array of cards fits into the column selected
+     * @author: Alberto Aniballi
      */
-    public boolean checkColumn(ObjectCard[] cards,int chosenColumn) {
-        // Assuming that cards contain the chosen cards from the grid, inserted in the order of insertion into the selected column
-        boolean columnIsAvailable = false;
-        int numberOfChosenCards = cards.length; //da decidere insieme quando controlliamo che il numero di carte sia minore o uguale a 3, in caso contrario lancio eccezione o mossa non valida
-        int numberOfAvailableCellsOnColumn = findNumberOfFreeCells(chosenColumn);
-
-        if (numberOfAvailableCellsOnColumn >= numberOfChosenCards) {
-            columnIsAvailable = true;
-            int firstAvailableRow = getNumberOfRows()-numberOfAvailableCellsOnColumn;
-            insertCardsInLibrary(cards,firstAvailableRow,chosenColumn);
-        }
-
-        return  columnIsAvailable;
+    public boolean isMoveAvailable(int chosenColumn, ObjectCard... cards){
+        int row = findNumberOfFreeCells(chosenColumn);
+        return row>=cards.length && chosenColumn<numberOfColumns && chosenColumn>=0;
     }
+
+
 
     /**
      * It verifies if two object cards have the same color
@@ -160,7 +166,7 @@ public class Library {
      * @return: boolean that is true if the two cards have the same color, false otherwise
      */
     private boolean compareColor(ObjectCard objectCard1,ObjectCard objectCard2) {
-        if (objectCard1.getColor().equals(objectCard2.getColor())) {
+        if (objectCard1.getColor()==objectCard2.getColor()) {
             return true;
         } else {
             return false;
@@ -168,135 +174,135 @@ public class Library {
     }
 
     /**
-     * It checks if the current cell, identified by startRow and startColumn, has the same color of the subsequent cell in the specified direction
+     * It checks if the current cell, identified by startRow and startColumn, has the same color of the celle identified by calculatedRow and calculatedColumn
      *
      * @param startRow      the row where the current cell is
      * @param startColumn   the column where the current cell is
-     * @param direction     the direction where we should select the next cell to be compared
+     * @param calculatedRow      the row where the subsequent cell is
+     * @param calculatedColumn   the column where the subsequent cell is
      * @return: boolean that is true if the two cells contains two object cards that have the same color, false otherwise
+     * @author: Alberto Aniballi
      */
-    private boolean checkIfColorIsTheSame(int startRow, int startColumn, String direction) {
-
-        boolean answer = false;
-
-        switch (direction) {
-            case "Down": {
-                if(compareColor(library[startRow][startColumn],library[startRow+1][startColumn])) {
-                    answer = true;
-                }
-                break;
-            }
-            case "Right": {
-                if(compareColor(library[startRow][startColumn],library[startRow][startColumn+1])) {
-                    answer = true;
-                }
-                break;
-            }
-            case "Left": {
-                if(compareColor(library[startRow][startColumn],library[startRow][startColumn-1])) {
-                    answer = true;
-                }
-                break;
-            }
-            case "Up": {
-                if(compareColor(library[startRow][startColumn],library[startRow-1][startColumn])) {
-                    answer = true;
-                }
-                break;
-            }
-        }
-
-        return answer;
+    private boolean checkIfColorIsTheSame(int startRow, int startColumn, int calculatedRow,int calculatedColumn) {
+        return compareColor(matrix[startRow][startColumn], matrix[calculatedRow][calculatedColumn]);
     }
 
     /**
-     * It counts the number of neighbours that have the same color of the initial cell passed as argument using a depth-first search approach
+     * Checks if the cordinate of a cell in the library are valid
+     * @param row   the row where the current cell is
+     * @param column the column where the current cell is
+     * @return true if the cordinate of a cell in the library are valid
+     * @author: Francesco Lo Mastro
+     */
+    private boolean checkPositionIsValid(int row, int column) {
+        return !(column < 0 || column >= numberOfColumns || row < 0 || row >= numberOfRows);
+    }
+
+
+
+    /**
+     * It counts the number of cards that are identified as neighbours of the parameter, using a recursive approach
+     * NOTE: a neighbour of a X card is a card that has the same color of X, also it needs to be close to subsequent to another neighbour of X, or X itself
      *
      * @param startRow      the row where the current cell is
      * @param startColumn   the column where the current cell is
-     * @param checkedCells  the set containing the already checked cells, these cells are not available for branching
-     * @return:             integer that represents the number of neighbours cells that store an object card of the same color of the initial object card
+     * @return:             integer that represents the number of neighbours of the passed cell
+     * @author: Alberto Aniballi, Francesco Lo MAstro
      */
-    public int countSameColorNeighbours(int startRow, int startColumn, HashSet<String> checkedCells) {
-
+    public int countNeighbours(int startRow, int startColumn,HashSet<Position> checkedCells) {
         int numberOfSameColorNeighbours = 0;
-        if(((startRow+1)<=numberOfRows-1) && (library[startRow+1][startColumn]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Down"))) {
-            if (!checkedCells.contains((startRow+1)+"_"+startColumn)) {
-                checkedCells.add((startRow+1)+"_"+startColumn);
-                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow+1,startColumn,checkedCells);
+        int calculatedRow;
+        int calculatedColumn;
+        Position position;
+
+        if(matrix[startRow][startColumn]!=null)
+        {
+            for (Direction direction : Direction.values())
+            {
+                calculatedRow = startRow + direction.getRowDirection();
+                calculatedColumn = startColumn + direction.getColumnDirection();
+                if (checkPositionIsValid(calculatedRow, calculatedColumn))
+                {
+                    position = new Position(calculatedRow, calculatedColumn);
+                    if (matrix[calculatedRow][calculatedColumn] == null)
+                        checkedCells.add(position);
+                    else {
+                        if (checkIfColorIsTheSame(startRow, startColumn, calculatedRow, calculatedColumn)) {
+                            if (checkedCells.add(position)) {
+                                numberOfSameColorNeighbours += 1 + countNeighbours(calculatedRow, calculatedColumn,checkedCells);
+                            }
+                        }
+                    }
+                }
             }
         }
-        if (((startColumn+1)<=numberOfColumns-1) && (library[startRow][startColumn+1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Right"))) {
-            if (!checkedCells.contains(startRow+"_"+(startColumn+1))) {
-                checkedCells.add(startRow+"_"+(startColumn+1));
-                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow,startColumn+1,checkedCells);
-            }
-        }
-        if (((startColumn-1)>=0) && (library[startRow][startColumn-1]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Left"))) {
-            if (!checkedCells.contains(startRow + "_" + (startColumn - 1))) {
-                checkedCells.add(startRow+"_"+(startColumn-1));
-                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow, startColumn - 1,checkedCells);
-            }
-        }
-        if (((startRow-1)>=0) && (library[startRow-1][startColumn]!=null) && (checkIfColorIsTheSame(startRow,startColumn,"Up"))) {
-            if (!checkedCells.contains((startRow-1) + "_" + startColumn)) {
-                checkedCells.add((startRow-1)+"_"+(startColumn));
-                numberOfSameColorNeighbours+=countSameColorNeighbours(startRow-1, startColumn,checkedCells);
-            }
-        }
-        return 1+numberOfSameColorNeighbours;
+        return numberOfSameColorNeighbours;
     }
 
     /**
-     * It selects the correct number of points to be added based on the number of neighbour cells that stores object cards that have the same color of the initial object card
+     * It selects the correct number of points to be given, based on the size of the group of adjacent card found
      *
-     * @param sameColorNeighbours the number of neighbours that have the same color
-     * @return: integer that represents the number of points to be added
+     * @param numOfAdjacentCard the number of neighbours that have the same color
+     * @return: integer that represents the number of points to be given
+     * @author: Alberto Aniballi
      */
-    private int addAdjacentPoints(int sameColorNeighbours) {
-        if (sameColorNeighbours==3) {
+    private int addAdjacentPoints(int numOfAdjacentCard) {
+        if (numOfAdjacentCard==3) {
             return 2;
-        } else if (sameColorNeighbours==4) {
+        } else if (numOfAdjacentCard==4) {
             return 3;
-        } else if (sameColorNeighbours==5) {
+        } else if (numOfAdjacentCard==5) {
             return 5;
-        } else if (sameColorNeighbours>=6) {
+        } else if (numOfAdjacentCard>=6) {
             return 8;
         } else {
             return 0;
         }
     }
 
-    /*
-    To be tested: cosa succede se abbiamo due possibili strade da poter seguire dalla cella iniziale?
-     */
     /**
-     * It counts the correct number of adjacency points to be added based on the number of neighbour cells that stores object cards that have the same color of the initial object card
+     * It returns the amount of points based on the number of groups of adjacent card found in the library
      *
-     * @return: integer that represents the number of adjacency points due to object cards positioning on the library
+     * @return: integer that represents the number of adjacency points due to object cards in the library
+     * @author: Alberto Aniballi, Francesco Lo Mastro
      */
     public int countAdjacentPoints() {
-        // La stringa "row_col" identifica univocamente una cella per questo uso checked_cells
-        int row = 0;
-        int column = 0;
+
         int numberOfAdjacentPoints = 0;
-        HashSet<String> checkedCells = new HashSet<String>();
+        int numberOfNeighbours;
+        Position position;
+        HashSet <Position> checkedCells = new HashSet<>();
 
-
-        while (row<getNumberOfRows()) {
-            while ((column <getNumberOfColumns()) && (!checkedCells.contains(row+"_"+ column))) {
-                checkedCells.add(row+"_"+column);
-                int sameColorNeighbours = countSameColorNeighbours(row, column,checkedCells);
-
-                /* da implementare la verifica dei punti da aggiungere in base al numero di sameColorNeighbours*/
-                numberOfAdjacentPoints += addAdjacentPoints(sameColorNeighbours);
-                column++;
+        for(int row=0;row<numberOfRows;row++)
+        {
+            for(int column = 0;column<numberOfColumns;column++)
+            {
+                position = new Position(row,column);
+                if(checkedCells.add(position))
+                {
+                    if(matrix[row][column]!=null)
+                    {
+                        numberOfNeighbours = countNeighbours(row, column,checkedCells);
+                        numberOfAdjacentPoints += addAdjacentPoints(numberOfNeighbours+1);
+                    }
+                }
             }
-            column=0;
-            row++;
         }
-
         return numberOfAdjacentPoints;
+    }
+    public void stampa()
+    {
+        for(int row=0;row<numberOfRows;row++)
+        {
+            for(int column = 0;column<numberOfColumns;column++)
+            {
+                if(matrix[row][column]==null)
+                    System.out.print("| ");
+                else
+                    System.out.print(matrix[row][column]+" ");
+            }
+            System.out.println("");
+        }
     }
 
 }

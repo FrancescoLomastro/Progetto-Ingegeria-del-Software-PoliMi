@@ -1,250 +1,224 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Cards.*;
+import it.polimi.ingsw.model.Enums.*;
+import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Enums.Type;
-import it.polimi.ingsw.model.Player.Library;
-import org.junit.Assert;
-import static org.junit.Assert.assertEquals;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashSet;
-
-/**
- * This class is used to test library class.
- *
- * @author: Alberto Aniballi
- */
+import static org.junit.Assert.*;
 
 public class LibraryTest {
-
-    Library library;
-    Type type = Type.FIRST;
-
-    public LibraryTest() {
-        library = new Library(5,6);
-    }
-
-    private void insertElement(int row, int col, Color color){
-        ObjectCard objectCards = new ObjectCard("", color , type);
-        library.insertCardInObjectCards(objectCards, row,col);
-    }
-
+    private Library library;
     @Before
-    public void setUp(){
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardInObjectCards(null, i,j);
-            }
+    public void setUp()
+    {
+        library=new Library();
+    }
+    @After
+    public void tearDown()
+    {}
+
+    private void fillVector(ObjectCard... vector)
+    {
+        CardGenerator cardGenerator= new CardGenerator();
+        for(int i=0; i<vector.length;i++)
+        {
+            vector[i]=cardGenerator.generateObjectCard();
         }
     }
-
     @Test
-    public void testIntVariable() {
-        int expected = 5;
-        int actual = 5;
-        assertEquals(expected, actual);
+    public void getMatrix_noInput_nullOutput()
+    {
+        ObjectCard[][] testMatrix= new ObjectCard[library.getNumberOfRows()][library.getNumberOfColumns()];
+        assertArrayEquals(testMatrix,library.getMatrix());
     }
 
-    /**
-     * First test: one group of 4 same type object cards, start row (0,0) -> answer 4
-     */
     @Test
-    public void test1_countSameColorNeighbours_trueInOutput(){
-        insertElement(0,0, Color.BEIGE);
-        insertElement(1,0, Color.BEIGE);
-        insertElement(2,0, Color.BEIGE);
-        insertElement(3,0, Color.BEIGE);
+    public void insertCardsInLibrary_correctInput_correctOutput()
+    {
+        ObjectCard[][] testMatrix= new ObjectCard[library.getNumberOfRows()][library.getNumberOfColumns()];
+        ObjectCard[] testVector = new ObjectCard[library.getNumberOfRows()];
+        fillVector(testVector);
 
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((0)+"_"+(0));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(0,0,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,4);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        for(int column=0;column<library.getNumberOfColumns();column++)
+        {
+            for(int row= library.getNumberOfRows()-1,i=0; row>=0;row--,i++)
+            {
+                testMatrix[row][column]= testVector[i];
+            }
+            assertTrue(library.insertCardsInLibrary(column,testVector));
+            assertArrayEquals(testMatrix,library.getMatrix());
+        }
+    }
+    @Test
+    public void insertCardsInLibrary_outOfBoundInput_falseOutput1()
+    {
+        ObjectCard[][] testMatrix= new ObjectCard[library.getNumberOfRows()][library.getNumberOfColumns()];
+        ObjectCard[] testVector = new ObjectCard[library.getNumberOfRows()+1];
+        fillVector(testVector);
+
+        assertFalse(library.insertCardsInLibrary(0,testVector));
+        assertArrayEquals(library.getMatrix(),testMatrix);
+    }
+    @Test
+    public void insertCardsInLibrary_outOfBoundComposedInput_falseOutput2()
+    {
+        ObjectCard[] testVector = new ObjectCard[library.getNumberOfRows()+1];
+        ObjectCard[] testVector_short = new ObjectCard[1];
+        fillVector(testVector);
+        fillVector(testVector_short);
+
+        assertTrue(library.insertCardsInLibrary(0,testVector_short));
+        assertFalse(library.insertCardsInLibrary(0,testVector));
     }
 
-    /**
-     * Second test: one group,in column, of 4 same type object cards. Start row (2,0) -> answer 4
-     */
     @Test
-    public void test2_countSameColorNeighbours_trueInOutput(){
-        insertElement(0,0, Color.BEIGE);
-        insertElement(1,0, Color.BEIGE);
-        insertElement(2,0, Color.BEIGE);
-        insertElement(3,0, Color.BEIGE);
+    public void isMoveAvailable_correctInput_TrueOutput()
+    {
+        ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()];
+        ObjectCard[] testVector2 = new ObjectCard[1];
+        fillVector(testVector1);
+        fillVector(testVector2);
 
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(0));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(0,0,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,4);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        assertTrue(library.isMoveAvailable(0,testVector1));
+        assertTrue(library.isMoveAvailable(library.getNumberOfColumns()-1,testVector2));
+        for(int i=0; i<library.getNumberOfRows()-1;i++)
+        {
+            library.insertCardsInLibrary(0,testVector2);
+        }
+        assertTrue(library.isMoveAvailable(0,testVector2));
+    }
+    @Test
+    public void isMoveAvailable_incorrectInput_FalseOutput()
+    {
+        ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()+1];
+        ObjectCard[] testVector2 = new ObjectCard[1];
+        fillVector(testVector1);
+        fillVector(testVector2);
+
+        assertFalse(library.isMoveAvailable(0,testVector1));
+        assertFalse(library.isMoveAvailable(library.getNumberOfColumns(),testVector2));
+        for(int i=0; i<library.getNumberOfRows();i++)
+        {
+            library.insertCardsInLibrary(0,testVector2);
+        }
+        assertFalse(library.isMoveAvailable(0,testVector2));
+    }
+    @Test
+    public void isFull__correctOutput()
+    {
+        ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()];
+        fillVector(testVector1);
+
+        assertFalse(library.isFull());
+        for(int column=0; column< library.getNumberOfColumns();column++)
+        {
+            library.insertCardsInLibrary(column,testVector1);
+        }
+        assertTrue(library.isFull());
     }
 
-    /**
-     * Third test: one group,in row, of 5 same type object cards. Start row (2,0) -> answer 5
-     */
     @Test
-    public void test3_countSameColorNeighbours_trueInOutput(){
-        insertElement(2,0, Color.BEIGE);
-        insertElement(2,1, Color.BEIGE);
-        insertElement(2,2, Color.BEIGE);
-        insertElement(2,3, Color.BEIGE);
-        insertElement(2,4, Color.BEIGE);
+    public void findNumberOfFreeCells_correctInput_correctOutput()
+    {
+        ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()];
+        fillVector(testVector1);
+        for(int column=0; column< library.getNumberOfColumns();column++)
+        {
+            assertSame(library.findNumberOfFreeCells(column),library.getNumberOfRows());
+        }
+        library.insertCardsInLibrary(0,testVector1);
+        assertSame(library.findNumberOfFreeCells(0),0);
+    }
+    @Test
+    public void findNumberOfFreeCells_incorrectInput_ZeroOutput()
+    {
+        assertSame(library.findNumberOfFreeCells(library.getNumberOfColumns()),0);
+        assertSame(library.findNumberOfFreeCells(library.getNumberOfColumns()+1),0);
+        assertSame(library.findNumberOfFreeCells(-1),0);
+    }
+    @Test
+    public void countAdjacentPoints_correctInput_correctOutput()
+    {
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
 
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(0));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,0,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,5);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
+
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.GREEN,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.PINK,Type.FIRST));
+
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.GREEN,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.GREEN,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.PINK,Type.FIRST));
+
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.GREEN,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.GREEN,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
+        System.out.println(library.countAdjacentPoints());
+        library.stampa();
+    }
+    @Test
+    public void countAdjacentPoints_correctInput1_correctOutput1()
+    {
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
+
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
+
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.GREEN,Type.FIRST));
+
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.GREEN,Type.FIRST));
+        assertSame(library.countAdjacentPoints(),0);
+    }
+    @Test
+    public void countAdjacentPoints_correctInput2_correctOutput2()
+    {
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(1,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.BLUE,Type.FIRST));
+        library.insertCardsInLibrary(2,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(3,new ObjectCard("",Color.YELLOW,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
+        library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
+        assertSame(library.countAdjacentPoints(),21);
+    }
+    @Test
+    public void countAdjacentPoints_noInput_correctOutput()
+    {
+        assertSame(library.countAdjacentPoints(),0);
     }
 
-    /**
-     * Fourth test: one group,in row, of 1 same type object cards. Start row (2,2) -> answer 1
-     */
-    @Test
-    public void test4_countSameColorNeighbours_trueInOutput(){
-        insertElement(2,0, Color.BEIGE);
-        insertElement(2,1, Color.BEIGE);
-        insertElement(2,2, Color.BEIGE);
-        insertElement(2,3, Color.BEIGE);
-        insertElement(2,4, Color.BEIGE);
 
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(2));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,2,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,5);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
-
-    /**
-     * Fifth test: one group,forming a L, of 5 same type object cards. Start row (2,2) -> answer 5
-     */
-    @Test
-    public void test5_countSameColorNeighbours_trueInOutput(){
-        insertElement(2,0, Color.BEIGE);
-        insertElement(2,1, Color.BEIGE);
-        insertElement(2,2, Color.BEIGE);
-        insertElement(1,2, Color.BEIGE);
-        insertElement(0,2, Color.BEIGE);
-
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(2));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,2,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,5);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
-
-    /**
-     * Sixth test: one group,forming a S, of 6 same type object cards. Start row (2,0) -> answer 6
-     */
-    @Test
-    public void test6_countSameColorNeighbours_trueInOutput(){
-        insertElement(3,0, Color.BEIGE);
-        insertElement(2,0, Color.BEIGE);
-        insertElement(2,1, Color.BEIGE);
-        insertElement(2,2, Color.BEIGE);
-        insertElement(1,2, Color.BEIGE);
-        insertElement(1,3, Color.BEIGE);
-
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(0));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,0,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,6);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
-
-    /**
-     * Seventh test: one group,forming a X, of 10 same type object cards. Start row (2,2) -> answer 10
-     */
-    @Test
-    public void test7_countSameColorNeighbours_trueInOutput(){
-        insertElement(2,0, Color.BEIGE);
-        insertElement(2,1, Color.BEIGE);
-        insertElement(2,2, Color.BEIGE);
-        insertElement(1,2, Color.BEIGE);
-        insertElement(0,2, Color.BEIGE);
-        insertElement(3,2, Color.BEIGE);
-        insertElement(4,2, Color.BEIGE);
-        insertElement(5,2, Color.BEIGE);
-        insertElement(2,3, Color.BEIGE);
-        insertElement(2,4, Color.BEIGE);
-
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(2));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,2,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,10);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
-
-
-
-    /**
-     * Eighth test: one group of 1 same type object cards. Start row (2,0) -> answer 1
-     */
-    @Test
-    public void test8_countSameColorNeighbours_trueInOutput(){
-        insertElement(2,0, Color.BEIGE);
-
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(0));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,0,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,1);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
-
-    /**
-     * Ninth test: one cube of 9 same type object cards. Start row (2,2) -> answer 9
-     */
-    @Test
-    public void test9_countSameColorNeighbours_trueInOutput(){
-        insertElement(1,1, Color.BEIGE);
-        insertElement(1,2, Color.BEIGE);
-        insertElement(1,3, Color.BEIGE);
-        insertElement(2,1, Color.BEIGE);
-        insertElement(2,2, Color.BEIGE);
-        insertElement(2,3, Color.BEIGE);
-        insertElement(3,1, Color.BEIGE);
-        insertElement(3,2, Color.BEIGE);
-        insertElement(3,3, Color.BEIGE);
-
-
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(2));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,2,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,9);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
-
-    /**
-     * Tenth test: two crossing S forming one unique group same type object cards. Start row (2,2) -> answer 19
-     */
-    @Test
-    public void test10_countSameColorNeighbours_trueInOutput(){
-        insertElement(0,0, Color.BEIGE);
-        insertElement(0,1, Color.BEIGE);
-        insertElement(0,2, Color.BEIGE);
-        insertElement(1,2, Color.BEIGE);
-        insertElement(2,2, Color.BEIGE);
-        insertElement(2,1, Color.BEIGE);
-        insertElement(2,0, Color.BEIGE);
-        insertElement(3,0, Color.BEIGE);
-        insertElement(4,0, Color.BEIGE);
-        insertElement(5,0, Color.BEIGE);
-        insertElement(2,3, Color.BEIGE);
-        insertElement(2,4, Color.BEIGE);
-        insertElement(1,4, Color.BEIGE);
-        insertElement(0,4, Color.BEIGE);
-        insertElement(3,2, Color.BEIGE);
-        insertElement(4,2, Color.BEIGE);
-        insertElement(5,2, Color.BEIGE);
-        insertElement(5,3, Color.BEIGE);
-        insertElement(5,4, Color.BEIGE);
-
-        HashSet<String> checkedCells = new HashSet<>();
-        checkedCells.add((2)+"_"+(2));
-        int neighboursWithSameColorCounter = library.countSameColorNeighbours(2,2,checkedCells);
-        assertEquals(neighboursWithSameColorCounter,19);
-        //Assert.assertTrue(commonGoalCard.isSatisfied(library));
-    }
 }

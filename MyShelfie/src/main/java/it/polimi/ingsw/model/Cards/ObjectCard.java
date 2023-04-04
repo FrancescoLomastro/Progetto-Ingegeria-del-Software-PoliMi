@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.Cards;
 
-import it.polimi.ingsw.model.Enums.*;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Enums.Type;
 
 public class ObjectCard extends Card {
     private final Color color;
@@ -30,4 +31,20 @@ public class ObjectCard extends Card {
         return type;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof ObjectCard)) {
+            return false;
+        }
+        ObjectCard other = (ObjectCard) obj;
+        return this.color == other.color && this.type == other.type;
+    }
+
+    @Override
+    public String toString() {
+        return ""+color;
+    }
 }

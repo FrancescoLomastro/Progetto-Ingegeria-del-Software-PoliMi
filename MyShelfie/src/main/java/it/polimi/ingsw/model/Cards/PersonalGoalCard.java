@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.Cards;
 
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Player.*;
-import it.polimi.ingsw.model.Utility.*;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Player.Library;
+import it.polimi.ingsw.model.Utility.Couple;
+import it.polimi.ingsw.model.Utility.Position;
 
 import java.util.ArrayList;
 
@@ -25,8 +26,8 @@ public class PersonalGoalCard extends Card {
             tmp = (Position) goalVector.get(i).getFirst();
             tmpColor = (Color) goalVector.get(i).getSecond();
             if(
-                    lib.getLibrary()[tmp.getRow()][tmp.getColumn()]!=null &&
-                    lib.getLibrary()[tmp.getRow()][tmp.getColumn()].getColor()== tmpColor
+                    lib.getMatrix()[tmp.getRow()][tmp.getColumn()]!=null &&
+                    lib.getMatrix()[tmp.getRow()][tmp.getColumn()].getColor()== tmpColor
             ){
                 count++;
             }

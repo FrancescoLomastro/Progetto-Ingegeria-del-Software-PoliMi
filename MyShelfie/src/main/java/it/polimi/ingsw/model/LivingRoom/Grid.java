@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model.LivingRoom;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Utility.*;
-import it.polimi.ingsw.model.CardGenerator.*;
+import it.polimi.ingsw.model.CardGenerator.CardGenerator;
+import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Utility.Position;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -94,15 +94,17 @@ public class Grid {
      * drawn, is formed by connected positions and finally if all the object cards have a free side before the drawn.
      */
     public boolean isDrawAvailable(Position[] drawn){
-        int columns[]= new int[drawn.length];
-        int rows[]= new int[drawn.length];
-        int vector[];
+        int[] columns;
+        int[] rows;
+        int[] vector;
 
         //Mossa non nulla ed interna
         if((drawn==null)||(drawn.length<=0)||(drawn.length>3))
         {
             return false;
         }
+        columns= new int[drawn.length];
+        rows= new int[drawn.length];
         //Mossa senza buchi
         for(int i=0; i< drawn.length;i++)
         {

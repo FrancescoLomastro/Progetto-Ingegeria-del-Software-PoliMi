@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Player.Library;
 
 /**
  * This class contains the algorithm to verify if the following common goal is satisfied.
@@ -26,10 +26,10 @@ public class CommonGoalCard1 extends CommonGoalCard {
                 if (i==0) {
                     boolean partial_ans = true;
                     Color color;
-                    if(library.getLibrary()[0][0]!=null) {
-                            color = library.getLibrary()[0][0].getColor();
+                    if(library.getMatrix()[0][0]!=null) {
+                            color = library.getMatrix()[0][0].getColor();
                         for(int diag=0;diag<5;diag++) {
-                            if (!(library.getLibrary()[diag][diag].getColor().equals(color)) || library.getLibrary()[diag][diag]==null) {
+                            if (!(library.getMatrix()[diag][diag].getColor().equals(color)) || library.getMatrix()[diag][diag]==null) {
                                 partial_ans = false;
                                 break;
                             }
@@ -42,10 +42,10 @@ public class CommonGoalCard1 extends CommonGoalCard {
                 } else if (i==1) {
                     boolean partial_ans = true;
                     Color color;
-                    if(library.getLibrary()[1][0]!=null) {
-                        color = library.getLibrary()[1][0].getColor();
+                    if(library.getMatrix()[1][0]!=null) {
+                        color = library.getMatrix()[1][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getLibrary()[1 + diag][diag].getColor().equals(color)) || library.getLibrary()[1+diag][diag]==null) {
+                            if (!(library.getMatrix()[1 + diag][diag].getColor().equals(color)) || library.getMatrix()[1+diag][diag]==null) {
                                 partial_ans = false;
                                 break;
                             }
@@ -58,10 +58,10 @@ public class CommonGoalCard1 extends CommonGoalCard {
                 } else if (i==2) {
                     boolean partial_ans = true;
                     Color color;
-                    if(library.getLibrary()[5][0]!=null) {
-                        color = library.getLibrary()[5][0].getColor();
+                    if(library.getMatrix()[5][0]!=null) {
+                        color = library.getMatrix()[5][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getLibrary()[5 - diag][diag].getColor().equals(color)) || library.getLibrary()[5-diag][diag]==null) {
+                            if (!(library.getMatrix()[5 - diag][diag].getColor().equals(color)) || library.getMatrix()[5-diag][diag]==null) {
                                 partial_ans = false;
                                 break;
                             }
@@ -74,10 +74,10 @@ public class CommonGoalCard1 extends CommonGoalCard {
                 } else if (i==3) {
                     boolean partial_ans = true;
                     Color color;
-                    if(library.getLibrary()[4][0]!=null) {
-                        color = library.getLibrary()[4][0].getColor();
+                    if(library.getMatrix()[4][0]!=null) {
+                        color = library.getMatrix()[4][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getLibrary()[4 - diag][diag].getColor().equals(color)) || library.getLibrary()[4-diag][diag]==null) {
+                            if (!(library.getMatrix()[4 - diag][diag].getColor().equals(color)) || library.getMatrix()[4-diag][diag]==null) {
                                 partial_ans = false;
                                 break;
                             }

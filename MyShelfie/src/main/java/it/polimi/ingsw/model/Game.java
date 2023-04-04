@@ -1,12 +1,15 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.LivingRoom.*;
-import it.polimi.ingsw.model.Player.*;
-import it.polimi.ingsw.model.Utility.*;
-import it.polimi.ingsw.model.CardGenerator.*;
+import it.polimi.ingsw.model.CardGenerator.CardGenerator;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.LivingRoom.Grid;
+import it.polimi.ingsw.model.LivingRoom.LivingRoom;
+import it.polimi.ingsw.model.Player.Library;
+import it.polimi.ingsw.model.Player.Player;
+import it.polimi.ingsw.model.Utility.Position;
 
 import java.io.IOException;
+
 
 /*
 class Game
@@ -119,7 +122,7 @@ public class Game {
 
         if(livingRoom.getGrid().isDrawAvailable(move)){
 
-            return player.getLibrary().checkColumn(grid.draw(move), column); //se la mossa è fattibile, controllo se la colonna della libreria è disponibile per compiere la mossa
+            return player.getLibrary().isMoveAvailable(column,grid.draw(move)); //se la mossa è fattibile, controllo se la colonna della libreria è disponibile per compiere la mossa
 
         }
         else{ // se la mossa è a priori infattibile
@@ -158,7 +161,7 @@ public class Game {
 
         for(i = library.getNumberOfColumns(); i > 0; i++){
 
-            if(library.getLibrary()[i][column].equals(null)){
+            if(library.getMatrix()[i][column]==null){
 
                 return i;
             }
@@ -166,4 +169,3 @@ public class Game {
         return -1; // gestire l'eccezione (sempre se non è gia stato fatto un controllo prima)
     }
 }
-

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.Player;
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.CardGenerator.*;
+import it.polimi.ingsw.model.CardGenerator.CardGenerator;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Cards.PersonalGoalCard;
 
 public class Player {
     private String name;
@@ -10,12 +11,12 @@ public class Player {
     private PersonalGoalCard personalGoalCard;
     private CardGenerator cardGenerator;
 
-    public Player(String name,CardGenerator cardGenerator) {
-        this.cardGenerator=cardGenerator;
+    public Player(String name, CardGenerator cardGenerator) {
+        this.cardGenerator = cardGenerator;
         this.name = name;
         this.points = 0;
-        this.library = new Library(20,20); // Ipotizzo dimensione 20x20 al momento, da valutare insiem
-        personalGoalCard = generatePersonalGoalCard(); // non so se ha senso chiamare un metodo per generare (come da UML) o istanziare direttamente la carta qui
+        this.library = new Library();
+        this.personalGoalCard = cardGenerator.generatePersonalGoalCard();
     }
 
     public String getName() {
@@ -39,22 +40,13 @@ public class Player {
     }
 
     public int countFinalPoints() {
-        // count points comparing the personal goal card configuration with the final library disposition
-        int countPersonalGoalCardPoints = this.personalGoalCard.countPersonalGoalCardPoints(getLibrary());
-
-        // count points counting adjacent cards of the same color in the final library configuration
+        int countPersonalGoalCardPoints = this.personalGoalCard.countPersonalGoalCardPoints(library);
         int countLibraryAdjacentPoints = library.countAdjacentPoints();
-
         int final_points = points + countPersonalGoalCardPoints + countLibraryAdjacentPoints;
-
         return final_points;
     }
 
-    private PersonalGoalCard generatePersonalGoalCard() {
-        return cardGenerator.generatePersonalGoalCard();
-    }
-
     public boolean isCommonGoalCardSatisfied(CommonGoalCard commonGoalCard) {
-        return commonGoalCard.isSatisfied(getLibrary()); // da verificare
+        return commonGoalCard.isSatisfied(getLibrary());
     }
 }

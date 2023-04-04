@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Player.Library;
 
 import java.util.HashSet;
 /**
@@ -25,8 +25,8 @@ public class CommonGoalCard7 extends CommonGoalCard {
         for(int row=0;row<6;row++) {
             HashSet<Color> s = new HashSet<>();
             for(int col=0;col<5;col++) {
-                if (library.getLibrary()[row][col] != null) {
-                    s.add(library.getLibrary()[row][col].getColor());
+                if (library.getMatrix()[row][col] != null) {
+                    s.add(library.getMatrix()[row][col].getColor());
                 }
             }
             count_row = (s.size()==5) ? count_row+1 : count_row;

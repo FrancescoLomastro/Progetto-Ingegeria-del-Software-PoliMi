@@ -1,15 +1,21 @@
 package it.polimi.ingsw.model.Enums;
 public enum Color {
-    BLUE(0),
-    GREEN(1),
-    LIGHTBLUE(2),
-    PINK(3),
-    YELLOW(4),
-    BEIGE(5);   
+    BLUE(0,"B"),
+    GREEN(1,"G"),
+    LIGHTBLUE(2,"L"),
+    PINK(3,"P"),
+    YELLOW(4,"Y"),
+    WHITE(5,"W");
     private final int relativeInt;
-    public static int numOfValues = 6;
-    private Color(int interoRelativo) {
+    private final String string;
+    private Color(int interoRelativo, String string) {
         this.relativeInt = interoRelativo;
+        this.string = string;
+    }
+
+    @Override
+    public String toString() {
+        return string;
     }
 
     public int getRelativeInt() {

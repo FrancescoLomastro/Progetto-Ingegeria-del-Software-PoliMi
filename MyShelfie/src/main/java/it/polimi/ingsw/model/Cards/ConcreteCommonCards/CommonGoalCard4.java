@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 
-import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Player.*;
+import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Player.Library;
 
 /**
  * This class contains the algorithm to verify if the following common goal is satisfied.
@@ -19,15 +19,15 @@ public class CommonGoalCard4 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
-        if(library.getLibrary()[0][0]!=null) {
-            Color color = library.getLibrary()[0][0].getColor();
-            return library.getLibrary()[0][0] != null
-                    && library.getLibrary()[0][4] != null
-                    && library.getLibrary()[5][0] != null
-                    && library.getLibrary()[5][4] != null
-                    && color.equals(library.getLibrary()[0][4].getColor())
-                    && color.equals(library.getLibrary()[5][4].getColor())
-                    && color.equals(library.getLibrary()[5][0].getColor());
+        if(library.getMatrix()[0][0]!=null) {
+            Color color = library.getMatrix()[0][0].getColor();
+            return library.getMatrix()[0][0] != null
+                    && library.getMatrix()[0][4] != null
+                    && library.getMatrix()[5][0] != null
+                    && library.getMatrix()[5][4] != null
+                    && color.equals(library.getMatrix()[0][4].getColor())
+                    && color.equals(library.getMatrix()[5][4].getColor())
+                    && color.equals(library.getMatrix()[5][0].getColor());
         }
         return false;
     }
