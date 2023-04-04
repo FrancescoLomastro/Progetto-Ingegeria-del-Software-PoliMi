@@ -23,37 +23,20 @@ public class CommonGoalCard0 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
-        /*
-        riflettere sul concetto di separati
-         */
+
         HashSet<String> checkedCells = new HashSet<>();
-        HashMap<Color,Integer> propertySatisfiedCounter = new HashMap<>();
-        propertySatisfiedCounter.put(Color.PINK,0);
-        propertySatisfiedCounter.put(Color.BLUE,0);
-        propertySatisfiedCounter.put(Color.BEIGE,0);
-        propertySatisfiedCounter.put(Color.GREEN,0);
-        propertySatisfiedCounter.put(Color.LIGHTBLUE,0);
-        propertySatisfiedCounter.put(Color.YELLOW,0);
+        int correctGroupCounter = 0;
 
         for(int row=0;row<6;row++) {
             for(int col=0;col<5;col++) {
                 if ((library.getLibrary()[row][col]!=null) && !checkedCells.contains((row)+"_"+(col))) {
-                    checkedCells.add((row)+"_"+(col));
-                    Color colorToCheck = (library.getLibrary())[row][col].getColor();
 
-                    if (row!=5 && (library.getLibrary()[row+1][col]!=null) && library.getLibrary()[row+1][col].getColor().equals(colorToCheck)) {
-                        checkedCells.add((row+1)+"_"+(col));
-                        propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
-                        if (propertySatisfiedCounter.get(colorToCheck)==6) {
-                            return true;
-                        }
-                        continue;
-                    }
+                    int same_color_neighbours = library.countSameColorNeighbours(row,col,checkedCells);
 
-                    if (col!=4&&(library.getLibrary()[row][col+1]!=null) && library.getLibrary()[row][col+1].getColor().equals(colorToCheck)) {
-                        checkedCells.add((row)+"_"+(col+1));
-                        propertySatisfiedCounter.put(colorToCheck,propertySatisfiedCounter.get(colorToCheck)+1);
-                        if (propertySatisfiedCounter.get(colorToCheck)==6) {
+                    Color colorToCheck = library.getLibrary()[row][col].getColor();
+                    if (same_color_neighbours>=2) {
+                        correctGroupCounter += 1;
+                        if (correctGroupCounter == 6) {
                             return true;
                         }
                     }
