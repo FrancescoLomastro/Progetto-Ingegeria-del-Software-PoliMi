@@ -19,32 +19,56 @@ public class GridTest {
     public void refill_EmptyGrid_filledGridInOutput(){
         grid.refill();
         for(int i=0; i<grid.getMatrix().length; i++){
-            for(int j=0; j<grid.getMatrix().length; j++){
-                Assert.assertNotEquals(null, grid.getMatrix()[i][j]);
+            for(int j=0; j<grid.getMatrix().length; j++)
+            {
+                if (!(((i==0) && (j==0||j==1||j==2||j==5||j==6||j==7||j==8))
+                ||((i==1) && (j==0||j==1||j==2||j==7||j==8||j==6))
+                ||((i==2) && (j==0||j==1||j==8||j==7))
+                ||((i==3) && (j==0))
+                ||((i==5) && (j==8))
+                ||((i==6) && (j==0||j==1||j==7||j==8))
+                ||((i==7) && (j==0||j==1||j==2||j==6||j==7||j==8))
+                ||((i==8) && (j==0||j==1||j==2||j==3||j==6||j==7||j==8)))) {
+                    Assert.assertNotEquals(null, grid.getMatrix()[i][j]);
+                }
             }
         }
     }
     @Test
     public void refill_PartiallyEmptyGrid_filledGridInOutput(){
         grid.refill();
-        grid.draw(new Position[]{new Position(0, 3), new Position(0, 4), new Position(0, 5)});
-        grid.draw(new Position[]{new Position(1, 3), new Position(1, 4), new Position(1, 5)});
-        grid.draw(new Position[]{new Position(2, 3), new Position(2, 4), new Position(2, 5)});
-        grid.draw(new Position[]{new Position(3, 3), new Position(3, 4), new Position(3, 5)});
-        grid.draw(new Position[]{new Position(4, 3), new Position(4, 4), new Position(4, 5)});
-        grid.draw(new Position[]{new Position(5, 3), new Position(5, 4), new Position(5, 5)});
-        grid.draw(new Position[]{new Position(6, 3), new Position(6, 4), new Position(6, 5)});
-        grid.draw(new Position[]{new Position(7, 3), new Position(7, 4), new Position(7, 5)});
-        grid.draw(new Position[]{new Position(1, 6), new Position(2, 6), new Position(3, 6)});
-        grid.draw(new Position[]{new Position(1, 6), new Position(2, 6), new Position(3, 6)});
-        grid.draw(new Position[]{new Position(4, 0), new Position(4, 0)});
-        grid.draw(new Position[]{new Position(3, 8), new Position(4, 8)});
-        grid.draw(new Position[]{new Position(3, 7)});
-        grid.draw(new Position[]{new Position(6, 6)});
-        grid.draw(new Position[]{new Position(5, 6)});
+        grid.draw(new Position[]{new Position(0, 3), new Position(0, 4)});
+        grid.draw(new Position[]{new Position(1, 3), new Position(1, 4)});
+        grid.draw(new Position[]{new Position(2, 3), new Position(2, 4)});
+        grid.draw(new Position[]{new Position(3, 3), new Position(3, 4)});
+        grid.draw(new Position[]{new Position(4, 3), new Position(4, 4)});
+        grid.draw(new Position[]{new Position(5, 3), new Position(5, 4)});
+        grid.draw(new Position[]{new Position(6, 3), new Position(6, 4)});
+        grid.draw(new Position[]{new Position(7, 3), new Position(7, 4)});
+        grid.draw(new Position[]{new Position(1, 5)});
+        grid.draw(new Position[]{new Position(2, 5)});
+        grid.draw(new Position[]{new Position(3, 5)});
+        grid.draw(new Position[]{new Position(4, 5)});
+        grid.draw(new Position[]{new Position(5, 5)});
+        grid.draw(new Position[]{new Position(6, 5)});
+        grid.draw(new Position[]{new Position(7, 5)});
         grid.draw(new Position[]{new Position(8, 5)});
-        grid.draw(new Position[]{new Position(3, 2), new Position(4, 2), new Position(5, 2)});
+        grid.draw(new Position[]{new Position(2, 6)});
+        grid.draw(new Position[]{new Position(3, 6)});
+        grid.draw(new Position[]{new Position(4, 6)});
+        grid.draw(new Position[]{new Position(5, 6)});
+        grid.draw(new Position[]{new Position(6, 6)});
+        grid.draw(new Position[]{new Position(3, 7), new Position(3, 8)});
+        grid.draw(new Position[]{new Position(4, 7), new Position(4, 8)});
+        grid.draw(new Position[]{new Position(2, 2)});
+        grid.draw(new Position[]{new Position(3, 2)});
+        grid.draw(new Position[]{new Position(4, 2)});
+        grid.draw(new Position[]{new Position(5, 2)});
+        grid.draw(new Position[]{new Position(6, 2)});
+        grid.draw(new Position[]{new Position(3, 1)});
         grid.draw(new Position[]{new Position(4, 1)});
+        grid.draw(new Position[]{new Position(5, 1)});
+        grid.draw(new Position[]{new Position(5, 0)});
         ObjectCard[][] objectCard1 = new ObjectCard[9][9];
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
@@ -54,7 +78,16 @@ public class GridTest {
         grid.refill();
         for(int i=0; i<grid.getMatrix().length; i++){
             for(int j=0; j<grid.getMatrix().length; j++){
-                Assert.assertNotEquals(null, grid.getMatrix()[i][j]);
+                if (!(((i==0) && (j==0||j==1||j==2||j==5||j==6||j==7||j==8))
+                        ||((i==1) && (j==0||j==1||j==2||j==7||j==8||j==6))
+                        ||((i==2) && (j==0||j==1||j==8||j==7))
+                        ||((i==3) && (j==0))
+                        ||((i==5) && (j==8))
+                        ||((i==6) && (j==0||j==1||j==7||j==8))
+                        ||((i==7) && (j==0||j==1||j==2||j==6||j==7||j==8))
+                        ||((i==8) && (j==0||j==1||j==2||j==3||j==6||j==7||j==8)))) {
+                    Assert.assertNotEquals(null, grid.getMatrix()[i][j]);
+                }
                 if(objectCard1[i][j]!=null){
                     Assert.assertEquals(objectCard1[i][j], grid.getMatrix()[i][j]);
                 }
@@ -64,24 +97,57 @@ public class GridTest {
     @Test
     public void needRefill__correctOutputMatrixNeedsRefill(){
         grid.refill();
-        grid.draw(new Position[]{new Position(0, 3), new Position(0, 4), new Position(0, 5)});
-        grid.draw(new Position[]{new Position(1, 3), new Position(1, 4), new Position(1, 5)});
-        grid.draw(new Position[]{new Position(2, 3), new Position(2, 4), new Position(2, 5)});
-        grid.draw(new Position[]{new Position(3, 3), new Position(3, 4), new Position(3, 5)});
-        grid.draw(new Position[]{new Position(4, 3), new Position(4, 4), new Position(4, 5)});
-        grid.draw(new Position[]{new Position(5, 3), new Position(5, 4), new Position(5, 5)});
-        grid.draw(new Position[]{new Position(6, 3), new Position(6, 4), new Position(6, 5)});
-        grid.draw(new Position[]{new Position(7, 3), new Position(7, 4), new Position(7, 5)});
-        grid.draw(new Position[]{new Position(1, 6), new Position(2, 6), new Position(3, 6)});
-        grid.draw(new Position[]{new Position(1, 6), new Position(2, 6), new Position(3, 6)});
-        grid.draw(new Position[]{new Position(4, 0), new Position(4, 0)});
-        grid.draw(new Position[]{new Position(3, 8), new Position(4, 8)});
-        grid.draw(new Position[]{new Position(3, 7)});
-        grid.draw(new Position[]{new Position(6, 6)});
-        grid.draw(new Position[]{new Position(5, 6)});
-        grid.draw(new Position[]{new Position(8, 5)});
-        grid.draw(new Position[]{new Position(3, 2), new Position(4, 2), new Position(5, 2)});
-        grid.draw(new Position[]{new Position(4, 1)});
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(0, 3), new Position(0, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(1, 3), new Position(1, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 3), new Position(2, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 3), new Position(3, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 3), new Position(4, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 3), new Position(5, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 3), new Position(6, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(7, 3), new Position(7, 4)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(1, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(7, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(8, 5)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 6)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 6)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 6)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 6)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 6)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 7), new Position(3, 8)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 7), new Position(4, 8)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 2)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 2)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 2)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 2)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 2)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 1)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 1)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 1)}));
+        Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 0)}));
+        /*for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                if ((((i==0) && (j==0||j==1||j==2||j==5||j==6||j==7||j==8))
+                        ||((i==1) && (j==0||j==1||j==2||j==7||j==8||j==6))
+                        ||((i==2) && (j==0||j==1||j==8||j==7))
+                        ||((i==3) && (j==0))
+                        ||((i==5) && (j==8))
+                        ||((i==6) && (j==0||j==1||j==7||j==8))
+                        ||((i==7) && (j==0||j==1||j==2||j==6||j==7||j==8))
+                        ||((i==8) && (j==0||j==1||j==2||j==3||j==6||j==7||j==8)))) {
+                    System.out.print("| ");
+                }
+                else if (grid.getMatrix()[i][j]==null)
+                    System.out.print("|@");
+                else
+                    System.out.print("|"+grid.getMatrix()[i][j]);
+            }
+            System.out.println("");
+        }*/
         Assert.assertTrue(grid.needRefill());
     }
     @Test
@@ -134,10 +200,9 @@ public class GridTest {
     @Test
     public void isDrawAvailable_correctInput_correctOutput(){
         grid.refill();
-        Position[] positions = new Position[3];
+        Position[] positions = new Position[2];
         positions[0] = new Position(0,3);
-        positions[1] = new Position(1,3);
-        positions[2] = new Position(2,3);
+        positions[1] = new Position(0,4);
         Assert.assertTrue(grid.isDrawAvailable(positions));
     }
     @Test
@@ -147,14 +212,13 @@ public class GridTest {
         for(int i=0; i<9; i++)
             for(int j=0; j<9; j++)
                 objectCardsMatric[i][j]=grid.getMatrix()[i][j];
-        Position[] positions = new Position[3];
+        Position[] positions = new Position[2];
         positions[0] = new Position(0,3);
-        positions[1] = new Position(1,3);
-        positions[2] = new Position(2,3);
+        positions[1] = new Position(0,4);
         ObjectCard[] objectCards = grid.draw(positions);
-        for(int i=0; i<3; i++){
-            Assert.assertNull(grid.getMatrix()[i][3]);
-            Assert.assertEquals(objectCardsMatric[i][3],objectCards[i]);
+        for(int i=3; i<5; i++){
+            Assert.assertNull(grid.getMatrix()[0][i]);
+            Assert.assertEquals(objectCardsMatric[0][i],objectCards[i-3]);
         }
     }
 

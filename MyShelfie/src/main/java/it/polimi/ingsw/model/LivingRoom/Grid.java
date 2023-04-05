@@ -120,18 +120,18 @@ public class Grid {
         {
             if (hasSameInt(columns))
             {
-                vector = columns;
+                vector = rows;
             }
             else if (hasSameInt(rows))
             {
-                vector = rows;
+                vector = columns;
             }
             else
                 return false;
 
             Arrays.sort(vector);
             for (int i = 1; i < vector.length; i++) {
-                if (vector[i] != vector[i - 1] -1)
+                if (vector[i] != vector[i - 1] + 1)
                     return false;
             }
         }
@@ -142,7 +142,8 @@ public class Grid {
         //almeno un lato libero
         for(int i=1; i<drawn.length;i++)
         {
-            if((drawn[i].getRow()!=0)&&(drawn[i].getRow()!=numColumns)&&(drawn[i].getColumn()!=0)&&(drawn[i].getColumn()!=numRows))
+            if((drawn[i].getRow()!=0)&&(drawn[i].getRow()!=numColumns)&&
+                    (drawn[i].getColumn()!=0)&&(drawn[i].getColumn()!=numRows))
             {
                 if((matrix[drawn[i].getRow()+1][drawn[i].getColumn()]!=null)&&
                         (matrix[drawn[i].getRow()-1][drawn[i].getColumn()]!=null)&&
@@ -240,26 +241,27 @@ public class Grid {
     /**
      * Check if {@code position} has cards near it.
      * @param position is the position to be checked
-     * @return {@code true} if the position is in the matrix and around the {@code position} are there only empty spaces.
-     * Note: The method ignores card positioned in diagonal, that's because they can't be picked in the same drawn.
+     * @return {@code true} if the position is in the matrix around the {@code position} are only empty ({@code null}) spaces.
+     *  Note: The method ignores card positioned in diagonal, that's because they can't be picked in the same drawn.
      */
     private boolean hasNeighbours(Position position)
     {
-        int x = position.getRow();
-        int y = position.getColumn();
+        int row = position.getRow();
+        int column = position.getColumn();
 
+        /*
         if(!isInside(position))
         {
             return false;
         }
+        */
 
-        if((x>0 && matrix[x-1][y]!=null) ||
-                (x< numColumns -1 && matrix[x+1][y]!=null) ||
-                (y>0 && matrix[x][y-1]!=null) ||
-                (y< numRows -1 && matrix[x][y+1]!=null)) {
-            return false;
-        }
-        return true;
+        return (
+                    row > 0 && matrix[row - 1][column] != null)
+                || (row < numColumns - 1 && matrix[row + 1][column] != null)
+                || (column > 0 && matrix[row][column - 1] != null)
+                || (column < numRows - 1 && matrix[row][column + 1] != null
+        );
     }
 
     /**
