@@ -13,21 +13,6 @@ import it.polimi.ingsw.model.Player.Library;
  */
 public class CommonGoalCard11 extends CommonGoalCard {
 
-    /*
-    private int c, i, j;
-
-    private Library library;
-
-    private ObjectCard[][] lib;
-
-    private int checkOneOrTwoResult;
-
-
-    private int isOne = 1;
-
-    private int isTwo = 1;
-    */
-
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
      *
@@ -37,41 +22,37 @@ public class CommonGoalCard11 extends CommonGoalCard {
     @Override
     public boolean isSatisfied(Library library) {
 
-        int current = 0;
-        int previous = 0;
+        int currentColumnFreeCells = 0;
+        int previousColumnFreeCells = 0;
 
-        for (int i = 0; i < library.getNumberOfColumns(); i++) {
-            if (i == 0) {
-                previous = library.findNumberOfFreeCells(i);
-                current = previous;
-                if(current != library.getNumberOfRows()-1)
-                    break;
+        for (int col = 0; col < library.getNumberOfColumns(); col++) {
+            if (col == 0) {
+                previousColumnFreeCells = library.findNumberOfFreeCells(col);
+                currentColumnFreeCells = previousColumnFreeCells;
             } else {
-                previous = current;
-                current = library.findNumberOfFreeCells(i);
-                if (previous != current + 1)
+                previousColumnFreeCells = currentColumnFreeCells;
+                currentColumnFreeCells = library.findNumberOfFreeCells(col);
+                if (previousColumnFreeCells != currentColumnFreeCells + 1) {
                     break;
-                else {
-                    if (i == library.getNumberOfColumns() - 1) {
+                } else {
+                    if (col == library.getNumberOfColumns() - 1) {
                         return true;
                     }
                 }
             }
         }
 
-        for (int i = 0; i < library.getNumberOfColumns(); i++) {
-            if (i == 0) {
-                previous = library.findNumberOfFreeCells(i);
-                current = previous;
-                if(current != 1)
-                    return false;
+        for (int col = 0; col < library.getNumberOfColumns(); col++) {
+            if (col == 0) {
+                previousColumnFreeCells = library.findNumberOfFreeCells(col);
+                currentColumnFreeCells = previousColumnFreeCells;
             } else {
-                previous = current;
-                current = library.findNumberOfFreeCells(i);
-                if (previous != current - 1)
+                previousColumnFreeCells = currentColumnFreeCells;
+                currentColumnFreeCells = library.findNumberOfFreeCells(col);
+                if (previousColumnFreeCells != currentColumnFreeCells - 1)
                     break;
                 else {
-                    if (i == library.getNumberOfColumns() - 1) {
+                    if (col == library.getNumberOfColumns() - 1) {
                         return true;
                     }
                 }

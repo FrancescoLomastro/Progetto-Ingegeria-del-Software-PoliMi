@@ -22,23 +22,9 @@ public class CommonGoalCard6 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
-        /*
-        due gruppi separati di 4 tessere dello stesso tipo.
-        Idea:
-        - Va verificata per tutti i 6 colori, al primo che viene trovato mi fermo. Uso un vettore di contatori di 6 elementi che partono da zero.
-        - Parto con una DFS,come per countAdjiacent, e cerco le sequenze con stesso colore (presente,su,destra,giù) che inglobino celle non già incluse in altre sequenze
-        - Una volta che ho trovato una sequenza, incremento il contatore di 1 per tale tipo/colore. Se uno raggiunge 2, mi fermo (anche prima di giungere al termine).
-         */
+
         HashSet<String> checkedCells = new HashSet<>();
-        /*
-        HashMap<Color,Integer> propertySatisfiedCounter = new HashMap<>();
-        propertySatisfiedCounter.put(Color.PINK,0);
-        propertySatisfiedCounter.put(Color.BLUE,0);
-        propertySatisfiedCounter.put(Color.BEIGE,0);
-        propertySatisfiedCounter.put(Color.GREEN,0);
-        propertySatisfiedCounter.put(Color.LIGHTBLUE,0);
-        propertySatisfiedCounter.put(Color.YELLOW,0);
-        */
+
         int counter=0;
 
         for(int row=0;row<library.getNumberOfRows()-1;row++) {

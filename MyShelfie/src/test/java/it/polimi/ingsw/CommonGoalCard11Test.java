@@ -41,7 +41,7 @@ public class CommonGoalCard11Test {
 
 
     /**
-     * Second Test Increasing: 1,2,3,4,5 -> answer true.
+     * First Test Increasing: 1,2,3,4,5 -> answer true.
      * @author: Alberto Aniballi
      * */
     @Test
@@ -69,6 +69,69 @@ public class CommonGoalCard11Test {
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 
+    /**
+     * Second Test Increasing: 0,1,2,3,4 -> answer true.
+     * @author: Alberto Aniballi
+     * */
+    @Test
+    public void isSatisfied_SecondIncreasingDisposition_trueInOutput(){
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
+    /**
+     * Third Test Increasing: 2,3,4,5,6 -> answer true.
+     * @author: Alberto Aniballi
+     * */
+    @Test
+    public void isSatisfied_ThirdIncreasingDisposition_trueInOutput(){
+
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
+    /**
+     * First Test Decreasing: 5,4,3,2,1 -> answer true.
+     * @author: Alberto Aniballi
+     * */
     @Test
     public void isSatisfied_DecreasingDisposition_trueInOutput(){
         library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
@@ -93,9 +156,68 @@ public class CommonGoalCard11Test {
 
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
+
+    /**
+     * Second Test Decreasing: 4,3,2,1,0 -> answer true.
+     * @author: Alberto Aniballi
+     * */
+    @Test
+    public void isSatisfied_SecondDecreasingDisposition_trueInOutput(){
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
+    /**
+     * Third Test Decreasing: 6,5,4,3,2 -> answer true.
+     * @author: Alberto Aniballi
+     * */
+    @Test
+    public void isSatisfied_ThirdDecreasingDisposition_trueInOutput(){
+
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.GREEN , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
+
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
+
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
+
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+    }
+
     @Test
     public void isSatisfied_DecreasingDispositionWithAnEmptyColumn_falseInOutput(){
-
 
         library.insertCardsInLibrary(3, new ObjectCard("", Color.PINK , Type.FIRST));
         library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
@@ -137,44 +259,6 @@ public class CommonGoalCard11Test {
         library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
         library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
         library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
-
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
-    }
-@Test
-    public void isSatisfied_IncreasingDispositionNotFromStart_falseInOutput(){
-
-        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
-
-        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
-        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
-
-        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
-        library.insertCardsInLibrary(3, new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
-
-        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
-        library.insertCardsInLibrary(4, new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
-        library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
-
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
-    }
-    @Test
-    public void isSatisfied_DecreasingDispositionNotFromStart_falseInOutput(){
-
-        library.insertCardsInLibrary(3, new ObjectCard("", Color.BLUE , Type.FIRST));
-
-        library.insertCardsInLibrary(2, new ObjectCard("", Color.PINK , Type.FIRST));
-        library.insertCardsInLibrary(2, new ObjectCard("", Color.YELLOW , Type.FIRST));
-
-        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
-        library.insertCardsInLibrary(1, new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
-
-        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
-        library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
-        library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
 
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
