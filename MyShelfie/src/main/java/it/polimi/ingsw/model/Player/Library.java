@@ -23,7 +23,7 @@ public class Library {
      *  @author Alberto Aniballi
      */
     public Library() {
-        matrix = new ObjectCard[numberOfRows][numberOfColumns];
+         matrix = new ObjectCard[numberOfRows][numberOfColumns];
     }
 
     /**
@@ -54,15 +54,15 @@ public class Library {
      * @author Lo Mastro Francesco
      */
     public ObjectCard[][] getMatrix() {
-        ObjectCard[][] toReturn= new ObjectCard[numberOfRows][numberOfColumns];
+        ObjectCard[][] answer= new ObjectCard[numberOfRows][numberOfColumns];
         for(int row=0; row<numberOfRows;row++)
         {
-            for(int column=0;column<numberOfColumns;column++)
+            for(int col=0;col<numberOfColumns;col++)
             {
-                toReturn[row][column]=matrix[row][column];
+                answer[row][col]=matrix[row][col];
             }
         }
-        return toReturn;
+        return answer;
     }
 
 
@@ -70,11 +70,11 @@ public class Library {
      * It checks if a specific cell of the library is free
      *
      * @param row    the specific row to be checked
-     * @param column the specific column to be checked
+     * @param col the specific column to be checked
      * @return: boolean that is true if the cell is empty, otherwise false
      */
-    private boolean isCellEmpty(int row, int column) {
-        if (matrix[row][column] != null) {
+    private boolean isCellEmpty(int row, int col) {
+        if (matrix[row][col] != null) {
             return false;
         } else {
             return true;
@@ -112,7 +112,7 @@ public class Library {
         int availableCells = 0;
         if(column>=0 && column<getNumberOfColumns())
         {
-            for(int row=numberOfRows-1;row>=0;row--) {
+            for(int row=getNumberOfRows()-1;row>=0;row--) {
                 if (isCellEmpty(row,column)) {
                     availableCells = row+1;
                     break;
@@ -152,8 +152,8 @@ public class Library {
      * @author: Alberto Aniballi
      */
     public boolean isMoveAvailable(int chosenColumn, ObjectCard... cards){
-        int row = findNumberOfFreeCells(chosenColumn);
-        return row>=cards.length && chosenColumn<numberOfColumns && chosenColumn>=0;
+        int numberOfFreeCells = findNumberOfFreeCells(chosenColumn);
+        return chosenColumn>=0 && numberOfFreeCells>=cards.length && chosenColumn<numberOfColumns;
     }
 
 
@@ -178,13 +178,13 @@ public class Library {
      *
      * @param startRow      the row where the current cell is
      * @param startColumn   the column where the current cell is
-     * @param calculatedRow      the row where the subsequent cell is
-     * @param calculatedColumn   the column where the subsequent cell is
+     * @param subsequentCellRow      the row where the subsequent cell is
+     * @param subsequentCellColumn   the column where the subsequent cell is
      * @return: boolean that is true if the two cells contains two object cards that have the same color, false otherwise
      * @author: Alberto Aniballi
      */
-    private boolean checkIfColorIsTheSame(int startRow, int startColumn, int calculatedRow,int calculatedColumn) {
-        return compareColor(matrix[startRow][startColumn], matrix[calculatedRow][calculatedColumn]);
+    private boolean checkIfColorIsTheSame(int startRow, int startColumn, int subsequentCellRow,int subsequentCellColumn) {
+        return compareColor(matrix[startRow][startColumn], matrix[subsequentCellRow][subsequentCellColumn]);
     }
 
     /**
@@ -242,18 +242,18 @@ public class Library {
     /**
      * It selects the correct number of points to be given, based on the size of the group of adjacent card found
      *
-     * @param numOfAdjacentCard the number of neighbours that have the same color
+     * @param numberOfAdjacentCard the number of neighbours that have the same color
      * @return: integer that represents the number of points to be given
      * @author: Alberto Aniballi
      */
-    private int addAdjacentPoints(int numOfAdjacentCard) {
-        if (numOfAdjacentCard==3) {
+    private int addAdjacentPoints(int numberOfAdjacentCard) {
+        if (numberOfAdjacentCard==3) {
             return 2;
-        } else if (numOfAdjacentCard==4) {
+        } else if (numberOfAdjacentCard==4) {
             return 3;
-        } else if (numOfAdjacentCard==5) {
+        } else if (numberOfAdjacentCard==5) {
             return 5;
-        } else if (numOfAdjacentCard>=6) {
+        } else if (numberOfAdjacentCard>=6) {
             return 8;
         } else {
             return 0;
@@ -268,15 +268,13 @@ public class Library {
      */
     public int countAdjacentPoints() {
 
+        Position position;
         int numberOfAdjacentPoints = 0;
         int numberOfNeighbours;
-        Position position;
-        HashSet <Position> checkedCells = new HashSet<>();
+        HashSet<Position> checkedCells = new HashSet<>();
 
-        for(int row=0;row<numberOfRows;row++)
-        {
-            for(int column = 0;column<numberOfColumns;column++)
-            {
+        for(int row=0;row<numberOfRows;row++) {
+            for(int column = 0;column<numberOfColumns;column++) {
                 position = new Position(row,column);
                 if(checkedCells.add(position))
                 {
