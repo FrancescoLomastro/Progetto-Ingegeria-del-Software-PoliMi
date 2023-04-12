@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.LivingRoom.Grid;
 import it.polimi.ingsw.model.LivingRoom.LivingRoom;
 import it.polimi.ingsw.model.Player.Library;
@@ -45,6 +46,14 @@ public class Game {
         return numPlayers;
     }
 
+    public ObjectCard[][] getGrid() {
+        return grid.getMatrix();
+    }
+
+    public ObjectCard[][] getLibrary(Player player) {
+        return player.getLibrary().getMatrix();
+    }
+
     /**
      * @param player: the turn player
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
@@ -53,26 +62,6 @@ public class Game {
     public void manageTurn(Player player, Position[] move, int column){
 
         if(checkMove(player, move, column)){ //se la mossa è lecita
-
-            // la mossa viene eseguita da Library, all'interno del metodo checkColumn
-
-            // TUTTO QUELLO QUI SOTTO E' INUTILE PERCHE' L'HA FATTO ALBERTO IN LIBRARY
-            /*
-            TUTTO CIO' E' INUTILE PERCHE' L'HA FATTO ALBERTO IN LIBRARY
-
-            private ObjectCard[] toInsertCards = new ObjectCard[move.length];
-
-            for(i = 0; i < toInsertCards.length; i++){
-
-                toInsertCards[i] = this.grid.getMatrix()[move[i].getX()][move[i].getY()];
-            }
-
-
-            firstAvailableRow = getFirstAvailableRow(player.getLibrary(), column);
-
-            player.getLibrary().insertCardsInLibrary(toInsertCards, firstAvailableRow, column);
-            */
-
             // alla fine del turno
             checkCommonGoal(player, livingRoom.getCommonGoalCards());
         }
@@ -135,10 +124,6 @@ public class Game {
      * @return Player: the winner player
      */
     public Player findWinner(){
-
-        // c'è un problema
-        // winnerPlayer = players.stream().map(player -> player.getPoints()).reduce((player1, player2) -> (player1 > player2)? player1 : player2);
-
 
         winnerPlayer = players[0];
 

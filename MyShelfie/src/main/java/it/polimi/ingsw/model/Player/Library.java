@@ -288,20 +288,5 @@ public class Library {
         }
         return numberOfAdjacentPoints;
     }
-    public void stampa()
-    {
-        for(int row=0;row<numberOfRows;row++)
-        {
-            for(int column = 0;column<numberOfColumns;column++)
-            {
-                if(matrix[row][column]==null)
-                    System.out.print("| ");
-                else
-                    System.out.print(matrix[row][column]+" ");
-            }
-            System.out.println("");
-        }
-    }
-
 }
 

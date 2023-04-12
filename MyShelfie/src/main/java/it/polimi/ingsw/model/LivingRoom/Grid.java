@@ -88,7 +88,7 @@ public class Grid {
     }
 
     /**
-     * Method that checks if a drawn is correctly formed and performable.
+     * Method that checks if a draw is correctly formed and performable.
      * @param drawn is a vector of positions
      * @return {@code true} if the vector is not null, has the correct length, has not empty cells in it, is a straight
      * drawn, is formed by connected positions and finally if all the object cards have a free side before the drawn.
@@ -156,8 +156,17 @@ public class Grid {
     }
 
     public ObjectCard[][] getMatrix(){
-        return matrix;
+        ObjectCard[][] answer= new ObjectCard[numRows][numColumns];
+        for(int row=0; row<numRows;row++)
+        {
+            for(int col=0;col<numColumns;col++)
+            {
+                answer[row][col]=matrix[row][col];
+            }
+        }
+        return answer;
     }
+
     /**This method remove cards from matrix and return an ObjectCard's array with them
      * @author: Riccardo Figini
      * @param move {@code Position[]} Vector with position to remove
