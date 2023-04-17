@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageAfterMoveNegative;
+import it.polimi.ingsw.Network.Messages.MessageAfterMovePositive;
+import it.polimi.ingsw.Network.Messages.MessageCommonGoal;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
 import it.polimi.ingsw.model.Cards.ObjectCard;
@@ -17,7 +21,6 @@ class Game
 *@author Andrea Ferrini
 */
 public class Game {
-
     private int gameNumber = 0;
     private final int numPlayers;
     private int i;
@@ -27,12 +30,15 @@ public class Game {
     private Player winnerPlayer; // lo uso nel metodo winner come valore di return
     private CardGenerator cardGenerator;
 
+    private int index;
+
     /**
      * constructor of the class Game
      * @param numPlayers: the number of the players in that game
      * @param gameNumber: to identify multiple games
      */
     public Game(int numPlayers, int gameNumber) throws IOException {
+
         this.cardGenerator=new CardGenerator();
         this.gameNumber = gameNumber;
         this.numPlayers=numPlayers;
@@ -40,6 +46,7 @@ public class Game {
         this.livingRoom = new LivingRoom(numPlayers, 0, 2,cardGenerator);
         this.winnerPlayer = new Player("winner", cardGenerator); // devo passargli una string
         this.grid = livingRoom.getGrid();
+        this.index = 0;
     }
 
     public int getNumPlayers() {
@@ -50,8 +57,9 @@ public class Game {
         return grid.getMatrix();
     }
 
-    public ObjectCard[][] getLibrary(Player player) {
-        return player.getLibrary().getMatrix();
+    public ObjectCard[][] getLibrary(String username) {
+
+        return searchByUsername(username, players).getLibrary().getMatrix();
     }
 
     public Player[] getPlayers() {
@@ -78,6 +86,7 @@ public class Game {
                 return player;
             }
         }
+        return null;
     }
 
     /**
@@ -85,7 +94,7 @@ public class Game {
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
-    public void manageTurn(String username, Position[] move, int column){
+    public Message manageTurn(String username, Position[] move, int column){
 
         Player player = searchByUsername(username, players);
 
@@ -94,12 +103,17 @@ public class Game {
             //esecuzione mossa
             player.getLibrary().insertCardsInLibrary(column, grid.draw(move));
 
+            Message messageAfterMovePositive = new MessageAfterMovePositive();
+            Message messageCommonGoal = new MessageCommonGoal();
             // alla fine del turno
-            checkCommonGoal(player, livingRoom.getCommonGoalCards());
+            checkCommonGoal(player, livingRoom.getCommonGoalCards(), (MessageAfterMovePositive) messageAfterMovePositive, (MessageCommonGoal) messageCommonGoal);
+
+            return messageAfterMovePositive;
         }
         else{
 
-            throw new RuntimeException("mossa non valida ahhahahhahahhhahhhahahahahahahahahhahahhahahah");
+            Message messageAfterMoveNegative = new MessageAfterMoveNegative();
+            return messageAfterMoveNegative;
         }
     }
 
@@ -107,20 +121,34 @@ public class Game {
      * @param player: the turn player
      * @param commonGoalCards: the two common goal cards that are in the living room
      */
-    private void checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards){
+    private void checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards, MessageAfterMovePositive messageAfterMove, MessageCommonGoal messageCommonGoal){
+
+        //DA FARE: INVIARE IL messageAfterMove DOPO IL CONSEGUIMENTO DEGLI OBIETTIVI COMUNI
+        // SALVARE ANCHE IL NUMERO DI PUNTI AGGIUNTI, PER DIRLO AL PLAYER CHE LI HA GUADAGNATI fatto
+
+        boolean satisfied = false;
 
         // da gestire come scegliere l'algoritmo giusto tra i 12
 
         if(commonGoalCards[0].isSatisfied(player.getLibrary())){
+
+            commonGoalCards[0].getScoreWithDecrease();
+            satisfied = true;
+            messageAfterMove.setGainedPointsFirstCard(commonGoalCards[0].getPoints());
+            messageCommonGoal.setGainedPointsFirstCard(commonGoalCards[0].getPoints());
 
             player.addPoints(commonGoalCards[0].getPoints());
         }
 
         if(commonGoalCards[1].isSatisfied(player.getLibrary())){
 
+            commonGoalCards[1].getScoreWithDecrease();
+            satisfied = true;
+            messageAfterMove.setGainedPointsSecondCard(commonGoalCards[1].getPoints());
+            messageCommonGoal.setGainedPointsFirstCard(commonGoalCards[1].getPoints());
+
             player.addPoints(commonGoalCards[1].getPoints());
         }
-
 
         // servono: - this.livingRoom
         //          - carte del giocatore
@@ -183,5 +211,11 @@ public class Game {
             }
         }
         return -1; // gestire l'eccezione (sempre se non è gia stato fatto un controllo prima)
+    }
+
+    public void setNextPlayer(String name){
+
+        this.players[index] = new Player(name, cardGenerator);
+        index ++;
     }
 }
