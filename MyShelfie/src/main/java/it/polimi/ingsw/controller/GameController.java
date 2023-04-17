@@ -114,7 +114,12 @@ public class GameController implements Runnable, ServerReceiver {
     }
     @Override
     synchronized public void onMessage(Message message) {
-
+        switch (message.getType()){
+            case MY_MOVE_ANSWER -> turnController.startTheTurn( (MessageMove) message);
+            //CASO CHAT
+            /*In teoria non possono esistere altri tipi di messaggi da parte da parte del client, gli altri tipi sono
+            * tutti in uscita dal server*/
+        }
     }
 
     /**
@@ -135,8 +140,9 @@ public class GameController implements Runnable, ServerReceiver {
         for (Map.Entry<String, Connection> entry : clients.entrySet()) {
 
             String key = entry.getKey();
-            game.setNewPlayer(key);
+            game.setNextPlayer(key);
         }
+        this.turnController = new TurnController(game, this);
     }
 
     /**

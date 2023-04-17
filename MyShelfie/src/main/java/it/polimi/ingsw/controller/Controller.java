@@ -3,10 +3,8 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.Connection;
 import it.polimi.ingsw.model.Utility.Request;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Controller implements ServerReceiver
 {
@@ -122,8 +120,6 @@ public class Controller implements ServerReceiver
                     }
                 }
             }
-
-
     }
 
 }
