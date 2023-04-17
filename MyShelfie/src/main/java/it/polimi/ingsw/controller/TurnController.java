@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageMove;
 import it.polimi.ingsw.model.Game;
 
 import static it.polimi.ingsw.Network.Messages.MessageType.MY_MOVE_ANSWER;
@@ -10,15 +11,14 @@ public class TurnController implements Runnable{
 
     Game game;
 
-    Message message;
+    MessageMove message;
 
     public TurnController(Game game){
 
         this.game = game;
     }
 
-    public void startTheTurn(Message message){
-
+    public void startTheTurn(MessageMove message){
         this.message = message;
         new Thread(this).start();
     }
@@ -27,7 +27,7 @@ public class TurnController implements Runnable{
 
         if(message != null){
 
-
+            game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
         }else throw new RuntimeException("messaggio non valido");
     }
 

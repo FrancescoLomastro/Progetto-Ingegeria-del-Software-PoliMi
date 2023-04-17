@@ -65,11 +65,29 @@ public class Game {
     }
 
     /**
-     * @param player: the turn player
+     * @param username : the turn player
+     * @param players : the game players list
+     * @return Player : the Player whose username matches with the parameter
+     */
+    public Player searchByUsername(String username, Player[] players){
+
+        for(Player player : players){
+
+            if(player.getName().equals(username)){
+
+                return player;
+            }
+        }
+    }
+
+    /**
+     * @param username: the turn player
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
-    public void manageTurn(Player player, Position[] move, int column){
+    public void manageTurn(String username, Position[] move, int column){
+
+        Player player = searchByUsername(username, players);
 
         if(checkMove(player, move, column)){ //se la mossa è lecita
 
