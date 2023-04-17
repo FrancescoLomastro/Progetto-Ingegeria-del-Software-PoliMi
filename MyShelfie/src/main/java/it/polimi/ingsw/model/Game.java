@@ -73,6 +73,7 @@ public class Game {
     }
 
     /**
+     * this method searches a player in a game, starting from his username
      * @param username : the turn player
      * @param players : the game players list
      * @return Player : the Player whose username matches with the parameter

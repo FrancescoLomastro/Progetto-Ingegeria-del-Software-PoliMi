@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player.Player;
 
 import static it.polimi.ingsw.Network.Messages.MessageType.*;
 
@@ -12,9 +13,11 @@ class TurnController
 public class TurnController implements Runnable{
 
     private Game game;
-
     private GameController gameController;
-    MessageMove message;
+    private MessageMove message;
+
+    private int currPlayerIndex;
+    private String currentPlayer;
 
     /**
      * the constructor of the class TurnController
@@ -25,6 +28,8 @@ public class TurnController implements Runnable{
 
         this.game = game;
         this.gameController = gameController;
+        currPlayerIndex = 0;
+        currentPlayer = game.getPlayers()[0].getName();
     }
 
     /**
@@ -33,8 +38,11 @@ public class TurnController implements Runnable{
      * */
     public void startTheTurn(MessageMove message){
 
-        this.message = message;
-        new Thread(this).start();
+        if(message.getUsername().equals(currentPlayer)){
+
+            this.message = message;
+            new Thread(this).start();
+        }
     }
 
     /**
@@ -70,6 +78,16 @@ public class TurnController implements Runnable{
 
                     gameController.notifyAllMessage(messageCommonGoal);
                 }
+
+                currPlayerIndex ++;
+                if(currPlayerIndex == 4){
+
+                    currPlayerIndex = 0;
+                }
+
+                currentPlayer = game.getPlayers()[currPlayerIndex].getName();
+
+                gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer); // richiedo la mossa al giocatore successivo
             }
             else if(moveResult.equals(AFTER_MOVE_NEGATIVE)){
 
