@@ -16,6 +16,7 @@ public class GameController implements Runnable, ServerReceiver {
 
     private Game game;
 
+    private TurnController turnController;
     private int numberOfGame;
     private Map<String, Connection> clients;
     private int limitOfPlayers;
@@ -119,7 +120,6 @@ public class GameController implements Runnable, ServerReceiver {
         }
         newServerMessages();
         startGameMessages();
-
         initGame();
 
         /////////////////////////
@@ -142,5 +142,24 @@ public class GameController implements Runnable, ServerReceiver {
                 entry.setValue(connection);
             }
         }
+    }
+
+    public void notifyAllMessage(Message message){
+
+        for(Map.Entry<String, Connection> entry : clients.entrySet()){
+            try {
+
+                Connection value = entry.getValue();
+                value.sendMessage(message);
+            } catch (IOException e) {
+
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void sendMessageToASpecificUser(Message message, String username){
+
+        clients.get(username).sendMessage(message);
     }
 }

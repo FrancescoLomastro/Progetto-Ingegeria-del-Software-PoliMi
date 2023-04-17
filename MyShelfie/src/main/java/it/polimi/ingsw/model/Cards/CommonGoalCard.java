@@ -29,4 +29,10 @@ public abstract class CommonGoalCard extends Card {
         return scorePointCard.getScore();
     }
 
+
+    public int getScoreWithDecrease(){
+
+        return scorePointCard.getScoreWithDecrease();
+    }
+
 }
