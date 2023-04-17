@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public abstract class Message implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final String userName;
+    private String userName;
     private final MessageType type;
 
     Message(String userName, MessageType type) {
@@ -16,7 +16,6 @@ public abstract class Message implements Serializable {
         this.type = type;
     }
     Message(MessageType type) {
-        this.userName = "Unknow";
         this.type = type;
     }
 
@@ -26,5 +25,8 @@ public abstract class Message implements Serializable {
 
     public MessageType getType() {
         return type;
+    }
+    public void setUserName(String name) {
+        this.userName=name;
     }
 }

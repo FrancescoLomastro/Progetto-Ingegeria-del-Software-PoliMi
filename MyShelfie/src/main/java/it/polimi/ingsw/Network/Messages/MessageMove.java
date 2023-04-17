@@ -34,4 +34,8 @@ public class MessageMove extends MessageGame{
     public void setMove(Position[] move) {
         this.move = move;
     }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
 }

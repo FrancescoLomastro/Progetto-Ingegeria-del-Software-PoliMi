@@ -43,10 +43,10 @@ public class Game {
         this.gameNumber = gameNumber;
         this.numPlayers=numPlayers;
         this.players = new Player[numPlayers];
-        this.livingRoom = new LivingRoom(numPlayers, 0, 2,cardGenerator);
+        this.livingRoom = new LivingRoom(numPlayers,  2,cardGenerator);
         this.winnerPlayer = new Player("winner", cardGenerator); // devo passargli una string
         this.grid = livingRoom.getGrid();
-        this.index = 0;
+        this.index = 0; 
     }
 
     public int getNumPlayers() {

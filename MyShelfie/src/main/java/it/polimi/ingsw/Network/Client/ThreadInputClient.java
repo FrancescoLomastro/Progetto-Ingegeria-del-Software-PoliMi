@@ -1,24 +1,30 @@
 package it.polimi.ingsw.Network.Client;
 
-
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.model.Utility.Position;
-
 import java.io.IOException;
 import java.util.Scanner;
-
+/**
+ * This class is used to catch input from client/user. In this way class "client" can handle other message
+ * */
 public class ThreadInputClient implements Runnable{
     private String messageFromCLI;
     private final Client client;
-    private MessageType command;
-    private Message message;
-
+    private final MessageType command;
+    private final Message message;
+    /**Constructor
+     * @author: Riccardo Figini
+     * @param message message
+     * @param client Class client (used to send message)
+     * @param command*/
     public ThreadInputClient(Client client, MessageType command, Message message){
         messageFromCLI=null;
         this.client=client;
         this.command=command;
         this.message=message;
     }
+    /**Switch case commad
+     * @author: Riccardo Figini*/
     @Override
     public void run() {
         switch(command){
@@ -27,7 +33,8 @@ public class ThreadInputClient implements Runnable{
             case PLAYERNUMBER_REQUEST -> askNumberOfPlayer();
         }
     }
-
+    /**Ask Player to insert number of player
+    * @author: Riccardo Figini*/
     private void askNumberOfPlayer() {
         PlayerNumberRequest msg = (PlayerNumberRequest) message;
         Scanner scanner = new Scanner(System.in);
@@ -55,21 +62,27 @@ public class ThreadInputClient implements Runnable{
             throw new RuntimeException("Couldn't contact the server"+e);
         }
     }
-
-    private void askMove() {
-        System.out.println("It's your turn, next input has to be your move. Please use #move command: ");
-        Scanner scanner = new Scanner(System.in);
-        messageFromCLI = scanner.nextLine().trim();
-        manageTurn();
+    /**Ask player a move
+     * @author: Riccardo Figini*/
+    private void askMove()  {
+        int n;
+        System.out.println("It's your turn, next input has to be your move.");
+        Position[] position = manageTurn();
+        MessageMove reMessage = new MessageMove();
+        reMessage.setMove(position);
+        System.out.println("In which column do you want insert new cards?");
+        n=goodFormat(5);
+        reMessage.setColumn(n);
         try {
-            client.sendMessage(new MessageMove(translateIntoNumber()));
+            client.sendMessage(reMessage);
         }
-        catch (IOException e){
-            System.out.println("Something goes wrong, " + e);
+        catch (Exception e){
+            System.out.println("Impossible to send message! " + e);
         }
     }
-
-
+    /**
+     * Ask name
+     * @author: Riccardo Figini*/
     private void askName(){
         Scanner scanner = new Scanner(System.in);
         messageFromCLI = scanner.nextLine().trim();
@@ -80,27 +93,46 @@ public class ThreadInputClient implements Runnable{
             System.out.println("Something goes wrong, " + e);
         }
     }
-
-    private Position[] translateIntoNumber() {
-        return new Position[3];
+    /**
+     * It allows good input for a move
+     * @author: Riccardo Figini
+     * @return {@code Position[]} Return an array of position*/
+    private Position[] manageTurn(){
+        int n;
+        Scanner scanner = new Scanner(System.in);
+        messageFromCLI = scanner.nextLine().trim();
+        System.out.println("How many card do you want? (minimum 1, max 3)");
+        n=goodFormat(3);
+        Position[] positions = new Position[n];
+        System.out.println("Now chose object card. ");
+        for(int i=0; i<n; i++){
+            System.out.println("Card number: " + i);
+            System.out.print("Row: ");
+            n=goodFormat(10);
+            positions[i].setRow(n);
+            System.out.print("Column: ");
+            n=goodFormat(10);
+            positions[i].setColumn(n);
+        }
+        return positions;
     }
-
-    private void manageTurn(){
-        while(!messageFromCLI.startsWith("#move") || !goodFormat()){
-            System.out.print("Format error, please enter again:");
-            Scanner scanner = new Scanner(System.in);
-            messageFromCLI = scanner.nextLine().trim();
+    /**It controls the input from user, type e limit of number inserted
+     * @author: Riccardo Figini
+     * @param limit Limit of integer inserted
+     * @return {@code Integer} Inserted number*/
+    private int goodFormat(int limit){
+        int number;
+        Scanner scanner = new Scanner(System.in);
+        messageFromCLI = scanner.nextLine().trim();
+        while (true) {
+            try {
+                number = Integer.parseInt(messageFromCLI);
+                if(number<=0 || number>limit)
+                    throw new Exception();
+            } catch (Exception e) {
+                System.out.println("That is not a good number! Try again...");
+            }
         }
     }
-
-    private boolean goodFormat(){
-        //TODO decidere il formato
-        return true;
-    }
-
-    private boolean isANumber(char charAt) {
-        return charAt>'0' && charAt < '9';
-    }
-
 }
 
