@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Messages;
 
-import org.example.UtilyGame.Position;
+
+import it.polimi.ingsw.model.Utility.Position;
 
 public class MessageMove extends MessageGame{
     Position[] move;

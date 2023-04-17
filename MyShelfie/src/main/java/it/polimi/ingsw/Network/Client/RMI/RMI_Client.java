@@ -4,6 +4,11 @@ package it.polimi.ingsw.Network.Client.RMI;
 
 import it.polimi.ingsw.Network.Client.Client;
 import it.polimi.ingsw.Network.Client.RMIClientConnection;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.NewGameServerMessage;
+import it.polimi.ingsw.Network.Messages.RMILoginMessage;
+import it.polimi.ingsw.Network.Servers.RMI.RMISharedInterface;
+import it.polimi.ingsw.View.View;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

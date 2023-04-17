@@ -1,6 +1,10 @@
 package it.polimi.ingsw.Network.Client;
 
 
+import it.polimi.ingsw.Network.Messages.Message;
+
+import java.util.ArrayList;
+
 public class MessageQueueHandler implements Runnable {
     private final Client client;
     public MessageQueueHandler(Client client) {

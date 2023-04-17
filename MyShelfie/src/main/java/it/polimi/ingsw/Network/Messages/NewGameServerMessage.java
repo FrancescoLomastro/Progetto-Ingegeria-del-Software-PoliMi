@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Messages;
 
-import org.example.Controller.GameController;
+
+import it.polimi.ingsw.controller.GameController;
 
 public class NewGameServerMessage extends Message{
     private final String server;

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Messages;
 
-import org.example.Servers.Connection;
+
+import it.polimi.ingsw.Network.Servers.Connection;
 
 public class LoginMessage extends Message{
     private Connection clientConnection;

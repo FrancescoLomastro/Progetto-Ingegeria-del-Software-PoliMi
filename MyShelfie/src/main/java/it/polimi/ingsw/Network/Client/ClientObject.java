@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Network.Client;
 
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageGrid;
+import it.polimi.ingsw.Network.Messages.MessageLibrary;
+import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 
 import java.util.HashMap;

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Network.Client;
 
 
+import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.model.Utility.Position;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -79,7 +82,7 @@ public class ThreadInputClient implements Runnable{
     }
 
     private Position[] translateIntoNumber() {
-        return null;
+        return new Position[3];
     }
 
     private void manageTurn(){

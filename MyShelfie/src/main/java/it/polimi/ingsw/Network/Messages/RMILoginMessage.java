@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Messages;
 
-import org.example.Clients.RMIClientConnection;
+
+import it.polimi.ingsw.Network.Client.RMIClientConnection;
 
 public class RMILoginMessage extends Message {
     private RMIClientConnection clientConnection =null;

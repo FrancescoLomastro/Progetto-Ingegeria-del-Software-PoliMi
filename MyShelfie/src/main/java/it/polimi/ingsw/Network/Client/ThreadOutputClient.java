@@ -1,6 +1,10 @@
 package it.polimi.ingsw.Network.Client;
 
 
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageLibrary;
+import it.polimi.ingsw.Network.ObserverImplementation.Observer;
+import it.polimi.ingsw.View.CLI;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 
 public class ThreadOutputClient implements Observer<ClientObject, Message> {

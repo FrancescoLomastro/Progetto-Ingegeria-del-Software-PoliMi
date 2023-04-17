@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Network.Messages;
 
-import org.example.UtilyGame.ObjectCard;
-
+import it.polimi.ingsw.model.Cards.ObjectCard;
 public class MessageGrid extends MessageGame{
     ObjectCard[][] grid;
 

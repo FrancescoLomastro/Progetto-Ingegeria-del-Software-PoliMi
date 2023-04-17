@@ -2,6 +2,9 @@ package it.polimi.ingsw.Network.Client;
 
 
 
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.View.View;
+
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
