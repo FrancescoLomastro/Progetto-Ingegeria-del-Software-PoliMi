@@ -1,11 +1,18 @@
 package it.polimi.ingsw.Network.Messages;
 
+/**
+ * class for messages about the reach of a common goal
+ * @author Andrea Ferrini
+ * */
 public class MessageCommonGoal extends Message{
 
     int gainedPointsFirstCard = 0;
 
     int gainedPointsSecondCard = 0;
 
+    /**
+     * constructor
+     * */
     public MessageCommonGoal(){
         super(MessageType.COMMON_GOAL);
     }

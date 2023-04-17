@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.Game;
 
 import static it.polimi.ingsw.Network.Messages.MessageType.*;
 
+/*
+class TurnController
+*@author Andrea Ferrini
+*/
 public class TurnController implements Runnable{
 
     private Game game;
@@ -12,18 +16,30 @@ public class TurnController implements Runnable{
     private GameController gameController;
     MessageMove message;
 
+    /**
+     * the constructor of the class TurnController
+     * @param game : the game which the TurnController is controlling
+     * @param gameController : the Game controller associated to the game
+     * */
     public TurnController(Game game, GameController gameController){
 
         this.game = game;
         this.gameController = gameController;
     }
 
+    /**
+     * a method to call to start the turn thread, it saves the message and runs the new thread
+     * @param message : the message to save
+     * */
     public void startTheTurn(MessageMove message){
 
         this.message = message;
         new Thread(this).start();
     }
 
+    /**
+     * implementation of Runnable interface's method run
+     * */
     public void run(){
 
         Message moveResult;

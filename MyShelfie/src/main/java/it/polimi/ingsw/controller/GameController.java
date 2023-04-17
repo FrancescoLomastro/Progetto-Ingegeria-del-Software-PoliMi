@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * the controller of a specific game
+ * @author Andrea Ferrini
+ * */
 public class GameController implements Runnable, ServerReceiver {
 
     private Game game;
@@ -22,15 +26,29 @@ public class GameController implements Runnable, ServerReceiver {
     private int limitOfPlayers;
     private final String serverNameRMI;
     private final int portServerRMI=9000;
+
+    /**
+     * constructor
+     * @param numberOfGame : identifies the game that game controller is controlling
+     * */
     public GameController(int numberOfGame) {
         clients= new HashMap<>();
         serverNameRMI="ServerGame"+numberOfGame;
         this.numberOfGame = numberOfGame;
     }
+
+    /**
+     * @return the size of the hashmap that contains the players
+     * */
     public int getSize()
     {
         return clients.size();
     }
+
+    /**
+     * @param username : a player's username
+     * @return true if this player is registered in this game
+     * */
     public boolean isRegistered(String username)
     {
         return clients.keySet().contains(username);
@@ -44,6 +62,11 @@ public class GameController implements Runnable, ServerReceiver {
         limitOfPlayers=value;
     }
 
+    /**
+     * this method adds a player in this game
+     * @param username : the player's username
+     * @param connection : the player's connection
+     * */
     public void addPlayer(String username, Connection connection) {
 
         clients.put(username,connection);
@@ -59,6 +82,9 @@ public class GameController implements Runnable, ServerReceiver {
         });
     }
 
+    /**
+     * sends a message to all the players
+     * */
     public void newServerMessages(){
         for(Map.Entry<String, Connection> entry : clients.entrySet()){
             try {
@@ -71,6 +97,9 @@ public class GameController implements Runnable, ServerReceiver {
         }
     }
 
+    /**
+     * sends the start game message
+     * */
     public void startGameMessages(){
         for(Map.Entry<String, Connection> entry : clients.entrySet()){
 
@@ -88,6 +117,9 @@ public class GameController implements Runnable, ServerReceiver {
 
     }
 
+    /**
+     * initialization of a game
+     * */
     public void initGame(){
 
         // inizializzo il game
@@ -106,6 +138,10 @@ public class GameController implements Runnable, ServerReceiver {
             game.setNewPlayer(key);
         }
     }
+
+    /**
+     * implementation of the method run, in Runnable interface
+     * */
     @Override
     public void run() {
 
@@ -144,6 +180,10 @@ public class GameController implements Runnable, ServerReceiver {
         }
     }
 
+    /**
+     * it sends a message to all the users in the game
+     * @param message : the message to send
+     * */
     public void notifyAllMessage(Message message){
 
         for(Map.Entry<String, Connection> entry : clients.entrySet()){
@@ -158,6 +198,11 @@ public class GameController implements Runnable, ServerReceiver {
         }
     }
 
+    /**
+     * it sends a message to a specific user
+     * @param message : the message to send
+     * @param username : the username who will receive that message
+     * */
     public void sendMessageToASpecificUser(Message message, String username){
 
         clients.get(username).sendMessage(message);
