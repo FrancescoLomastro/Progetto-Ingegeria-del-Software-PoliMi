@@ -54,6 +54,16 @@ public class Game {
         return player.getLibrary().getMatrix();
     }
 
+    public Player[] getPlayers() {
+        Player[] answer = new Player[numPlayers];
+
+        for(int i=0;i<numPlayers;i++) {
+            answer[i] = players[i];
+        }
+
+        return answer;
+    }
+
     /**
      * @param player: the turn player
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards

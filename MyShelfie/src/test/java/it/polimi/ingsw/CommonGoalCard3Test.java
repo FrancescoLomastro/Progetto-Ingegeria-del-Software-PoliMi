@@ -81,7 +81,6 @@ public class CommonGoalCard3Test {
             }
         }
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
-        library.stampa();
     }
     @Test
     public void isSatisfied_exactlyFourRowsWithCorrectColors_trueInOutput(){

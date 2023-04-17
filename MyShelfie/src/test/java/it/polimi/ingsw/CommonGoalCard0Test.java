@@ -63,7 +63,6 @@ public class CommonGoalCard0Test {
         library.insertCardsInLibrary(4,new ObjectCard("",Color.BLUE,Type.FIRST));
         library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
-        library.stampa();
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 
@@ -129,7 +128,6 @@ public class CommonGoalCard0Test {
                 new ObjectCard("",Color.YELLOW,Type.FIRST),
                 new ObjectCard("",Color.YELLOW,Type.FIRST),
                 new ObjectCard("",Color.YELLOW,Type.FIRST));
-        library.stampa();
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 

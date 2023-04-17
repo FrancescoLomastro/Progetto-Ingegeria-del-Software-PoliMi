@@ -98,7 +98,6 @@ public class CommonGoalCard10Test {
         library.insertCardsInLibrary(4,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(4,new ObjectCard("",Color.BLUE,Type.FIRST));
         library.insertCardsInLibrary(4,new ObjectCard("",Color.GREEN,Type.FIRST));
-        library.stampa();
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 

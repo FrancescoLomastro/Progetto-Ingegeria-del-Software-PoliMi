@@ -233,7 +233,6 @@ public class CommonGoalCard8Test {
         library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.WHITE,Type.FIRST));
-        library.stampa();
         Assert.assertTrue(commonGoalCard.isSatisfied(library));
     }
 

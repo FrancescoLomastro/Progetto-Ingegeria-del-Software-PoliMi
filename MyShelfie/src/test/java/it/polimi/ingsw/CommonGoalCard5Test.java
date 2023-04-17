@@ -74,7 +74,6 @@ public class CommonGoalCard5Test {
         library.insertCardsInLibrary(4,new ObjectCard("",Color.getEnumFromRelativeInt(0),Type.FIRST));
 
         library.insertCardsInLibrary(3,new ObjectCard("",Color.getEnumFromRelativeInt(5),Type.FIRST));
-        library.stampa();
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 

@@ -175,7 +175,6 @@ public class LibraryTest {
         library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
         System.out.println(library.countAdjacentPoints());
-        library.stampa();
     }
     @Test
     public void countAdjacentPoints_correctInput1_correctOutput1()

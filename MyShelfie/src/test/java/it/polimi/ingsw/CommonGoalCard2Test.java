@@ -140,7 +140,6 @@ public class CommonGoalCard2Test {
                 new ObjectCard("", Color.YELLOW , Type.FIRST),
                 new ObjectCard("", Color.YELLOW, Type.FIRST),
                 new ObjectCard("", Color.YELLOW, Type.FIRST));
-        library.stampa();
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
