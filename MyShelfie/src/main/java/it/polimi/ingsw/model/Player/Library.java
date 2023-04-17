@@ -132,15 +132,14 @@ public class Library {
      */
     public boolean insertCardsInLibrary(int chosenColumn, ObjectCard... cards) {
         int row;
-        if(isMoveAvailable(chosenColumn,cards))
+
+        row=findNumberOfFreeCells(chosenColumn)-1;
+        for (int i=0; i < cards.length; row--,i++)
         {
-            row=findNumberOfFreeCells(chosenColumn)-1;
-            for (int i=0; i < cards.length; row--,i++)
-            {
-                matrix[row][chosenColumn] = cards[i];
-            }
-            return true;
+            matrix[row][chosenColumn] = cards[i];
         }
+        return true;
+
         return false;
     }
 

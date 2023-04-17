@@ -27,12 +27,7 @@ public class TurnController implements Runnable{
 
         if(message != null){
 
-            switch(message){
 
-                case START_GAME_MESSAGE -> initGame();
-
-                case MY_MOVE_ANSWER -> makeAMove();
-            }
         }else throw new RuntimeException("messaggio non valido");
     }
 

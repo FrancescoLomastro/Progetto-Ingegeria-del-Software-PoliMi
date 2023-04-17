@@ -32,7 +32,7 @@ public class Game {
      * @param numPlayers: the number of the players in that game
      * @param gameNumber: to identify multiple games
      */
-    public Game(int numPlayers, /* dal controller: */ int gameNumber) throws IOException {
+    public Game(int numPlayers, int gameNumber) throws IOException {
         this.cardGenerator=new CardGenerator();
         this.gameNumber = gameNumber;
         this.numPlayers=numPlayers;
@@ -72,13 +72,16 @@ public class Game {
     public void manageTurn(Player player, Position[] move, int column){
 
         if(checkMove(player, move, column)){ //se la mossa è lecita
+
+            //esecuzione mossa
+            player.getLibrary().insertCardsInLibrary(column, grid.draw(move));
+
             // alla fine del turno
             checkCommonGoal(player, livingRoom.getCommonGoalCards());
         }
         else{
 
-            //mossa non lecita
-            //gestire gli output e le azioni successive
+            throw new RuntimeException("mossa non valida ahhahahhahahhhahhhahahahahahahahahhahahhahahah");
         }
     }
 
@@ -119,7 +122,7 @@ public class Game {
      */
     private boolean checkMove(Player player, Position[] move, int column){
 
-        if(livingRoom.getGrid().isDrawAvailable(move)){
+        if(grid.isDrawAvailable(move)){
 
             return player.getLibrary().isMoveAvailable(column,grid.draw(move)); //se la mossa è fattibile, controllo se la colonna della libreria è disponibile per compiere la mossa
 
