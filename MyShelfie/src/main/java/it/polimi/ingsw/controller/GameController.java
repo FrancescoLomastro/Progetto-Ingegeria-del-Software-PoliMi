@@ -1,8 +1,9 @@
 package it.polimi.ingsw.controller;
 
-import org.example.Messages.*;
-import org.example.Servers.Connection;
-import org.example.Servers.RMI.RMIShared;
+import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.Network.Servers.Connection;
+import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
+import it.polimi.ingsw.model.Game;
 
 import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
@@ -12,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class GameController implements Runnable, ServerReceiver {
+
+    private Game game;
+
+    private int numberOfGame;
     private Map<String, Connection> clients;
     private int limitOfPlayers;
     private final String serverNameRMI;
@@ -19,7 +24,7 @@ public class GameController implements Runnable, ServerReceiver {
     public GameController(int numberOfGame) {
         clients= new HashMap<>();
         serverNameRMI="ServerGame"+numberOfGame;
-
+        this.numberOfGame = numberOfGame;
     }
     public int getSize()
     {
@@ -82,8 +87,27 @@ public class GameController implements Runnable, ServerReceiver {
 
     }
 
+    public void initGame(){
+
+        // inizializzo il game
+        try {
+            game = new Game(clients.size() - 1, numberOfGame);
+
+        }catch(IOException e){
+
+            throw new RuntimeException("ciao");
+        }
+
+        //inizializzo i giocatori nel game
+        for (Map.Entry<String, Connection> entry : clients.entrySet()) {
+
+            String key = entry.getKey();
+            game.setNewPlayer(key);
+        }
+    }
     @Override
     public void run() {
+
         try {
             RMIShared gameShared = new RMIShared(this);
             Registry registry = LocateRegistry.getRegistry(portServerRMI);
@@ -95,6 +119,8 @@ public class GameController implements Runnable, ServerReceiver {
         }
         newServerMessages();
         startGameMessages();
+
+        initGame();
 
         /////////////////////////
         try {

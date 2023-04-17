@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import org.example.Messages.*;
-import org.example.Request;
-import org.example.Servers.Connection;
+import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.Network.Servers.Connection;
+import it.polimi.ingsw.model.Utility.Request;
 
 import java.io.IOException;
 import java.util.ArrayList;

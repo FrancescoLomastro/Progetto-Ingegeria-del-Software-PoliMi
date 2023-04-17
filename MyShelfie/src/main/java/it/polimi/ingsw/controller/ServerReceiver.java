@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import org.example.Messages.Message;
+import it.polimi.ingsw.Network.Messages.Message;
 
 public interface ServerReceiver {
     public void onMessage(Message message);
