@@ -12,10 +12,10 @@ public class LivingRoom {
     private int numCommonGoalCards;
     private CardGenerator cardGenerator;
 
-    public LivingRoom(int numPlayers, int livingRoomScore, int numCommonGoalCards, CardGenerator cardGenerator) throws IOException {
+    public LivingRoom(int numPlayers, int numCommonGoalCards, CardGenerator cardGenerator) throws IOException {
         this.cardGenerator= cardGenerator;
         this.grid = new Grid(numPlayers,this.cardGenerator);
-        this.scoreCard= new ScorePointCard(livingRoomScore);
+        this.scoreCard= new ScorePointCard(numPlayers);
         this.numCommonGoalCards=numCommonGoalCards;
         this.commonGoalCards = new CommonGoalCard[numCommonGoalCards];
     }
