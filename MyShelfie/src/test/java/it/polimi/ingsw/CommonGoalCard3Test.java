@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class CommonGoalCard3Test {
     CommonGoalCard commonGoalCard;
     Library library;
@@ -30,42 +32,50 @@ public class CommonGoalCard3Test {
      * */
     @Test
     public void isSatisfied_correctInputAllRowsHaveSameColor_trueInOutput(){
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardsInLibrary(j,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < library.getNumberOfRows(); i++) {
+                for (int j = 0; j < library.getNumberOfColumns(); j++) {
+                    library.insertCardsInLibrary(j, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
+                }
             }
-        }
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
     public void isSatisfied_correctInputAllRowsHaveTwoDifferentColor_trueInOutput(){
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardsInLibrary(j,new ObjectCard("",Color.getEnumFromRelativeInt(j%2),Type.FIRST));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < library.getNumberOfRows(); i++) {
+                for (int j = 0; j < library.getNumberOfColumns(); j++) {
+                    library.insertCardsInLibrary(j, new ObjectCard("", Color.getEnumFromRelativeInt(j % 2), Type.FIRST));
+                }
             }
-        }
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
     public void isSatisfied_correctInputAllRowsHaveThreeDifferentColor_trueInOutput(){
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardsInLibrary(j,new ObjectCard("",Color.getEnumFromRelativeInt(j%3),Type.FIRST));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < library.getNumberOfRows(); i++) {
+                for (int j = 0; j < library.getNumberOfColumns(); j++) {
+                    library.insertCardsInLibrary(j, new ObjectCard("", Color.getEnumFromRelativeInt(j % 3), Type.FIRST));
+                }
             }
-        }
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
     public void isSatisfied_correctInputAllRowsHaveAllDifferentColor_falseInOutput(){
-        for(int i=0; i<library.getNumberOfRows(); i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardsInLibrary(j,new ObjectCard("",Color.getEnumFromRelativeInt(j),Type.FIRST));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < library.getNumberOfRows(); i++) {
+                for (int j = 0; j < library.getNumberOfColumns(); j++) {
+                    library.insertCardsInLibrary(j, new ObjectCard("", Color.getEnumFromRelativeInt(j), Type.FIRST));
+                }
             }
-        }
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+            Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
@@ -75,21 +85,25 @@ public class CommonGoalCard3Test {
 
     @Test
     public void isSatisfied_onlyThreeRowsWithCorrectColors_falseInOutput(){
-        for(int i=0; i<3; i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardsInLibrary(j,new ObjectCard("",Color.getEnumFromRelativeInt(j%3),Type.FIRST));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < library.getNumberOfColumns(); j++) {
+                    library.insertCardsInLibrary(j, new ObjectCard("", Color.getEnumFromRelativeInt(j % 3), Type.FIRST));
+                }
             }
-        }
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+            Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        });
     }
     @Test
     public void isSatisfied_exactlyFourRowsWithCorrectColors_trueInOutput(){
-        for(int i=0; i<4; i++){
-            for(int j=0; j<library.getNumberOfColumns(); j++){
-                library.insertCardsInLibrary(j,new ObjectCard("",Color.getEnumFromRelativeInt(j%3),Type.FIRST));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < library.getNumberOfColumns(); j++) {
+                    library.insertCardsInLibrary(j, new ObjectCard("", Color.getEnumFromRelativeInt(j % 3), Type.FIRST));
+                }
             }
-        }
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
 

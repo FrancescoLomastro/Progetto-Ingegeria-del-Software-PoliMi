@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 /**
  * @author: Alberto Aniballi
  */
@@ -41,6 +43,7 @@ public class CommonGoalCard9Test {
     @Test
     public void isSatisfied_oneCorrectInputOtherCellsEmpty_trueInOutput()
     {
+        assertDoesNotThrow(()-> {
 
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -62,7 +65,7 @@ public class CommonGoalCard9Test {
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));});
     }
 
     /**
@@ -71,6 +74,7 @@ public class CommonGoalCard9Test {
      * */
     @Test
     public void isSatisfied_noCorrectInput_falseInOutput(){
+        assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.GREEN,Type.FIRST));
@@ -106,7 +110,7 @@ public class CommonGoalCard9Test {
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(3,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
     }
 
     /**
@@ -115,7 +119,7 @@ public class CommonGoalCard9Test {
      * */
     @Test
     public void isSatisfied_noCorrectInputLeftUpCornerWrong_falseInOutput(){
-
+        assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -136,7 +140,7 @@ public class CommonGoalCard9Test {
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
     }
 
     /**
@@ -145,6 +149,7 @@ public class CommonGoalCard9Test {
      * */
     @Test
     public void isSatisfied_noCorrectInputLeftDownCornerWrong_falseInOutput(){
+        assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -165,7 +170,7 @@ public class CommonGoalCard9Test {
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
     }
 
     /**
@@ -174,6 +179,8 @@ public class CommonGoalCard9Test {
      * */
     @Test
     public void isSatisfied_noCorrectInputRightUpCornerWrong_falseInOutput(){
+        assertDoesNotThrow(()-> {
+
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -194,7 +201,7 @@ public class CommonGoalCard9Test {
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.PINK,Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
     }
 
     /**
@@ -203,6 +210,7 @@ public class CommonGoalCard9Test {
      * */
     @Test
     public void isSatisfied_noCorrectInputRightDownCornerWrong_falseInOutput(){
+        assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -223,7 +231,7 @@ public class CommonGoalCard9Test {
         library.insertCardsInLibrary(2,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(2,new ObjectCard("",Color.WHITE,Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
     }
 
     /**

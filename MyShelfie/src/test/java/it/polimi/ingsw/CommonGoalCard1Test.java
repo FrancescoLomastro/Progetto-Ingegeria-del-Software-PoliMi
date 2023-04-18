@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class CommonGoalCard1Test {
     CommonGoalCard commonGoalCard;
     //Type never affects this algorithm
@@ -34,114 +36,122 @@ public class CommonGoalCard1Test {
 
     @Test
     public void isSatisfied_correctInputCase0_trueInOutput(){
-        library.insertCardsInLibrary(0,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(1,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(2,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(3,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(4,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        assertDoesNotThrow(()-> {
+            library.insertCardsInLibrary(0,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            library.insertCardsInLibrary(1,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            library.insertCardsInLibrary(2,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            library.insertCardsInLibrary(3,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            library.insertCardsInLibrary(4,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
     public void isSatisfied_correctInputCase1_trueInOutput(){
-        library.insertCardsInLibrary(0,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST));
-        library.insertCardsInLibrary(1,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST));
-        library.insertCardsInLibrary(2,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST));
-        library.insertCardsInLibrary(3,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST));
-        library.insertCardsInLibrary(4,
-                new ObjectCard("", Color.GREEN , Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        assertDoesNotThrow(()-> {
+            library.insertCardsInLibrary(0,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST));
+            library.insertCardsInLibrary(1,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST));
+            library.insertCardsInLibrary(2,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST));
+            library.insertCardsInLibrary(3,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST));
+            library.insertCardsInLibrary(4,
+                    new ObjectCard("", Color.GREEN, Type.FIRST));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
 
     @Test
     public void isSatisfied_correctInputCase3_trueInOutput(){
-        library.insertCardsInLibrary(0,
-                new ObjectCard("", Color.GREEN , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(1,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(2,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(3,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(4,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
+        assertDoesNotThrow(()-> {
+            library.insertCardsInLibrary(0,
+                    new ObjectCard("", Color.GREEN, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(1,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(2,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(3,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(4,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
 
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
     public void isSatisfied_correctInputCase4_trueInOutput(){
-        library.insertCardsInLibrary(0,
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(1,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(2,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(3,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(4,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        assertDoesNotThrow(()-> {
+            library.insertCardsInLibrary(0,
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(1,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(2,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(3,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(4,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
@@ -151,37 +161,39 @@ public class CommonGoalCard1Test {
 
     @Test
     public void isSatisfied_correctInput_falseInOutput(){
-        library.insertCardsInLibrary(0,
-                new ObjectCard("", Color.LIGHTBLUE , Type.FIRST),
-                new ObjectCard("", Color.LIGHTBLUE , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(1,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(2,
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST));
-        library.insertCardsInLibrary(3,
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.GREEN , Type.FIRST),
-                new ObjectCard("", Color.YELLOW , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        library.insertCardsInLibrary(4,
-                new ObjectCard("", Color.LIGHTBLUE , Type.FIRST),
-                new ObjectCard("", Color.LIGHTBLUE , Type.FIRST),
-                new ObjectCard("", Color.BLUE , Type.FIRST),
-                new ObjectCard("", Color.PINK , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST),
-                new ObjectCard("", Color.WHITE , Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        assertDoesNotThrow(()-> {
+            library.insertCardsInLibrary(0,
+                    new ObjectCard("", Color.LIGHTBLUE, Type.FIRST),
+                    new ObjectCard("", Color.LIGHTBLUE, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            library.insertCardsInLibrary(1,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            library.insertCardsInLibrary(2,
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST));
+            library.insertCardsInLibrary(3,
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.GREEN, Type.FIRST),
+                    new ObjectCard("", Color.YELLOW, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            library.insertCardsInLibrary(4,
+                    new ObjectCard("", Color.LIGHTBLUE, Type.FIRST),
+                    new ObjectCard("", Color.LIGHTBLUE, Type.FIRST),
+                    new ObjectCard("", Color.BLUE, Type.FIRST),
+                    new ObjectCard("", Color.PINK, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST),
+                    new ObjectCard("", Color.WHITE, Type.FIRST));
+            Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        });
     }
 }

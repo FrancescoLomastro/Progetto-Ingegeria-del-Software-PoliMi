@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 public class CommonGoalCard5Test {
     CommonGoalCard commonGoalCard;
 
@@ -35,28 +37,33 @@ public class CommonGoalCard5Test {
 
     @Test
     public void isSatisfied_correctInputCheckFisrtLastColumn_trueInOutput(){
-        for(int i=0; i<library.getNumberOfRows(); i++)
-            library.insertCardsInLibrary(0,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
-        for(int i=0; i<library.getNumberOfRows(); i++)
-            library.insertCardsInLibrary(4,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < library.getNumberOfRows(); i++)
+                library.insertCardsInLibrary(0, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
+            for (int i = 0; i < library.getNumberOfRows(); i++)
+                library.insertCardsInLibrary(4, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
 
     @Test
     public void isSatisfied_correctInputCheckSecondFourthColumn_trueInOutput(){
-        for(int i=0; i<library.getNumberOfRows(); i++)
-            library.insertCardsInLibrary(1,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
-        for(int i=0; i<library.getNumberOfRows(); i++)
-            library.insertCardsInLibrary(3,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        assertDoesNotThrow(()-> {
+            for (int i = 0; i < library.getNumberOfRows(); i++)
+                library.insertCardsInLibrary(1, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
+            for (int i = 0; i < library.getNumberOfRows(); i++)
+                library.insertCardsInLibrary(3, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
+            Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        });
     }
     @Test
     public void isSatisfied_correctInputCheckthirdFourthColumn_trueInOutput(){
+        assertDoesNotThrow(()->{
         for(int i=0; i<library.getNumberOfRows(); i++)
             library.insertCardsInLibrary(2,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
         for(int i=0; i<library.getNumberOfRows(); i++)
             library.insertCardsInLibrary(3,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));});
     }
 
     @Test
@@ -65,6 +72,7 @@ public class CommonGoalCard5Test {
     }
     @Test
     public void isSatisfied_correctInputFullMatrix_falseInOutput(){
+        assertDoesNotThrow(()->{
         for(int i=0; i<library.getNumberOfRows()-1; i++)
             for(int j=0; j<library.getNumberOfColumns(); j++)
                 library.insertCardsInLibrary(j,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
@@ -74,7 +82,7 @@ public class CommonGoalCard5Test {
         library.insertCardsInLibrary(4,new ObjectCard("",Color.getEnumFromRelativeInt(0),Type.FIRST));
 
         library.insertCardsInLibrary(3,new ObjectCard("",Color.getEnumFromRelativeInt(5),Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
     }
 
 }
