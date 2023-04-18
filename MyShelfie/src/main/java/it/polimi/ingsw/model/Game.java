@@ -212,7 +212,7 @@ public class Game {
         index ++;
     }
 
-    public boolean checkEndLibrary(String username) {
+    public boolean checkEndLibrary(String username){
         Player player = searchByUsername(username);
         return player.getLibrary().isFull();
     }
