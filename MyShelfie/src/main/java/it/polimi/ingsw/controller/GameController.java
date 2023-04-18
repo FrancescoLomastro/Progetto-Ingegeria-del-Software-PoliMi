@@ -210,7 +210,11 @@ public class GameController implements Runnable, ServerReceiver {
      * @param username : the username who will receive that message
      * */
     public void sendMessageToASpecificUser(Message message, String username){
-
-        clients.get(username).sendMessage(message);
+        try {
+            clients.get(username).sendMessage(message);
+        }
+        catch (Exception e){
+            System.out.println("Error in sending message" + e);
+        }
     }
 }

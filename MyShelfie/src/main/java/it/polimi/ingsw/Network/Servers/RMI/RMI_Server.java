@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network.Servers.RMI;
 
-import org.example.Controller.ServerReceiver;
+import it.polimi.ingsw.controller.ServerReceiver;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;

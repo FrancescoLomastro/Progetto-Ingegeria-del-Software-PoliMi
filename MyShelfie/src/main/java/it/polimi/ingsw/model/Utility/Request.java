@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.Utility;
 
-import org.example.Servers.Connection;
+import it.polimi.ingsw.Network.Servers.Connection;
+
 
 public class Request {
     private String username;

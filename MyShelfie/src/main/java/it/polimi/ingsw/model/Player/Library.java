@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.Player;
 
+import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Direction;
 import it.polimi.ingsw.model.Utility.Position;
@@ -130,17 +131,18 @@ public class Library {
      * @return true if the cards array has been succesuflly inserted into the fibrary
      * @author: Alberto Aniballi, Francesco Lo Mastro
      */
-    public boolean insertCardsInLibrary(int chosenColumn, ObjectCard... cards) {
+    public void insertCardsInLibrary(int chosenColumn, ObjectCard... cards) throws InvalidMoveException {
         int row;
+
+
+        isMoveAvailable(chosenColumn, cards);
 
         row=findNumberOfFreeCells(chosenColumn)-1;
         for (int i=0; i < cards.length; row--,i++)
         {
             matrix[row][chosenColumn] = cards[i];
         }
-        return true;
 
-        return false;
     }
 
     /** Checks if an array of cards can be inserted into a specific column.
@@ -150,9 +152,11 @@ public class Library {
      * @return true if the array of cards fits into the column selected
      * @author: Alberto Aniballi
      */
-    public boolean isMoveAvailable(int chosenColumn, ObjectCard... cards){
+    public void isMoveAvailable(int chosenColumn, ObjectCard... cards)throws InvalidMoveException {
         int numberOfFreeCells = findNumberOfFreeCells(chosenColumn);
-        return chosenColumn>=0 && numberOfFreeCells>=cards.length && chosenColumn<numberOfColumns;
+        if(chosenColumn >= 0 && numberOfFreeCells >= cards.length && chosenColumn < numberOfColumns){
+            throw new InvalidMoveException("Insufficient space in selected column");
+        }
     }
 
 
@@ -196,7 +200,6 @@ public class Library {
     private boolean checkPositionIsValid(int row, int column) {
         return !(column < 0 || column >= numberOfColumns || row < 0 || row >= numberOfRows);
     }
-
 
 
     /**

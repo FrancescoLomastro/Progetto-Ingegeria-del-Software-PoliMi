@@ -1,8 +1,10 @@
 package it.polimi.ingsw.Network.Servers.Socket;
 
-import org.example.Controller.ServerReceiver;
-import org.example.Messages.*;
-import org.example.Servers.Connection;
+
+
+import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.Network.Servers.Connection;
+import it.polimi.ingsw.controller.ServerReceiver;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -51,7 +53,7 @@ public class SocketConnection implements Connection,Runnable {
     }
 
     public void onMessage(Message message) {
-        if(message.getType()==MessageType.SOCKET_LOGIN_REQUEST)
+        if(message.getType()== MessageType.SOCKET_LOGIN_REQUEST)
         {
             SocketLoginMessage msg = (SocketLoginMessage) message;
             LoginMessage newMessage = new LoginMessage(msg.getUsername(),this);

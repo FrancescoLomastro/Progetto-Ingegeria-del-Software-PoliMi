@@ -9,6 +9,12 @@ public class MessageWinner extends Message{
         super(MessageType.WINNER);
     }
 
+    public MessageWinner(String first, Integer second) {
+        super(MessageType.WINNER);
+        this.winner=first;
+        this.winnerPoints = second;
+    }
+
     public String getWinner() {
         return winner;
     }

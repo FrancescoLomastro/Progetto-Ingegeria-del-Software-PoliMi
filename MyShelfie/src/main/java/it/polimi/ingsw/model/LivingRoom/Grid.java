@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Utility.Position;
@@ -93,7 +94,7 @@ public class Grid {
      * @return {@code true} if the vector is not null, has the correct length, has not empty cells in it, is a straight
      * drawn, is formed by connected positions and finally if all the object cards have a free side before the drawn.
      */
-    public boolean isDrawAvailable(Position[] drawn){
+    public void isDrawAvailable(Position[] drawn) throws InvalidMoveException{
         int[] columns;
         int[] rows;
         int[] vector;
@@ -101,7 +102,7 @@ public class Grid {
         //Mossa non nulla ed interna
         if((drawn==null)||(drawn.length<=0)||(drawn.length>3))
         {
-            return false;
+            throw new InvalidMoveException("Invalid number of card drawn");
         }
         columns= new int[drawn.length];
         rows= new int[drawn.length];
@@ -110,7 +111,7 @@ public class Grid {
         {
             if((drawn[i]==null)||(matrix[drawn[i].getRow()][drawn[i].getColumn()]==null))
             {
-                return false;
+                throw new InvalidMoveException("Some position to extract was null");
             }
             columns[i]=drawn[i].getRow();
             rows[i]=drawn[i].getColumn();
@@ -127,18 +128,18 @@ public class Grid {
                 vector = columns;
             }
             else
-                return false;
+                throw new InvalidMoveException("Position don't extract contiguous cards");
 
             Arrays.sort(vector);
             for (int i = 1; i < vector.length; i++) {
                 if (vector[i] != vector[i - 1] + 1)
-                    return false;
+                    throw new InvalidMoveException("Position don't extract contiguous cards");
             }
         }
         //Non fa parte delle zone che non sono disponibili
         for (Position position : drawn)
             if (!isAvailable(position))
-                return false;
+                throw new InvalidMoveException("Positions are not available (position extra-gird)");
         //almeno un lato libero
         for(int i=1; i<drawn.length;i++)
         {
@@ -149,10 +150,9 @@ public class Grid {
                         (matrix[drawn[i].getRow()-1][drawn[i].getColumn()]!=null)&&
                         (matrix[drawn[i].getRow()][drawn[i].getColumn()+1]!=null)&&
                         (matrix[drawn[i].getRow()][drawn[i].getColumn()-1]!=null))
-                    return false;
+                    throw new InvalidMoveException("Card have not free side");
             }
         }
-        return true;
     }
 
     public ObjectCard[][] getMatrix(){
@@ -171,15 +171,20 @@ public class Grid {
      * @author: Riccardo Figini
      * @param move {@code Position[]} Vector with position to remove
      * @return {@code ObjectCard[]} return removed cards*/
-    public ObjectCard[] draw(Position[] move){
-        if(move==null || !isDrawAvailable(move))
-            return null;
-        ObjectCard[] objectCards= new ObjectCard[move.length];
-        for(int i=0; i<move.length;i++){
-            objectCards[i] = matrix[move[i].getRow()][move[i].getColumn()];
-            matrix[move[i].getRow()][move[i].getColumn()]=null;
+    public ObjectCard[] draw(Position[] move) throws InvalidMoveException {
+        try {
+            isDrawAvailable(move);
+            if (move == null)
+                return null;
+            ObjectCard[] objectCards = new ObjectCard[move.length];
+            for (int i = 0; i < move.length; i++) {
+                objectCards[i] = matrix[move[i].getRow()][move[i].getColumn()];
+                matrix[move[i].getRow()][move[i].getColumn()] = null;
+            }
+            return objectCards;
+        }catch (InvalidMoveException e){
+            throw e;
         }
-        return objectCards;
     }
 
     /**

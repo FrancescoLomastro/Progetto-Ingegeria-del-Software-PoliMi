@@ -1,9 +1,10 @@
 package it.polimi.ingsw.Network.Servers;
 
-import org.example.Controller.Controller;
-import org.example.Messages.Message;
-import org.example.Servers.RMI.RMI_Server;
-import org.example.Servers.Socket.Socket_Server;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Servers.RMI.RMI_Server;
+import it.polimi.ingsw.Network.Servers.Socket.Socket_Server;
+import it.polimi.ingsw.controller.Controller;
+
 
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Network.Servers.Socket;
 
-import org.example.Controller.ServerReceiver;
+
+
+import it.polimi.ingsw.controller.ServerReceiver;
 
 import java.io.IOException;
 import java.net.ServerSocket;

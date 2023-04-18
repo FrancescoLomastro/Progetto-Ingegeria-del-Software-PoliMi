@@ -1,10 +1,11 @@
 package it.polimi.ingsw.Network.Servers.RMI;
 
-import org.example.Controller.ServerReceiver;
-import org.example.Messages.LoginMessage;
-import org.example.Messages.Message;
-import org.example.Messages.MessageType;
-import org.example.Messages.RMILoginMessage;
+
+import it.polimi.ingsw.Network.Messages.LoginMessage;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageType;
+import it.polimi.ingsw.Network.Messages.RMILoginMessage;
+import it.polimi.ingsw.controller.ServerReceiver;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

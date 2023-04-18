@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Network.Servers.RMI;
 
-import org.example.Clients.RMIClientConnection;
-import org.example.Messages.Message;
+
+import it.polimi.ingsw.Network.Messages.Message;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
