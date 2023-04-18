@@ -21,5 +21,5 @@ public enum MessageType
     AFTER_MOVE_POSITIVE,
     AFTER_MOVE_NEGATIVE,
     WINNER,
-    COMMON_GOAL;
+    COMMON_GOAL, CHAT_MESSAGE;
 }

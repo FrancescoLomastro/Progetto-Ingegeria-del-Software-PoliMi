@@ -11,6 +11,7 @@ public class NewGameServerMessage extends Message{
         super(MessageType.NEW_GAME_SERVER_MESSAGE);
         this.server=server;
         this.port=port;
+        this.gameController=gameController;
     }
     public String getServerName() {
         return server;
