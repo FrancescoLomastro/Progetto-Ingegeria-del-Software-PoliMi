@@ -133,7 +133,7 @@ public class GameController implements Runnable, ServerReceiver {
 
         }catch(IOException e){
 
-            throw new RuntimeException("ciao");
+            throw new RuntimeException("Error" + e);
         }
 
         //inizializzo i giocatori nel game
@@ -163,6 +163,7 @@ public class GameController implements Runnable, ServerReceiver {
         newServerMessages();
         startGameMessages();
         initGame();
+
 
         /////////////////////////
         try {

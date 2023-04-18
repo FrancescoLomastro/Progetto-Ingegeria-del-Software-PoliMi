@@ -36,6 +36,8 @@ public class TurnController implements Runnable{
         currPlayerIndex = 0;
         currentPlayer = game.getPlayers()[0].getName();
         numberOfTurnUntilEndGame= game.getNumPlayers();
+        gameController.sendMessageToASpecificUser(
+                new MessageMove(), game.getPlayers()[0].getName());
     }
 
     /**
