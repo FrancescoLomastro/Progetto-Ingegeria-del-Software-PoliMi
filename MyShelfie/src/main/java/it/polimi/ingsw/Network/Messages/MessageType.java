@@ -20,6 +20,6 @@ public enum MessageType
     RMI_LOGIN_REQUEST, ERROR,
     AFTER_MOVE_POSITIVE,
     AFTER_MOVE_NEGATIVE,
-
+    WINNER,
     COMMON_GOAL;
 }
