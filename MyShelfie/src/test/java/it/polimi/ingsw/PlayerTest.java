@@ -13,6 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * Class used to test Player class.
@@ -42,24 +45,26 @@ public class PlayerTest {
      */
     @Test
     public void countFinalPoints_correctInputAllMatchPersonalGoalCard_correctOutput() {
-        HashMap<Position, Color> objectCardsGoal = new HashMap<>();
-        for(int objectCard_i=0;objectCard_i<player.getPersonalGoalCard().getGoalVector().size(); objectCard_i++) {
-            objectCardsGoal.put(
-                    (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
-                    (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
-        }
+        assertDoesNotThrow(()-> {
+            HashMap<Position, Color> objectCardsGoal = new HashMap<>();
+            for (int objectCard_i = 0; objectCard_i < player.getPersonalGoalCard().getGoalVector().size(); objectCard_i++) {
+                objectCardsGoal.put(
+                        (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
+                        (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
+            }
 
-        for(int row=5;row>=0;row--) {
-            for(int col=0;col<player.getLibrary().getNumberOfColumns();col++) {
-                Position position = new Position(row,col);
-                if(objectCardsGoal.get(position)==null) {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
-                } else {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST ));
+            for (int row = 5; row >= 0; row--) {
+                for (int col = 0; col < player.getLibrary().getNumberOfColumns(); col++) {
+                    Position position = new Position(row, col);
+                    if (objectCardsGoal.get(position) == null) {
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                    } else {
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", objectCardsGoal.get(position), Type.FIRST));
+                    }
                 }
             }
-        }
-        Assert.assertEquals(20,player.countFinalPoints());
+            Assert.assertEquals(20, player.countFinalPoints());
+        });
     }
 
     /**
@@ -68,25 +73,32 @@ public class PlayerTest {
      */
     @Test
     public void countFinalPoints_correctInput5MatchPersonalGoalCard_correctOutput() {
-        HashMap<Position, Color> objectCardsGoal = new HashMap<>();
-        for(int objectCard_i=0;objectCard_i<player.getPersonalGoalCard().getGoalVector().size()-1; objectCard_i++) {
-            objectCardsGoal.put(
-                    (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
-                    (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
-        }
+        assertDoesNotThrow(()-> {
+            HashMap<Position, Color> objectCardsGoal = new HashMap<>();
+            for (int objectCard_i = 0; objectCard_i < player.getPersonalGoalCard().getGoalVector().size() - 1; objectCard_i++) {
+                objectCardsGoal.put(
+                        (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
+                        (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
+            }
 
-        for(int row=5;row>=0;row--) {
-            for(int col=0;col<player.getLibrary().getNumberOfColumns();col++) {
-                Position position = new Position(row,col);
-                if(objectCardsGoal.get(position)==null) {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
-                } else {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST ));
+
+            for (int row = 5; row >= 0; row--) {
+                for (int col = 0; col < player.getLibrary().getNumberOfColumns(); col++) {
+                    Position position = new Position(row, col);
+                    if (objectCardsGoal.get(position) == null) {
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                    } else {
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", objectCardsGoal.get(position), Type.FIRST));
+                    }
                 }
             }
-        }
-        Assert.assertEquals(17,player.countFinalPoints());
+
+
+            Assert.assertEquals(17, player.countFinalPoints());
+        });
     }
+
+
 
     /**
      * Third test: final points have to be 17 because personalGoalCard is satisfied in just 4 positions and
@@ -94,24 +106,29 @@ public class PlayerTest {
      */
     @Test
     public void countFinalPoints_correctInput4MatchPersonalGoalCard_correctOutput() {
-        HashMap<Position, Color> objectCardsGoal = new HashMap<>();
-        for(int objectCard_i=0;objectCard_i<player.getPersonalGoalCard().getGoalVector().size()-2; objectCard_i++) {
-            objectCardsGoal.put(
-                    (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
-                    (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
-        }
+        assertDoesNotThrow(()-> {
+            HashMap<Position, Color> objectCardsGoal = new HashMap<>();
+            for (int objectCard_i = 0; objectCard_i < player.getPersonalGoalCard().getGoalVector().size() - 2; objectCard_i++) {
+                objectCardsGoal.put(
+                        (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
+                        (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
+            }
 
-        for(int row=5;row>=0;row--) {
-            for(int col=0;col<player.getLibrary().getNumberOfColumns();col++) {
-                Position position = new Position(row,col);
-                if(objectCardsGoal.get(position)==null) {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
-                } else {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST ));
+
+            for (int row = 5; row >= 0; row--) {
+                for (int col = 0; col < player.getLibrary().getNumberOfColumns(); col++) {
+                    Position position = new Position(row, col);
+                    if (objectCardsGoal.get(position) == null) {
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                    } else {
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST));
+                    }
                 }
             }
-        }
-        Assert.assertEquals(14,player.countFinalPoints());
+            Assert.assertEquals(14, player.countFinalPoints());
+
+
+        });
     }
 
     /**
@@ -121,28 +138,32 @@ public class PlayerTest {
      */
     @Test
     public void countFinalPoints_secondCorrectInputAllMatchPersonalGoalCard_correctOutput() {
-        HashMap<Position, Color> objectCardsGoal = new HashMap<>();
-        for(int objectCard_i=0;objectCard_i<player.getPersonalGoalCard().getGoalVector().size(); objectCard_i++) {
-            objectCardsGoal.put(
-                    (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
-                    (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
-        }
+        assertDoesNotThrow(()-> {
+            HashMap<Position, Color> objectCardsGoal = new HashMap<>();
+            for (int objectCard_i = 0; objectCard_i < player.getPersonalGoalCard().getGoalVector().size(); objectCard_i++) {
+                objectCardsGoal.put(
+                        (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
+                        (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
+            }
 
-        for(int row=5;row>=0;row--) {
-            for(int col=0;col<player.getLibrary().getNumberOfColumns();col++) {
-                Position position = new Position(row,col);
-                if(objectCardsGoal.get(position)==null) {
-                    if(row>2) {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
+
+            for (int row = 5; row >= 0; row--) {
+                for (int col = 0; col < player.getLibrary().getNumberOfColumns(); col++) {
+                    Position position = new Position(row, col);
+                    if (objectCardsGoal.get(position) == null) {
+                        if (row > 2) {
+                            player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
+                        } else {
+                            player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                        }
                     } else {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST));
                     }
-                } else {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST ));
                 }
             }
-        }
-        Assert.assertEquals(28,player.countFinalPoints());
+
+            Assert.assertEquals(28, player.countFinalPoints());
+        });
     }
 
     /**
@@ -152,28 +173,33 @@ public class PlayerTest {
      */
     @Test
     public void countFinalPoints_secondCorrectInput5MatchPersonalGoalCard_correctOutput() {
-        HashMap<Position, Color> objectCardsGoal = new HashMap<>();
-        for(int objectCard_i=0;objectCard_i<player.getPersonalGoalCard().getGoalVector().size() -1; objectCard_i++) {
-            objectCardsGoal.put(
-                    (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
-                    (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
-        }
+        assertDoesNotThrow(()-> {
+            HashMap<Position, Color> objectCardsGoal = new HashMap<>();
+            for (int objectCard_i = 0; objectCard_i < player.getPersonalGoalCard().getGoalVector().size() - 1; objectCard_i++) {
+                objectCardsGoal.put(
+                        (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
+                        (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
+            }
 
-        for(int row=5;row>=0;row--) {
-            for(int col=0;col<player.getLibrary().getNumberOfColumns();col++) {
-                Position position = new Position(row,col);
-                if(objectCardsGoal.get(position)==null) {
-                    if(row>2) {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
+
+            for (int row = 5; row >= 0; row--) {
+                for (int col = 0; col < player.getLibrary().getNumberOfColumns(); col++) {
+                    Position position = new Position(row, col);
+                    if (objectCardsGoal.get(position) == null) {
+                        if (row > 2) {
+                            player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
+                        } else {
+                            player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                        }
                     } else {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", objectCardsGoal.get(position), Type.FIRST));
                     }
-                } else {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST ));
                 }
             }
-        }
-        Assert.assertEquals(25,player.countFinalPoints());
+
+
+            Assert.assertEquals(25, player.countFinalPoints());
+        });
     }
 
     /**
@@ -183,28 +209,30 @@ public class PlayerTest {
      */
     @Test
     public void countFinalPoints_secondCorrectInput1MatchPersonalGoalCard_correctOutput() {
-        HashMap<Position, Color> objectCardsGoal = new HashMap<>();
-        for(int objectCard_i=0;objectCard_i<player.getPersonalGoalCard().getGoalVector().size()-5; objectCard_i++) {
-            objectCardsGoal.put(
-                    (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
-                    (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
-        }
+        assertDoesNotThrow(()-> {
+            HashMap<Position, Color> objectCardsGoal = new HashMap<>();
+            for (int objectCard_i = 0; objectCard_i < player.getPersonalGoalCard().getGoalVector().size() - 5; objectCard_i++) {
+                objectCardsGoal.put(
+                        (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
+                        (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
+            }
 
-        for(int row=5;row>=0;row--) {
-            for(int col=0;col<player.getLibrary().getNumberOfColumns();col++) {
-                Position position = new Position(row,col);
-                if(objectCardsGoal.get(position)==null) {
-                    if(row>2) {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
+            for (int row = 5; row >= 0; row--) {
+                for (int col = 0; col < player.getLibrary().getNumberOfColumns(); col++) {
+                    Position position = new Position(row, col);
+                    if (objectCardsGoal.get(position) == null) {
+                        if (row > 2) {
+                            player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
+                        } else {
+                            player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                        }
                     } else {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST));
                     }
-                } else {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST ));
                 }
             }
-        }
-        Assert.assertEquals(17,player.countFinalPoints());
+            Assert.assertEquals(17, player.countFinalPoints());
+        });
     }
 
     /**
@@ -215,29 +243,34 @@ public class PlayerTest {
      */
     @Test
     public void countFinalPoints_secondCorrectInput2MatchPersonalGoalCard_correctOutput() {
-        HashMap<Position, Color> objectCardsGoal = new HashMap<>();
-        for(int objectCard_i=0;objectCard_i<player.getPersonalGoalCard().getGoalVector().size(); objectCard_i++) {
-            objectCardsGoal.put(
-                    (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
-                    (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
-        }
-
-        for(int row=5;row>=0;row--) {
-            for(int col=0;col<player.getLibrary().getNumberOfColumns();col++) {
-                Position position = new Position(row,col);
-                if(objectCardsGoal.get(position)==null) {
-                    if (row>=4) {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.GREEN, Type.FIRST));
-                    } else if(row>=2) {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
-                    } else {
-                        player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
-                    }
-                } else {
-                    player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST ));
-                }
+        assertDoesNotThrow(()-> {
+            HashMap<Position, Color> objectCardsGoal = new HashMap<>();
+            for (int objectCard_i = 0; objectCard_i < player.getPersonalGoalCard().getGoalVector().size(); objectCard_i++) {
+                objectCardsGoal.put(
+                        (Position) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getFirst(),
+                        (Color) player.getPersonalGoalCard().getGoalVector().get(objectCard_i).getSecond());
             }
-        }
-        Assert.assertEquals(36,player.countFinalPoints());
+
+                for (int row = 5; row >= 0; row--) {
+                    for (int col = 0; col < player.getLibrary().getNumberOfColumns(); col++) {
+                        Position position = new Position(row, col);
+                        if (objectCardsGoal.get(position) == null) {
+                            if (row >= 4) {
+                                player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.GREEN, Type.FIRST));
+                            } else if (row >= 2) {
+                                player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.YELLOW, Type.FIRST));
+                            } else {
+                                player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", Color.BLUE, Type.FIRST));
+                            }
+                        } else {
+                            player.getLibrary().insertCardsInLibrary(col, new ObjectCard("", (Color) objectCardsGoal.get(position), Type.FIRST));
+                        }
+                    }
+                }
+                Assert.assertEquals(36, player.countFinalPoints());
+
+        });
     }
+
+
 }
