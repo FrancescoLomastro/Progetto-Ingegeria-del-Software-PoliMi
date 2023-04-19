@@ -98,16 +98,18 @@ public class Game {
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
-    public Message manageTurn(String username, Position[] move, int column){
+    public Message manageTurn(String username, Position[] move, int column, MessageAfterMovePositive messageAfterMovePositive){
+
         Player player = searchByUsername(username);
         try{
             checkMove(player, move, column);
             player.getLibrary().insertCardsInLibrary(column, grid.draw(move));
-            MessageAfterMovePositive messageAfterMovePositive = new MessageAfterMovePositive();
-            MessageCommonGoal messageCommonGoal = new MessageCommonGoal();
-            checkCommonGoal(player, livingRoom.getCommonGoalCards(),  messageAfterMovePositive,  messageCommonGoal);
+
+            checkCommonGoal(player, livingRoom.getCommonGoalCards(),  messageAfterMovePositive);
             return messageAfterMovePositive;
-        }catch (InvalidMoveException e){
+        }
+        catch (InvalidMoveException e){
+
             MessageAfterMoveNegative messageAfterMoveNegative = new MessageAfterMoveNegative();
             messageAfterMoveNegative.setInvelidmessage(e.getMessage());
             return messageAfterMoveNegative;
@@ -118,7 +120,7 @@ public class Game {
      * @param player: the turn player
      * @param commonGoalCards: the two common goal cards that are in the living room
      */
-    private void checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards, MessageAfterMovePositive messageAfterMove, MessageCommonGoal messageCommonGoal){
+    private void checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards, MessageAfterMovePositive messageAfterMove){
 
         //DA FARE: INVIARE IL messageAfterMove DOPO IL CONSEGUIMENTO DEGLI OBIETTIVI COMUNI
         // SALVARE ANCHE IL NUMERO DI PUNTI AGGIUNTI, PER DIRLO AL PLAYER CHE LI HA GUADAGNATI fatto
@@ -132,7 +134,6 @@ public class Game {
             commonGoalCards[0].getScoreWithDecrease();
 
             messageAfterMove.setGainedPointsFirstCard(commonGoalCards[0].getPoints());
-            messageCommonGoal.setGainedPointsFirstCard(commonGoalCards[0].getPoints());
 
             player.addPoints(commonGoalCards[0].getPoints());
         }
@@ -142,7 +143,6 @@ public class Game {
             commonGoalCards[1].getScoreWithDecrease();
 
             messageAfterMove.setGainedPointsSecondCard(commonGoalCards[1].getPoints());
-            messageCommonGoal.setGainedPointsFirstCard(commonGoalCards[1].getPoints());
 
             player.addPoints(commonGoalCards[1].getPoints());
         }

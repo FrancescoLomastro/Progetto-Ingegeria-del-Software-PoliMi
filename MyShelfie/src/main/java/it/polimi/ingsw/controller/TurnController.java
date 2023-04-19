@@ -62,11 +62,11 @@ public class TurnController implements Runnable{
             MessageGrid messageGrid = new MessageGrid();
             MessageLibrary messageLibrary = new MessageLibrary();
 
-            moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
+            MessageAfterMovePositive messageAfterMovePositive = new MessageAfterMovePositive();
 
-            if(moveResult.getType()==AFTER_MOVE_POSITIVE){
+            moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn(), messageAfterMovePositive);
 
-                // notifyAll di grid e library + eventtualemnte commongol
+            if(moveResult.getType() == AFTER_MOVE_POSITIVE){
 
                 messageGrid.setGrid(game.getGrid()); // messaggio con griglia aggiornata
                 gameController.notifyAllMessage(messageGrid);
@@ -82,13 +82,21 @@ public class TurnController implements Runnable{
                     flagCountdown =true;
 
 
-                MessageCommonGoal messageCommonGoal = new MessageCommonGoal();
 
                 //se il player ha completato almeno un obiettivo comune, informo tutti i giocatori
-                if(messageCommonGoal.getGainedPointsFirstCard() > 0 || messageCommonGoal.getGainedPointsSecondCard() > 0){
+                if(messageAfterMovePositive.getGainedPointsFirstCard() > 0 || messageAfterMovePositive.getGainedPointsSecondCard() > 0){
 
+                    // copio nel messaggio del common goal i punti guadagnati, di cui ho tenuto traccia nel messageAfterMovePositive
+                    MessageCommonGoal messageCommonGoal = new MessageCommonGoal();
+
+                    messageCommonGoal.setGainedPointsFirstCard(messageAfterMovePositive.getGainedPointsFirstCard());
+                    messageCommonGoal.setGainedPointsSecondCard(messageAfterMovePositive.getGainedPointsSecondCard());
+
+                    // e notifico a tutti i giocatori
                     gameController.notifyAllMessage(messageCommonGoal);
                 }
+
+
 
                 currPlayerIndex ++;
                 if(currPlayerIndex == 4){
