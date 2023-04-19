@@ -217,10 +217,10 @@ public class Grid {
             setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
         }
 
-        for(int i=numPlayers; i<4; i++)
+        for(int i=numPlayers+1; i<=4; i++)
         {
             for (JsonElement jsonCellElement : arrayOfJsonCells) {
-                arrayOfJsonCells = jsonObject.getAsJsonArray((i+1)+"_Player_New_Positions");
+                arrayOfJsonCells = jsonObject.getAsJsonArray((i)+"_Player_New_Positions");
                 jsonCell = jsonCellElement.getAsJsonArray();
                 setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
             }

@@ -127,7 +127,7 @@ public class GameController implements Runnable, ServerReceiver {
 
         // inizializzo il game
         try {
-            game = new Game(clients.size() - 1, numberOfGame);
+            game = new Game(clients.size() , numberOfGame);
 
         }catch(IOException e){
 
@@ -160,7 +160,9 @@ public class GameController implements Runnable, ServerReceiver {
         }
         newServerMessages();
         startGameMessages();
-        initGame();  //LANCIA ECCEZZIONE, NON NE VOGLIO SAPERE
+        initGame();
+        System.out.println("Inizializzata partita e mandato il messaggio");
+        //LANCIA ECCEZZIONE, NON NE VOGLIO SAPERE
 
 
         /////////////////////////
