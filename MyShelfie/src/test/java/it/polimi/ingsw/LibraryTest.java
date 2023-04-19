@@ -48,14 +48,16 @@ public class LibraryTest {
             ObjectCard[] testVector = new ObjectCard[library.getNumberOfRows()];
             fillVector(testVector);
 
-            for(int column=0;column<library.getNumberOfColumns();column++)
-            {
-                for(int row= library.getNumberOfRows()-1,i=0; row>=0;row--,i++)
-                {
+            for(int column=0;column<library.getNumberOfColumns();column++) {
+                for(int row= library.getNumberOfRows()-1,i=0; row>=0;row--,i++) {
                     testMatrix[row][column]= testVector[i];
                 }
-
-                assertArrayEquals(testMatrix,library.getMatrix());
+                library.insertCardsInLibrary(column,testVector);
+            }
+            for(int i=0; i<library.getNumberOfColumns(); i++){
+                for(int j=0; j<library.getNumberOfRows(); j++){
+                    assertEquals(testMatrix[j][i], library.getMatrix()[j][i]);
+                }
             }
         });
     }
