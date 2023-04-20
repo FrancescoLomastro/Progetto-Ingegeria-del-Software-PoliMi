@@ -78,8 +78,10 @@ public class TurnController implements Runnable{
                 gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa è adnata a buon fine
 
                 /*Controllo se la sua libraria è terminata, allora attivo il countdown*/
-                if(game.checkEndLibrary(message.getUsername()) && !flagCountdown)
-                    flagCountdown =true;
+                if(game.checkEndLibrary(message.getUsername()) && !flagCountdown) {
+                    flagCountdown = true;
+                    gameController.notifyAllMessage(new MessageGame(ALMOST_OVER));
+                }
 
 
 
@@ -125,6 +127,7 @@ public class TurnController implements Runnable{
         for(int i=0; i<list.size(); i++)
             gameController.sendMessageToASpecificUser(new MessageWinner(
                     list.get(0).getFirst(),
-                    list.get(i).getSecond() ), list.get(i).getFirst());
+                    list.get(i).getSecond() ),
+                    list.get(i).getFirst());
     }
 }

@@ -157,8 +157,6 @@ public class CLI implements View,Runnable {
     }
     private Position[] manageTurn(){
         int n;
-        Scanner scanner = new Scanner(System.in);
-        //messageFromCLI = scanner.nextLine().trim();
         System.out.println("How many card do you want? (minimum 1, max 3)");
         n=goodFormat(3);
         Position[] positions = new Position[n];
@@ -166,10 +164,10 @@ public class CLI implements View,Runnable {
         for(int i=0; i<n; i++){
             System.out.println("Card number: " + i);
             System.out.print("Row: ");
-            n=goodFormat(10);
+            n=goodFormat(10)-1;
             positions[i].setRow(n);
             System.out.print("Column: ");
-            n=goodFormat(10);
+            n=goodFormat(10)-1;
             positions[i].setColumn(n);
         }
         return positions;
@@ -183,22 +181,27 @@ public class CLI implements View,Runnable {
                 number = Integer.parseInt(input);
                 if(number<=0 || number>limit)
                     throw new Exception();
+                return number;
             } catch (Exception e) {
                 System.out.println("That is not a good number! Try again...");
             }
         }
     }
+    /*NOTA IMPORTANTE: Nell'inserimento che ho creato dico che i numeri validi partono sempre da 1 fino
+    * al limite effettivo. Quindi le colonne possibile in cui inserire sono 1,2,3,4,5; mentre
+    * la grgilia ha righe e colonne che vanno da 1 a 10. Ogni volta che poi prendo i dati sottratto 1
+    * così che il game possa lavorare effetticamnete da 0. Ho controllato e in libreria e in griglia
+    * non mi sembra di aver visto parti in cui veniva sottratto 1 in automatico*/
     private void askMove()  {
         int n;
         //Interrompi threadh chat
         threadChat.interrupt();
-
         System.out.println("It's your turn, next input has to be your move.");
         Position[] position = manageTurn();
         MessageMove reMessage = new MessageMove();
         reMessage.setMove(position);
         System.out.println("In which column do you want insert new cards?");
-        n=goodFormat(5);
+        n=goodFormat(5)-1;
         reMessage.setColumn(n);
         try {
             client.sendMessage(reMessage);
