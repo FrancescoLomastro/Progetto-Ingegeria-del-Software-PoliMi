@@ -5,7 +5,15 @@ package it.polimi.ingsw.Network.Messages;
  * @author Andrea Ferrini
  * */
 public class MessageCommonGoal extends Message{
+    public String getPlayer() {
+        return player;
+    }
 
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    String player;
     int gainedPointsFirstCard = 0;
 
     int gainedPointsSecondCard = 0;

@@ -89,6 +89,7 @@ public class TurnController implements Runnable{
                     // copio nel messaggio del common goal i punti guadagnati, di cui ho tenuto traccia nel messageAfterMovePositive
                     MessageCommonGoal messageCommonGoal = new MessageCommonGoal();
 
+                    messageCommonGoal.setPlayer(message.getUsername());
                     messageCommonGoal.setGainedPointsFirstCard(messageAfterMovePositive.getGainedPointsFirstCard());
                     messageCommonGoal.setGainedPointsSecondCard(messageAfterMovePositive.getGainedPointsSecondCard());
 

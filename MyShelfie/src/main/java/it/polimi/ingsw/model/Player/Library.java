@@ -154,7 +154,7 @@ public class Library {
      */
     public void isMoveAvailable(int chosenColumn, ObjectCard... cards)throws InvalidMoveException {
         int numberOfFreeCells = findNumberOfFreeCells(chosenColumn);
-        if(!(chosenColumn >= 0 && numberOfFreeCells >= cards.length && chosenColumn < numberOfColumns)){
+        if(chosenColumn < 0 || chosenColumn > numberOfColumns || numberOfFreeCells < cards.length){
             throw new InvalidMoveException("Insufficient space in selected column");
         }
     }
