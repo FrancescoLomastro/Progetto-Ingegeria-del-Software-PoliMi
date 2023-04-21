@@ -159,7 +159,6 @@ public class GameController implements Runnable, ServerReceiver {
             throw new RuntimeException(e);
         }
         newServerMessages();
-        startGameMessages();
         initGame();
         System.out.println("Inizializzata partita e mandato il messaggio");
         //LANCIA ECCEZZIONE, NON NE VOGLIO SAPERE

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class MessagePersonalGoal extends Message {
     private final ArrayList<Couple> goalVector;
-    public MessagePersonalGoal(PersonalGoalCard personalGoalCard) {
+    public MessagePersonalGoal(ArrayList<Couple> personalGoalCard) {
         super(MessageType.INIT_PERSONAL_GOAL);
-        goalVector = personalGoalCard.getGoalVector();
+        goalVector = personalGoalCard;
     }
     public ArrayList<Couple> getGoalVector() {
         return goalVector;
