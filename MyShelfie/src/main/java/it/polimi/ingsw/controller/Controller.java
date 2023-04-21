@@ -99,7 +99,7 @@ public class Controller implements ServerReceiver
                     LoginMessage msg = (LoginMessage) message;
                     login(msg.getUsername(),msg.getClientConnection());
                 }
-                case PLAYERNUMBER_ANSWER ->
+                case PLAYER_NUMBER_ANSWER ->
                 {
                     if (waitedRequest.getUsername().equals(message.getUsername())) {
 

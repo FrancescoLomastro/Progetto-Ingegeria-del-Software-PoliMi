@@ -5,7 +5,7 @@ public class PlayerNumberAnswer extends Message{
     private int playerNumber;
 
     public PlayerNumberAnswer(String userName, int playerNumber) {
-        super(userName, MessageType.PLAYERNUMBER_ANSWER);
+        super(userName, MessageType.PLAYER_NUMBER_ANSWER);
         this.playerNumber=playerNumber;
     }
 

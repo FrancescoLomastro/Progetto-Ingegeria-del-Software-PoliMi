@@ -28,9 +28,9 @@ public class ThreadInputClient implements Runnable{
     @Override
     public void run() {
         switch(command){
-            case INVALIDUSERNAME_MESSAGE -> askName();
+            case INVALID_USERNAME_MESSAGE -> askName();
             case MY_MOVE_REQUEST -> askMove();
-            case PLAYERNUMBER_REQUEST -> askNumberOfPlayer();
+            case PLAYER_NUMBER_REQUEST -> askNumberOfPlayer();
         }
     }
     /**Ask Player to insert number of player

@@ -36,8 +36,20 @@ public class TurnController implements Runnable{
         currPlayerIndex = 0;
         currentPlayer = game.getPlayers()[0].getName();
         numberOfTurnUntilEndGame= game.getNumPlayers();
+        initClientObjectInPlayer();
         gameController.sendMessageToASpecificUser(
                 new MessageMove(), game.getPlayers()[0].getName());
+    }
+
+    private void initClientObjectInPlayer() {
+        gameController.notifyAllMessage(new MessageGrid(game.getGrid()));
+        for(int i=0; i<game.getNumPlayers(); i++){
+            gameController.notifyAllMessage(new MessageLibrary(game.getLibrary(game.getPlayers()[i].getName()), game.getPlayers()[i].getName()));
+            gameController.sendMessageToASpecificUser(new MessagePersonalGoal(game.getPlayers()[i].getPersonalGoalCard()), game.getPlayers()[i].getName());
+            gameController.notifyAllMessage(
+                    new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
+            gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
+        }
     }
 
     /**
@@ -59,20 +71,14 @@ public class TurnController implements Runnable{
         Message moveResult;
         if(message != null){
 
-            MessageGrid messageGrid = new MessageGrid();
-            MessageLibrary messageLibrary = new MessageLibrary();
-
-            MessageAfterMovePositive messageAfterMovePositive = new MessageAfterMovePositive();
-
-            moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn(), messageAfterMovePositive);
+            moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
 
             if(moveResult.getType() == AFTER_MOVE_POSITIVE){
 
-                messageGrid.setGrid(game.getGrid()); // messaggio con griglia aggiornata
+                MessageGrid messageGrid = new MessageGrid(game.getGrid());
                 gameController.notifyAllMessage(messageGrid);
 
-                messageLibrary.setLibrary(game.getLibrary(message.getUsername())); // messaggio con libreria aggiornata
-                messageLibrary.setPlayer(message.getUsername());
+                MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername());
                 gameController.notifyAllMessage(messageLibrary);
 
                 gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa è adnata a buon fine
@@ -86,14 +92,14 @@ public class TurnController implements Runnable{
 
 
                 //se il player ha completato almeno un obiettivo comune, informo tutti i giocatori
-                if(messageAfterMovePositive.getGainedPointsFirstCard() > 0 || messageAfterMovePositive.getGainedPointsSecondCard() > 0){
+                if(((MessageAfterMovePositive)moveResult).getGainedPointsFirstCard() > 0 || ((MessageAfterMovePositive)moveResult).getGainedPointsSecondCard() > 0){
 
                     // copio nel messaggio del common goal i punti guadagnati, di cui ho tenuto traccia nel messageAfterMovePositive
-                    MessageCommonGoal messageCommonGoal = new MessageCommonGoal();
-
-                    messageCommonGoal.setPlayer(message.getUsername());
-                    messageCommonGoal.setGainedPointsFirstCard(messageAfterMovePositive.getGainedPointsFirstCard());
-                    messageCommonGoal.setGainedPointsSecondCard(messageAfterMovePositive.getGainedPointsSecondCard());
+                    MessageCommonGoal messageCommonGoal = new MessageCommonGoal(
+                            ((MessageAfterMovePositive)moveResult).getGainedPointsFirstCard(),
+                            ((MessageAfterMovePositive)moveResult).getGainedPointsSecondCard(),
+                            message.getUsername()
+                    );
 
                     // e notifico a tutti i giocatori
                     gameController.notifyAllMessage(messageCommonGoal);

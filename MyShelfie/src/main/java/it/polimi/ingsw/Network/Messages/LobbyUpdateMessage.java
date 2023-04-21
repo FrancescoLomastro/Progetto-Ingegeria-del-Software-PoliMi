@@ -6,7 +6,7 @@ public class LobbyUpdateMessage extends Message {
     private List<String> usernames;
     private int limitOfPlayers;
     public LobbyUpdateMessage(List<String> usernames, int limitOfPlayers ) {
-        super("Server",MessageType.LOBBYUPDATE_MESSAGE);
+        super("Server",MessageType.LOBBY_UPDATE_MESSAGE);
         this.usernames=usernames;
         this.limitOfPlayers=limitOfPlayers;
     }

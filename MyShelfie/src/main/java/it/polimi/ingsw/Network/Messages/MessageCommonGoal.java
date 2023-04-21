@@ -5,39 +5,22 @@ package it.polimi.ingsw.Network.Messages;
  * @author Andrea Ferrini
  * */
 public class MessageCommonGoal extends Message{
+    private final String player;
+    private final int gainedPointsFirstCard;
+    public final int gainedPointsSecondCard;
+    public MessageCommonGoal(int gainedPointsFirstCard, int gainedPointsSecondCard, String username) {
+        super(MessageType.COMMON_GOAL);
+        player=username;
+        this.gainedPointsFirstCard=gainedPointsFirstCard;
+        this.gainedPointsSecondCard=gainedPointsSecondCard;
+    }
     public String getPlayer() {
         return player;
     }
-
-    public void setPlayer(String player) {
-        this.player = player;
-    }
-
-    String player;
-    int gainedPointsFirstCard = 0;
-
-    int gainedPointsSecondCard = 0;
-
-    /**
-     * constructor
-     * */
-    public MessageCommonGoal(){
-        super(MessageType.COMMON_GOAL);
-    }
-
     public int getGainedPointsFirstCard() {
         return gainedPointsFirstCard;
     }
-
-    public void setGainedPointsFirstCard(int gainedPointsFirstCard) {
-        this.gainedPointsFirstCard = gainedPointsFirstCard;
-    }
-
     public int getGainedPointsSecondCard() {
         return gainedPointsSecondCard;
-    }
-
-    public void setGainedPointsSecondCard(int gainedPointsSecondCard) {
-        this.gainedPointsSecondCard = gainedPointsSecondCard;
     }
 }

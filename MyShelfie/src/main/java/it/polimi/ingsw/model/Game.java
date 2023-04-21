@@ -98,21 +98,19 @@ public class Game {
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
-    public Message manageTurn(String username, Position[] move, int column, MessageAfterMovePositive messageAfterMovePositive){
+    public Message manageTurn(String username, Position[] move, int column){
 
         Player player = searchByUsername(username);
         try{
             checkMove(player, move, column);
             player.getLibrary().insertCardsInLibrary(column, grid.draw(move));
 
-            checkCommonGoal(player, livingRoom.getCommonGoalCards(),  messageAfterMovePositive);
-            return messageAfterMovePositive;
+
+            return checkCommonGoal(player, livingRoom.getCommonGoalCards());
         }
         catch (InvalidMoveException e){
 
-            MessageAfterMoveNegative messageAfterMoveNegative = new MessageAfterMoveNegative();
-            messageAfterMoveNegative.setInvelidmessage(e.getMessage());
-            return messageAfterMoveNegative;
+            return new MessageAfterMoveNegative(e.getMessage());
         }
     }
 
@@ -120,8 +118,8 @@ public class Game {
      * @param player: the turn player
      * @param commonGoalCards: the two common goal cards that are in the living room
      */
-    private void checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards, MessageAfterMovePositive messageAfterMove){
-
+    private Message checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards){
+        int points1=0, points2=0;
         //DA FARE: INVIARE IL messageAfterMove DOPO IL CONSEGUIMENTO DEGLI OBIETTIVI COMUNI
         // SALVARE ANCHE IL NUMERO DI PUNTI AGGIUNTI, PER DIRLO AL PLAYER CHE LI HA GUADAGNATI fatto
 
@@ -133,7 +131,7 @@ public class Game {
 
             commonGoalCards[0].getScoreWithDecrease();
 
-            messageAfterMove.setGainedPointsFirstCard(commonGoalCards[0].getPoints());
+            points1=commonGoalCards[0].getPoints();
 
             player.addPoints(commonGoalCards[0].getPoints());
         }
@@ -142,10 +140,11 @@ public class Game {
 
             commonGoalCards[1].getScoreWithDecrease();
 
-            messageAfterMove.setGainedPointsSecondCard(commonGoalCards[1].getPoints());
+            points2=commonGoalCards[1].getPoints();
 
             player.addPoints(commonGoalCards[1].getPoints());
         }
+        return new MessageAfterMovePositive(points1, points2);
 
         // servono: - this.livingRoom
         //          - carte del giocatore
@@ -215,5 +214,11 @@ public class Game {
     public boolean checkEndLibrary(String username){
         Player player = searchByUsername(username);
         return player.getLibrary().isFull();
+    }
+    /**Return array with common goal card
+     * @author: Riccardo Figini
+     * @return CommonGaolCard[]*/
+    public CommonGoalCard[] getCommonGoalCard(){
+        return livingRoom.getCommonGoalCards();
     }
 }

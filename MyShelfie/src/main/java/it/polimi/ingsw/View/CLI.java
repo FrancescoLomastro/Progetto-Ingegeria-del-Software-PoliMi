@@ -123,22 +123,22 @@ public class CLI implements View,Runnable {
     public void update(Message message) {
         switch (message.getType())
         {
-            case ACCEPTEDLOGIN_MESSAGE ->
+            case ACCEPTED_LOGIN_MESSAGE ->
             {
                 threadOutputClient.printAString("Connection accepted, waiting for other players");
             }
-            case PLAYERNUMBER_REQUEST ->
+            case PLAYER_NUMBER_REQUEST ->
             {
                 PlayerNumberRequest msg = (PlayerNumberRequest)message;
                 askNumberOfPlayer(msg.getMinimumPlayers(), msg.getMaximumPlayers());
             }
-            case LOBBYUPDATE_MESSAGE ->
+            case LOBBY_UPDATE_MESSAGE ->
             {
                 LobbyUpdateMessage msg = (LobbyUpdateMessage) message;
                 threadOutputClient.printAString("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players.");
                 threadOutputClient.printAString("Members: " + msg.getUsernames());
             }
-            case INVALIDUSERNAME_MESSAGE ->
+            case INVALID_USERNAME_MESSAGE ->
             {
                 askNewName();
             }
@@ -263,11 +263,8 @@ public class CLI implements View,Runnable {
         threadOutputClient.printAString("The username is already used, try later or change username: ");
         client.changeUsername(scanner.nextLine());
     }
-    private Position[] askPositions()
+    private Position[] askPositions(int numberOfCards)
     {
-        int numberOfCards;
-        threadOutputClient.printAString("How many card do you want? (minimum 1, max 3)");
-        numberOfCards = getNumberOfCards(3);
         Position[] positions = new Position[numberOfCards];
         threadOutputClient.printAString("Now draw");
         for(int i=0; i<numberOfCards; i++){
@@ -298,16 +295,20 @@ public class CLI implements View,Runnable {
     }
 
     private void askMove()  {
-        int column;
+        int column, numberOfCards;
+        Position[] position;
         threadChat.interrupt();
-
         threadOutputClient.printAString("It's your turn, please make your move");
-        Position[] position = askPositions();
-        MessageMove reMessage = new MessageMove();
-        reMessage.setMove(position);
+
+        threadOutputClient.printAString("How many card do you want? (minimum 1, max 3)");
+        numberOfCards = getNumberOfCards(3);
+        position = askPositions(numberOfCards);
+
         threadOutputClient.printAString("In which column do you want insert this cards?");
         column= getNumberOfCards(5)-1;
-        reMessage.setColumn(column);
+
+        Message reMessage = new MessageMove(position, column);
+
         try {
             client.sendMessage(reMessage);
         }

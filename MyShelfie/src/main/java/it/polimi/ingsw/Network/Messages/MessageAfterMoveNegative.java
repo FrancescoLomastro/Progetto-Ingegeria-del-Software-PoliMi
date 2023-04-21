@@ -5,19 +5,15 @@ package it.polimi.ingsw.Network.Messages;
  * @author Andrea Ferrini
  * */
 public class MessageAfterMoveNegative extends Message{
-    String invelidmessage;
+    private final String invelidmessage;
     /**
      * constructor
      * */
-    public MessageAfterMoveNegative(){
+    public MessageAfterMoveNegative(String message){
         super(MessageType.AFTER_MOVE_NEGATIVE);
+        invelidmessage=message;
     }
-
     public String getInvelidmessage() {
         return invelidmessage;
-    }
-
-    public void setInvelidmessage(String invelidmessage) {
-        this.invelidmessage = invelidmessage;
     }
 }

@@ -1,12 +1,9 @@
 package it.polimi.ingsw.Network.Messages;
-
-
 import it.polimi.ingsw.controller.GameController;
-
 public class NewGameServerMessage extends Message{
     private final String server;
     private final int port;
-    private transient GameController gameController;
+    private final transient GameController gameController;
     public NewGameServerMessage(String server, int port, GameController gameController){
         super(MessageType.NEW_GAME_SERVER_MESSAGE);
         this.server=server;
