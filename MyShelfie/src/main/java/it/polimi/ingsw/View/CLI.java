@@ -155,6 +155,7 @@ public class CLI implements View,Runnable {
             case START_GAME_MESSAGE ->
             {
                 threadOutputClient.printAString("Game started");
+                threadOutputClient.printAll(clientObject);
             }
             case CHAT_MESSAGE ->
             {
@@ -163,6 +164,7 @@ public class CLI implements View,Runnable {
             }
             case MY_MOVE_REQUEST ->
             {
+                threadOutputClient.printAll(clientObject);
                 askMove();
             }
             case AFTER_MOVE_NEGATIVE ->
@@ -187,26 +189,34 @@ public class CLI implements View,Runnable {
             }
             case COMMON_GOAL ->
             {
-                //bruttissimo
-                MessageCommonGoal msg = (MessageCommonGoal) message;
-                threadOutputClient.printAString(msg.getPlayer()+" completed common goal card number ");
-                if(msg.getGainedPointsFirstCard()!=0)
-                    threadOutputClient.printAString("1 gaining "+msg.getGainedPointsFirstCard()+" points");
-                else
-                    threadOutputClient.printAString("2 gaining "+msg.getGainedPointsSecondCard()+" points");
+                clientObject.addPoint((MessageCommonGoal) message);
             }
             case AFTER_MOVE_POSITIVE ->
             {
                 threadOutputClient.printAString("Move performed successfully");
+                if(((MessageAfterMovePositive) message).getGainedPointsFirstCard()>0){
+                    threadOutputClient.printAString("Points gained from first common goal: " + ((MessageAfterMovePositive) message).getGainedPointsFirstCard());
+                }
+                if(((MessageAfterMovePositive) message).getGainedPointsSecondCard()>0){
+                    threadOutputClient.printAString("Points gained from second common goal: " + ((MessageAfterMovePositive) message).getGainedPointsSecondCard());
+                }
             }
-            case INIT_PLAYER_MESSAGE ->
-            {
+            case INIT_PLAYER_MESSAGE -> {
                 clientObject.addPlayer(((MessageInitPlayer) message).getPlayer());
             }
             case UPDATE_GRID_MESSAGE ->
                     clientObject.setGrid(((MessageGrid) message).getGrid());
             case UPDATE_LIBRARY_MESSAGE ->
                     clientObject.setLibrary(((MessageLibrary) message).getPlayer(), ((MessageLibrary) message).getLibrary());
+            case INIT_COMMON_GOAL -> {
+                MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
+                clientObject.setDescriptionFirstCommonGoal(msg.getDescription1());
+                clientObject.setDescriptionSecondCommonGoal(msg.getDescription2());
+            }
+            case INIT_PERSONAL_GOAL -> {
+                MessagePersonalGoal msg = (MessagePersonalGoal) message;
+                clientObject.setPersonalGoalCard(msg.getGoalVector());
+            }
         }
     }
 
