@@ -47,13 +47,6 @@ public class ThreadOutputClient implements Observer<ClientObject, Message> {
             System.out.println("");
         }
     }
-    /**
-     * Show a message
-     * @author: Riccardo Figini
-     * */
-    public void initGame (){
-        System.out.println("The game is started <3");
-    }
     /**Print a generic string
      * @author: Riccardo Figini*/
     public void printAString(String s){

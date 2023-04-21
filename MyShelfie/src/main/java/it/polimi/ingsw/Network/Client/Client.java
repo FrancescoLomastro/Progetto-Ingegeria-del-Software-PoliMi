@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * This class is a generic Client. It can be implemented type RMI or Socket. Exist some generic method */
 public abstract class Client extends UnicastRemoteObject {
-    private final String username;
+    private String username;
     private final String serverAddress;
     private final int serverPort;
     private transient View view;
@@ -27,6 +27,8 @@ public abstract class Client extends UnicastRemoteObject {
         this.view=view;
         new Thread(new MessageQueueHandler(this)).start();
     }
+
+
     /**
      * This method is called from MessageQueueHandler thread and return list of message
      * @author: Riccardo Figini
@@ -40,17 +42,34 @@ public abstract class Client extends UnicastRemoteObject {
         }
         return list;
     }
+
+
+    public void changeUsername(String username)
+    {
+        this.username=username;
+        connect();
+    }
     public String getUsername() {
         return username;
     }
+
+
     public String getServerAddress() {
         return serverAddress;
     }
+
+
     public int getServerPort() {
         return serverPort;
     }
+
+
     public abstract void connect();
+
+
     public abstract void sendMessage(Message message) throws IOException;
+
+
     /**Update view sending a message with "command"
      * @author: Riccardo Figini
      * @param message Message from server*/
