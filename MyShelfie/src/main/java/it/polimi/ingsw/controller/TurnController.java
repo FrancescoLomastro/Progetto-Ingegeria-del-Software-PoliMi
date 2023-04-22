@@ -43,13 +43,13 @@ public class TurnController implements Runnable{
 
     private void initClientObjectInPlayer() {
         gameController.notifyAllMessage(new MessageGrid(game.getGrid()));
-        for(int i=0; i<game.getNumPlayers(); i++){
+        /*for(int i=0; i<game.getNumPlayers(); i++){
             gameController.notifyAllMessage(new MessageLibrary(game.getLibrary(game.getPlayers()[i].getName()), game.getPlayers()[i].getName()));
             gameController.sendMessageToASpecificUser(new MessagePersonalGoal(game.getPlayers()[i].getPersonalGoalCard().getGoalVector()), game.getPlayers()[i].getName());
             gameController.notifyAllMessage(
                     new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
             gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
-        }
+        }*/
     }
 
     /**
@@ -67,12 +67,9 @@ public class TurnController implements Runnable{
      * implementation of Runnable interface's method run
      * */
     public void run(){
-
         Message moveResult;
         if(message != null){
-
             moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
-
             if(moveResult.getType() == AFTER_MOVE_POSITIVE){
 
                 MessageGrid messageGrid = new MessageGrid(game.getGrid());

@@ -12,22 +12,19 @@ public abstract class Client extends UnicastRemoteObject {
     private String username;
     private final String serverAddress;
     private final int serverPort;
-    private transient View view;
     protected final transient ArrayList<Message> messageQueue;
+
     /**Construtor
      * @author: Riccardo Figini
      * */
-    public Client(String username, String address, int port ,View view) throws RemoteException
+    public Client(String username, String address, int port) throws RemoteException
     {
         super();
         this.messageQueue= new ArrayList<>();
         this.username = username;
         this.serverAddress = address;
         this.serverPort = port;
-        this.view=view;
-        new Thread(new MessageQueueHandler(this)).start();
     }
-
 
     /**
      * This method is called from MessageQueueHandler thread and return list of message
@@ -69,12 +66,5 @@ public abstract class Client extends UnicastRemoteObject {
 
     public abstract void sendMessage(Message message) throws IOException;
 
-
-    /**Update view sending a message with "command"
-     * @author: Riccardo Figini
-     * @param message Message from server*/
-    public void updateView(Message message) {
-        view.update(message);
-    }
 
 }

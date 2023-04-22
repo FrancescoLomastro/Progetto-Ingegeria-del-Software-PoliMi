@@ -3,7 +3,9 @@ package it.polimi.ingsw.model.Cards;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Enums.Type;
 
-public class ObjectCard extends Card {
+import java.io.Serializable;
+
+public class ObjectCard extends Card implements Serializable {
     private final Color color;
     private final Type type;
 
@@ -45,6 +47,6 @@ public class ObjectCard extends Card {
 
     @Override
     public String toString() {
-        return ""+color;
+            return ""+color;
     }
 }

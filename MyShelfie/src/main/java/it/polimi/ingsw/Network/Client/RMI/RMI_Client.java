@@ -22,11 +22,10 @@ public class RMI_Client extends Client implements RMIClientConnection {
      * @author: Riccardo Figini
      * @param address Server's address
      * @param port Server's port
-     * @param username Client's name
-     * @param view View of the player */
-    public RMI_Client(String username, String address, int port, View view) throws RemoteException
+     * @param username Client's name */
+    public RMI_Client(String username, String address, int port) throws RemoteException
     {
-        super(username, address, port, view);
+        super(username, address, port);
     }
     /**
      * This method changes reference to server, from acceptor server to Game server.

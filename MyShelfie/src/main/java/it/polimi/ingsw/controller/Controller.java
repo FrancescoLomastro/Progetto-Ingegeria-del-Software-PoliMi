@@ -30,7 +30,6 @@ public class Controller implements ServerReceiver
                         try {
                             connection.sendMessage(new ErrorMessage("A lobby is being created from another user, please retry soon"));
                         } catch (IOException e) {
-
                             System.out.println("Couldn't ask number to the client " + username + ", dropping the request...");
                         }
                     }
@@ -41,7 +40,6 @@ public class Controller implements ServerReceiver
                         try {
                             connection.sendMessage(new PlayerNumberRequest(minimumPlayers, maximumPlayers));
                         } catch (IOException e) {
-
                             System.out.println("Couldn't ask number to the client " + username + ", dropping the request...");
                             waitedRequest = null;
                         }
@@ -59,22 +57,19 @@ public class Controller implements ServerReceiver
                 try {
                     connection.sendMessage(new InvalidUsernameMessage());
                 } catch (IOException e) {
-
                     System.out.println("Problem contacting " + username + ", dropping the request...");
                     waitedRequest = null;
                 }
             }
-
     }
 
      private void addPlayer(String username, Connection connection) {
-
-            currentGame.addPlayer(username,connection);
-            games.add(currentGame);
-         if(currentGame.getSize()==currentGame.getLimitOfPlayers())
-         {
-             new Thread(currentGame).start();
-             currentGame=new GameController(games.size());
+        currentGame.addPlayer(username,connection);
+        games.add(currentGame);
+        if(currentGame.getSize()==currentGame.getLimitOfPlayers())
+        {
+            new Thread(currentGame).start();
+            currentGame=new GameController(games.size());
         }
     }
 

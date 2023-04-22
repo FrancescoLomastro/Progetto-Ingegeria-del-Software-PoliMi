@@ -4,33 +4,26 @@ import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageCommonGoal;
 import it.polimi.ingsw.Network.Messages.MessageLibrary;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
-import it.polimi.ingsw.View.CLI;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * This class reacts to notify from clientObject class and prints update*/
-public class ThreadOutputClient implements Observer<ClientObject, Message> {
-    private final CLI cli;
-    /**
-     * Constructor
-     * @author: Riccardo Figini
-     * @param client client*/
-    public ThreadOutputClient(CLI client){
-        this.cli=client;
+public class OutputHandler implements Observer<ClientModel, Message> {
+
+    public OutputHandler(){
     }
     /**
      * Show grid
      * @author: Riccardo Figini
      * */
     public void showGrid(){
-        ObjectCard[][] grid = cli.getClientObject().getGrid();
+     /*   ObjectCard[][] grid = cli.getClientObject().getGrid();
         for(int i=0; i<grid.length; i++){
             for(int j=0; j<grid[i].length; j++){
                 System.out.print(
@@ -38,7 +31,7 @@ public class ThreadOutputClient implements Observer<ClientObject, Message> {
                 );
             }
             System.out.println("");
-        }
+        }*/
     }
     /**
      * Show Library of specific player
@@ -63,11 +56,11 @@ public class ThreadOutputClient implements Observer<ClientObject, Message> {
     /**
      * This is used after observable notify
      * @author: Riccardo Figini
-     * @param o ClientObject with game's information
+     * @param o ClientModel with game's information
      * @param arg message
      * */
     @Override
-    public void update(ClientObject o, Message arg) {
+    public void update(ClientModel o, Message arg) {
         switch (arg.getType()){
             case UPDATE_GRID_MESSAGE -> showGrid();
             case UPDATE_LIBRARY_MESSAGE -> {
@@ -85,13 +78,13 @@ public class ThreadOutputClient implements Observer<ClientObject, Message> {
         System.out.println("Point for common goal card 2: " + arg.getPointAvailable2());
     }
 
-    public void printAll(ClientObject clientObject) {
+    public void printAll(ClientModel clientModel) {
         showGrid();
-        System.out.println("First common goal: " + clientObject.getDescriptionFirstCommonGoal());
-        System.out.println("Second common goal: " + clientObject.getDescriptionSecondCommonGoal());
+        System.out.println("First common goal: " + clientModel.getDescriptionFirstCommonGoal());
+        System.out.println("Second common goal: " + clientModel.getDescriptionSecondCommonGoal());
         System.out.println("Your personal goal:" );
-        printPersonalGaol(clientObject.getGoalVector());
-        Map<String, ObjectCard[][]> map = clientObject.getAllLibrary();
+        printPersonalGaol(clientModel.getGoalList());
+        Map<String, ObjectCard[][]> map = clientModel.getAllLibrary();
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
             System.out.println(entry.getKey() +"'s library");
             showLibrary(entry.getValue());

@@ -21,11 +21,10 @@ public class Socket_Client extends Client implements Runnable{
      * @author: Riccardo Figini
      * @param address Server's address
      * @param port Server's port
-     * @param username Client's name
-     * @param view View of the player */
-    public Socket_Client(String username, String address, int port, View view) throws RemoteException
+     * @param username Client's name*/
+    public Socket_Client(String username, String address, int port) throws RemoteException
     {
-        super(username, address, port,view);
+        super(username, address, port);
     }
     /**
      * Client makes login on server, to join in a game.

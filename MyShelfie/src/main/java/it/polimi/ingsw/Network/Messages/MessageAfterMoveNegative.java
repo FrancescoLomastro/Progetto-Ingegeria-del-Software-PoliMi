@@ -13,7 +13,7 @@ public class MessageAfterMoveNegative extends Message{
         super(MessageType.AFTER_MOVE_NEGATIVE);
         invelidmessage=message;
     }
-    public String getInvelidmessage() {
+    public String getInvalidMessage() {
         return invelidmessage;
     }
 }

@@ -25,5 +25,6 @@ public enum MessageType
     CHAT_MESSAGE,
     ALMOST_OVER,
     INIT_PERSONAL_GOAL,
-    INIT_COMMON_GOAL;
+    INIT_COMMON_GOAL,
+    VIEW_LOGIN_DETAILS;
 }
