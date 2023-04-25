@@ -5,8 +5,12 @@ import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
 
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Cli extends View implements Observer<ClientModel,Message> {
@@ -170,6 +174,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
 
     @Override
     public void showGrid(ObjectCard[][] matrice){
+        System.out.println("Here grid");
         /*for(int i=0; i<grid.length; i++){
             for(int j=0; j<grid[i].length; j++){
                 System.out.print(grid[i][j]);
@@ -194,9 +199,10 @@ public class Cli extends View implements Observer<ClientModel,Message> {
                 }
                 larghezzaColonne[colonna] = larghezzaMassima;
             }
-
+            System.out.println("| N || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9 |");
             // Stampa la matrice con i bordi
             for (int riga = 0; riga < matrice.length; riga++) {
+                System.out.print(riga+1 + " -> ");
                 for (int colonna = 0; colonna < matrice[0].length; colonna++) {
                     String valoreStringa;
                     if(matrice[riga][colonna]==null)
@@ -226,6 +232,9 @@ public class Cli extends View implements Observer<ClientModel,Message> {
     }
     @Override
     public void showLibrary(ObjectCard[][] library){
+        if(library == null)
+            System.err.println("Library is null, somethings goes wrong");
+        System.out.println("Here library: ");
         for(int i=0; i<library.length; i++){
             for(int j=0; j<library[i].length; j++){
                 System.out.print(library[i][j]);
@@ -259,47 +268,52 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         System.out.println("Point for common goal card 1: " + arg.getPointAvailable1());
         System.out.println("Point for common goal card 2: " + arg.getPointAvailable2());
     }
-/*
 
+
+    //da rivedere
+    @Override
     public void printAll(ClientModel clientObject) {
-        showGrid();
+        showGrid(clientObject.getGrid());
         System.out.println("First common goal: " + clientObject.getDescriptionFirstCommonGoal());
         System.out.println("Second common goal: " + clientObject.getDescriptionSecondCommonGoal());
-        System.out.println("Your personal goal:" );
-        printPersonalGaol(clientObject.getGoalVector());
+        printPersonalGaol(clientObject.getGoalList());
         Map<String, ObjectCard[][]> map = clientObject.getAllLibrary();
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
             System.out.println(entry.getKey() +"'s library");
-            showLibrary(entry.getValue());
+            showLibrary(clientObject.getLibrary(entry.getKey()));
         }
     }
 
     private void printPersonalGaol(ArrayList<Couple> goalVector) {
+        System.out.println("Here personal goal card: ");
+        if(goalVector==null)
+            System.err.println("Error, list of goal vector null");
         for(int i=0; i<goalVector.size(); i++){
             Position p = (Position) (goalVector.get(i).getFirst());
             Color c = (Color) (goalVector.get(i).getSecond());
             System.out.println("row: " + p.getRow() + ", column: " + p.getColumn()+", color: "+ c);
         }
-    }*/
+    }
 
-   /*
+
     private Position[] askPositions(int numberOfCards)
     {
+        int row, column;
         Position[] positions = new Position[numberOfCards];
-        threadOutputClient.printAString("Now draw");
+        System.out.println("Now draw "+numberOfCards+" cards");
         for(int i=0; i<numberOfCards; i++){
-            threadOutputClient.printAString("Card number " + i);
-            threadOutputClient.printAString("Row: ");
-            numberOfCards= getNumberOfCards(10)-1;
-            positions[i].setRow(numberOfCards);
-            threadOutputClient.printAString("Column: ");
-            numberOfCards= getNumberOfCards(10)-1;
-            positions[i].setColumn(numberOfCards);
+            System.out.println("Card number " + i);
+            System.out.println("Row: ");
+            row= getNumberOfCards(10)-1;
+            System.out.println("Column: ");
+            column= getNumberOfCards(10)-1;
+            positions[i] = new Position(row, column);
         }
         return positions;
     }
     private int getNumberOfCards(int limit)
     {
+        String input;
         int number;
         input = scanner.nextLine().trim();
         while (true) {
@@ -311,11 +325,14 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             } catch (NumberFormatException e) {
                 System.out.println("That is not a good number! Try again...");
             }
+            input = scanner.nextLine().trim();
         }
-    }*/
-    /*
+    }
+
+
     //da rivedere
-    private void askMove()  {
+    @Override
+    public Message askMove()  {
         int column, numberOfCards;
         Position[] position;
         //threadChat.interrupt();
@@ -330,15 +347,10 @@ public class Cli extends View implements Observer<ClientModel,Message> {
 
         Message reMessage = new MessageMove(position, column);
 
-        try {
-            client.sendMessage(reMessage);
-        }
-        catch (Exception e){
-            throw new RuntimeException("Unable to send message");
-        }
+        return reMessage;
         //threadChat.start();
     }
 
-     */
+
 
 }

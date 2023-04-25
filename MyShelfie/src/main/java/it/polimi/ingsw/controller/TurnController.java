@@ -22,7 +22,6 @@ public class TurnController implements Runnable{
     private int currPlayerIndex;
     private String currentPlayer;
     private boolean flagCountdown;
-    private int numberOfTurnUntilEndGame;
 
     /**
      * the constructor of the class TurnController
@@ -35,7 +34,6 @@ public class TurnController implements Runnable{
         this.gameController = gameController;
         currPlayerIndex = 0;
         currentPlayer = game.getPlayers()[0].getName();
-        numberOfTurnUntilEndGame= game.getNumPlayers();
         initClientObjectInPlayer();
         gameController.sendMessageToASpecificUser(
                 new MessageMove(), game.getPlayers()[0].getName());
@@ -43,13 +41,13 @@ public class TurnController implements Runnable{
 
     private void initClientObjectInPlayer() {
         gameController.notifyAllMessage(new MessageGrid(game.getGrid()));
-        /*for(int i=0; i<game.getNumPlayers(); i++){
+        for(int i=0; i<game.getNumPlayers(); i++){
             gameController.notifyAllMessage(new MessageLibrary(game.getLibrary(game.getPlayers()[i].getName()), game.getPlayers()[i].getName()));
             gameController.sendMessageToASpecificUser(new MessagePersonalGoal(game.getPlayers()[i].getPersonalGoalCard().getGoalVector()), game.getPlayers()[i].getName());
             gameController.notifyAllMessage(
                     new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
             gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
-        }*/
+        }
     }
 
     /**

@@ -99,13 +99,11 @@ public class Game {
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
     public Message manageTurn(String username, Position[] move, int column){
-
         Player player = searchByUsername(username);
+        ObjectCard[] obs;
         try{
-            checkMove(player, move, column);
-            player.getLibrary().insertCardsInLibrary(column, grid.draw(move));
-
-
+            obs = checkMove(player, move, column);
+            player.getLibrary().insertCardsInLibrary(column, obs);
             return checkCommonGoal(player, livingRoom.getCommonGoalCards());
         }
         catch (InvalidMoveException e){
@@ -162,9 +160,12 @@ public class Game {
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
-    private void checkMove(Player player, Position[] move, int column) throws InvalidMoveException{
+    private ObjectCard[] checkMove(Player player, Position[] move, int column) throws InvalidMoveException{
         grid.isDrawAvailable(move);
-        player.getLibrary().isMoveAvailable(column,grid.draw(move));
+        ObjectCard[] obs = new ObjectCard[move.length];
+        obs = grid.draw(move);
+        player.getLibrary().isMoveAvailable(column,obs);
+        return obs;
     }
 
     /**

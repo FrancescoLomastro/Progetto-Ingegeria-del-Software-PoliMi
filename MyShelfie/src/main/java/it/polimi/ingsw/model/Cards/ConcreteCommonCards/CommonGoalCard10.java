@@ -16,6 +16,11 @@ import java.util.HashMap;
  * */
 public class CommonGoalCard10 extends CommonGoalCard {
 
+    public CommonGoalCard10(){
+        setDescription("Eight tiles of the same type. There’s no " +
+                "restriction about the position of these " +
+                "tiles");
+    }
     /**
      * the main algorithm that checks this common goal
      * @param library the turn player's library

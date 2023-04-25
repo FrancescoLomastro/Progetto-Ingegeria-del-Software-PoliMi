@@ -13,6 +13,12 @@ import java.util.HashSet;
  * @author: Alberto Aniballi
  * */
 public class CommonGoalCard8 extends CommonGoalCard {
+    public CommonGoalCard8(){
+        setDescription("Three columns each formed by 6 tiles Five tiles of the same type forming an X. " +
+                "of maximum three different types. One " +
+                "column can show the same or a different " +
+                "combination of another column");
+    }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
      *

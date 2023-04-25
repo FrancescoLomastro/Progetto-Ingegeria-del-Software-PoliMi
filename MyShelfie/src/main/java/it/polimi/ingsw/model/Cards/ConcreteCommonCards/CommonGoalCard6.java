@@ -14,6 +14,12 @@ import java.util.HashSet;
  * @author: Alberto Aniballi
  * */
 public class CommonGoalCard6 extends CommonGoalCard {
+    public CommonGoalCard6(){
+        setDescription("Two groups each containing 4 tiles of " +
+                "the same type in a 2x2 square. The tiles " +
+                "of one square can be different from " +
+                "those of the other square.");
+    }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
      *

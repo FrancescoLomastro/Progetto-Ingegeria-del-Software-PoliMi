@@ -14,6 +14,10 @@ import java.util.HashSet;
  * @author: Alberto Aniballi
  * */
 public class CommonGoalCard5 extends CommonGoalCard {
+    public CommonGoalCard5(){
+        setDescription("Two columns each formed by 6 " +
+                "different types of tiles.");
+    }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
      *

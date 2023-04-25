@@ -25,7 +25,8 @@ public class GameController implements Runnable, ServerReceiver {
     private final String serverNameRMI;
     private final int portServerRMI=9000;
 
-
+    private int sendMessageAll =0;
+    private int sendMessageToSpecifica=0;
 
     /**
      * constructor
@@ -163,6 +164,8 @@ public class GameController implements Runnable, ServerReceiver {
      * @param message : the message to send
      * */
     public void notifyAllMessage(Message message){
+        System.out.println(sendMessageAll + ") Message send all, Type: " + message.getType());
+        sendMessageAll++;
         for(Map.Entry<String, Connection> entry : clients.entrySet()){
             try {
                 Connection value = entry.getValue();
@@ -179,6 +182,8 @@ public class GameController implements Runnable, ServerReceiver {
      * @param username : the username who will receive that message
      * */
     public void sendMessageToASpecificUser(Message message, String username){
+        System.out.println(sendMessageToSpecifica + ") Message send specific, Type: " + message.getType());
+        sendMessageToSpecifica++;
         try {
             clients.get(username).sendMessage(message);
         }

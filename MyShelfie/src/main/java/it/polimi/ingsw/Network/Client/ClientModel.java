@@ -3,6 +3,8 @@ package it.polimi.ingsw.Network.Client;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Enums.Type;
 import it.polimi.ingsw.model.Utility.Couple;
 
 import java.util.ArrayList;
@@ -18,12 +20,18 @@ public class ClientModel extends Observable<Message> {
     private String descriptionFirstCommonGoal;
     private String descriptionSecondCommonGoal;
     private int pointsCommonGoalCards[];
-    private  ObjectCard[][] defaultLibrary;
+    private  ObjectCard[][] defaultLibrary ;
 
     public ClientModel(){
         librariesMap = new HashMap<>();
         pointsMap = new HashMap<>();
         pointsCommonGoalCards = new int[] {8,8};
+        defaultLibrary = new ObjectCard[6][5];
+        for(int i=0; i<6; i++){
+            for(int j=0; j<5; j++){
+                defaultLibrary[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
+            }
+        }
     }
 
 
@@ -38,9 +46,18 @@ public class ClientModel extends Observable<Message> {
 
 
     public void setLibrary(String name, ObjectCard[][] library) {
-        this.librariesMap.put(name, library);
+        ObjectCard[][] obs = new ObjectCard[library.length][library[0].length];
+        for(int i =0; i<library.length; i++){
+            for(int j=0; j<library[i].length; j++){
+                if(library[i][j]==null)
+                    obs[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
+                else
+                    obs[i][j] = new ObjectCard(library[i][j].getDescription(), library[i][j].getColor(), library[i][j].getType());
+            }
+        }
+        librariesMap.put(name, obs);
         setChanged();
-        notifyObservers(new MessageLibrary(library, name));
+        notifyObservers(new MessageLibrary(obs, name));
         //notifyObservers(new MessageLibrary(copy(library), name)); //da chiedere ai prof
     }
 

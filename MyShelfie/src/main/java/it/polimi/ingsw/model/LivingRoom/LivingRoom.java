@@ -18,13 +18,15 @@ public class LivingRoom {
         this.scoreCard= new ScorePointCard(numPlayers);
         this.numCommonGoalCards=numCommonGoalCards;
         this.commonGoalCards = new CommonGoalCard[numCommonGoalCards];
+        generateCommonGoalCards();
     }
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
     private void generateCommonGoalCards()
     {
-        //not implemented yet
+        commonGoalCards[0] = cardGenerator.generateCommonGoalCard();
+        commonGoalCards[1] = cardGenerator.generateCommonGoalCard();
     }
 
     public Grid getGrid() {

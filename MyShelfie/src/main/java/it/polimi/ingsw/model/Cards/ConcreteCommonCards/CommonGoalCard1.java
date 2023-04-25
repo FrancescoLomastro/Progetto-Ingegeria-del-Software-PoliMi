@@ -11,6 +11,10 @@ import it.polimi.ingsw.model.Player.Library;
  * @author: Alberto Aniballi
  * */
 public class CommonGoalCard1 extends CommonGoalCard {
+    public CommonGoalCard1(){
+        setDescription("Five tiles of the same type forming a " +
+                "diagonal. ");
+    }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
      *

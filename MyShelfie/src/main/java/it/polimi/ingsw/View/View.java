@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.model.Cards.ObjectCard;
@@ -16,5 +17,8 @@ public abstract class View extends Observable<Message> {
     public abstract String onInvalidUsername();
     public abstract void showGrid(ObjectCard[][] grid);
     public abstract void showLibrary(ObjectCard[][] library);
-
+    //da rivedere
+    public abstract void printAll(ClientModel clientObject);
+    //da rivedere
+    public abstract Message askMove();
 }

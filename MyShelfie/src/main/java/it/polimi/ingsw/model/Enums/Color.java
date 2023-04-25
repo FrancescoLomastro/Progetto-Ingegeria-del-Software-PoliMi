@@ -5,7 +5,8 @@ public enum Color {
     LIGHTBLUE(2,"L"),
     PINK(3,"P"),
     YELLOW(4,"Y"),
-    WHITE(5,"W");
+    WHITE(5,"W"),
+    EMPTY(6, "E");
     private final int relativeInt;
     private final String string;
     private Color(int interoRelativo, String string) {

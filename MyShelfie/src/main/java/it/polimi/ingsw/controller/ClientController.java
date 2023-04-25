@@ -108,10 +108,10 @@ public class ClientController implements Observer<View,Message> {
                 // threadChat = new Thread(new ThreadChat(client,scanner));
                 //threadChat.start();
             }
-            /*case START_GAME_MESSAGE ->
+            case START_GAME_MESSAGE ->
             {
                 view.printAString("Game started");
-                threadOutputClient.printAll(clientObject);
+                view.printAll(clientModel);
             }
             case CHAT_MESSAGE ->
             {
@@ -120,14 +120,26 @@ public class ClientController implements Observer<View,Message> {
             }
             case MY_MOVE_REQUEST ->
             {
-                threadOutputClient.printAll(clientObject);
-                askMove();
+                view.printAll(clientModel);
+                try {
+                    client.sendMessage(view.askMove());
+                }
+                catch (IOException e){
+                    //TODO capire cosa fare
+                    System.out.println("Impossible send move to server, " + e);
+                }
             }
             case AFTER_MOVE_NEGATIVE ->
             {
                 MessageAfterMoveNegative msg = (MessageAfterMoveNegative) message;
                 view.printAString(msg.getInvalidMessage());
-                askMove();
+                try {
+                    client.sendMessage(view.askMove());
+                }
+                catch (IOException e){
+                    //TODO capire cosa fare
+                    System.out.println("Impossible send move to server, " + e);
+                }
             }
             case WINNER ->
             {
@@ -145,7 +157,7 @@ public class ClientController implements Observer<View,Message> {
             }
             case COMMON_GOAL ->
             {
-                clientObject.addPoint((MessageCommonGoal) message);
+                clientModel.addPoint((MessageCommonGoal) message);
             }
             case AFTER_MOVE_POSITIVE ->
             {
@@ -158,21 +170,21 @@ public class ClientController implements Observer<View,Message> {
                 }
             }
             case INIT_PLAYER_MESSAGE -> {
-                clientObject.addPlayer(((MessageInitPlayer) message).getPlayer());
-            }*/
+                clientModel.addPlayer(((MessageInitPlayer) message).getPlayer());
+            }
             case UPDATE_GRID_MESSAGE ->
                     clientModel.setGrid(((MessageGrid) message).getGrid());
             case UPDATE_LIBRARY_MESSAGE ->
                     clientModel.setLibrary(((MessageLibrary) message).getPlayer(), ((MessageLibrary) message).getLibrary());
-            /*case INIT_COMMON_GOAL -> {
+            case INIT_COMMON_GOAL -> {
                 MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
-                clientObject.setDescriptionFirstCommonGoal(msg.getDescription1());
-                clientObject.setDescriptionSecondCommonGoal(msg.getDescription2());
+                clientModel.setDescriptionFirstCommonGoal(msg.getDescription1());
+                clientModel.setDescriptionSecondCommonGoal(msg.getDescription2());
             }
             case INIT_PERSONAL_GOAL -> {
                 MessagePersonalGoal msg = (MessagePersonalGoal) message;
-                clientObject.setPersonalGoalCard(msg.getGoalVector());
-            }*/
+                clientModel.setPersonalGoalCard(msg.getGoalVector());
+            }
         }
     }
 

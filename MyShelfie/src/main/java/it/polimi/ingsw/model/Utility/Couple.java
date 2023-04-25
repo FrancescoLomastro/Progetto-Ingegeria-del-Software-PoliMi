@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model.Utility;
 
+import java.io.Serializable;
+
 /*TODO non capisco perché couple ha due oggetti generici, tanto sappiamo esattamente che si andrà
 *  sicuramente colore posizioni, tanto vale segnarle direttamente
 *  In personalCard ho dovuto far un cast esplicito (non che crei problemi)*/
-public class Couple<E1,E2>{
+public class Couple<E1,E2> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private E1 first;
     private E2 second;
 

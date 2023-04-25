@@ -111,7 +111,7 @@ public class Grid {
         {
             if((drawn[i]==null)||(matrix[drawn[i].getRow()][drawn[i].getColumn()]==null))
             {
-                throw new InvalidMoveException("Some position to extract was null");
+                throw new InvalidMoveException("Some position extracted was null");
             }
             columns[i]=drawn[i].getRow();
             rows[i]=drawn[i].getColumn();
