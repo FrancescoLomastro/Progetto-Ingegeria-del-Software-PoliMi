@@ -67,11 +67,14 @@ public class OutputHandler implements Observer<ClientModel, Message> {
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
                 showLibrary(obs);
             }
-            case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
+            case COMMON_GOAL -> showPointAfterReachedGoal( (MessageCommonGoal) arg);
         }
     }
-
-    private void showPoint(MessageCommonGoal arg) {
+    /**It prints points (from common goal card) achieved from specific player
+     * @param arg Message with all information about points achieved from common goal card. It re-used an existing class to
+     * pass paramter. Player contained in arg is who has achieved common goal. Points gained are conteined in "getGainedPointsFirstCard".
+     * New points available are contained in PointAvailable1 and PointAvailable2*/
+    private void showPointAfterReachedGoal(MessageCommonGoal arg) {
         System.out.println("Common/s goal have been reached by: " + arg.getPlayer());
         System.out.println("He has " + arg.getGainedPointsFirstCard() + "points now");
         System.out.println("Point for common goal card 1: " + arg.getPointAvailable1());
