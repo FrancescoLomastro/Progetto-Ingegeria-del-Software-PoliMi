@@ -1,4 +1,6 @@
 package it.polimi.ingsw.Network.Client.Socket;
+
+
 import it.polimi.ingsw.Network.Client.Client;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.SocketLoginMessage;
@@ -9,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
-/**Class that manage socket communication */
+
 public class Socket_Client extends Client implements Runnable{
     private transient Socket socket;
     private transient ObjectInputStream in;

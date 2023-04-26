@@ -1,4 +1,6 @@
 package it.polimi.ingsw.View;
+
+
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
@@ -10,30 +12,27 @@ import it.polimi.ingsw.model.Utility.Position;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
-/**This class handles input and output in cli version
- * @author: Riccardo Figini*/
+
 public class Cli extends View implements Observer<ClientModel,Message> {
     private final Scanner scanner;
-    /**Constructor
-     * @author: Riccardo Figini*/
+
     public Cli(ClientModel clientModel)
     {
         scanner = new Scanner(System.in);
         clientModel.addObserver(this);
     }
-    /**Ask username
-     * @author: Riccardo Figini
-     * @return {@code String} username*/
+
+
+
     @Override
     public String askUsername()
     {
         System.out.print("Type your username: ");
         return scanner.nextLine().trim();
     }
-    /**Ask type of technology to use during the game
-     * @author: Riccardo Figini
-     * @return {@code int} Chosen technology
-     * */
+
+
+
     @Override
     public int askTechnology()
     {
@@ -62,10 +61,9 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         }while (badInput);
         return parsedInput;
     }
-    /**Ask addres to user
-     * @author: Riccardo Figini
-     * @return {@code String} Address
-     * */
+
+
+
     @Override
     public String askAddress()
     {
@@ -77,12 +75,9 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         else
             return input;
     }
-    /**Ask port (TCP port) to user
-     * @author: Riccardo Figini
-     * @param chosenTechnology Type of technology chosen
-     * @param defaultPort Default port
-     * @return {@code int} Port
-     * */
+
+
+
     @Override
     public int askPort(int chosenTechnology, int defaultPort)
     {
@@ -115,29 +110,26 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         }while (badInput);
         return parsedInput;
     }
-    /**Update chat
-     * @author: Riccardo Figini
-     * @param message Chat's message*/
+
+
+    //servirà per la chat
     @Override
     public void updateObserversWithMessage(Message message)
     {
         setChanged();
         notifyObservers(message);
     }
-    /**Print generic string
-     * @author: Riccardo Figini
-     * @param s String to print
-     * */
+
+
+
     @Override
     public void printAString(String s)
     {
         System.out.println(s);
     }
-    /**Ask number of player
-     * @author: Riccardo Figini
-     * @param min Minimum number of players
-     * @param max Maximum number of player
-     * @return {@code int} Number of player*/
+
+
+
     @Override
     public int askNumberOfPlayers(int min, int max)
     {
@@ -168,19 +160,18 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         }while(badInput);
         return value;
     }
-    /**It handles invalid username chosen
-     * @return {@code String} Username
-     * */
+
+
+
     @Override
     public String onInvalidUsername()
     {
         System.out.println("The typed username was already used, please type another username or try later");
         return askUsername();
     }
-    /**
-     * Show grid
-     * @author: Riccardo Figini
-     * */
+
+
+
     @Override
     public void showGrid(ObjectCard[][] matrice){
         System.out.println("Here grid");
@@ -190,6 +181,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             }
             System.out.println("");
         }*/
+
             // Calcola la lunghezza massima di ogni colonna per allineare i bordi
             int[] larghezzaColonne = new int[matrice[0].length];
             for (int colonna = 0; colonna < matrice[0].length; colonna++) {
@@ -238,11 +230,6 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             }
 
     }
-    /**
-     * Show Library of specific player
-     * @author: Riccardo Figini
-     * @param library library to print
-     * */
     @Override
     public void showLibrary(ObjectCard[][] library){
         if(library == null)
@@ -255,10 +242,8 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             System.out.println("");
         }
     }
-    /**Ask cli to do something
-     * @param arg type of message to manage
-     * @param o client model
-     * */
+
+    //da rivedere
     @Override
     public void update(ClientModel o, Message arg) {
         switch (arg.getType())
@@ -274,20 +259,18 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
         }
     }
-    /**It prints points (from common goal card) achieved from specific player
-     * @param arg Message with all information about points achieved from common goal card. It re-used an existing class to
-     * pass paramter. Player contained in arg is who has achieved common goal. Points gained are conteined in "getGainedPointsFirstCard".
-     * New points available are contained in PointAvailable1 and PointAvailable2*/
+
+
+    //da rivedere
     private void showPoint(MessageCommonGoal arg) {
         System.out.println("Common/s goal have been reached by: " + arg.getPlayer());
         System.out.println("He has " + arg.getGainedPointsFirstCard() + "points now");
         System.out.println("Point for common goal card 1: " + arg.getPointAvailable1());
         System.out.println("Point for common goal card 2: " + arg.getPointAvailable2());
     }
-    /**Print everything in client model
-     * @author: Riccardo Figini
-     * @param clientObject Copy of model kept by severer
-     * */
+
+
+    //da rivedere
     @Override
     public void printAll(ClientModel clientObject) {
         showGrid(clientObject.getGrid());
@@ -300,10 +283,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             showLibrary(clientObject.getLibrary(entry.getKey()));
         }
     }
-    /**Print personal goal card
-     * @author: Riccardo Figini
-     * @param goalVector Personal goal card vector
-     * */
+
     private void printPersonalGaol(ArrayList<Couple> goalVector) {
         System.out.println("Here personal goal card: ");
         if(goalVector==null)
@@ -314,11 +294,8 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             System.out.println("row: " + p.getRow() + ", column: " + p.getColumn()+", color: "+ c);
         }
     }
-    /**Ask position in which extract cards
-     * @author: Riccardo Figini
-     * @param numberOfCards Number of card in input
-     * @return {@code Position[]} Vector with position
-     * */
+
+
     private Position[] askPositions(int numberOfCards)
     {
         int row, column;
@@ -327,19 +304,14 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         for(int i=0; i<numberOfCards; i++){
             System.out.println("Card number " + i);
             System.out.println("Row: ");
-            row= getNumberWithLimit(10)-1;
+            row= getNumberOfCards(10)-1;
             System.out.println("Column: ");
-            column= getNumberWithLimit(10)-1;
+            column= getNumberOfCards(10)-1;
             positions[i] = new Position(row, column);
         }
         return positions;
     }
-    /**Get a generic number with lower limit = 0 and upper limit as parameter
-     * @author: Riccardo Figini
-     * @param limit Upper limit
-     * @return {@code int} inseted number
-     * */
-    private int getNumberWithLimit(int limit)
+    private int getNumberOfCards(int limit)
     {
         String input;
         int number;
@@ -356,9 +328,9 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             input = scanner.nextLine().trim();
         }
     }
-    /**Ask move
-     * @author: Riccardo Figini*
-     * @return {@code messahe} Message with move (Column and positions)*/
+
+
+    //da rivedere
     @Override
     public Message askMove()  {
         int column, numberOfCards;
@@ -367,15 +339,18 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         System.out.println("It's your turn, please make your move");
 
         System.out.println("How many card do you want? (minimum 1, max 3)");
-        numberOfCards = getNumberWithLimit(3);
+        numberOfCards = getNumberOfCards(3);
         position = askPositions(numberOfCards);
 
         System.out.println("In which column do you want insert this cards?");
-        column= getNumberWithLimit(5)-1;
+        column= getNumberOfCards(5)-1;
 
         Message reMessage = new MessageMove(position, column);
 
         return reMessage;
         //threadChat.start();
     }
+
+
+
 }

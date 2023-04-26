@@ -1,4 +1,5 @@
 package it.polimi.ingsw.controller;
+
 import it.polimi.ingsw.Network.Client.*;
 import it.polimi.ingsw.Network.Client.RMI.RMI_Client;
 import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
@@ -9,8 +10,10 @@ import it.polimi.ingsw.Network.Client.ClientModel;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-/**This class controls/manage client, from initialization to message (game message and chat message)*/
+
+
 public class ClientController implements Observer<View,Message> {
+
     private View view;
     private ClientModel clientModel;
     private MessageQueueHandler messageReceiver;
@@ -22,16 +25,14 @@ public class ClientController implements Observer<View,Message> {
     private final int rmiPort = 9000;
     private final int socketPort = 8000;
 
-    /** Constructor
-     **/
     public ClientController()
     {
         this.clientModel = new ClientModel();
         this.view = new Cli(clientModel);
         view.addObserver(this);
     }
-    /**Start view and create specific class to communicate with server
-     * */
+
+
     public void startView()
     {
         int defaultPort;
@@ -45,15 +46,7 @@ public class ClientController implements Observer<View,Message> {
         chosenPort=view.askPort(chosenTechnology,defaultPort);
         createClient(chosenUsername,chosenTechnology,chosenAddress,chosenPort);
     }
-    /**Create RMI-client and socket-client according to player's choice. That class work
-     * with same mathod implemented in different way. It creates also messageQueueHandler that manage message from
-     * server
-     * @author: Riccardo Figini
-     * @param chosenPort Port's chosen
-     * @param chosenAddress Address's chosen
-     * @param chosenTechnology Rmi (0) or Socket (1)
-     * @param chosenUsername Username name chosen
-     * */
+
     private void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
         try {
             switch (chosenTechnology) {
@@ -73,10 +66,7 @@ public class ClientController implements Observer<View,Message> {
         }
     }
 
-    /**Method called from messageQueueHandler, it handles every type of message
-    *  @author: Riccardo Figini
-     * @param message message from server to be managed
-     * */
+    //messaggi ricevuti dalla rete
     public void onMessage(Message message) {
         switch (message.getType())
         {
@@ -199,10 +189,6 @@ public class ClientController implements Observer<View,Message> {
     }
 
 
-    /**Method called when arrive a message from chat
-    * @author: Riccardo Figini
-    * @param  o View where print message
-     *@param arg Message from server (others player)*/
     @Override
     public void update(View o, Message arg) {
         //servirà per la chat
