@@ -154,6 +154,7 @@ public class ClientController implements Observer<View,Message> {
             {
                 ErrorMessage msg = (ErrorMessage) message;
                 view.printAString(msg.getString());
+                System.exit(0);
             }
             case COMMON_GOAL ->
             {

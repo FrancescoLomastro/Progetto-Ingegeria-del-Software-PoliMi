@@ -12,7 +12,7 @@ public class Controller implements ServerReceiver
     private GameController currentGame;
     private Request waitedRequest;
     private boolean isAsking;
-    private final int minimumPlayers = 1;
+    private final int minimumPlayers = 2;
     private final int maximumPlayers = 4;
 
     public Controller() {

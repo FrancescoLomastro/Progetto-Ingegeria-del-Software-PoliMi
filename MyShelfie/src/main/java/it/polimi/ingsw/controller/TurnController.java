@@ -48,6 +48,7 @@ public class TurnController implements Runnable{
                     new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
             gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
         }
+        gameController.startGameMessages();
     }
 
     /**
