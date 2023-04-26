@@ -99,19 +99,24 @@ public class Grid {
         int[] rows;
         int[] vector;
 
-        //Mossa non nulla ed interna
+        //Mossa non nulla
         if((drawn==null)||(drawn.length<=0)||(drawn.length>3))
         {
             throw new InvalidMoveException("Invalid number of card drawn");
         }
+
         columns= new int[drawn.length];
         rows= new int[drawn.length];
-        //Mossa senza buchi
+        //Mossa senza buchi e interna
         for(int i=0; i< drawn.length;i++)
         {
-            if((drawn[i]==null)||(matrix[drawn[i].getRow()][drawn[i].getColumn()]==null))
+            if(drawn[i]==null)
             {
                 throw new InvalidMoveException("Some position extracted was null");
+            }
+            else if((drawn[i].getRow()>=numRows)||(drawn[i].getColumn()>=numColumns) || (drawn[i].getRow()<0) || (drawn[i].getColumn()<0))
+            {
+                throw new InvalidMoveException("Some position extracted was not internal");
             }
             columns[i]=drawn[i].getRow();
             rows[i]=drawn[i].getColumn();
@@ -143,8 +148,8 @@ public class Grid {
         //almeno un lato libero
         for(int i=1; i<drawn.length;i++)
         {
-            if((drawn[i].getRow()!=0)&&(drawn[i].getRow()!=numColumns)&&
-                    (drawn[i].getColumn()!=0)&&(drawn[i].getColumn()!=numRows))
+            if((drawn[i].getRow()!=0)&&(drawn[i].getRow()!=numRows-1)&&
+                    (drawn[i].getColumn()!=0)&&(drawn[i].getColumn()!=numColumns-1))
             {
                 if((matrix[drawn[i].getRow()+1][drawn[i].getColumn()]!=null)&&
                         (matrix[drawn[i].getRow()-1][drawn[i].getColumn()]!=null)&&

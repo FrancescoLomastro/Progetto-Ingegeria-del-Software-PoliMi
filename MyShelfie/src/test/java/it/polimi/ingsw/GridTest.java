@@ -234,7 +234,7 @@ public class GridTest {
         });
     }
     @Test
-    public void isDrawAvailable_correctInput_correctOutput(){
+    public void isDrawAvailable_correctInput_correctOutput() throws InvalidMoveException {
         assertDoesNotThrow(() -> {
             grid.refill();
             Position[] positions = new Position[2];
