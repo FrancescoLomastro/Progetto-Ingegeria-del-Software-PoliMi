@@ -39,7 +39,7 @@ public class Controller implements ServerReceiver
         for (JsonElement jsonCellElement : arrayOfJsonCells) {
             number = jsonCellElement.getAsString();
             String path = "src/main/resources/gameFile/ServerGame"+number+".bin";
-            getPlayerFromFile(path);
+            getPlayerFromFile(path, number);
         }
         System.out.println("File has been read");
     }
@@ -66,7 +66,7 @@ public class Controller implements ServerReceiver
     /**It adds name of player from ongoing game. It reads object "gameController" from a file indicated with path
      * @param path Game's path
      * */
-    private void getPlayerFromFile(String path) {
+    private void getPlayerFromFile(String path, String gameId) {
         GameController gameController ;
         try {
             FileInputStream finput = new FileInputStream(path);
@@ -84,8 +84,7 @@ public class Controller implements ServerReceiver
         }
         ArrayList<String> list = gameController.getNameOfPlayer();
         for (String s : list) {
-            //TODO da correggere nel caso ci siano numeri con più cifre
-            oldPlayer.put(s, path.substring(path.length()-5, path.length()-4));
+            oldPlayer.put(s, gameId);
         }
     }
 

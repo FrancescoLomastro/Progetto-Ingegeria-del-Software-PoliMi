@@ -192,6 +192,9 @@ public class ClientController implements Observer<View,Message> {
                 MessagePersonalGoal msg = (MessagePersonalGoal) message;
                 clientModel.setPersonalGoalCard(msg.getGoalVector());
             }
+            case RETURN_TO_OLD_GAME_MESSAGE -> {
+                view.printAString("You are joining in your old game");
+            }
         }
 
     }
