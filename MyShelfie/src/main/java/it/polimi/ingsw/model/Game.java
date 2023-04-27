@@ -17,6 +17,7 @@ import it.polimi.ingsw.model.Utility.Position;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -24,7 +25,8 @@ import java.util.*;
 class Game
 *@author Andrea Ferrini
 */
-public class Game {
+public class Game implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int gameNumber = 0;
     private final int numPlayers;
     private int i;

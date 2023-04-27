@@ -3,12 +3,15 @@ package it.polimi.ingsw.model.CardGenerator;
 import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Enums.*;
 
+import java.io.Serializable;
+
 
 /**
  * This class is a ObjectCard deck manager. It keeps tracks of the card to be generated and the already generated cards
  * @author: Francesco Lo Mastro
  */
-public class ObjectCardManager {
+public class ObjectCardManager implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final int numCardsForTypes[] = {8,7,7};
     private final int numColors=6;
     private final int[][] deck;

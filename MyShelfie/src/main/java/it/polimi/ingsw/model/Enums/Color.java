@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.Enums;
-public enum Color {
+
+import java.io.Serializable;
+
+public enum Color implements Serializable {
     BLUE(0,"B"),
     GREEN(1,"G"),
     LIGHTBLUE(2,"L"),
@@ -8,6 +11,7 @@ public enum Color {
     WHITE(5,"W"),
     EMPTY(6, "E");
     private final int relativeInt;
+    private static final long serialVersionUID = 1L;
     private final String string;
     private Color(int interoRelativo, String string) {
         this.relativeInt = interoRelativo;

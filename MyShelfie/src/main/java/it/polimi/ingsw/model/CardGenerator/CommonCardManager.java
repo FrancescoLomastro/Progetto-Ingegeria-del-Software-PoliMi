@@ -2,13 +2,17 @@ package it.polimi.ingsw.model.CardGenerator;
 
 import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Cards.ConcreteCommonCards.*;
+
+import java.io.Serializable;
+
 /**
  * This class is a CommonCard deck manager. It keeps tracks of the card to be generated and the already generated cards
  * @author: Francesco Lo Mastro
  */
-public class CommonCardManager {
+public class CommonCardManager implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final int numCards;
-    private final CustomizedFunction<CommonGoalCard>[] factoryMethodArray =
+    private final transient CustomizedFunction<CommonGoalCard>[] factoryMethodArray =
             new CustomizedFunction[]{CommonGoalCard0::new, CommonGoalCard1::new, CommonGoalCard2::new, CommonGoalCard3::new, CommonGoalCard4::new,
                     CommonGoalCard5::new, CommonGoalCard6::new, CommonGoalCard7::new, CommonGoalCard8::new, CommonGoalCard9::new,
                     CommonGoalCard10::new, CommonGoalCard11::new};

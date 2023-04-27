@@ -290,6 +290,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
      * */
     @Override
     public void printAll(ClientModel clientObject) {
+        clearScreen();
         showGrid(clientObject.getGrid());
         System.out.println("First common goal: " + clientObject.getDescriptionFirstCommonGoal());
         System.out.println("Second common goal: " + clientObject.getDescriptionSecondCommonGoal());
@@ -377,5 +378,13 @@ public class Cli extends View implements Observer<ClientModel,Message> {
 
         return reMessage;
         //threadChat.start();
+    }
+
+    /**Clear the screen
+     * @author: Riccardo Figini
+     * */
+    private void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

@@ -5,41 +5,42 @@ import it.polimi.ingsw.Network.Servers.Connection;
 import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
 import it.polimi.ingsw.model.Game;
 
-import java.io.IOException;
+import java.io.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * the controller of a specific game
  * @author Andrea Ferrini
  * */
-public class GameController implements Runnable, ServerReceiver {
+public class GameController implements Runnable, ServerReceiver, Serializable {
+    private static final long serialVersionUID = 1L;
     private Game game;
     private TurnController turnController;
     private int gameId;
-    private Map<String, Connection> clients;
+    private transient Map<String, Connection> clients;
     private int limitOfPlayers;
     private final String serverNameRMI;
     private final int portServerRMI=9000;
-
+    private String gameFilePath;
     private int sendMessageAll =0;
     private int sendMessageToSpecifica=0;
+
+    ArrayList<String> testArray = new ArrayList<>();
 
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
      * */
     public GameController(int gameId) {
-        this.clients= new HashMap<>();
+        this.clients= new LinkedHashMap<>();
         this.gameId = gameId;
         this.serverNameRMI="ServerGame"+gameId;
     }
-
-
-
+    public void reloadPlayer(){
+        clients = new LinkedHashMap<>();
+    }
     /**
      * this method adds a player in this game
      * @param username : the player's username
@@ -47,6 +48,7 @@ public class GameController implements Runnable, ServerReceiver {
      * */
     public void addPlayer(String username, Connection connection) {
         clients.put(username,connection);
+        testArray.add(username);
         List<String> usernames = clients.keySet().stream().toList();
         clients.values().forEach(x->
         {
@@ -57,9 +59,6 @@ public class GameController implements Runnable, ServerReceiver {
             }
         });
     }
-
-
-
     /**
      * implementation of the method run, in Runnable interface
      * */
@@ -75,10 +74,21 @@ public class GameController implements Runnable, ServerReceiver {
         }
         newServerMessages();
         initGame();
+        initGameFile();
         System.out.println("Inizializzata partita e mandato il messaggio");
     }
 
-
+    private void initGameFile() {
+        gameFilePath = "src/main/resources/gameFile/"+serverNameRMI+".bin";
+        try {
+            FileOutputStream file = new FileOutputStream(gameFilePath);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(this);
+            out.close();
+        } catch (IOException e) {
+            System.out.println("Initialization of game file has problems, " + e);
+        }
+    }
 
     /**
      * sends a message to all the players
@@ -92,9 +102,6 @@ public class GameController implements Runnable, ServerReceiver {
             }
         }
     }
-
-
-
     /**
      * initialization of a game
      * */
@@ -113,17 +120,6 @@ public class GameController implements Runnable, ServerReceiver {
         }
         this.turnController = new TurnController(game, this);
     }
-
-
-
-
-
-
-
-
-
-
-
     /**
      * sends the start game message
      * */
@@ -144,21 +140,6 @@ public class GameController implements Runnable, ServerReceiver {
             case CHAT_MESSAGE -> notifyAllMessage(message);
         }
     }
-
-
-
-
-/*
-    public void login(String username, Connection connection) {
-
-        for(Map.Entry<String, Connection> entry : clients.entrySet()){
-
-            if(entry.equals(username)){
-                entry.setValue(connection);
-            }
-        }
-    }
-*/
     /**
      * it sends a message to all the users in the game
      * @param message : the message to send
@@ -175,7 +156,6 @@ public class GameController implements Runnable, ServerReceiver {
             }
         }
     }
-
     /**
      * it sends a message to a specific user
      * @param message : the message to send
@@ -185,34 +165,54 @@ public class GameController implements Runnable, ServerReceiver {
         System.out.println(sendMessageToSpecifica + ") Message send specific, Type: " + message.getType());
         sendMessageToSpecifica++;
         try {
+            if(message.getType() == MessageType.AFTER_MOVE_POSITIVE)
+                updateFile();
             clients.get(username).sendMessage(message);
         }
         catch (Exception e){
             System.out.println("Error in sending message" + e);
         }
     }
+    /**Save Game data on a file
+     * @author: Riccardo Figini
+     * */
+    private void updateFile() {
+        try {
+            FileOutputStream file = new FileOutputStream(gameFilePath);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(this);
+            out.close();
+            System.out.println("Memory updated");
+        } catch (IOException e) {
+            System.out.println("Updating file error, " + e);
+        }
+    }
 
-
-
-
-
-
-
-
+    /**It returns an arrayList with name of player
+     * @author: Riccardo Figini
+     * @return {@code ArrayList<String>} List of player
+     * */
+    public ArrayList<String> getNameOfPlayer(){
+        ArrayList<String> s = new ArrayList<>();
+        /*
+        for(Map.Entry<String, Connection> entry : clients.entrySet()){
+            String tmp = entry.getKey();
+            s.add(tmp);
+        }
+        */
+        return testArray;
+    }
+    public int getGameId() {
+        return gameId;
+    }
     public int getLimitOfPlayers()
     {
         return limitOfPlayers;
     }
-
-
-
     public void setLimitOfPlayers(int value)
     {
         limitOfPlayers=value;
     }
-
-
-
     /**
      * @return the size of the hashmap that contains the players
      * */
@@ -220,8 +220,6 @@ public class GameController implements Runnable, ServerReceiver {
     {
         return clients.size();
     }
-
-
 
     /**
      * @param username : a player's username
@@ -231,4 +229,13 @@ public class GameController implements Runnable, ServerReceiver {
     {
         return clients.keySet().contains(username);
     }
+
+    public void restartGameAfterReload(){
+        String player;
+        turnController.initClientObjectInPlayer();
+        player = turnController.getPlayerAfterReload();
+        notifyAllMessage(new MessageGame(MessageType.START_GAME_MESSAGE));
+        sendMessageToASpecificUser(new MessageMove(), player);
+    }
+
 }

@@ -1,13 +1,11 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.*;
-import it.polimi.ingsw.Network.Servers.Connection;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.model.Utility.Couple;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Map;
 
 import static it.polimi.ingsw.Network.Messages.MessageType.*;
 
@@ -15,7 +13,8 @@ import static it.polimi.ingsw.Network.Messages.MessageType.*;
 class TurnController
 *@author Andrea Ferrini
 */
-public class TurnController implements Runnable{
+public class TurnController implements Runnable, Serializable {
+    private static final long serialVersionUID = 1L;
     private final Game game;
     private final GameController gameController;
     private MessageMove message;
@@ -39,7 +38,7 @@ public class TurnController implements Runnable{
                 new MessageMove(), game.getPlayers()[0].getName());
     }
 
-    private void initClientObjectInPlayer() {
+    public void initClientObjectInPlayer() {
         gameController.notifyAllMessage(new MessageGrid(game.getGrid()));
         for(int i=0; i<game.getNumPlayers(); i++){
             gameController.notifyAllMessage(new MessageLibrary(game.getLibrary(game.getPlayers()[i].getName()), game.getPlayers()[i].getName()));
@@ -106,7 +105,7 @@ public class TurnController implements Runnable{
 
 
                 currPlayerIndex ++;
-                if(currPlayerIndex == 4){
+                if(currPlayerIndex == game.getNumPlayers()){
 
                     currPlayerIndex = 0;
                 }
@@ -134,4 +133,13 @@ public class TurnController implements Runnable{
                     list.get(i).getSecond() ),
                     list.get(i).getFirst());
     }
+
+    public String getPlayerAfterReload() {
+        currPlayerIndex ++;
+        if(currPlayerIndex == game.getNumPlayers()){
+            currPlayerIndex = 0;
+        }
+        return game.getPlayers()[currPlayerIndex].getName();
+    }
+
 }

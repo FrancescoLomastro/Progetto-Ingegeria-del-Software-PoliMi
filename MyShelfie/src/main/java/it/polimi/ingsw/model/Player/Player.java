@@ -4,7 +4,10 @@ import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
 import it.polimi.ingsw.model.Cards.PersonalGoalCard;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String name;
     private int points;
     private Library library;

@@ -17,8 +17,7 @@ public abstract class Client extends UnicastRemoteObject {
     /**Construtor
      * @author: Riccardo Figini
      * */
-    public Client(String username, String address, int port) throws RemoteException
-    {
+    public Client(String username, String address, int port) throws RemoteException {
         super();
         this.messageQueue= new ArrayList<>();
         this.username = username;

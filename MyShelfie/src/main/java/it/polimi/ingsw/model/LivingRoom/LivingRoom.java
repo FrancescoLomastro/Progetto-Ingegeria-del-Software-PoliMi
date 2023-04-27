@@ -4,8 +4,10 @@ import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.CardGenerator.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class LivingRoom {
+public class LivingRoom implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Grid grid;
     private ScorePointCard scoreCard;
     private CommonGoalCard[] commonGoalCards;

@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Direction;
 import it.polimi.ingsw.model.Utility.Position;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
@@ -13,7 +14,8 @@ import java.util.HashSet;
  *
  * @author Alberto Aniballi
  */
-public class Library {
+public class Library implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final int numberOfRows=6;
     private final int numberOfColumns=5;
     private ObjectCard[][] matrix;

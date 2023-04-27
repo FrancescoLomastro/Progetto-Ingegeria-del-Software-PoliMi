@@ -7,13 +7,13 @@ import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.Network.Client.ClientModel;
-
 import java.io.IOException;
 import java.rmi.RemoteException;
 
 
 public class ClientController implements Observer<View,Message> {
-
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
     private View view;
     private ClientModel clientModel;
     private MessageQueueHandler messageReceiver;
@@ -59,8 +59,13 @@ public class ClientController implements Observer<View,Message> {
             }
             messageReceiver = new MessageQueueHandler(client, this);
             new Thread(messageReceiver).start();
+        }catch (RemoteException e) {
+            throw new RuntimeException("RMI error remote, " + e);
+        }
+        try {
             client.connect();
-        }catch (RuntimeException | RemoteException e) {
+        }
+        catch (Exception e){
             throw new RuntimeException("It was impossible to create a client and contact " +
                     "the server at [" + chosenAddress + "," + this.chosenPort + "]\n" + e);
         }
@@ -68,6 +73,7 @@ public class ClientController implements Observer<View,Message> {
 
     //messaggi ricevuti dalla rete
     public void onMessage(Message message) {
+        System.out.println(ANSI_YELLOW + "Message is arrived: " + message.getType() + ANSI_RESET);
         switch (message.getType())
         {
             case ACCEPTED_LOGIN_MESSAGE ->
@@ -187,8 +193,12 @@ public class ClientController implements Observer<View,Message> {
                 clientModel.setPersonalGoalCard(msg.getGoalVector());
             }
         }
+
     }
 
+    private void activeThread(){
+        
+    }
 
     @Override
     public void update(View o, Message arg) {

@@ -9,10 +9,7 @@ import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Utility.Position;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +21,8 @@ import java.util.Set;
  * In this grid will be positioned the object card that will be drawn by the players on the different turns.
  * In the grid will be managed all the logic that involves the draws and the refills.
  */
-public class Grid {
+public class Grid implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final int numColumns = 9;
     private final int numRows = 9;
     private int numPlayers;

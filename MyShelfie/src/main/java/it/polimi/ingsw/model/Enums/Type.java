@@ -1,8 +1,14 @@
 package it.polimi.ingsw.model.Enums;
-public enum Type {
+
+import it.polimi.ingsw.model.Cards.ScorePointCard;
+
+import java.io.Serializable;
+
+public enum Type implements Serializable {
     FIRST(0),
     SECOND(1),
     THIRD(2);
+    private static final long serialVersionUID = 1L;
     private final int relativeInt;
     public static int numOfValues = 3;
     private Type(int relativeInt) {

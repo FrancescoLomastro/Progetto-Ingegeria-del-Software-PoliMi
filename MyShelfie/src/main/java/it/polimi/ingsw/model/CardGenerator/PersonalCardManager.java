@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.Utility.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 /**
@@ -19,11 +20,12 @@ import java.util.Random;
  * It keeps tracks of the card to be generated and the already generated cards
  * @author: Francesco Lo Mastro
  */
-public class PersonalCardManager {
+public class PersonalCardManager implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int numCards;
     private boolean[] usedCards;
     private final String filePath= "src/main/resources/json/PersonalCards.json";
-    private JsonArray jsonArrayOfCards;
+    private transient JsonArray jsonArrayOfCards;
 
     /**
      * Constructor: Get all the models stored in the class JSON file and creates a PersonalCardManager with 0 already generated cards.
@@ -55,7 +57,7 @@ public class PersonalCardManager {
         try {
             fileReader = new FileReader(filePath);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Errore apertura del file "+filePath);
+            throw new RuntimeException("Errro in opening "+filePath);
         }
 
         JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
