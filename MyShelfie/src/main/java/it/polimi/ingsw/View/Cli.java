@@ -3,6 +3,7 @@ import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Enums.ClientState;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
@@ -12,14 +13,18 @@ import java.util.Map;
 import java.util.Scanner;
 /**This class handles input and output in cli version
  * @author: Riccardo Figini*/
-public class Cli extends View implements Observer<ClientModel,Message> {
+public class Cli extends View implements Observer<ClientModel,Message>,Runnable {
     private final Scanner scanner;
+    private boolean chatAvailable;
+    private ClientState state;
+    private String inputRequestBuffer;
     /**Constructor
      * @author: Riccardo Figini*/
     public Cli(ClientModel clientModel)
     {
         scanner = new Scanner(System.in);
         clientModel.addObserver(this);
+        chatAvailable=false;
     }
     /**Ask username
      * @author: Riccardo Figini
@@ -28,7 +33,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
     public String askUsername()
     {
         System.out.print("Type your username: ");
-        return scanner.nextLine().trim();
+        return getInputRequest();
     }
     /**Ask type of technology to use during the game
      * @author: Riccardo Figini
@@ -45,7 +50,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             badInput=false;
             System.out.println("Select the communication technology to use,");
             System.out.print("RMI = '0'; Socket = '1': ");
-            input = scanner.nextLine();
+            input = getInputRequest();
             try
             {
                 parsedInput = Integer.parseInt(input);
@@ -71,7 +76,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
     {
         String input;
         System.out.print("Type a server address [Default: 'localhost']: ");
-        input = scanner.nextLine().trim();
+        input = getInputRequest();
         if(input.equals(""))
             return "localhost";
         else
@@ -95,7 +100,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             System.out.print("Type a server port number [Default: ");
             parsedInput=defaultPort;
             System.out.print(parsedInput+"]: ");
-            input = scanner.nextLine();
+            input = getInputRequest();
             if(!input.equals(""))
             {
                 try
@@ -114,15 +119,6 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             }
         }while (badInput);
         return parsedInput;
-    }
-    /**Update chat
-     * @author: Riccardo Figini
-     * @param message Chat's message*/
-    @Override
-    public void updateObserversWithMessage(Message message)
-    {
-        setChanged();
-        notifyObservers(message);
     }
     /**Print generic string
      * @author: Riccardo Figini
@@ -149,7 +145,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             System.out.println("You are the first player, please type the number of players,");
             System.out.print("[Number must be between " + min + " and " + max+"]: ");
             badInput=false;
-            input = scanner.nextLine().trim();
+            input = getInputRequest();
             try {
                 value = Integer.parseInt(input);
                 if(value<min || value> max)
@@ -344,7 +340,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
     {
         String input;
         int number;
-        input = scanner.nextLine().trim();
+        input = getInputRequest();
         while (true) {
             try {
                 number = Integer.parseInt(input);
@@ -354,7 +350,7 @@ public class Cli extends View implements Observer<ClientModel,Message> {
             } catch (NumberFormatException e) {
                 System.out.println("That is not a good number! Try again...");
             }
-            input = scanner.nextLine().trim();
+            input = getInputRequest();
         }
     }
     /**Ask move
@@ -364,20 +360,16 @@ public class Cli extends View implements Observer<ClientModel,Message> {
     public Message askMove()  {
         int column, numberOfCards;
         Position[] position;
-        //threadChat.interrupt();
         System.out.println("It's your turn, please make your move");
-
         System.out.println("How many card do you want? (minimum 1, max 3)");
         numberOfCards = getNumberWithLimit(3);
+
         position = askPositions(numberOfCards);
 
         System.out.println("In which column do you want insert this cards?");
         column= getNumberWithLimit(5)-1;
-
         Message reMessage = new MessageMove(position, column);
-
         return reMessage;
-        //threadChat.start();
     }
 
     /**Clear the screen
@@ -387,4 +379,55 @@ public class Cli extends View implements Observer<ClientModel,Message> {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+
+    private String getInputRequest()
+    {
+        synchronized (this)
+        {
+            state=ClientState.REQUEST;
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return inputRequestBuffer;
+    }
+
+
+    @Override
+    public void run()
+    {
+        String input;
+        state=ClientState.CHAT;
+        while (true)
+        {
+            input=scanner.nextLine();
+            synchronized (this)
+            {
+                if (state == ClientState.CHAT)
+                {
+                    if(chatAvailable)
+                    {
+                        setChanged();
+                        notifyObservers(input);
+                    }
+                }
+                else if (state == ClientState.REQUEST)
+                {
+                    inputRequestBuffer=input;
+                    this.notifyAll();
+                    state=ClientState.CHAT;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void startChat() {
+        chatAvailable=true;
+    }
+
+
 }

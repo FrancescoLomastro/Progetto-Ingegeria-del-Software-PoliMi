@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 
-public class ClientController implements Observer<View,Message> {
+public class ClientController implements Observer<View,String> {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_RESET = "\u001B[0m";
     private View view;
@@ -30,6 +30,7 @@ public class ClientController implements Observer<View,Message> {
         this.clientModel = new ClientModel();
         this.view = new Cli(clientModel);
         view.addObserver(this);
+        new Thread(view).start();
     }
 
 
@@ -117,7 +118,7 @@ public class ClientController implements Observer<View,Message> {
             case START_GAME_MESSAGE ->
             {
                 view.printAString("Game started");
-                view.printAll(clientModel);
+                view.startChat();
             }
             case CHAT_MESSAGE ->
             {
@@ -199,12 +200,13 @@ public class ClientController implements Observer<View,Message> {
 
     }
 
-    private void activeThread(){
-        
-    }
 
     @Override
-    public void update(View o, Message arg) {
-        //servirà per la chat
+    public void update(View o, String arg) {
+        try {
+            client.sendMessage(new ChatMessage(client.getUsername(),arg));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
