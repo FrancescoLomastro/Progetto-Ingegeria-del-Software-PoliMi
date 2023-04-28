@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class MessageQueueHandler implements Runnable {
     private final Client client;
     private ClientController clientController;
+
     /**
      * Constructor
      * @author: Riccardo Figini*/
@@ -20,13 +21,26 @@ public class MessageQueueHandler implements Runnable {
      * @author: Riccardo Figini*/
     @Override
     public void run() {
-        ArrayList<Message> list=null;
+
+        TimerClientMessageQueue timerClientMessageQueue = new TimerClientMessageQueue(client, clientController);
+
+        Thread t = new Thread(timerClientMessageQueue);
+        t.start();
+
+        ArrayList<Message> list = null;
+
         while (true)
         {
             list=client.getMessageQueue();
             if(list!=null && list.size()!=0)
             {
                 list.forEach(x->clientController.onMessage(x));
+
+                t.interrupt();
+
+                // forse
+                t = new Thread(timerClientMessageQueue);
+                t.start();
             }
             else
             {

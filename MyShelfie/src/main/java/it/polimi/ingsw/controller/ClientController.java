@@ -59,12 +59,13 @@ public class ClientController implements Observer<View,String> {
                 }
             }
             messageReceiver = new MessageQueueHandler(client, this);
-            new Thread(messageReceiver).start();
+
         }catch (RemoteException e) {
             throw new RuntimeException("RMI error remote, " + e);
         }
         try {
             client.connect();
+            new Thread(messageReceiver).start();
         }
         catch (Exception e){
             throw new RuntimeException("It was impossible to create a client and contact " +
