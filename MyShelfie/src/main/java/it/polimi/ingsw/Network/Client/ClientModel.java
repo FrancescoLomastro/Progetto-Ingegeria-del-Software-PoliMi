@@ -27,6 +27,7 @@ public class ClientModel extends Observable<Message> {
         pointsMap = new HashMap<>();
         pointsCommonGoalCards = new int[] {8,8};
         defaultLibrary = new ObjectCard[6][5];
+
         for(int i=0; i<6; i++){
             for(int j=0; j<5; j++){
                 defaultLibrary[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
@@ -37,9 +38,18 @@ public class ClientModel extends Observable<Message> {
 
 
     public void setGrid(ObjectCard[][] grid) {
-        this.grid = grid;
+        ObjectCard[][] obs = new ObjectCard[grid.length][grid[0].length];
+        for(int i =0; i<grid.length; i++){
+            for(int j=0; j<grid[i].length; j++){
+                if(grid[i][j]==null)
+                    obs[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
+                else
+                    obs[i][j] = new ObjectCard(grid[i][j].getDescription(), grid[i][j].getColor(), grid[i][j].getType());
+            }
+        }
+        this.grid = obs;
         setChanged();
-        notifyObservers(new MessageGrid(grid));
+        notifyObservers(new MessageGrid(this.grid));
         //notifyObservers(new MessageGrid(copy(grid))); //da chiedere ai prof
     }
 

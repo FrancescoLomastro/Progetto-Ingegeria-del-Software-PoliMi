@@ -3,13 +3,13 @@ package it.polimi.ingsw.model.Enums;
 import java.io.Serializable;
 
 public enum Color implements Serializable {
-    BLUE(0,"B"),
-    GREEN(1,"G"),
-    LIGHTBLUE(2,"L"),
-    PINK(3,"P"),
-    YELLOW(4,"Y"),
+    BLUE(0,"\033[34mB\033[0m"),
+    GREEN(1,"\033[32mG\033[0m"),
+    LIGHTBLUE(2,"\033[36mL\033[0m"),
+    PINK(3,"\033[35mP\033[0m"),
+    YELLOW(4,"\033[93mY\033[0m"),
     WHITE(5,"W"),
-    EMPTY(6, "E");
+    EMPTY(6, " ");
     private final int relativeInt;
     private static final long serialVersionUID = 1L;
     private final String string;

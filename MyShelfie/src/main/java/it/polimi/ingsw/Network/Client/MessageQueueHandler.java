@@ -22,10 +22,10 @@ public class MessageQueueHandler implements Runnable {
     @Override
     public void run() {
 
-        TimerClientMessageQueue timerClientMessageQueue = new TimerClientMessageQueue(client, clientController);
+        /*TimerClientMessageQueue timerClientMessageQueue = new TimerClientMessageQueue(client, clientController);
 
         Thread t = new Thread(timerClientMessageQueue);
-        t.start();
+        t.start();*/
 
         ArrayList<Message> list = null;
 
@@ -36,11 +36,11 @@ public class MessageQueueHandler implements Runnable {
             {
                 list.forEach(x->clientController.onMessage(x));
 
-                t.interrupt();
+               /* t.interrupt();
 
                 // forse
                 t = new Thread(timerClientMessageQueue);
-                t.start();
+                t.start();*/
             }
             else
             {

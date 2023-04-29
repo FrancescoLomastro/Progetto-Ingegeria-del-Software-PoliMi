@@ -179,58 +179,30 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @author: Riccardo Figini
      * */
     @Override
-    public void showGrid(ObjectCard[][] matrice){
-        System.out.println("Here grid");
-        /*for(int i=0; i<grid.length; i++){
-            for(int j=0; j<grid[i].length; j++){
-                System.out.print(grid[i][j]);
-            }
-            System.out.println("");
-        }*/
-        // Calcola la lunghezza massima di ogni colonna per allineare i bordi
-        int[] larghezzaColonne = new int[matrice[0].length];
-        for (int colonna = 0; colonna < matrice[0].length; colonna++) {
-            int larghezzaMassima = 0;
-            for (int riga = 0; riga < matrice.length; riga++) {
-                String valoreStringa;
-                if(matrice[riga][colonna]==null)
-                {
-                    valoreStringa = " ";
-                }
-                else
-                    valoreStringa = ""+matrice[riga][colonna];
-
-                larghezzaMassima = Math.max(larghezzaMassima, valoreStringa.length());
-            }
-            larghezzaColonne[colonna] = larghezzaMassima;
+    public void showGrid(ObjectCard[][] matrice)
+    {
+        String top_header = "|   |";
+        String valoreStringa;
+        System.out.println("Living room grid:");
+        for(int colonna=1; colonna<=matrice.length;colonna++)
+        {
+            top_header+="| "+colonna+" |";
         }
-        System.out.println("| N || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9 |");
-        // Stampa la matrice con i bordi
+        System.out.println(top_header);
+
+
         for (int riga = 0; riga < matrice.length; riga++) {
-            System.out.print(riga+1 + " -> ");
+            System.out.print((riga+1) + " -> ");
             for (int colonna = 0; colonna < matrice[0].length; colonna++) {
-                String valoreStringa;
+
                 if(matrice[riga][colonna]==null)
                 {
                     valoreStringa = " ";
                 }
                 else
                     valoreStringa = ""+matrice[riga][colonna];
-                int spaziVuoti = larghezzaColonne[colonna] - valoreStringa.length();
-
-                // Stampa il bordo sinistro della cella
-                System.out.print("| ");
-
-                // Stampa il valore della cella allineando a destra
-                for (int i = 0; i < spaziVuoti; i++) {
-                    System.out.print(" ");
-                }
-                System.out.print(valoreStringa);
-
-                // Stampa il bordo destro della cella
-                System.out.print(" |");
+                System.out.print("| "+valoreStringa+" |");
             }
-            // Vai alla riga successiva
             System.out.println();
         }
 
@@ -244,13 +216,21 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     public void showLibrary(ObjectCard[][] library){
         if(library == null)
             System.err.println("Library is null, somethings goes wrong");
-        System.out.println("Here library: ");
-        for(int i=0; i<library.length; i++){
-            for(int j=0; j<library[i].length; j++){
-                System.out.print(library[i][j]);
-            }
-            System.out.println("");
+        String bottom_header = "";
+        for(int colonna=1; colonna<=library[0].length;colonna++)
+        {
+            bottom_header+="| "+colonna+" |";
         }
+
+        for(int i=0; i<library.length; i++)
+        {
+            for(int j=0; j<library[0].length; j++)
+            {
+                System.out.print("| "+library[i][j]+" |");
+            }
+            System.out.println();
+        }
+        System.out.println(bottom_header);
     }
     /**Ask cli to do something
      * @param arg type of message to manage
