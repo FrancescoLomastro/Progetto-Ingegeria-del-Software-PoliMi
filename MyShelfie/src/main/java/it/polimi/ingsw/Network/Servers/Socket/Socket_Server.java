@@ -25,6 +25,7 @@ public class Socket_Server extends Thread{
     @Override
     public void run()
     {
+        System.out.println("Server Socket on listening to all interfaces");
         while (true)
         {
             Socket clientSocket=null;

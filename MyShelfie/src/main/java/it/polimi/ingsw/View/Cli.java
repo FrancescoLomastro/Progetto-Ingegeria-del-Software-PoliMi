@@ -25,6 +25,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         scanner = new Scanner(System.in);
         clientModel.addObserver(this);
         chatAvailable=false;
+        state=ClientState.CHAT;
     }
     /**Ask username
      * @author: Riccardo Figini
@@ -400,7 +401,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     public void run()
     {
         String input;
-        state=ClientState.CHAT;
+
         while (true)
         {
             input=scanner.nextLine();

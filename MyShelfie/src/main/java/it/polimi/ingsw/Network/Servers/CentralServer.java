@@ -30,19 +30,15 @@ public class CentralServer {
         RMI_Server rmiServer = new RMI_Server(controller,rmiPort);
         try {
             rmiServer.turnOn();
-        } catch (RemoteException e) {
-            System.out.println("Failed to create Socket server"+e);
-        } catch (AlreadyBoundException e) {
-            System.out.println("Error while creating RMI server,an RMI server already exists"+e);
+        } catch (Exception e) {
+            System.out.println("Failed to create RMI server" + e);
         }
-
         try {
             Socket_Server socketServer = new Socket_Server(controller, socketPort);
             socketServer.turnOn();
         } catch (IOException e) {
             System.out.println("Failed to create Socket server" + e);
         }
-        System.out.println("I'm on");
 //        /////////////////////PARTE DI PROVA////////////////////
 //        try {
 //            Thread.sleep(60000);
