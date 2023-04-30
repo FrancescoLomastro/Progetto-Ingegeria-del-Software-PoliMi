@@ -20,7 +20,6 @@ public class Controller implements ServerReceiver
     private boolean isAsking;
     private final int minimumPlayers = 2;
     private final int maximumPlayers = 4;
-
     String pathFileWithNumberOfGame="src/main/resources/gameFile/gameNumbers.json";
 
     public Controller() {
@@ -28,7 +27,7 @@ public class Controller implements ServerReceiver
         currentGame= new GameController(choseNewNumberForGame());
         waitedRequest=null;
         isAsking=false;
-        //manageOldPlayer();
+        manageOldPlayer();
     }
 
     private void manageOldPlayer(){
@@ -82,6 +81,7 @@ public class Controller implements ServerReceiver
             System.out.println("Error in reading class from file, " + e);
             return;
         }
+        gameController.setInGame(false);
         ArrayList<String> list = gameController.getNameOfPlayer();
         for (String s : list) {
             oldPlayer.put(s, gameId);
@@ -134,6 +134,7 @@ public class Controller implements ServerReceiver
     private int isOldPlayer(String username) {
         for(Map.Entry<String, String> entry : oldPlayer.entrySet()){
             if(entry.getKey().equals(username)){
+                System.out.println("Old player has joined: " + username);
                 return Integer.parseInt(entry.getValue());
             }
         }
@@ -225,22 +226,34 @@ public class Controller implements ServerReceiver
      * @param idGame ID of game
      * */
     private void manageOldGame(String username, Connection connection, int idGame) {
-        for(int i=0; i<games.size(); i++){
-            if(games.get(i).getGameId() == idGame){
-                games.get(i).addPlayer(username, connection);
-                try {
-                    connection.sendMessage(new MessageReturnToGame(MessageType.RETURN_TO_OLD_GAME_MESSAGE));
-                    connection.sendMessage(new AcceptedLoginMessage());
-                    if(games.get(i).getSize() == games.get(i).getLimitOfPlayers()) {
-                        games.get(i).restartGameAfterReload();
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                return;
-            }
+        GameController gameController = null;
+
+        for (GameController game : games) {
+            if (game.getGameId() == idGame)
+                gameController = game;
         }
-        reloadGame(idGame).addPlayer(username, connection);
+
+        if(gameController == null)
+            gameController = reloadGame(idGame);
+
+        try {
+            gameController.addPlayer(username, connection);
+            connection.sendMessage(new MessageReturnToGame(MessageType.RETURN_TO_OLD_GAME_MESSAGE));
+            connection.sendMessage(new AcceptedLoginMessage());
+            if(gameController.getSize() == gameController.getLimitOfPlayers()) {
+                gameController.restartGameAfterReload();
+                removePlayerFromOldList(gameController);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void removePlayerFromOldList(GameController gameController) {
+        for(int i=0; i< gameController.getNameOfPlayer().size(); i++){
+            oldPlayer.remove(gameController.getNameOfPlayer().get(i));
+
+        }
     }
 
     private GameController reloadGame(int gameId) {

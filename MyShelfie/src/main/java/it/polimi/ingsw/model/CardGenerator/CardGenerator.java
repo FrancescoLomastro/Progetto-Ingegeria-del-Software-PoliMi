@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Enums.*;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -15,18 +16,19 @@ import java.util.Random;
  * @author: Francesco Lo Mastro
  */
 public class CardGenerator implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private ObjectCardManager objectCardManager;
-    private CommonCardManager commonCardManager;
-    private PersonalCardManager personalCardManager;
+    private final ObjectCardManager objectCardManager;
+    private final CommonCardManager commonCardManager;
+    private final PersonalCardManager personalCardManager;
 
     /**
      * Creates 3 istancesc of submanagers
      * @author: Francesco Lo Mastro
      */
-    public CardGenerator(){
+    public CardGenerator(int numOfPlayer){
         objectCardManager= new ObjectCardManager();
-        commonCardManager = new CommonCardManager();
+        commonCardManager = new CommonCardManager(numOfPlayer);
         personalCardManager = new PersonalCardManager();
     }
 

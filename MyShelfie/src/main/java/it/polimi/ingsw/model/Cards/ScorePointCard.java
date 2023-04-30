@@ -40,7 +40,8 @@ public class ScorePointCard implements Serializable {
             default:break;
         }
     }
-    /**Method that return current common goal's point. Automatically decrease the
+    /**
+     * Method that returns current common goal's point. Automatically decrease the
      * score of common goal card (calling changeScore)
      * @author Riccardo Figini
      * @return {@code int}: It return point made with common goal card*/

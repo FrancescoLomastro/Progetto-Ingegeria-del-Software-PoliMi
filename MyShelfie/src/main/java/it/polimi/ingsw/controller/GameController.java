@@ -15,20 +15,22 @@ import java.util.*;
  * @author Andrea Ferrini
  * */
 public class GameController implements Runnable, ServerReceiver, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
     private Game game;
     private TurnController turnController;
-    private int gameId;
-    private transient Map<String, Connection> clients;
+    private final int gameId;
+    private Map<String, Connection> clients;
     private int limitOfPlayers;
     private final String serverNameRMI;
     private final int portServerRMI=9000;
     private String gameFilePath;
     private int sendMessageAll =0;
     private int sendMessageToSpecifica=0;
-
     ArrayList<String> testArray = new ArrayList<>();
-
+    private boolean inGame;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -108,7 +110,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     public void initGame(){
         // inizializzo il game
         try {
-            game = new Game(clients.size() , gameId);
+            game = new Game(clients.size());
         }catch(IOException e){
             throw new RuntimeException("Error" + e);
         }
@@ -135,6 +137,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     @Override
     synchronized public void onMessage(Message message) {
+        System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
         switch (message.getType()){
             case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
             case CHAT_MESSAGE -> notifyAllMessage(message);
@@ -232,10 +235,30 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
 
     public void restartGameAfterReload(){
         String player;
+        setInGame(true);
+        setUpOldServerGame();
+        newServerMessages();
         turnController.initClientObjectInPlayer();
         player = turnController.getPlayerAfterReload();
-        notifyAllMessage(new MessageGame(MessageType.START_GAME_MESSAGE));
         sendMessageToASpecificUser(new MessageMove(), player);
     }
 
+    private void setUpOldServerGame() {
+        try {
+            RMIShared gameShared = new RMIShared(this);
+            Registry registry = LocateRegistry.getRegistry(portServerRMI);
+            registry.bind(serverNameRMI, gameShared);
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isInGame() {
+        return inGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
 }

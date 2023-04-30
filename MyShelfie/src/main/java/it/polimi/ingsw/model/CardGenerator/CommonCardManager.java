@@ -16,14 +16,17 @@ public class CommonCardManager implements Serializable {
             new CustomizedFunction[]{CommonGoalCard0::new, CommonGoalCard1::new, CommonGoalCard2::new, CommonGoalCard3::new, CommonGoalCard4::new,
                     CommonGoalCard5::new, CommonGoalCard6::new, CommonGoalCard7::new, CommonGoalCard8::new, CommonGoalCard9::new,
                     CommonGoalCard10::new, CommonGoalCard11::new};
+
+    private final int numOfPlayer;
     private boolean usedCards[];
 
     /**
      * Constructor: creates an CommonCardManager with 0 already generated cards.
      * @author: Francesco Lo Mastro
      */
-    public CommonCardManager()
+    public CommonCardManager(int numPlayer)
     {
+        this.numOfPlayer=numPlayer;
         numCards=factoryMethodArray.length;
         usedCards = new boolean[numCards];
         for(int i=0; i<numCards;i++)
@@ -43,7 +46,9 @@ public class CommonCardManager implements Serializable {
         if(isCardDrawable(commonGoalCardId))
         {
             usedCards[commonGoalCardId]=true;
-            return factoryMethodArray[commonGoalCardId].apply();
+            CommonGoalCard c = factoryMethodArray[commonGoalCardId].apply();
+            c.setScorePointCard(new ScorePointCard(numOfPlayer));
+            return c;
         }
         return null;
     }

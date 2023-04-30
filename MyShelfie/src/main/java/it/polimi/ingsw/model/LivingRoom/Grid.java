@@ -174,20 +174,15 @@ public class Grid implements Serializable {
      * @author: Riccardo Figini
      * @param move {@code Position[]} Vector with position to remove
      * @return {@code ObjectCard[]} return removed cards*/
-    public ObjectCard[] draw(Position[] move) throws InvalidMoveException {
-        try {
-            isDrawAvailable(move);
-            if (move == null)
-                return null;
-            ObjectCard[] objectCards = new ObjectCard[move.length];
-            for (int i = 0; i < move.length; i++) {
-                objectCards[i] = matrix[move[i].getRow()][move[i].getColumn()];
-                matrix[move[i].getRow()][move[i].getColumn()] = null;
-            }
-            return objectCards;
-        }catch (InvalidMoveException e){
-            throw e;
+    public ObjectCard[] draw(Position[] move) {
+        if (move == null)
+            return null;
+        ObjectCard[] objectCards = new ObjectCard[move.length];
+        for (int i = 0; i < move.length; i++) {
+            objectCards[i] = matrix[move[i].getRow()][move[i].getColumn()];
+            matrix[move[i].getRow()][move[i].getColumn()] = null;
         }
+        return objectCards;
     }
 
     /**
@@ -295,5 +290,16 @@ public class Grid implements Serializable {
                 return false;
         }
         return true;
+    }
+
+    public ObjectCard[] drawNoRepercussions(Position[] move) throws InvalidMoveException {
+        isDrawAvailable(move);
+        if (move == null)
+            return null;
+        ObjectCard[] objectCards = new ObjectCard[move.length];
+        for (int i = 0; i < move.length; i++) {
+            objectCards[i] = matrix[move[i].getRow()][move[i].getColumn()];
+        }
+        return objectCards;
     }
 }

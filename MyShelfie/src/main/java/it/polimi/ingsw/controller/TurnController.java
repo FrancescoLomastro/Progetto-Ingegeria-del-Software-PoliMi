@@ -34,6 +34,7 @@ public class TurnController implements Runnable, Serializable {
         currPlayerIndex = 0;
         currentPlayer = game.getPlayers()[0].getName();
         initClientObjectInPlayer();
+        gameController.notifyAllMessage(new MessageGame(START_GAME_MESSAGE));
         gameController.sendMessageToASpecificUser(
                 new MessageMove(), game.getPlayers()[0].getName());
     }
@@ -47,7 +48,6 @@ public class TurnController implements Runnable, Serializable {
                     new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
             gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
         }
-        gameController.startGameMessages();
     }
 
     /**
