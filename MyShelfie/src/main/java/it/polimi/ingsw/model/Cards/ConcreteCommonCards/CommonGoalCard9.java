@@ -39,13 +39,16 @@ public class CommonGoalCard9 extends CommonGoalCard {
                             if ((library.getMatrix()[row + 1][col + 1]!=null) && library.getMatrix()[row + 1][col + 1].getColor().equals(centralCellColor)) {
                                 if ((library.getMatrix()[row - 1][col + 1]!=null) && library.getMatrix()[row - 1][col + 1].getColor().equals(centralCellColor)) {
 
+
+                                    //Lomi -> Ho commentato questo controllo perchè non serve e poi non considera celle null
                                     // Checking that the other cells inside the square but not in X have different color
-                                    if (!(library.getMatrix()[row - 1][col].getColor().equals(centralCellColor)) &&
+                                    /*if (!(library.getMatrix()[row - 1][col].getColor().equals(centralCellColor)) &&
                                             !(library.getMatrix()[row + 1][col].getColor().equals(centralCellColor)) &&
                                             !(library.getMatrix()[row][col - 1].getColor().equals(centralCellColor)) &&
                                             !(library.getMatrix()[row][col + 1].getColor().equals(centralCellColor))) {
                                         return true;
-                                    }
+                                    }*/
+                                    return true;
                                 }
                             }
                         }

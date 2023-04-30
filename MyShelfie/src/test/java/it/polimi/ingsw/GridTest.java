@@ -243,6 +243,18 @@ public class GridTest {
             grid.isDrawAvailable(positions);
         });
     }
+
+    @Test
+    public void isDrawAvailable_incorrectInputOnAUsedCell_ExceptionThrown() throws InvalidMoveException {
+        assertThrows(InvalidMoveException.class, () -> {
+            grid.refill();
+            Position[] positions = new Position[1];
+            positions[0] = new Position(5,1);
+            grid.draw(positions);
+            grid.isDrawAvailable(positions);
+        });
+    }
+
     @Test
     public void draw_correctInput_correctOutput(){
         assertDoesNotThrow(() -> {

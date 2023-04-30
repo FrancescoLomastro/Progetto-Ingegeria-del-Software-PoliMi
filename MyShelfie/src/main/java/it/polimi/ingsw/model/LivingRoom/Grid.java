@@ -141,10 +141,10 @@ public class Grid implements Serializable {
         }
         //Non fa parte delle zone che non sono disponibili
         for (Position position : drawn)
-            if (!isAvailable(position))
+            if (!isAvailable(position) || matrix[position.getRow()][position.getColumn()]==null)
                 throw new InvalidMoveException("Positions are not available (position extra-gird)");
         //almeno un lato libero
-        for(int i=1; i<drawn.length;i++)
+        for(int i=0; i<drawn.length;i++)
         {
             if((drawn[i].getRow()!=0)&&(drawn[i].getRow()!=numRows-1)&&
                     (drawn[i].getColumn()!=0)&&(drawn[i].getColumn()!=numColumns-1))
@@ -254,6 +254,8 @@ public class Grid implements Serializable {
     {
         return !notAvailablePositions.contains(position);
     }
+
+
 
     /**
      * Check if {@code position} has cards near it.

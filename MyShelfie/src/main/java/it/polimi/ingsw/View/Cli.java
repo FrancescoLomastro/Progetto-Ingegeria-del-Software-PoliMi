@@ -216,14 +216,17 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     public void showLibrary(ObjectCard[][] library){
         if(library == null)
             System.err.println("Library is null, somethings goes wrong");
-        String bottom_header = "";
+        String bottom_header = "|   |";
+        String bottom_row = "";
         for(int colonna=1; colonna<=library[0].length;colonna++)
         {
             bottom_header+="| "+colonna+" |";
+            bottom_row+="-----";
         }
 
         for(int i=0; i<library.length; i++)
         {
+            System.out.print((i+1)+" -> ");
             for(int j=0; j<library[0].length; j++)
             {
                 System.out.print("| "+library[i][j]+" |");
@@ -289,7 +292,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         for(int i=0; i<goalVector.size(); i++){
             Position p = (Position) (goalVector.get(i).getFirst());
             Color c = (Color) (goalVector.get(i).getSecond());
-            System.out.println("row: " + p.getRow() + ", column: " + p.getColumn()+", color: "+ c);
+            System.out.println("row: " + (p.getRow()+1) + ", column: " + (p.getColumn()+1)+", color: "+ c);
         }
     }
     /**Ask position in which extract cards
