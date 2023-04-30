@@ -2,6 +2,7 @@ package it.polimi.ingsw.Network.Client;
 
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observable;
+import it.polimi.ingsw.View.ViewFactory;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Enums.Type;
@@ -20,13 +21,16 @@ public class ClientModel extends Observable<Message> {
     private String descriptionFirstCommonGoal;
     private String descriptionSecondCommonGoal;
     private int pointsCommonGoalCards[];
-    private  ObjectCard[][] defaultLibrary ;
+    private  ObjectCard[][] defaultLibrary;
+
+    private final ViewFactory viewFactory;
 
     public ClientModel(){
         librariesMap = new HashMap<>();
         pointsMap = new HashMap<>();
         pointsCommonGoalCards = new int[] {8,8};
         defaultLibrary = new ObjectCard[6][5];
+        this.viewFactory = new ViewFactory();
 
         for(int i=0; i<6; i++){
             for(int j=0; j<5; j++){
@@ -106,6 +110,10 @@ public class ClientModel extends Observable<Message> {
     {
         return librariesMap.get(name);
        // return copy(librariesMap.get(name));
+    }
+
+    public ViewFactory getViewFactory() {
+        return this.viewFactory;
     }
 
 
