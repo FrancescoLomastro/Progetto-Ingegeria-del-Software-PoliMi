@@ -65,7 +65,7 @@ public class ClientModel extends Observable<Message> {
                     obs[i][j] = new ObjectCard(library[i][j].getDescription(), library[i][j].getColor(), library[i][j].getType());
             }
         }
-        librariesMap.put(name, obs);
+        librariesMap.replace(name, obs);
         setChanged();
         notifyObservers(new MessageLibrary(obs, name));
         //notifyObservers(new MessageLibrary(copy(library), name)); //da chiedere ai prof

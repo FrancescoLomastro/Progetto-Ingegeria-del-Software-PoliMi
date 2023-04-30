@@ -42,11 +42,11 @@ public class TurnController implements Runnable, Serializable {
     public void initClientObjectInPlayer() {
         gameController.notifyAllMessage(new MessageGrid(game.getGrid()));
         for(int i=0; i<game.getNumPlayers(); i++){
+            gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
             gameController.notifyAllMessage(new MessageLibrary(game.getLibrary(game.getPlayers()[i].getName()), game.getPlayers()[i].getName()));
             gameController.sendMessageToASpecificUser(new MessagePersonalGoal(game.getPlayers()[i].getPersonalGoalCard().getGoalVector()), game.getPlayers()[i].getName());
             gameController.notifyAllMessage(
                     new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
-            gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
         }
     }
 
