@@ -20,6 +20,7 @@ public class TurnController implements Runnable, Serializable {
     private MessageMove message;
     private int currPlayerIndex;
     private String currentPlayer;
+    private int lastPlayer;
     private boolean flagCountdown;
 
     /**
@@ -33,6 +34,7 @@ public class TurnController implements Runnable, Serializable {
         this.gameController = gameController;
         currPlayerIndex = 0;
         currentPlayer = game.getPlayers()[0].getName();
+        lastPlayer=0;
         initClientObjectInPlayer();
         gameController.notifyAllMessage(new MessageGame(START_GAME_MESSAGE));
         gameController.sendMessageToASpecificUser(
@@ -109,7 +111,7 @@ public class TurnController implements Runnable, Serializable {
 
                     currPlayerIndex = 0;
                 }
-
+                lastPlayer = currPlayerIndex;
                 currentPlayer = game.getPlayers()[currPlayerIndex].getName();
 
                 if(flagCountdown && currPlayerIndex==0)
@@ -135,11 +137,7 @@ public class TurnController implements Runnable, Serializable {
     }
 
     public String getPlayerAfterReload() {
-        currPlayerIndex ++;
-        if(currPlayerIndex == game.getNumPlayers()){
-            currPlayerIndex = 0;
-        }
-        return game.getPlayers()[currPlayerIndex].getName();
+        return currentPlayer;
     }
 
 }

@@ -33,7 +33,7 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getMatrix()[0][0]!=null) {
                             color = library.getMatrix()[0][0].getColor();
                         for(int diag=0;diag<5;diag++) {
-                            if (!(library.getMatrix()[diag][diag].getColor().equals(color)) || library.getMatrix()[diag][diag]==null) {
+                            if (!(library.getMatrix()[diag][diag]==null ||library.getMatrix()[diag][diag].getColor().equals(color))) {
                                 partial_ans = false;
                                 break;
                             }
@@ -49,7 +49,7 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getMatrix()[1][0]!=null) {
                         color = library.getMatrix()[1][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getMatrix()[1 + diag][diag].getColor().equals(color)) || library.getMatrix()[1+diag][diag]==null) {
+                            if (!(library.getMatrix()[1+diag][diag]==null || library.getMatrix()[1 + diag][diag].getColor().equals(color)) ) {
                                 partial_ans = false;
                                 break;
                             }
@@ -65,7 +65,7 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getMatrix()[5][0]!=null) {
                         color = library.getMatrix()[5][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getMatrix()[5 - diag][diag].getColor().equals(color)) || library.getMatrix()[5-diag][diag]==null) {
+                            if (!( library.getMatrix()[5-diag][diag]==null || library.getMatrix()[5 - diag][diag].getColor().equals(color)) ) {
                                 partial_ans = false;
                                 break;
                             }
@@ -81,7 +81,7 @@ public class CommonGoalCard1 extends CommonGoalCard {
                     if(library.getMatrix()[4][0]!=null) {
                         color = library.getMatrix()[4][0].getColor();
                         for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getMatrix()[4 - diag][diag].getColor().equals(color)) || library.getMatrix()[4-diag][diag]==null) {
+                            if (!(library.getMatrix()[4-diag][diag]==null || library.getMatrix()[4 - diag][diag].getColor().equals(color))  ) {
                                 partial_ans = false;
                                 break;
                             }
