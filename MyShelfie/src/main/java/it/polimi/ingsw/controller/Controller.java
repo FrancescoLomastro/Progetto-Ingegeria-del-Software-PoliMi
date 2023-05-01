@@ -40,7 +40,7 @@ public class Controller implements ServerReceiver
             String path = "src/main/resources/gameFile/ServerGame"+number+".bin";
             getPlayerFromFile(path, number);
         }
-        System.out.println("File has been read");
+        System.out.println("File has been read, players: " + oldPlayer.size());
     }
 
     /**It returns jsonArray with number of ongoing game

@@ -22,7 +22,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private Game game;
     private TurnController turnController;
     private final int gameId;
-    private Map<String, Connection> clients;
+    private transient Map<String, Connection> clients;
     private int limitOfPlayers;
     private final String serverNameRMI;
     private final int portServerRMI=9000;
@@ -50,7 +50,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * */
     public void addPlayer(String username, Connection connection) {
         clients.put(username,connection);
-        testArray.add(username);
+        if(game == null || (testArray != null && testArray.size() != game.getNumPlayers()))
+            testArray.add(username);
         List<String> usernames = clients.keySet().stream().toList();
         clients.values().forEach(x->
         {
@@ -168,8 +169,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         System.out.println(sendMessageToSpecifica + ") Message send specific, Type: " + message.getType());
         sendMessageToSpecifica++;
         try {
-            if(message.getType() == MessageType.AFTER_MOVE_POSITIVE)
-                updateFile();
             clients.get(username).sendMessage(message);
         }
         catch (Exception e){
@@ -179,7 +178,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     /**Save Game data on a file
      * @author: Riccardo Figini
      * */
-    private void updateFile() {
+    public void updateFile() {
         try {
             FileOutputStream file = new FileOutputStream(gameFilePath);
             ObjectOutputStream out = new ObjectOutputStream(file);
@@ -196,13 +195,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @return {@code ArrayList<String>} List of player
      * */
     public ArrayList<String> getNameOfPlayer(){
-        ArrayList<String> s = new ArrayList<>();
-        /*
-        for(Map.Entry<String, Connection> entry : clients.entrySet()){
-            String tmp = entry.getKey();
-            s.add(tmp);
-        }
-        */
         return testArray;
     }
     public int getGameId() {

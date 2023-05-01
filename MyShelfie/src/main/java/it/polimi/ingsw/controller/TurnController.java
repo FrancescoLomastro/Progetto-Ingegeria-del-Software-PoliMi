@@ -4,6 +4,7 @@ import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Utility.Couple;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,13 +15,13 @@ class TurnController
 *@author Andrea Ferrini
 */
 public class TurnController implements Runnable, Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private final Game game;
     private final GameController gameController;
     private MessageMove message;
     private int currPlayerIndex;
     private String currentPlayer;
-    private int lastPlayer;
     private boolean flagCountdown;
 
     /**
@@ -34,7 +35,6 @@ public class TurnController implements Runnable, Serializable {
         this.gameController = gameController;
         currPlayerIndex = 0;
         currentPlayer = game.getPlayers()[0].getName();
-        lastPlayer=0;
         initClientObjectInPlayer();
         gameController.notifyAllMessage(new MessageGame(START_GAME_MESSAGE));
         gameController.sendMessageToASpecificUser(
@@ -111,17 +111,16 @@ public class TurnController implements Runnable, Serializable {
 
                     currPlayerIndex = 0;
                 }
-                lastPlayer = currPlayerIndex;
                 currentPlayer = game.getPlayers()[currPlayerIndex].getName();
 
                 if(flagCountdown && currPlayerIndex==0)
                     handleEndGame();
                 gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer); // richiedo la mossa al giocatore successivo
+                gameController.updateFile();
             }
             else if(moveResult.getType()==AFTER_MOVE_NEGATIVE){
                 gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa non è andata a buon fine
             }
-
         }
         else
             throw new RuntimeException("messaggio non valido");
