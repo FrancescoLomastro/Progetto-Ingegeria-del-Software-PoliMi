@@ -1,0 +1,5 @@
+.client_login_container {
+    -fx-background-image: url("Title_2000x2000px.png");
+    -fx-background-position: center center;
+    -fx-background-size: 900 700;
+}
