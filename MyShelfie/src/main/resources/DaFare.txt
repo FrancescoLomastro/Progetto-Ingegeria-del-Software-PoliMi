@@ -1,0 +1,14 @@
+
+-Gestione ping lato client: lomi(?)
+
+- Gestione del ping lato server
+
+- Rifare stampa personal card
+
+- Sistemare chat
+
+- Prima o poi fare una partita per ogni common goal card
+
+- Svolgere un intera partita per vedere se funziona tutto correttamente: figio
+
+- Gestione messaggio "GAME_IS_OVER" lato cliet, con stampa che la partita è terminata
