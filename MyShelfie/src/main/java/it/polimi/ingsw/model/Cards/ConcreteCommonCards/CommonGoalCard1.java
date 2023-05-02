@@ -1,101 +1,84 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
+import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Player.Library;
 
-/**
- * This class contains the algorithm to verify if the following common goal is satisfied.
- * The goal is: Five tiles of the same type forming a diagonal.
- *
- * @author: Alberto Aniballi
- * */
 public class CommonGoalCard1 extends CommonGoalCard {
+
+    ObjectCard[][] matrix;
+    private boolean result = false;
+    private int i, j, k;
+    private  int counter = 1;
+
     public CommonGoalCard1(){
         setDescription("Five tiles of the same type forming a " +
                 "diagonal. ");
     }
-    /**
-     * It verifies if the library satisfies the goal of this specific common goal card
-     *
-     * @param library   the library on which we will verify if the goal is satisfied or not
-     * @return: boolean that is true if the goal is satisfied, false otherwise
-     * */
-    @Override
-    public boolean isSatisfied(Library library) {
 
-        boolean ans = false;
-        for(int i=0;i<4;i++) {
-            if (!ans) {
-                if (i==0) {
-                    boolean partial_ans = true;
-                    Color color;
-                    if(library.getMatrix()[0][0]!=null) {
-                            color = library.getMatrix()[0][0].getColor();
-                        for(int diag=0;diag<5;diag++) {
-                            if (!(library.getMatrix()[diag][diag]==null ||library.getMatrix()[diag][diag].getColor().equals(color))) {
-                                partial_ans = false;
-                                break;
-                            }
-                        }
-                        ans = ans || partial_ans;
-                    } else {
-                        partial_ans = false;
-                        ans = ans || partial_ans;
-                    }
-                } else if (i==1) {
-                    boolean partial_ans = true;
-                    Color color;
-                    if(library.getMatrix()[1][0]!=null) {
-                        color = library.getMatrix()[1][0].getColor();
-                        for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getMatrix()[1+diag][diag]==null || library.getMatrix()[1 + diag][diag].getColor().equals(color)) ) {
-                                partial_ans = false;
-                                break;
-                            }
-                        }
-                        ans = ans || partial_ans;
-                    } else {
-                        partial_ans = false;
-                        ans = ans || partial_ans;
-                    }
-                } else if (i==2) {
-                    boolean partial_ans = true;
-                    Color color;
-                    if(library.getMatrix()[5][0]!=null) {
-                        color = library.getMatrix()[5][0].getColor();
-                        for (int diag = 0; diag < 5; diag++) {
-                            if (!( library.getMatrix()[5-diag][diag]==null || library.getMatrix()[5 - diag][diag].getColor().equals(color)) ) {
-                                partial_ans = false;
-                                break;
-                            }
-                        }
-                        ans = ans || partial_ans;
-                    } else {
-                        partial_ans = false;
-                        ans = ans || partial_ans;
-                    }
-                } else if (i==3) {
-                    boolean partial_ans = true;
-                    Color color;
-                    if(library.getMatrix()[4][0]!=null) {
-                        color = library.getMatrix()[4][0].getColor();
-                        for (int diag = 0; diag < 5; diag++) {
-                            if (!(library.getMatrix()[4-diag][diag]==null || library.getMatrix()[4 - diag][diag].getColor().equals(color))  ) {
-                                partial_ans = false;
-                                break;
-                            }
-                        }
-                        ans = ans || partial_ans;
-                    } else {
-                        partial_ans = false;
-                        ans = ans || partial_ans;
+    @Override
+    public boolean isSatisfied(Library lib) {
+
+        matrix = lib.getMatrix();
+
+        for(i = 0; i < 4; i++){
+
+            Color thisColor;
+
+            switch (i){
+
+                // da 0,0 a 4,4
+                case 0: {
+
+                    if(matrix[0][0] != null) thisColor = matrix[0][0].getColor();
+                    else break;
+
+                    if(matrix[1][1] != null && matrix[2][2] != null && matrix[3][3] != null &&matrix[4][4] != null){
+
+                        if((matrix[1][1].getColor().equals(thisColor) && matrix[2][2].getColor().equals(thisColor) && matrix[3][3].getColor().equals(thisColor) && matrix[4][4].getColor().equals(thisColor)))
+                            return true;
                     }
                 }
-            } else {
-                break;
+                /* da 1,0 a 5,4*/
+                case 1: {
+
+                    if(matrix[1][0] != null) thisColor = matrix[1][0].getColor();
+                    else break;
+
+                    if(matrix[2][1] != null && matrix[3][2] != null && matrix[4][3] != null && matrix[5][4] != null){
+
+                        if((matrix[2][1].getColor().equals(thisColor) && matrix[3][2].getColor().equals(thisColor) && matrix[4][3].getColor().equals(thisColor) && matrix[5][4].getColor().equals(thisColor)))
+                            return true;
+                    }
+                }
+                // da 0,4 a 4,0
+                case 2: {
+
+                    if(matrix[0][4] != null) thisColor = matrix[0][4].getColor();
+                    else break;
+
+                    if(matrix[1][3] != null && matrix[2][2] != null && matrix[3][1] != null &&matrix[4][0] != null){
+
+                        if((matrix[1][3].getColor().equals(thisColor) && matrix[2][2].getColor().equals(thisColor) && matrix[3][1].getColor().equals(thisColor) && matrix[4][0].getColor().equals(thisColor)))
+                            return true;
+                    }
+                }
+                // da 1,4 a 5,0
+                case 3: {
+
+                    if(matrix[1][4] != null) thisColor = matrix[1][4].getColor();
+                    else break;
+
+                    if(matrix[2][3] != null && matrix[3][2]!= null && matrix[4][1] != null && matrix[5][0] != null){
+
+                        if((matrix[2][3].getColor().equals(thisColor) && matrix[3][2].getColor().equals(thisColor) && matrix[4][1].getColor().equals(thisColor) && matrix[5][0].getColor().equals(thisColor)))
+                            return true;
+                    }
+                }
             }
         }
-        return ans;
+
+        return false;
     }
 }
