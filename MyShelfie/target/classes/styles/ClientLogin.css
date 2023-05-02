@@ -1,14 +1,75 @@
-.client_login_container {
-    -fx-background-image: url("Title_2000x2000px.png");
+.clientLogin_container {
+    -fx-background-image: url("Display_3.jpg");
     -fx-background-position: center center;
     -fx-background-size: 900 700;
+    /*-fx-background-size: cover;*/
+    -fx-background-repeat: no-repeat;
 }
-#startButton{
 
-    -fx-pref-width: 300px;
-    -fx-pref-height: 100px;
-    -fx-font-size: 35px;
-    -fx-text-fill: rgba(101, 85, 19, 0.8);
-    -fx-background-color: rgba(240, 209, 83, 0.8)
+
+.external_options_container {
+    -fx-background-color: #8B4513;
+    -fx-opacity: 1;
+}
+
+.internal_form_container {
+    -fx-background-color: #FFDEAD;
+    -fx-opacity: 0.75;
+    -fx-spacing: 15;
+    -fx-alignment: center center;
+}
+
+.internal_form_container Label {
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8B4513;
+}
+
+.internal_form_container_Title_Label {
+    -fx-font-size: 3.5em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8B4513;
+}
+
+.internal_form_container TextField {
+    -fx-text-fill: #000000;
+    -fx-max-width: 300;
+}
+
+.internal_form_container_horizontal_box_1 {
+    -fx-spacing: 20;
+    -fx-alignment: center;
+    -fx-max-height: 40;
+    -fx-max-width: 500;
+    -fx-font-size: 0.9em;
+    -fx-border-color: #8B4513;
+    -fx-border-style: dashed;
+}
+
+.internal_form_container_horizontal_box_2 {
+    -fx-spacing: 30;
+    -fx-alignment: center;
+    -fx-max-height: 40;
+    -fx-max-width: 300;
+    -fx-font-size: 1em;
+    -fx-font-weight: bold;
+}
+
+.internal_form_container_horizontal_box_2 RadioButton {
+    -fx-text-fill: #8B4513;
+}
+
+.internal_form_container_horizontal_box_2 RadioButton:hover {
+    -fx-cursor: hand;
+}
+
+.internal_form_container_horizontal_box_3 {
+    -fx-spacing: 20;
+    -fx-alignment: center;
+    -fx-max-height: 40;
+    -fx-max-width: 500;
+    -fx-font-size: 0.9em;
+    -fx-border-color: #8B4513;
+    -fx-border-style: dashed;
 }
 

@@ -14,11 +14,13 @@ public class ViewFactory {
         Scene scene = null;
         try {
             scene = new Scene(loader.load());
+            //scene = new Scene(loader.load(),1000,1000));
         } catch (Exception e) {
             e.printStackTrace();
         }
         Stage stage = new Stage();
         stage.setScene(scene);
+        //stage.setFullScreen(true);
         stage.setTitle("ClientLogin");
         stage.show();
     }

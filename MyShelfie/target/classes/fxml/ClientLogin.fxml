@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0"
-            styleClass="client_login_container"
-            stylesheets="@../styles/ClientLogin.css"
-            xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.controller.guiControllers.ClientLoginController">
-    <VBox spacing="10" alignment="CENTER" layoutX="300" layoutY="500">
-        <Button fx:id="startButton" text="Start Game" onAction="#startGame"/>
-    </VBox>
-
-
+<AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="clientLogin_container" stylesheets="@../styles/ClientLogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.controller.guiControllers.ClientLoginController">
+    <children>
+        <AnchorPane styleClass="external_options_container" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0">
+            <children>
+                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="internal_form_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    <children>
+                        <Label styleClass="internal_form_container_Title_Label" text="Welcome to My Shelfie" />
+                        <Label text="Type your username:" />
+                        <TextField styleClass="internal_form_container_input_username" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_1">
+                            <children>
+                                <Label text="Select communication technology:" />
+                                <HBox prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_2">
+                                    <children>
+                                        <RadioButton mnemonicParsing="false" text="Socket" />
+                                        <RadioButton mnemonicParsing="false" text="RMI" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_3">
+                            <children>
+                                <Label text="Type server address:" />
+                                <TextField styleClass="internal_form_container_input_username" />
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_3">
+                            <children>
+                                <Label text="Type server server port number:" />
+                                <TextField styleClass="internal_form_container_input_username" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>
