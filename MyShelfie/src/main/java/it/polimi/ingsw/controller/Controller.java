@@ -24,7 +24,7 @@ public class Controller implements ServerReceiver
 
     public Controller() {
         games = new ArrayList<>();
-        currentGame= new GameController(choseNewNumberForGame());
+        currentGame= new GameController(choseNewNumberForGame(), this);
         waitedRequest=null;
         isAsking=false;
         manageOldPlayer();
@@ -84,7 +84,6 @@ public class Controller implements ServerReceiver
             System.out.println("Error in reading class from file, " + e);
             return;
         }
-        gameController.setInGame(false);
         ArrayList<String> list = gameController.getNameOfPlayer();
         for (String s : list) {
             oldPlayer.put(s, gameId);
@@ -152,7 +151,7 @@ public class Controller implements ServerReceiver
             writeNewGameInExecution(currentGame.getGameId());
             new Thread(currentGame).start();
             int num = choseNewNumberForGame();
-            currentGame=new GameController(num);
+            currentGame=new GameController(num, this);
 
         }
     }
@@ -189,6 +188,7 @@ public class Controller implements ServerReceiver
         }catch (IOException e) {
             System.out.println("Impossible to open file to write game, " + e);
             System.err.println("Error");
+            throw new RuntimeException(e);
             //TODO fai qualcosa in caso di errore
         }
     }
@@ -255,7 +255,6 @@ public class Controller implements ServerReceiver
     private void removePlayerFromOldList(GameController gameController) {
         for(int i=0; i< gameController.getNameOfPlayer().size(); i++){
             oldPlayer.remove(gameController.getNameOfPlayer().get(i));
-
         }
     }
 
@@ -307,5 +306,37 @@ public class Controller implements ServerReceiver
                 }
             }
     }
+    /**Delete number game from file
+     * @author: Riccardo Figini
+     * @param gameId Game's id
+     * */
+    public void deleteGame(int gameId) {
+        JsonObject j =  getArrayJsonWithNumberGame();
+        JsonArray jsonArray = j.getAsJsonArray("numOfGame");
 
+        if(jsonArray == null)
+            throw new RuntimeException("Error, array with game number is null");
+
+        for(int i=0; i< jsonArray.size(); i++){
+            if(jsonArray.get(i).getAsInt() == gameId){
+                jsonArray.remove(i);
+                break;
+            }
+        }
+
+        Gson gson = new Gson();
+        Writer writer;
+        try {
+            writer = new FileWriter(pathFileWithNumberOfGame);
+            String jsonWrite = gson.toJson(j);
+            writer.write(jsonWrite);
+            writer.close();
+        }catch (IOException e) {
+            System.out.println("Impossible to open file to write game, " + e);
+            System.err.println("Error");
+            throw new RuntimeException(e);
+            //TODO fai qualcosa in caso di errore
+        }
+
+    }
 }

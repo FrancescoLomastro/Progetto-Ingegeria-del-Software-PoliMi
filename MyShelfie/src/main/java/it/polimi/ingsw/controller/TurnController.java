@@ -138,6 +138,7 @@ public class TurnController implements Runnable, Serializable {
                     list.get(0).getFirst(),
                     list.get(i).getSecond() ),
                     list.get(i).getFirst());
+        gameController.closeGame();
     }
 
     public String getPlayerAfterReload() {

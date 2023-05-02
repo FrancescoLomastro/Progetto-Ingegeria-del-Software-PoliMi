@@ -213,9 +213,10 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @param library library to print
      * */
     @Override
-    public void showLibrary(ObjectCard[][] library){
+    public void showLibrary(ObjectCard[][] library, String username){
         if(library == null)
             System.err.println("Library is null, somethings goes wrong");
+        System.out.println(username + "'s library");
         String bottom_header = "|   |";
         String bottom_row = "";
         for(int colonna=1; colonna<=library[0].length;colonna++)
@@ -249,7 +250,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs);
+                showLibrary(obs, arg.getUsername());
             }
             case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
         }
@@ -283,8 +284,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         printPersonalGaol(clientObject.getGoalList());
         Map<String, ObjectCard[][]> map = clientObject.getAllLibrary();
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
-            System.out.println(entry.getKey() +"'s library");
-            showLibrary(clientObject.getLibrary(entry.getKey()));
+            showLibrary(clientObject.getLibrary(entry.getKey()), entry.getKey() );
         }
         System.out.println("Points:");
         Map<String, Integer> map1 = clientObject.getPointsMap();
