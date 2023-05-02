@@ -3,3 +3,12 @@
     -fx-background-position: center center;
     -fx-background-size: 900 700;
 }
+#startButton{
+
+    -fx-pref-width: 300px;
+    -fx-pref-height: 100px;
+    -fx-font-size: 35px;
+    -fx-text-fill: rgba(101, 85, 19, 0.8);
+    -fx-background-color: rgba(240, 209, 83, 0.8)
+}
+

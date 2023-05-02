@@ -12,5 +12,9 @@
             xmlns="http://javafx.com/javafx/19"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.controller.guiControllers.ClientLoginController">
+    <VBox spacing="10" alignment="CENTER" layoutX="300" layoutY="500">
+        <Button fx:id="startButton" text="Start Game" onAction="#startGame"/>
+    </VBox>
+
 
 </AnchorPane>
