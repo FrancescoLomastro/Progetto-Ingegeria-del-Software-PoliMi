@@ -104,10 +104,8 @@ public class ClientController implements Observer<View,String> {
             }
             case INVALID_USERNAME_MESSAGE ->
             {
-                //Da finire
-                //bisogna distruggere il client di prima perchè potrebbe aver creato dei thread di ascolto
                 chosenUsername=view.onInvalidUsername();
-                //createClient(chosenUsername,chosenTechnology,chosenAddress,chosenPort);
+                client.changeUsername(chosenUsername);
             }
             case NEW_GAME_SERVER_MESSAGE ->
             {
@@ -116,8 +114,6 @@ public class ClientController implements Observer<View,String> {
                     c.changeServer(msg);
                 }
                 view.printAString("Server moved to a game");
-                // threadChat = new Thread(new ThreadChat(client,scanner));
-                //threadChat.start();
             }
             case START_GAME_MESSAGE ->
             {
@@ -127,7 +123,7 @@ public class ClientController implements Observer<View,String> {
             case CHAT_MESSAGE ->
             {
                 String text = ((ChatMessage) message).getText();
-                view.printAString("CHAT >> "+text);
+                view.printAString("CHAT >> "+ text);
             }
             case MY_MOVE_REQUEST ->
             {
