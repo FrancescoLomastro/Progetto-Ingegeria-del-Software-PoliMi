@@ -22,7 +22,7 @@ public class PersonalGoalCard extends Card {
         int count=0;
         Position tmp;
         Color tmpColor;
-        for(int i = 0; i< Color.values().length; i++){
+        for(int i = 0; i< Color.values().length-1; i++){
             tmp = (Position) goalVector.get(i).getFirst();
             tmpColor = (Color) goalVector.get(i).getSecond();
             if(

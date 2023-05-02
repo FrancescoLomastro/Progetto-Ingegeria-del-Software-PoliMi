@@ -27,6 +27,17 @@ public class RMI_Client extends Client implements RMIClientConnection {
     {
         super(username, address, port);
     }
+
+    @Override
+    public void newUsernameProposal() {
+        Message message = new RMILoginMessage(getUsername(),this);
+        try {
+            server.onMessage(message);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This method changes reference to server, from acceptor server to Game server.
      * Thanks to this,cClient can communicate directly with GameController

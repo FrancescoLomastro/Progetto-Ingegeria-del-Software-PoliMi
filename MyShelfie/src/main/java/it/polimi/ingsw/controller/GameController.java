@@ -6,6 +6,8 @@ import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
 import it.polimi.ingsw.model.Game;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.*;
@@ -28,14 +30,14 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private final int portServerRMI=9000;
     private String gameFilePath;
     private int sendMessageAll =0;
-    private int sendMessageToSpecifica=0;
+    private int sendMessageToSpecific =0;
     ArrayList<String> testArray = new ArrayList<>();
-    private boolean inGame;
+    Controller controller;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
      * */
-    public GameController(int gameId) {
+    public GameController(int gameId, Controller controller) {
         this.clients= new LinkedHashMap<>();
         this.gameId = gameId;
         this.serverNameRMI="ServerGame"+gameId;
@@ -166,8 +168,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param username : the username who will receive that message
      * */
     public void sendMessageToASpecificUser(Message message, String username){
-        System.out.println(sendMessageToSpecifica + ") Message send specific, Type: " + message.getType());
-        sendMessageToSpecifica++;
+        System.out.println(sendMessageToSpecific + ") Message send specific, Type: " + message.getType());
+        sendMessageToSpecific++;
         try {
             clients.get(username).sendMessage(message);
         }
@@ -220,21 +222,22 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param username : a player's username
      * @return true if this player is registered in this game
      * */
-    public boolean isRegistered(String username)
-    {
+    public boolean isRegistered(String username) {
         return clients.keySet().contains(username);
     }
-
+    /**It initialized game (model and client) when a game is restarted
+     * */
     public void restartGameAfterReload(){
         String player;
-        setInGame(true);
         setUpOldServerGame();
         newServerMessages();
+        notifyAllMessage(new MessageGame(MessageType.START_GAME_MESSAGE));
         turnController.initClientObjectInPlayer();
         player = turnController.getPlayerAfterReload();
         sendMessageToASpecificUser(new MessageMove(), player);
     }
-
+    /**Set server game when a game is restarted
+     * */
     private void setUpOldServerGame() {
         try {
             RMIShared gameShared = new RMIShared(this);
@@ -245,12 +248,15 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             throw new RuntimeException(e);
         }
     }
-
-    public boolean isInGame() {
-        return inGame;
-    }
-
-    public void setInGame(boolean inGame) {
-        this.inGame = inGame;
+    /**Delete file game when it is over
+     * */
+    public void closeGame() {
+        String path = gameFilePath;
+        try {
+            Files.delete(Paths.get(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        controller.deleteGame(gameId);
     }
 }

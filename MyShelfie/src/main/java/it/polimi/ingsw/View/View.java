@@ -15,10 +15,11 @@ public abstract class View extends Observable<String> implements Runnable {
     public abstract int askNumberOfPlayers(int min, int max);
     public abstract String onInvalidUsername();
     public abstract void showGrid(ObjectCard[][] grid);
-    public abstract void showLibrary(ObjectCard[][] library);
+    public abstract void showLibrary(ObjectCard[][] library, String username);
     //da rivedere
     public abstract void printAll(ClientModel clientObject);
     //da rivedere
     public abstract Message askMove();
     public abstract void startChat();
+    public abstract void printPoints(ClientModel clientObject);
 }

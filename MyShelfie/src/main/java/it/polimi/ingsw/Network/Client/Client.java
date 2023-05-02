@@ -43,8 +43,11 @@ public abstract class Client extends UnicastRemoteObject {
     public void changeUsername(String username)
     {
         this.username=username;
-        connect();
+        newUsernameProposal();
     }
+
+    public abstract void newUsernameProposal();
+
     public String getUsername() {
         return username;
     }

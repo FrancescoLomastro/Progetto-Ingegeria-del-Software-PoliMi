@@ -50,6 +50,10 @@ public class TurnController implements Runnable, Serializable {
             gameController.notifyAllMessage(
                     new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
         }
+        countActualPointAndShare();
+    }
+
+    private void countActualPointAndShare() {
         ArrayList<Couple<String, Integer>> list = new ArrayList<>();
         for(int i=0; i<game.getNumPlayers(); i++){
             list.add(new Couple<>(game.getPlayers()[i].getName(), game.getPlayers()[i].getPoints()));
@@ -118,8 +122,10 @@ public class TurnController implements Runnable, Serializable {
                 }
                 currentPlayer = game.getPlayers()[currPlayerIndex].getName();
 
-                if(flagCountdown && currPlayerIndex==0)
+                if(flagCountdown && currPlayerIndex==0) {
                     handleEndGame();
+                    return;
+                }
                 gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer); // richiedo la mossa al giocatore successivo
                 gameController.updateFile();
             }
@@ -133,11 +139,15 @@ public class TurnController implements Runnable, Serializable {
 
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findWinner();
-        for(int i=0; i<list.size(); i++)
+        gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
+        countActualPointAndShare();
+        for(int i=0; i<list.size(); i++) {
             gameController.sendMessageToASpecificUser(new MessageWinner(
-                    list.get(0).getFirst(),
-                    list.get(i).getSecond() ),
+                            list.get(0).getFirst(),
+                            list.get(i).getSecond()),
                     list.get(i).getFirst());
+        }
+        gameController.closeGame();
     }
 
     public String getPlayerAfterReload() {

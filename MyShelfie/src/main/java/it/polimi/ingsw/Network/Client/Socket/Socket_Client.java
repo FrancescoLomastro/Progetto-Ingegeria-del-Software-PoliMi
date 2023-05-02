@@ -26,6 +26,16 @@ public class Socket_Client extends Client implements Runnable{
     {
         super(username, address, port);
     }
+
+    @Override
+    public void newUsernameProposal() {
+        try {
+            sendMessage(new SocketLoginMessage(getUsername()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Client makes login on server, to join in a game.
      * It is an Override because the creation of connection depend on RMI/Socket

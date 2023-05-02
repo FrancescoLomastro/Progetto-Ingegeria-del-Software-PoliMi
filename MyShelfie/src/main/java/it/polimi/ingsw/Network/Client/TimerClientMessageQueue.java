@@ -16,13 +16,13 @@ public class TimerClientMessageQueue implements Runnable{
     @Override
     public void run() {
         try {
-            Thread.sleep(1200000);
+            Thread.sleep(10000);
             MessageServerError messageServerError = new MessageServerError();
             try {
                 client.sendMessage(messageServerError);
                 System.out.println(messageServerError.getDescription());
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                return;
             }
             System.exit(0);
         } catch (InterruptedException ignored) {
