@@ -21,4 +21,5 @@ public abstract class View extends Observable<String> implements Runnable {
     //da rivedere
     public abstract Message askMove();
     public abstract void startChat();
+    public abstract void printPoints(ClientModel clientObject);
 }

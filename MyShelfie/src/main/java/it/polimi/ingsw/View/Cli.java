@@ -287,11 +287,20 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
             showLibrary(clientObject.getLibrary(entry.getKey()), entry.getKey() );
         }
         System.out.println("Points:");
+        printPoints(clientObject);
+    }
+    /**Prints points
+     * @author: Riccardo Figini
+     * @param clientObject model lato cliet
+     * */
+    @Override
+    public void printPoints(ClientModel clientObject) {
         Map<String, Integer> map1 = clientObject.getPointsMap();
         for(Map.Entry<String, Integer> entry : map1.entrySet()){
             System.out.println("- "+entry.getKey()+": "+entry.getValue());
         }
     }
+
     /**Print personal goal card
      * @author: Riccardo Figini
      * @param goalVector Personal goal card vector

@@ -155,6 +155,7 @@ public class ClientController implements Observer<View,String> {
             case WINNER ->
             {
                 MessageWinner msg = (MessageWinner) message;
+                view.printPoints(clientModel);
                 view.printAString("The game is ended\nYour points: "+msg.getMyPoints()+"\nWinner: "+msg.getWinner());
             }
             case ALMOST_OVER ->
