@@ -18,7 +18,7 @@ public class GridTest {
     Grid grid;
 
     public GridTest(){
-        grid = new Grid(4, new CardGenerator());
+        grid = new Grid(4, new CardGenerator(4));
     }
 
     @Test
@@ -275,6 +275,6 @@ public class GridTest {
     }
     @After
     public void tearDown(){
-        grid = new Grid(4, new CardGenerator());
+        grid = new Grid(4, new CardGenerator(4));
     }
 }

@@ -26,7 +26,7 @@ public class LibraryTest {
 
     private void fillVector(ObjectCard... vector)
     {
-        CardGenerator cardGenerator= new CardGenerator();
+        CardGenerator cardGenerator= new CardGenerator(4);
         for(int i=0; i<vector.length;i++)
         {
             vector[i]=cardGenerator.generateObjectCard();

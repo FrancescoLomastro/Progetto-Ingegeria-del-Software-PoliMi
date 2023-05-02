@@ -26,7 +26,7 @@ public class PersonalGoalCardTest {
     /**Constructor
      * @author: Riccardo Figini*/
     public PersonalGoalCardTest(){
-        cardGenerator = new CardGenerator();
+        cardGenerator = new CardGenerator(4);
         personalGoalCard = cardGenerator.generatePersonalGoalCard();
         library = new Library();
     }
@@ -180,7 +180,7 @@ public class PersonalGoalCardTest {
     @After
     public void tearDown(){
         library= new Library();
-        cardGenerator = new CardGenerator();
+        cardGenerator = new CardGenerator(4);
         personalGoalCard = cardGenerator.generatePersonalGoalCard();
     }
 }
