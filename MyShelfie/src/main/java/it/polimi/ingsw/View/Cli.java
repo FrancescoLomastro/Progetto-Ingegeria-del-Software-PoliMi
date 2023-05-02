@@ -259,8 +259,14 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * pass paramter. Player contained in arg is who has achieved common goal. Points gained are conteined in "getGainedPointsFirstCard".
      * New points available are contained in PointAvailable1 and PointAvailable2*/
     private void showPoint(MessageCommonGoal arg) {
-        System.out.println("Common/s goal have been reached by: " + arg.getPlayer());
-        System.out.println("He has " + arg.getGainedPointsFirstCard() + "points now");
+        System.out.println("In " + arg.getPlayer() + "'s move: ");
+        if(arg.getGainedPointsSecondCard()==1)
+            System.out.println("First common goal card has been reached");
+        else if(arg.getGainedPointsSecondCard()==2)
+            System.out.println("Second common goal card has been reached");
+        else if(arg.getGainedPointsSecondCard() == 3)
+            System.out.println("Both commons goal card has been reached");
+        System.out.println("He has " + arg.getGainedPointsFirstCard() + " points now");
         System.out.println("Point for common goal card 1: " + arg.getPointAvailable1());
         System.out.println("Point for common goal card 2: " + arg.getPointAvailable2());
     }
@@ -279,6 +285,11 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
             System.out.println(entry.getKey() +"'s library");
             showLibrary(clientObject.getLibrary(entry.getKey()));
+        }
+        System.out.println("Points:");
+        Map<String, Integer> map1 = clientObject.getPointsMap();
+        for(Map.Entry<String, Integer> entry : map1.entrySet()){
+            System.out.println("- "+entry.getKey()+": "+entry.getValue());
         }
     }
     /**Print personal goal card

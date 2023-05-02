@@ -7,8 +7,11 @@ import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.Network.Client.ClientModel;
+import it.polimi.ingsw.model.Utility.Couple;
+
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 
 public class ClientController implements Observer<View,String> {
@@ -75,7 +78,7 @@ public class ClientController implements Observer<View,String> {
 
     //messaggi ricevuti dalla rete
     public void onMessage(Message message) {
-        System.out.println(ANSI_YELLOW + "Message is arrived: " + message.getType() + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "Message has arrived: " + message.getType() + ANSI_RESET);
         switch (message.getType())
         {
             case ACCEPTED_LOGIN_MESSAGE ->
@@ -164,8 +167,7 @@ public class ClientController implements Observer<View,String> {
                 view.printAString(msg.getString());
                 System.exit(0);
             }
-            case COMMON_GOAL ->
-            {
+            case COMMON_GOAL -> {
                 clientModel.addPoint((MessageCommonGoal) message);
             }
             case AFTER_MOVE_POSITIVE ->
@@ -197,6 +199,13 @@ public class ClientController implements Observer<View,String> {
             case RETURN_TO_OLD_GAME_MESSAGE -> {
                 view.printAString("You are joining in your old game");
             }
+            case POINTS_MESSAGE -> {
+                ArrayList<Couple<String, Integer>> list = ((MessagePoints) message).getList();
+                for(int i=0; i<list.size(); i++) {
+                    clientModel.setPointToPlayer(list.get(i).getFirst(), list.get(i).getSecond());
+                }
+            }
+
         }
 
     }

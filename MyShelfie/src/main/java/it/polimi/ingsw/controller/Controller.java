@@ -41,6 +41,9 @@ public class Controller implements ServerReceiver
             getPlayerFromFile(path, number);
         }
         System.out.println("File has been read, players: " + oldPlayer.size());
+        for(Map.Entry<String, String> entry : oldPlayer.entrySet()){
+            System.out.println("- " + entry.getKey() + ", " + entry.getValue());
+        }
     }
 
     /**It returns jsonArray with number of ongoing game

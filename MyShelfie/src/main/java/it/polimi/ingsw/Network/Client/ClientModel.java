@@ -85,14 +85,23 @@ public class ClientModel extends Observable<Message> {
 
 
     public void addPoint(MessageCommonGoal msg){
-        int score;
-        pointsCommonGoalCards[0] = msg.getPointAvailable1();
-        pointsCommonGoalCards[1] = msg.getPointAvailable2();
+        int score, card=0;
+        if(0 != msg.getGainedPointsFirstCard()) {
+            card=1;
+            pointsCommonGoalCards[0] = msg.getPointAvailable1();
+        }
+        if(0 != msg.getGainedPointsSecondCard()) {
+            if(card==0)
+                card=2;
+            else
+                card=3;
+            pointsCommonGoalCards[1] = msg.getPointAvailable2();
+        }
         score = msg.getGainedPointsSecondCard() + msg.getGainedPointsFirstCard();
         score = pointsMap.get(msg.getPlayer()) + score;
         pointsMap.replace(msg.getPlayer(), score);
         setChanged();
-        notifyObservers(new MessageCommonGoal(score, -1, msg.getPlayer(), pointsCommonGoalCards[0], pointsCommonGoalCards[1]));
+        notifyObservers(new MessageCommonGoal(score, card, msg.getPlayer(), pointsCommonGoalCards[0], pointsCommonGoalCards[1]));
     }
 
 
@@ -172,6 +181,14 @@ public class ClientModel extends Observable<Message> {
 
     public String getDescriptionSecondCommonGoal() {
         return descriptionSecondCommonGoal;
+    }
+
+    public void setPointToPlayer(String first, Integer second) {
+        pointsMap.replace(first, second);
+    }
+
+    public Map<String, Integer> getPointsMap() {
+        return pointsMap;
     }
 }
 

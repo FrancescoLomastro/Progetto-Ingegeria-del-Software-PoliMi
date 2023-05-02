@@ -39,23 +39,6 @@ public class CentralServer {
         } catch (IOException e) {
             System.out.println("Failed to create Socket server" + e);
         }
-//        /////////////////////PARTE DI PROVA////////////////////
-//        try {
-//            Thread.sleep(60000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        for(Map.Entry<String,Connection> a : clients.entrySet())
-//        {
-//            try {
-//                a.getValue().sendMessage(new BasicMessage("Server",MessageType.BENVENUTO));
-//            } catch (SocketException e) {
-//                System.out.println("Non sono riuscito a dare il benvenuto a "+a.getKey()+""+e);
-//            } catch (IOException e) {
-//                System.out.println("Non sono riuscito a dare il benvenuto a "+a.getKey()+""+e);
-//            }
-//        }
-//        ///////////////////////////////////////////////////////
     }
 
     public static void main(String[] args) {

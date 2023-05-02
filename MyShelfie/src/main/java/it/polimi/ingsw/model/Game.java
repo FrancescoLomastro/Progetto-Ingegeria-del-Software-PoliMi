@@ -93,6 +93,8 @@ public class Game implements Serializable {
         try{
             obs = checkMove(player, move, column);
             player.getLibrary().insertCardsInLibrary(column, obs);
+            if(grid.needRefill())
+                grid.refill();
             return checkCommonGoal(player, livingRoom.getCommonGoalCards());
         }
         catch (InvalidMoveException e){

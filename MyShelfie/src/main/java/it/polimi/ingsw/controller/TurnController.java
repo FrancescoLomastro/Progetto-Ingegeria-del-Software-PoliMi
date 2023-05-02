@@ -50,6 +50,11 @@ public class TurnController implements Runnable, Serializable {
             gameController.notifyAllMessage(
                     new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
         }
+        ArrayList<Couple<String, Integer>> list = new ArrayList<>();
+        for(int i=0; i<game.getNumPlayers(); i++){
+            list.add(new Couple<>(game.getPlayers()[i].getName(), game.getPlayers()[i].getPoints()));
+        }
+        gameController.notifyAllMessage(new MessagePoints(list));
     }
 
     /**
