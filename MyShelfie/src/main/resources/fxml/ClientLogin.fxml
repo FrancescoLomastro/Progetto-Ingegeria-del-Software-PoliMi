@@ -12,30 +12,26 @@
     <children>
         <AnchorPane styleClass="external_options_container" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="150.0">
             <children>
-                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="internal_form_container"
-                      AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                      AnchorPane.topAnchor="10.0">
-                    <Label styleClass="internal_form_container_Title_Label" text="Welcome to My Shelfie"/>
-                    <Label text="Type your username:"/>
-                    <TextField fx:id="username_textfield" styleClass="internal_form_container_input_username"/>
+                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="internal_form_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    <Label fx:id="title_label" styleClass="internal_form_container_Title_Label" text="Welcome to My Shelfie" />
+                    <Label text="Type your username:" />
+                    <TextField fx:id="username_textfield" styleClass="internal_form_container_input_username" />
                     <HBox prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_1">
-                        <Label text="Select communication technology:"/>
-                        <HBox fx:id="technology_type_selector" prefHeight="100.0" prefWidth="200.0"
-                              styleClass="internal_form_container_horizontal_box_2">
-                            <RadioButton fx:id="socket_button" mnemonicParsing="false" text="Socket"/>
-                            <RadioButton fx:id="rmi_button" mnemonicParsing="false" text="RMI"/>
+                        <Label text="Select communication technology:" />
+                        <HBox fx:id="technology_type_selector" prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_2">
+                            <RadioButton fx:id="socket_button" mnemonicParsing="false" text="Socket" />
+                            <RadioButton fx:id="rmi_button" mnemonicParsing="false" text="RMI" />
                         </HBox>
                     </HBox>
                     <HBox prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_3">
-                        <Label text="Type server address:"/>
-                        <TextField fx:id="server_textfield" styleClass="internal_form_container_input_username"/>
+                        <Label text="Type server address:" />
+                        <TextField fx:id="server_textfield" styleClass="internal_form_container_input_username" />
                     </HBox>
                     <HBox prefHeight="100.0" prefWidth="200.0" styleClass="internal_form_container_horizontal_box_3">
-                        <Label text="Type server server port number:"/>
-                        <TextField fx:id="port_number_textfield"
-                                   styleClass="internal_form_container_input_username"/>
+                        <Label text="Type server server port number:" />
+                        <TextField fx:id="port_number_textfield" styleClass="internal_form_container_input_username" />
                     </HBox>
-                    <Button fx:id="login_button" styleClass="internal_form_container_logInButton" mnemonicParsing="false" text="Log into the game"/>
+                    <Button fx:id="login_button" mnemonicParsing="false" styleClass="internal_form_container_logInButton" text="Log into the game" />
                 </VBox>
             </children>
         </AnchorPane>
