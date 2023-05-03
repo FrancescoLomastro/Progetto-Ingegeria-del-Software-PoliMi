@@ -7,21 +7,26 @@ import javafx.stage.Stage;
 public class ViewFactory {
     public void showClientLogin() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-        createStage(loader);
+        createStage(loader,700,900);
     }
 
-    private void createStage(FXMLLoader loader) {
+    public void showInvalidPort() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
+        createStage(loader,200,300);
+    }
+
+    private void createStage(FXMLLoader loader,int minHeight,int minWidth) {
         Scene scene = null;
         try {
             scene = new Scene(loader.load());
-            //scene = new Scene(loader.load(),1000,1000));
         } catch (Exception e) {
             e.printStackTrace();
         }
         Stage stage = new Stage();
         stage.setScene(scene);
-        //stage.setFullScreen(true);
-        stage.setTitle("ClientLogin");
+        stage.setResizable(false);
+        stage.setMinHeight(minHeight);
+        stage.setMinWidth(minWidth);
         stage.show();
     }
 }

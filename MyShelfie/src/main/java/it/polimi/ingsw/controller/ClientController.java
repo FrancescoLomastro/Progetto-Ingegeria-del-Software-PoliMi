@@ -36,6 +36,21 @@ public class ClientController implements Observer<View,String> {
         new Thread(view).start();
     }
 
+    public void setChosenUsername(String chosenUsername) {
+        this.chosenUsername = chosenUsername;
+    }
+
+    public void setChosenTechnology(int chosenTechnology) {
+        this.chosenTechnology = chosenTechnology;
+    }
+
+    public void setChosenPort(int chosenPort) {
+        this.chosenPort = chosenPort;
+    }
+
+    public void setChosenAddress(String chosenAddress) {
+        this.chosenAddress = chosenAddress;
+    }
 
     public void startView()
     {
@@ -51,7 +66,7 @@ public class ClientController implements Observer<View,String> {
         createClient(chosenUsername,chosenTechnology,chosenAddress,chosenPort);
     }
 
-    private void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
+    public void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
         try {
             switch (chosenTechnology) {
                 case 0 -> {

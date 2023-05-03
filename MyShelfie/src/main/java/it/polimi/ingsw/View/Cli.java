@@ -107,7 +107,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
                 try
                 {
                     parsedInput = Integer.parseInt(input);
-                    if (parsedInput > 1 || parsedInput < 0)
+                    if (parsedInput <= 0)
                         badInput = true;
                 } catch (NumberFormatException e) {
                     badInput = true;
