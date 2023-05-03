@@ -73,3 +73,18 @@
     -fx-border-style: dashed;
 }
 
+.internal_form_container_logInButton {
+    -fx-background-color: #8B4513;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-pref-width: 200;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 15px;
+}
+
+.internal_form_container Button:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #800000;
+}
+
