@@ -250,7 +250,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, arg.getUsername());
+                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary());
             }
             case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
         }

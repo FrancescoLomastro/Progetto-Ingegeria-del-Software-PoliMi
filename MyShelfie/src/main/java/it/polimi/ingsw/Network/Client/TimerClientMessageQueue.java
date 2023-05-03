@@ -16,7 +16,7 @@ public class TimerClientMessageQueue implements Runnable{
     @Override
     public void run() {
         try {
-            Thread.sleep(10000);
+            Thread.sleep(1000000);
             MessageServerError messageServerError = new MessageServerError();
             try {
                 client.sendMessage(messageServerError);

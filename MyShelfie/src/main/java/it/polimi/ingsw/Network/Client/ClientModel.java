@@ -42,39 +42,33 @@ public class ClientModel extends Observable<Message> {
 
 
     public void setGrid(ObjectCard[][] grid) {
-        ObjectCard[][] obs = new ObjectCard[grid.length][grid[0].length];
-        for(int i =0; i<grid.length; i++){
-            for(int j=0; j<grid[i].length; j++){
-                if(grid[i][j]==null)
-                    obs[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
-                else
-                    obs[i][j] = new ObjectCard(grid[i][j].getDescription(), grid[i][j].getColor(), grid[i][j].getType());
-            }
-        }
+        ObjectCard[][] obs = getObjectCards(grid);
         this.grid = obs;
         setChanged();
         notifyObservers(new MessageGrid(this.grid));
         //notifyObservers(new MessageGrid(copy(grid))); //da chiedere ai prof
     }
 
-
-
     public void setLibrary(String name, ObjectCard[][] library) {
-        ObjectCard[][] obs = new ObjectCard[library.length][library[0].length];
-        for(int i =0; i<library.length; i++){
-            for(int j=0; j<library[i].length; j++){
-                if(library[i][j]==null)
-                    obs[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
-                else
-                    obs[i][j] = new ObjectCard(library[i][j].getDescription(), library[i][j].getColor(), library[i][j].getType());
-            }
-        }
+        ObjectCard[][] obs = getObjectCards(library);
         librariesMap.replace(name, obs);
         setChanged();
         notifyObservers(new MessageLibrary(obs, name));
         //notifyObservers(new MessageLibrary(copy(library), name)); //da chiedere ai prof
     }
 
+    private static ObjectCard[][] getObjectCards(ObjectCard[][] objectCards) {
+        ObjectCard[][] obs = new ObjectCard[objectCards.length][objectCards[0].length];
+        for(int i = 0; i< objectCards.length; i++){
+            for(int j = 0; j< objectCards[i].length; j++){
+                if(objectCards[i][j]==null)
+                    obs[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
+                else
+                    obs[i][j] = new ObjectCard(objectCards[i][j].getDescription(), objectCards[i][j].getColor(), objectCards[i][j].getType());
+            }
+        }
+        return obs;
+    }
 
 
     public void setPersonalGoalCard(ArrayList<Couple> goalList)

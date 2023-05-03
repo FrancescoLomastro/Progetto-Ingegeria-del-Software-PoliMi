@@ -9,6 +9,9 @@
 
 - Prima o poi fare una partita per ogni common goal card
 
-- Svolgere un intera partita per vedere se funziona tutto correttamente: figio
+- Svolgere un intera partita per vedere se funziona tutto correttamente: figio (fatto e funziona)
 
-- Gestione messaggio "GAME_IS_OVER" lato cliet, con stampa che la partita è terminata
+- Verifica cosa succede se realizzi un obbiettivo 3 volte: fatto e sembra che non faccia nulla come dovrebbe
+
+- Gestione messaggio "GAME_IS_OVER" lato cliet, con stampa che la partita è terminata: figio
+

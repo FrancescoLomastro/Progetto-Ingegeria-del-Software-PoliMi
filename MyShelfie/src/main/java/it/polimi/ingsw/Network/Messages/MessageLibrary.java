@@ -8,7 +8,7 @@ public class MessageLibrary extends MessageGame{
         this.library=library;
         this.player=player;
     }
-    public String getPlayer() {
+    public String getOwnerOfLibrary() {
         return player;
     }
     public ObjectCard[][] getLibrary() {

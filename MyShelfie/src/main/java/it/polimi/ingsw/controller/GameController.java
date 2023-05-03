@@ -41,6 +41,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         this.clients= new LinkedHashMap<>();
         this.gameId = gameId;
         this.serverNameRMI="ServerGame"+gameId;
+        this.controller = controller;
     }
     public void reloadPlayer(){
         clients = new LinkedHashMap<>();

@@ -197,9 +197,10 @@ public class ClientController implements Observer<View,String> {
             }
             case UPDATE_GRID_MESSAGE ->
                     clientModel.setGrid(((MessageGrid) message).getGrid());
-            case UPDATE_LIBRARY_MESSAGE ->
-                    clientModel.setLibrary(((MessageLibrary) message).getPlayer(), ((MessageLibrary) message).getLibrary());
-            case INIT_COMMON_GOAL -> {
+            case UPDATE_LIBRARY_MESSAGE -> {
+                MessageLibrary msg = (MessageLibrary) message;
+                clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary());
+            }case INIT_COMMON_GOAL -> {
                 MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
                 clientModel.setDescriptionFirstCommonGoal(msg.getDescription1());
                 clientModel.setDescriptionSecondCommonGoal(msg.getDescription2());
@@ -213,9 +214,12 @@ public class ClientController implements Observer<View,String> {
             }
             case POINTS_MESSAGE -> {
                 ArrayList<Couple<String, Integer>> list = ((MessagePoints) message).getList();
-                for(int i=0; i<list.size(); i++) {
-                    clientModel.setPointToPlayer(list.get(i).getFirst(), list.get(i).getSecond());
+                for (Couple<String, Integer> stringIntegerCouple : list) {
+                    clientModel.setPointToPlayer(stringIntegerCouple.getFirst(), stringIntegerCouple.getSecond());
                 }
+            }
+            case GAME_IS_OVER -> {
+                view.printAString("Game is over");
             }
 
         }
