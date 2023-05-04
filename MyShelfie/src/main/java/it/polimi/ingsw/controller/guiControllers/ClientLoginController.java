@@ -118,35 +118,30 @@ public class ClientLoginController implements Initializable {
 
         String server_port;
         int parsed_port;
-        boolean invalid_input;
+        boolean invalid_input=false;
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
             server_port = port_number_textfield.getText();
-            do {
-                invalid_input = false;
-                if (server_port.length() > 0) {
-                    try {
-                        parsed_port = Integer.parseInt(server_port);
-                        if (parsed_port <= 0) {
-                            invalid_input = true;
-                        }
-                    } catch (NumberFormatException e) {
+            if (server_port.length() > 0) {
+                try {
+                    parsed_port = Integer.parseInt(server_port);
+                    if (parsed_port <= 0) {
                         invalid_input = true;
-                    } finally {
-                        if (invalid_input) {
-                            // CREA PANNELLO CHE AVVISA CHE LA PORT NON VA BENE
-                            ViewFactory viewFactory = new ViewFactory();
-                            viewFactory.showInvalidPort();
-                        }
+                    }
+                } catch (NumberFormatException e) {
+                    invalid_input = true;
+                } finally {
+                    if (invalid_input) {
+                        port_number_textfield.setText("");
+                        ViewFactory viewFactory = new ViewFactory();
+                        viewFactory.showInvalidPort();
+                    } else {
+                        setPortNumber(Integer.parseInt(server_port));
+                        port_number_textfield.setDisable(true);
+                        login_button.setVisible(true);
                     }
                 }
-
-            } while (invalid_input);
-
-            setPortNumber(Integer.parseInt(server_port));
-            port_number_textfield.setDisable(true);
-            login_button.setVisible(true);
-
+            }
         }
     }
 
@@ -163,13 +158,4 @@ public class ClientLoginController implements Initializable {
             }
         }
     }
-
-    /*
-    @FXML
-    public void startGame() {
-
-        String[] args = {};
-        ClientApp.main(args);
-    }
-    */
 }
