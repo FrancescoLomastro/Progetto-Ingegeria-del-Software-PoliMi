@@ -3,6 +3,8 @@
 
 - Gestione del ping lato server
 
+-Gestione del pint lato client: andrea
+
 - Rifare stampa personal card
 
 - Sistemare chat
