@@ -15,3 +15,4 @@
 
 - Gestione messaggio "GAME_IS_OVER" lato cliet, con stampa che la partita è terminata: figio
 
+- Chat, scrivere da chi proviene il messaggio (rendere più bella?):
