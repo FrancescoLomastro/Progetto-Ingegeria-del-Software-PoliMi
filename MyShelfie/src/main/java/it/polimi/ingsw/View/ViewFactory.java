@@ -3,6 +3,7 @@ package it.polimi.ingsw.View;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Modality;
 
 public class ViewFactory {
     public void showClientLogin() {
@@ -12,7 +13,20 @@ public class ViewFactory {
 
     public void showInvalidPort() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
-        createStage(loader,200,300);
+
+        Scene scene = null;
+        try {
+            scene = new Scene(loader.load());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        //createStage(loader,200,300);
     }
 
     private void createStage(FXMLLoader loader,int minHeight,int minWidth) {

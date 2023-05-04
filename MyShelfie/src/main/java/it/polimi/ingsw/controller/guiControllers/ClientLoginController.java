@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller.guiControllers;
 
 import it.polimi.ingsw.ClientApp;
 import it.polimi.ingsw.Network.Client.Client;
+import it.polimi.ingsw.View.ViewFactory;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.Network.Client.MessageQueueHandler;
 import it.polimi.ingsw.Network.Client.RMI.RMI_Client;
@@ -134,7 +135,8 @@ public class ClientLoginController implements Initializable {
                     } finally {
                         if (invalid_input) {
                             // CREA PANNELLO CHE AVVISA CHE LA PORT NON VA BENE
-
+                            ViewFactory viewFactory = new ViewFactory();
+                            viewFactory.showInvalidPort();
                         }
                     }
                 }
