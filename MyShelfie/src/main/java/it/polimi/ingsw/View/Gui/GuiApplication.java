@@ -1,15 +1,16 @@
 package it.polimi.ingsw.View.Gui;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
+import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Gui extends Application {
-    private ClientModel clientModel;
+public class GuiApplication extends Application {
 
+    ViewFactory viewFactory;
     @Override
     public void start(Stage stage) throws Exception {
-        this.clientModel = new ClientModel();
-        clientModel.getViewFactory().showClientLogin();
+        viewFactory= ViewFactory.getInstance();
+        viewFactory.showClientLogin();
     }
 }

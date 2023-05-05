@@ -1,5 +1,10 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
+import it.polimi.ingsw.Network.Client.ClientModel;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.ObserverImplementation.Observable;
+import it.polimi.ingsw.View.View;
+import it.polimi.ingsw.model.Cards.ObjectCard;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -11,7 +16,7 @@ import javafx.stage.Modality;
  *
  * @author Alberto Aniballi
  */
-public class ViewFactory {
+public class ViewFactory extends View {
 
     private static ViewFactory instance = null;
 
@@ -22,6 +27,7 @@ public class ViewFactory {
         return instance;
     }
 
+    //scrivi questo metodo in AskInitialInfo
     public void showClientLogin() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
         createStage(loader,700,900,false);
@@ -54,5 +60,67 @@ public class ViewFactory {
         } else {
             stage.show();
         }
+    }
+
+
+    @Override
+    public void askInitialInfo() {
+
+    }
+    @Override
+    public void errorCreatingClient(String chosenAddress, int chosenPort) {
+
+    }
+
+    @Override
+    public void askNumberOfPlayers(int min, int max) {
+
+    }
+
+    @Override
+    public void askMove() {
+
+    }
+
+    @Override
+    public void onInvalidUsername() {
+
+    }
+
+    @Override
+    public void printAString(String string) {
+
+    }
+
+    @Override
+    public void showGrid(ObjectCard[][] grid) {
+
+    }
+
+    @Override
+    public void showLibrary(ObjectCard[][] library, String username) {
+
+    }
+
+    @Override
+    public void printAll(ClientModel clientObject) {
+
+    }
+
+    @Override
+    public void startChat() {
+
+    }
+
+    @Override
+    public void printPoints(ClientModel clientObject) {
+
+    }
+
+
+
+    @Override
+    public void run() {
+        //per ora lascialo stare
     }
 }

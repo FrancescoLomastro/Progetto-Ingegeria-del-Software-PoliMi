@@ -27,4 +27,5 @@ module MyShelfie {
     exports it.polimi.ingsw.Network.Servers.Socket;
     exports it.polimi.ingsw.View;
     exports it.polimi.ingsw.View.Gui;
+    exports it.polimi.ingsw.View.Cli;
 }

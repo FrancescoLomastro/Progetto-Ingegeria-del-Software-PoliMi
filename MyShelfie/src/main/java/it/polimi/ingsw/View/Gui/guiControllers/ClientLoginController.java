@@ -57,7 +57,7 @@ public class ClientLoginController implements Initializable {
         socket_button.setOnAction(actionEvent -> getServerTechnologyFromInput(socket_button));
         server_textfield.setOnKeyPressed(event -> getServerFromInput(event));
         port_number_textfield.setOnKeyPressed(event -> getPortFromInput(event));
-        login_button.setOnAction(event -> onLogin());
+      //  login_button.setOnAction(event -> onLogin());     Qui devi notificare l'osservatore, non creare tu il client
     }
 
     public void getUsernameFromInput(KeyEvent keyEvent) {
@@ -134,7 +134,9 @@ public class ClientLoginController implements Initializable {
         }
     }
 
-    public void onLogin() {
+
+    //DA TOGLIERE, NON TE NE OCCUPI TU
+   /* public void onLogin() {
 
         clientController = new ClientController();
 
@@ -146,5 +148,5 @@ public class ClientLoginController implements Initializable {
                 clientController.createClient(userName,1,serverIP,portNumber);
             }
         }
-    }
+    }*/
 }

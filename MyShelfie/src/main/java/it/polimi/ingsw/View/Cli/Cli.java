@@ -1,7 +1,10 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
+import it.polimi.ingsw.View.OBSMessages.*;
+import it.polimi.ingsw.View.OBSMessages.OBS_ChatMessage;
+import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.ClientState;
 import it.polimi.ingsw.model.Enums.Color;
@@ -27,20 +30,31 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         chatAvailable=false;
         state=ClientState.CHAT;
     }
-    /**Ask username
-     * @author: Riccardo Figini
-     * @return {@code String} username*/
-    @Override
+
+    public void askInitialInfo()
+    {
+        String chosenUsername=askUsername();
+        int chosenTechnology=askTechnology();
+        String chosenAddress=askAddress();
+        int chosenPort=0;
+        if(chosenTechnology==0)
+            chosenPort=askPort(defaultRMIPort);
+        else
+            chosenPort=askPort(defaultSocketPort);
+
+        OBS_Message msg = new OBS_InitialInfoMessage(chosenUsername,chosenTechnology,chosenAddress,chosenPort);
+
+        setChanged();
+        notifyObservers(msg);
+    }
+
+
     public String askUsername()
     {
         System.out.print("Type your username: ");
         return getInputRequest();
     }
-    /**Ask type of technology to use during the game
-     * @author: Riccardo Figini
-     * @return {@code int} Chosen technology
-     * */
-    @Override
+
     public int askTechnology()
     {
         String input;
@@ -68,11 +82,8 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         }while (badInput);
         return parsedInput;
     }
-    /**Ask addres to user
-     * @author: Riccardo Figini
-     * @return {@code String} Address
-     * */
-    @Override
+
+
     public String askAddress()
     {
         String input;
@@ -83,14 +94,9 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         else
             return input;
     }
-    /**Ask port (TCP port) to user
-     * @author: Riccardo Figini
-     * @param chosenTechnology Type of technology chosen
-     * @param defaultPort Default port
-     * @return {@code int} Port
-     * */
-    @Override
-    public int askPort(int chosenTechnology, int defaultPort)
+
+
+    public int askPort(int defaultPort)
     {
         String input;
         int parsedInput;
@@ -121,6 +127,9 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         }while (badInput);
         return parsedInput;
     }
+
+
+
     /**Print generic string
      * @author: Riccardo Figini
      * @param s String to print
@@ -136,7 +145,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @param max Maximum number of player
      * @return {@code int} Number of player*/
     @Override
-    public int askNumberOfPlayers(int min, int max)
+    public void askNumberOfPlayers(int min, int max)
     {
         String input;
         Boolean badInput;
@@ -163,16 +172,22 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
                 System.out.println("ERROR: You typed an invalid number, please retry\n");
             }
         }while(badInput);
-        return value;
+
+        OBS_Message msg = new OBS_NumberOfPlayerMessage(value);
+        setChanged();
+        notifyObservers(msg);
     }
     /**It handles invalid username chosen
      * @return {@code String} Username
      * */
     @Override
-    public String onInvalidUsername()
+    public void onInvalidUsername()
     {
         System.out.println("The typed username was already used, please type another username or try later");
-        return askUsername();
+        OBS_Message msg = new OBS_ChangedUsernameMessage(askUsername());
+
+        setChanged();
+        notifyObservers(msg);
     }
     /**
      * Show grid
@@ -301,6 +316,11 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         }
     }
 
+    @Override
+    public void errorCreatingClient(String chosenAddress, int chosenPort) {
+        System.out.println("Error >> It was impossible to create a client and contact the server at [" + chosenAddress + "," + chosenPort + "]");
+    }
+
     /**Print personal goal card
      * @author: Riccardo Figini
      * @param goalVector Personal goal card vector
@@ -361,7 +381,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @author: Riccardo Figini*
      * @return {@code messahe} Message with move (Column and positions)*/
     @Override
-    public Message askMove()  {
+    public void askMove()  {
         int column, numberOfCards;
         Position[] position;
         System.out.println("It's your turn, please make your move");
@@ -372,8 +392,12 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
 
         System.out.println("In which column do you want insert this cards?");
         column= getNumberWithLimit(5)-1;
-        Message reMessage = new MessageMove(position, column);
-        return reMessage;
+
+        OBS_Message msg = new OBS_MoveMessage(position, column);
+
+        setChanged();
+        notifyObservers(msg);
+
     }
 
     /**Clear the screen
@@ -404,7 +428,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     public void run()
     {
         String input;
-
+        OBS_Message msg;
         while (true)
         {
             input=scanner.nextLine();
@@ -414,8 +438,9 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
                 {
                     if(chatAvailable)
                     {
+                        msg = new OBS_ChatMessage(input);
                         setChanged();
-                        notifyObservers(input);
+                        notifyObservers(msg);
                     }
                 }
                 else if (state == ClientState.REQUEST)

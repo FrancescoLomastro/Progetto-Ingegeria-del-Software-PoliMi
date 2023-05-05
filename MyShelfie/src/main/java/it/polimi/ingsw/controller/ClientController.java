@@ -4,9 +4,13 @@ import it.polimi.ingsw.Network.Client.*;
 import it.polimi.ingsw.Network.Client.RMI.RMI_Client;
 import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.Network.Messages.ChatMessage;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.Network.Client.ClientModel;
+import it.polimi.ingsw.View.Cli.Cli;
+//import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
+import it.polimi.ingsw.View.OBSMessages.*;
 import it.polimi.ingsw.model.Utility.Couple;
 
 import java.io.IOException;
@@ -14,62 +18,43 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
-public class ClientController implements Observer<View,String> {
+public class ClientController implements Observer<View, OBS_Message> {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_RESET = "\u001B[0m";
     private View view;
     private ClientModel clientModel;
     private MessageQueueHandler messageReceiver;
     private Client client;
-    private String chosenUsername;
-    private int chosenTechnology;
-    private int chosenPort;
-    private String chosenAddress;
     private final int rmiPort = 9000;
     private final int socketPort = 8000;
 
-    public ClientController()
+    public ClientController(String viewMode)
     {
         this.clientModel = new ClientModel();
-        this.view = new Cli(clientModel);
+        if(viewMode.equals("CLI"))
+        {
+            view = new Cli(clientModel);
+        }
+        else
+        {
+            //this.view = new ViewFactory();
+        }
         view.addObserver(this);
         new Thread(view).start();
     }
 
-    public void setChosenUsername(String chosenUsername) {
-        this.chosenUsername = chosenUsername;
+    public void startView() {
+        view.askInitialInfo();
     }
 
-    public void setChosenTechnology(int chosenTechnology) {
-        this.chosenTechnology = chosenTechnology;
-    }
 
-    public void setChosenPort(int chosenPort) {
-        this.chosenPort = chosenPort;
-    }
-
-    public void setChosenAddress(String chosenAddress) {
-        this.chosenAddress = chosenAddress;
-    }
-
-    public void startView()
-    {
-        int defaultPort;
-        chosenUsername=view.askUsername();
-        chosenTechnology=view.askTechnology();
-        chosenAddress=view.askAddress();
-        if(chosenTechnology==0)
-            defaultPort=rmiPort;
-        else
-            defaultPort=socketPort;
-        chosenPort=view.askPort(chosenTechnology,defaultPort);
-        createClient(chosenUsername,chosenTechnology,chosenAddress,chosenPort);
-    }
 
     public void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
         try {
+            System.out.println(chosenPort);
             switch (chosenTechnology) {
                 case 0 -> {
+
                     client = new RMI_Client(chosenUsername, chosenAddress, chosenPort);
                 }
                 case 1 -> {
@@ -77,17 +62,13 @@ public class ClientController implements Observer<View,String> {
                 }
             }
             messageReceiver = new MessageQueueHandler(client, this);
-
-        }catch (RemoteException e) {
-            throw new RuntimeException("RMI error remote, " + e);
-        }
-        try {
             client.connect();
             new Thread(messageReceiver).start();
         }
         catch (Exception e){
+            view.errorCreatingClient(chosenAddress,chosenPort);
             throw new RuntimeException("It was impossible to create a client and contact " +
-                    "the server at [" + chosenAddress + "," + this.chosenPort + "]\n" + e);
+                    "the server at [" + chosenAddress + "," + chosenPort + "]\n" + e);
         }
     }
 
@@ -102,14 +83,8 @@ public class ClientController implements Observer<View,String> {
             }
             case PLAYER_NUMBER_REQUEST ->
             {
-                int numberOfPlayers;
                 PlayerNumberRequest msg = (PlayerNumberRequest)message;
-                numberOfPlayers=view.askNumberOfPlayers(msg.getMinimumPlayers(), msg.getMaximumPlayers());
-                try {
-                    client.sendMessage(new PlayerNumberAnswer(client.getUsername(),numberOfPlayers));
-                } catch (IOException e) {
-                    throw new RuntimeException("Couldn't contact the server"+e);
-                }
+                view.askNumberOfPlayers(msg.getMinimumPlayers(), msg.getMaximumPlayers());
             }
             case LOBBY_UPDATE_MESSAGE ->
             {
@@ -119,8 +94,7 @@ public class ClientController implements Observer<View,String> {
             }
             case INVALID_USERNAME_MESSAGE ->
             {
-                chosenUsername=view.onInvalidUsername();
-                client.changeUsername(chosenUsername);
+                view.onInvalidUsername();
             }
             case NEW_GAME_SERVER_MESSAGE ->
             {
@@ -143,25 +117,13 @@ public class ClientController implements Observer<View,String> {
             case MY_MOVE_REQUEST ->
             {
                 view.printAll(clientModel);
-                try {
-                    client.sendMessage(view.askMove());
-                }
-                catch (IOException e){
-                    //TODO capire cosa fare
-                    System.out.println("Impossible send move to server, " + e);
-                }
+                view.askMove();
             }
             case AFTER_MOVE_NEGATIVE ->
             {
                 MessageAfterMoveNegative msg = (MessageAfterMoveNegative) message;
                 view.printAString(msg.getInvalidMessage());
-                try {
-                    client.sendMessage(view.askMove());
-                }
-                catch (IOException e){
-                    //TODO capire cosa fare
-                    System.out.println("Impossible send move to server, " + e);
-                }
+                view.askMove();
             }
             case WINNER ->
             {
@@ -221,18 +183,52 @@ public class ClientController implements Observer<View,String> {
             case GAME_IS_OVER -> {
                 view.printAString("Game is over");
             }
-
         }
 
     }
 
 
     @Override
-    public void update(View o, String arg) {
-        try {
-            client.sendMessage(new ChatMessage(client.getUsername(),arg));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void update(View o, OBS_Message arg) {
+        switch (arg.getType()) {
+            case INITIAL_INFO -> {
+
+                OBS_InitialInfoMessage message = (OBS_InitialInfoMessage) arg;
+                System.out.println("--"+message.getChosenUsername()+"--"+message.getChosenTechnology()+"--"+message.getChosenAddress()+"--"+message.getChosenPort());
+                createClient(message.getChosenUsername(), message.getChosenTechnology(),
+                        message.getChosenAddress(), message.getChosenPort());
+            }
+            case NUMBER_OF_PLAYERS -> {
+                OBS_NumberOfPlayerMessage message = (OBS_NumberOfPlayerMessage) arg;
+                try {
+                    client.sendMessage(new PlayerNumberAnswer(client.getUsername(), message.getNumberOfPlayers()));
+                } catch (IOException e) {
+                    throw new RuntimeException("Couldn't contact the server" + e);
+                }
+            }
+            case CHANGED_USERNAME -> {
+                OBS_ChangedUsernameMessage message = (OBS_ChangedUsernameMessage) arg;
+                client.changeUsername(message.getChangedUsername());
+            }
+            case MOVE -> {
+                OBS_MoveMessage message = (OBS_MoveMessage) arg;
+                try {
+                    client.sendMessage(new MessageMove(message.getMove(), message.getColumn()));
+                } catch (IOException e) {
+                    //TODO capire cosa fare
+                    System.out.println("Impossible send move to server, " + e);
+                }
+            }
+            case CHAT ->
+            {
+                OBS_ChatMessage message = (OBS_ChatMessage) arg;
+                try {
+                    client.sendMessage(new ChatMessage(client.getUsername(),message.getChatMessage()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
         }
     }
 }
