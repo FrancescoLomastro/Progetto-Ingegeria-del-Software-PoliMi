@@ -1,0 +1,33 @@
+.external_player_number_request_container {
+    -fx-alignment: center;
+    -fx-background-color: #8B4513;
+    -fx-opacity: 1;
+    -fx-pref-height: 250;
+    -fx-pref-width: 350;
+}
+
+.internal_vbox_container {
+    -fx-background-color: #FFFFFF;
+    -fx-opacity: 0.75;
+    -fx-spacing: 10;
+    -fx-alignment: top-center;
+    -fx-pref-width: 240;
+    -fx-pref-height: 320;
+}
+
+.internal_vbox_container ImageView {
+    -fx-pref-height: 90;
+    -fx-pref-width: 320;
+}
+
+.internal_form_container TextField {
+    -fx-text-fill: #8B4513;
+    -fx-max-width: 100;
+}
+
+.internal_vbox_container_label1 {
+    -fx-text-fill: #8B4513;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-alignment: center;
+}

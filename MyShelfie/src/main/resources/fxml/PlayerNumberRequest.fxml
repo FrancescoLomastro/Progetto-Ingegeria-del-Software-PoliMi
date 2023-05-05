@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="clientLogin_container" stylesheets="@../styles/ClientLogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.PlayerNumberRequestController">
+    <AnchorPane layoutX="275.0" layoutY="225.0" prefHeight="250.0" prefWidth="350.0" styleClass="external_player_number_request_container" stylesheets="@../styles/PlayerNumberRequest.css" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="225.0">
+        <children>
+            <VBox prefHeight="240" prefWidth="320" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                <ImageView fitHeight="90.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../styles/Title_2000x618px.png" />
+                    </image>
+                </ImageView>
+                <Label styleClass="internal_vbox_container_label1" text="You are the first player,&#13; please type the number of players:" />
+            <TextField fx:id="input_number_players" maxWidth="200.0" />
+            </VBox>
+        </children>
+    </AnchorPane>
+
+</AnchorPane>

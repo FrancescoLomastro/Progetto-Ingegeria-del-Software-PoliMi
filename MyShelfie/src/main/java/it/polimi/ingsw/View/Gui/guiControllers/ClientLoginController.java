@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.controller.ClientController;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -57,13 +58,13 @@ public class ClientLoginController implements Initializable {
         socket_button.setOnAction(actionEvent -> getServerTechnologyFromInput(socket_button));
         server_textfield.setOnKeyPressed(event -> getServerFromInput(event));
         port_number_textfield.setOnKeyPressed(event -> getPortFromInput(event));
-      //  login_button.setOnAction(event -> onLogin());     Qui devi notificare l'osservatore, non creare tu il client
+        login_button.setOnAction(event -> onLogin(event));
     }
 
     public void getUsernameFromInput(KeyEvent keyEvent) {
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            String username_text = username_textfield.getText();
+            String username_text = username_textfield.getText().trim();
 
             if (username_text.length() > 0) {
                 setUserName(username_text);
@@ -87,18 +88,25 @@ public class ClientLoginController implements Initializable {
         rmi_button.setDisable(true);
         socket_button.setDisable(true);
         server_textfield.setDisable(false);
+        server_textfield.setText("Default localhost");
 
     }
 
     public void getServerFromInput(KeyEvent keyEvent) {
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            String server_ip = server_textfield.getText();
+            String server_ip = server_textfield.getText().trim();
 
             if (server_ip.length() > 0) {
                 setServerIP(server_ip);
                 server_textfield.setDisable(true);
                 port_number_textfield.setDisable(false);
+
+                if (serverTechnology=="RMI") {
+                    port_number_textfield.setText("Default RMI port number");
+                } else {
+                    port_number_textfield.setText("Default Socket port number");
+                }
             }
         }
 
@@ -111,8 +119,18 @@ public class ClientLoginController implements Initializable {
         boolean invalid_input=false;
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            server_port = port_number_textfield.getText();
-            if (server_port.length() > 0) {
+            server_port = port_number_textfield.getText().trim();
+
+            if (server_port.contains("Default")) {
+                if (serverTechnology.equals("Socket")) {
+                    setPortNumber(8000);
+                } else {
+                    setPortNumber(9000);
+                }
+                port_number_textfield.setDisable(true);
+                login_button.setVisible(true);
+
+            } else if (server_port.length() > 0) {
                 try {
                     parsed_port = Integer.parseInt(server_port);
                     if (parsed_port <= 0) {
@@ -134,19 +152,12 @@ public class ClientLoginController implements Initializable {
         }
     }
 
+    public void onLogin(ActionEvent event) {
 
-    //DA TOGLIERE, NON TE NE OCCUPI TU
-   /* public void onLogin() {
+        boolean first_player = true;
 
-        clientController = new ClientController();
-
-        switch (serverTechnology) {
-            case "RMI" -> {
-                clientController.createClient(userName,0,serverIP,portNumber);
-            }
-            case "Socket" -> {
-                clientController.createClient(userName,1,serverIP,portNumber);
-            }
+        if (first_player) {
+            ViewFactory.getInstance().showPlayerNumberRequest(event);
         }
-    }*/
+    }
 }

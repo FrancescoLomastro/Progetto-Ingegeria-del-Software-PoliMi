@@ -9,7 +9,8 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class InvalidPortController implements Initializable {
+public class InvalidNumPlayersController implements Initializable {
+
     public Button retry_btn;
 
     @Override
@@ -22,5 +23,4 @@ public class InvalidPortController implements Initializable {
         Stage currentStage = (Stage) node.getScene().getWindow();
         currentStage.close();
     }
-
 }

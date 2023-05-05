@@ -5,7 +5,9 @@ import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
@@ -27,7 +29,6 @@ public class ViewFactory extends View {
         return instance;
     }
 
-    //scrivi questo metodo in AskInitialInfo
     public void showClientLogin() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
         createStage(loader,700,900,false);
@@ -39,7 +40,17 @@ public class ViewFactory extends View {
         createStage(loader,200,320,true);
     }
 
-    private void createStage(FXMLLoader loader,int minHeight,int minWidth,boolean lockStage) {
+    public void showInvalidNumPlayers() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
+        createStage(loader,200,320,true);
+    }
+
+    public void showPlayerNumberRequest(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
+        switchScene(loader,event);
+    }
+
+    private Scene loadScene(FXMLLoader loader) {
 
         Scene scene = null;
         try {
@@ -48,6 +59,21 @@ public class ViewFactory extends View {
             e.printStackTrace();
         }
 
+        return scene;
+    }
+
+    private void switchScene(FXMLLoader loader, ActionEvent event) {
+
+        Scene scene = loadScene(loader);
+        Node node = (Node) event.getSource();
+        Stage currentStage = (Stage) node.getScene().getWindow();
+
+        currentStage.setScene(scene);
+    }
+
+    private void createStage(FXMLLoader loader,int minHeight,int minWidth,boolean lockStage) {
+
+        Scene scene = loadScene(loader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setResizable(false);
@@ -60,6 +86,10 @@ public class ViewFactory extends View {
         } else {
             stage.show();
         }
+    }
+
+    public void closeStage(Stage stage) {
+        stage.close();
     }
 
 
