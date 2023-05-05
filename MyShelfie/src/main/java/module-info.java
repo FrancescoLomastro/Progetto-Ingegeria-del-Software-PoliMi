@@ -7,7 +7,7 @@ module MyShelfie {
     opens it.polimi.ingsw to javafx.fxml;
     exports it.polimi.ingsw;
     exports it.polimi.ingsw.controller;
-    exports it.polimi.ingsw.controller.guiControllers;
+    exports it.polimi.ingsw.View.Gui.guiControllers;
     exports it.polimi.ingsw.exceptions;
     exports it.polimi.ingsw.model;
     exports it.polimi.ingsw.model.CardGenerator;
@@ -26,4 +26,5 @@ module MyShelfie {
     exports it.polimi.ingsw.Network.Servers.RMI;
     exports it.polimi.ingsw.Network.Servers.Socket;
     exports it.polimi.ingsw.View;
+    exports it.polimi.ingsw.View.Gui;
 }

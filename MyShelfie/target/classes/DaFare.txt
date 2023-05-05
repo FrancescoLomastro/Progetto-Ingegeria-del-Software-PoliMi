@@ -3,6 +3,8 @@
 
 - Gestione del ping lato server
 
+-Gestione del pint lato client: andrea
+
 - Rifare stampa personal card
 
 - Sistemare chat
@@ -15,3 +17,6 @@
 
 - Gestione messaggio "GAME_IS_OVER" lato cliet, con stampa che la partita è terminata: figio
 
+- Chat, scrivere da chi proviene il messaggio (rendere più bella?):
+
+- Pattern adapter per il client controller: lomi - figio

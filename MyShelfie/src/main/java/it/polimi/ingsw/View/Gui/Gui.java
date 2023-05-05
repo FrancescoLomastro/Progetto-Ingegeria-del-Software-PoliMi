@@ -1,4 +1,4 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.Gui;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
 import javafx.application.Application;

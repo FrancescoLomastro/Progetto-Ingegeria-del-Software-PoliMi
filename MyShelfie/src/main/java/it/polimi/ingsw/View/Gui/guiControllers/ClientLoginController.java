@@ -1,15 +1,6 @@
-package it.polimi.ingsw.controller.guiControllers;
+package it.polimi.ingsw.View.Gui.guiControllers;
 
-import it.polimi.ingsw.ClientApp;
-import it.polimi.ingsw.Network.Client.Client;
-import it.polimi.ingsw.View.ViewFactory;
 import it.polimi.ingsw.controller.ClientController;
-import it.polimi.ingsw.Network.Client.MessageQueueHandler;
-import it.polimi.ingsw.Network.Client.RMI.RMI_Client;
-import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +11,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class ClientLoginController implements Initializable {
@@ -133,8 +123,7 @@ public class ClientLoginController implements Initializable {
                 } finally {
                     if (invalid_input) {
                         port_number_textfield.setText("");
-                        ViewFactory viewFactory = new ViewFactory();
-                        viewFactory.showInvalidPort();
+                        ViewFactory.getInstance().showInvalidPort();
                     } else {
                         setPortNumber(Integer.parseInt(server_port));
                         port_number_textfield.setDisable(true);

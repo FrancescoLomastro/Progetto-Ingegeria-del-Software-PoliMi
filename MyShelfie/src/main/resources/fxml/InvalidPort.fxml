@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="200" prefWidth="320.0" styleClass="external_invalid_port_container" stylesheets="@../styles/InvalidPort.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.controller.guiControllers.InvalidPortController">
+<AnchorPane prefHeight="200" prefWidth="320.0" styleClass="external_invalid_port_container" stylesheets="@../styles/InvalidPort.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.InvalidPortController">
    <children>
       <VBox prefHeight="190" prefWidth="310" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>

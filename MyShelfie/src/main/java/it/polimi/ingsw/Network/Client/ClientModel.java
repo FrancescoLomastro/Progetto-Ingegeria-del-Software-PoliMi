@@ -2,7 +2,7 @@ package it.polimi.ingsw.Network.Client;
 
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observable;
-import it.polimi.ingsw.View.ViewFactory;
+import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Enums.Type;
