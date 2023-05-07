@@ -34,6 +34,12 @@ public class ViewFactory extends View {
         return instance;
     }
 
+
+    public void showStart() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
+        createStage(loader,700,900,false);
+    }
+
     public void showClientLogin() {
         //spostalo in askInitialInfo dopo aver fatto la schermata iniaziale di cui parlo nel GuiApplication
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
