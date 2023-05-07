@@ -10,6 +10,7 @@ import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.View.Cli.Cli;
 //import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
+import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
 import it.polimi.ingsw.View.OBSMessages.*;
 import it.polimi.ingsw.model.Utility.Couple;
 
@@ -37,7 +38,7 @@ public class ClientController implements Observer<View, OBS_Message> {
         }
         else
         {
-            //this.view = new ViewFactory();
+            this.view = ViewFactory.getInstance();
         }
         view.addObserver(this);
         new Thread(view).start();
@@ -47,7 +48,10 @@ public class ClientController implements Observer<View, OBS_Message> {
         view.askInitialInfo();
     }
 
+    public void changeObserver()
+    {
 
+    }
 
     public void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
         try {
@@ -163,10 +167,10 @@ public class ClientController implements Observer<View, OBS_Message> {
                 MessageLibrary msg = (MessageLibrary) message;
                 clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary());
             }case INIT_COMMON_GOAL -> {
-                MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
-                clientModel.setDescriptionFirstCommonGoal(msg.getDescription1());
-                clientModel.setDescriptionSecondCommonGoal(msg.getDescription2());
-            }
+            MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
+            clientModel.setDescriptionFirstCommonGoal(msg.getDescription1());
+            clientModel.setDescriptionSecondCommonGoal(msg.getDescription2());
+        }
             case INIT_PERSONAL_GOAL -> {
                 MessagePersonalGoal msg = (MessagePersonalGoal) message;
                 clientModel.setPersonalGoalCard(msg.getGoalVector());

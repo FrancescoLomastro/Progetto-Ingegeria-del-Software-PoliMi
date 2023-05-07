@@ -3,8 +3,11 @@ package it.polimi.ingsw.View.Gui.guiControllers;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.ObserverImplementation.Observable;
+import it.polimi.ingsw.View.Gui.GuiApplication;
+import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -30,6 +33,7 @@ public class ViewFactory extends View {
     }
 
     public void showClientLogin() {
+        //spostalo in askInitialInfo dopo aver fatto la schermata iniaziale di cui parlo nel GuiApplication
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
         createStage(loader,700,900,false);
     }
@@ -95,7 +99,6 @@ public class ViewFactory extends View {
 
     @Override
     public void askInitialInfo() {
-
     }
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
@@ -152,5 +155,13 @@ public class ViewFactory extends View {
     @Override
     public void run() {
         //per ora lascialo stare
+    }
+
+
+    //Chiama questo metodo dai controllers delle scene pr notificare gli osservatori
+    public void notifyAllOBS(OBS_Message msg)
+    {
+        setChanged();
+        notifyAllOBS(msg);
     }
 }
