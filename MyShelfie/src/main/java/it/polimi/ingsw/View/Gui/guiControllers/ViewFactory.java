@@ -19,7 +19,7 @@ import javafx.stage.Modality;
 
 /**
  * ViewFactory class contains methods related to the creation of stages during our program lifecycle.
- * The main responsibilities is to interact with specific "guiControllers" to direct interactions among users and stages.
+ * The main responsibilities is to interact with specific "guiControllers" to direct interactions among users and stages.d
  *
  * @author Alberto Aniballi
  */
@@ -35,17 +35,54 @@ public class ViewFactory extends View {
     }
 
 
+
+
+    /*showLoginClient è diventato getiInitialInfo*/
+
     public void showStart() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
         createStage(loader,700,900,false);
     }
 
+// COME PASSARE VARIABILI//
+     /* @Override
+    public void askInitialInfo(String s) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
+
+        // Personalizza il controller per passare il parametro 's'
+        loader.setControllerFactory(controllerClass -> {
+            ClientLoginController controller = new ClientLoginController();
+            controller.setInitialInfo(s);                                          //da implementare in ogni controller
+            return controller;
+        });
+
+        createStage(loader, 700, 900, false);
+    }
+    ///////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////
+
+    public class ennesimaScenaController implements Initializable {
+
+    @FXML
+    private String initialInfo;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Utilizza la variabile 'initialInfo' come desideri
+        System.out.println("Initial Info: " + initialInfo);
+        //oppure assegnala ad una label
+    }
+
+    // ... altri metodi del controller
+}
+
+    */
+
+
     public void showClientLogin() {
-        //spostalo in askInitialInfo dopo aver fatto la schermata iniaziale di cui parlo nel GuiApplication
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
         createStage(loader,700,900,false);
     }
-
 
     public void showInvalidPort() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
@@ -112,8 +149,11 @@ public class ViewFactory extends View {
 
     @Override
     public void askInitialInfo() {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
+        createStage(loader,700,900,false);
     }
+
+
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
 
@@ -176,6 +216,6 @@ public class ViewFactory extends View {
     public void notifyAllOBS(OBS_Message msg)
     {
         setChanged();
-        notifyAllOBS(msg);
+        notifyObservers(msg);
     }
 }

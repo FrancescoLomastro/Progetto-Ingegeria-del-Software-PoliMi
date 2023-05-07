@@ -191,6 +191,10 @@ public class ClientController implements Observer<View, OBS_Message> {
     @Override
     public void update(View o, OBS_Message arg) {
         switch (arg.getType()) {
+            case START ->
+            {
+                view.askInitialInfo();
+            }
             case INITIAL_INFO -> {
 
                 OBS_InitialInfoMessage message = (OBS_InitialInfoMessage) arg;

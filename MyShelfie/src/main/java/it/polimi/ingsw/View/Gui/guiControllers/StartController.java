@@ -1,5 +1,7 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
+import it.polimi.ingsw.View.OBSMessages.OBS_MessageType;
+import it.polimi.ingsw.View.OBSMessages.OBS_OnlyTypeMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,7 +23,6 @@ public class StartController implements Initializable {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
         currentStage.close();
-
-        ViewFactory.getInstance().showClientLogin();
+        ViewFactory.getInstance().notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START));
     }
 }
