@@ -2,7 +2,9 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.Connection;
+import it.polimi.ingsw.Network.Servers.PingTaskServer;
 import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
+import it.polimi.ingsw.Network.Servers.Socket.PingTimer;
 import it.polimi.ingsw.model.Game;
 
 import java.io.*;
@@ -33,6 +35,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private int sendMessageToSpecific =0;
     ArrayList<String> testArray = new ArrayList<>();
     Controller controller;
+    PingTimer[] pingTimers;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -103,11 +106,35 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         for(Map.Entry<String, Connection> entry : clients.entrySet()){
             try {
                 entry.getValue().sendMessage(new NewGameServerMessage(serverNameRMI, portServerRMI, this));
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
+    @Override
+    synchronized public void onMessage(Message message) {
+        System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
+        switch (message.getType()){
+            case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
+            case CHAT_MESSAGE -> notifyAllMessage(message);
+            case PING_MESSAGE -> {
+
+                for(PingTimer pt: pingTimers){
+
+                    if(pt.getPlayerUsername().equals(((ServerPingMessage) message).getPlayerUsername())){
+
+                        pt.cancel();
+                        pt = new PingTimer();
+                        pt.setPlayerUsername(((ServerPingMessage) message).getPlayerUsername());
+                        pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * initialization of a game
      * */
@@ -124,6 +151,14 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             String key = entry.getKey();
             game.setNextPlayer(key);
         }
+
+        // inizializzo l'array di pingTimers per dare a ogni timer lo username del rispettivo player e inizio il timeout
+        for (int i = 0; i < game.getNumPlayers(); i++){
+
+            pingTimers[i].setPlayerUsername(game.getPlayers()[i].getName());
+            pingTimers[i].schedule(new PingTaskServer(pingTimers[i].getPlayerUsername()), 10000);
+        }
+
         this.turnController = new TurnController(game, this);
     }
     /**
@@ -139,14 +174,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             }
         }
     }
-    @Override
-    synchronized public void onMessage(Message message) {
-        System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
-        switch (message.getType()){
-            case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
-            case CHAT_MESSAGE -> notifyAllMessage(message);
-        }
-    }
+
     /**
      * it sends a message to all the users in the game
      * @param message : the message to send

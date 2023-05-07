@@ -76,6 +76,7 @@ public class TurnController implements Runnable, Serializable {
      * implementation of Runnable interface's method run
      * */
     public void run(){
+
         Message moveResult;
         if(message != null){
             moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
