@@ -23,26 +23,26 @@ public class ClientLoginController implements Initializable {
     public TextField port_number_textfield;
     public Button login_button;
     public Label title_label;
-    private String userName;
-    private String serverTechnology;
-    private String serverIP;
-    private int portNumber;
+    private String chosenUsername;
+    private String chosenTechnology;
+    private String chosenIPAddress;
+    private int chosenPort;
     private ClientController clientController;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setChosenUsername(String chosenUsername) {
+        this.chosenUsername = chosenUsername;
     }
 
-    public void setServerTechnology(String serverTechnology) {
-        this.serverTechnology = serverTechnology;
+    public void setChosenTechnology(String chosenTechnology) {
+        this.chosenTechnology = chosenTechnology;
     }
 
-    public void setServerIP(String serverIP) {
-        this.serverIP = serverIP;
+    public void setChosenIPAddress(String chosenIPAddress) {
+        this.chosenIPAddress = chosenIPAddress;
     }
 
-    public void setPortNumber(int portNumber) {
-        this.portNumber = portNumber;
+    public void setChosenPort(int chosenPort) {
+        this.chosenPort = chosenPort;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ClientLoginController implements Initializable {
             String username_text = username_textfield.getText().trim();
 
             if (username_text.length() > 0) {
-                setUserName(username_text);
+                setChosenUsername(username_text);
                 title_label.setText("Welcome " +username_text + "!");
                 username_textfield.setDisable(true);
                 rmi_button.setDisable(false);
@@ -80,9 +80,9 @@ public class ClientLoginController implements Initializable {
     public void getServerTechnologyFromInput(RadioButton radioButton) {
 
         if (radioButton.getText().equals("RMI")) {
-            setServerTechnology("RMI");
+            setChosenTechnology("RMI");
         } else {
-            setServerTechnology("Socket");
+            setChosenTechnology("Socket");
         }
 
         rmi_button.setDisable(true);
@@ -98,11 +98,11 @@ public class ClientLoginController implements Initializable {
             String server_ip = server_textfield.getText().trim();
 
             if (server_ip.length() > 0) {
-                setServerIP(server_ip);
+                setChosenIPAddress(server_ip);
                 server_textfield.setDisable(true);
                 port_number_textfield.setDisable(false);
 
-                if (serverTechnology=="RMI") {
+                if (chosenTechnology =="RMI") {
                     port_number_textfield.setText("Default RMI port number");
                 } else {
                     port_number_textfield.setText("Default Socket port number");
@@ -122,10 +122,10 @@ public class ClientLoginController implements Initializable {
             server_port = port_number_textfield.getText().trim();
 
             if (server_port.contains("Default")) {
-                if (serverTechnology.equals("Socket")) {
-                    setPortNumber(8000);
+                if (chosenTechnology.equals("Socket")) {
+                    setChosenPort(8000);
                 } else {
-                    setPortNumber(9000);
+                    setChosenPort(9000);
                 }
                 port_number_textfield.setDisable(true);
                 login_button.setVisible(true);
@@ -143,7 +143,7 @@ public class ClientLoginController implements Initializable {
                         port_number_textfield.setText("");
                         ViewFactory.getInstance().showInvalidPort();
                     } else {
-                        setPortNumber(Integer.parseInt(server_port));
+                        setChosenPort(Integer.parseInt(server_port));
                         port_number_textfield.setDisable(true);
                         login_button.setVisible(true);
                     }

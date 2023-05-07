@@ -45,7 +45,7 @@ public class PlayerNumberRequestController implements Initializable {
                     } else {
                         setNumPlayers(Integer.parseInt(numPlayers_Input));
                         input_number_players.setDisable(true);
-                        //login_button.setVisible(true);
+                        ViewFactory.getInstance().showAcceptedLogin(keyEvent);
                     }
                 }
             }

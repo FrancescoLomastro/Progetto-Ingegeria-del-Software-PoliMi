@@ -9,9 +9,11 @@ import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 
@@ -54,6 +56,11 @@ public class ViewFactory extends View {
         switchScene(loader,event);
     }
 
+    public void showAcceptedLogin(KeyEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
+        switchScene(loader,event);
+    }
+
     private Scene loadScene(FXMLLoader loader) {
 
         Scene scene = null;
@@ -66,7 +73,7 @@ public class ViewFactory extends View {
         return scene;
     }
 
-    private void switchScene(FXMLLoader loader, ActionEvent event) {
+    private void switchScene(FXMLLoader loader, Event event) {
 
         Scene scene = loadScene(loader);
         Node node = (Node) event.getSource();
@@ -99,6 +106,7 @@ public class ViewFactory extends View {
 
     @Override
     public void askInitialInfo() {
+
     }
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
