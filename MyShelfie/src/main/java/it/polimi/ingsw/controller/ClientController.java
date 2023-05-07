@@ -48,10 +48,6 @@ public class ClientController implements Observer<View, OBS_Message> {
         view.askInitialInfo();
     }
 
-    public void changeObserver()
-    {
-
-    }
 
     public void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
         try {
