@@ -162,7 +162,7 @@ public class ClientModel extends Observable<Message> {
 
 
     public ArrayList<Couple> getGoalList() {
-        return goalList;
+        return new ArrayList<>(goalList);
     }
 
 

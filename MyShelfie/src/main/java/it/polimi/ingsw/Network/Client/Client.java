@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Timer;
+
 /**
  * This class is a generic Client. It can be implemented type RMI or Socket. Exist some generic method */
 public abstract class Client extends UnicastRemoteObject {
@@ -13,6 +15,8 @@ public abstract class Client extends UnicastRemoteObject {
     private final String serverAddress;
     private final int serverPort;
     protected final transient ArrayList<Message> messageQueue;
+    protected final transient long TIMEOUT = 15000;
+    protected Timer timer;
 
     /**Construtor
      * @author: Riccardo Figini
@@ -23,6 +27,7 @@ public abstract class Client extends UnicastRemoteObject {
         this.username = username;
         this.serverAddress = address;
         this.serverPort = port;
+        this.timer=new Timer();
     }
 
     /**

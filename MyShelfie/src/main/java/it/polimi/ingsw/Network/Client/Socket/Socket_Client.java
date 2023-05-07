@@ -11,6 +11,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Socket_Client extends Client implements Runnable{
     private transient Socket socket;
@@ -49,9 +51,9 @@ public class Socket_Client extends Client implements Runnable{
             in = new ObjectInputStream(socket.getInputStream());
             sendMessage(new SocketLoginMessage(getUsername()));
             new Thread(this).start();
-        } catch (IOException e)
+        } catch (Exception e)
         {
-            throw new RuntimeException("Failed connecting to RMI server "+e);
+            throw new RuntimeException("Failed connecting to Socket server: "+e);
         }
     }
     /**

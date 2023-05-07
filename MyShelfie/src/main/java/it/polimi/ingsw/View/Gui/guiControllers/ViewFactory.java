@@ -148,6 +148,12 @@ public class ViewFactory extends View {
 
 
     @Override
+    public void startView() {
+        Application.launch(GuiApplication.class);
+
+    }
+
+    @Override
     public void askInitialInfo() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
         createStage(loader,700,900,false);
@@ -175,7 +181,7 @@ public class ViewFactory extends View {
     }
 
     @Override
-    public void printAString(String string) {
+    public void printMessage(String string) {
 
     }
 

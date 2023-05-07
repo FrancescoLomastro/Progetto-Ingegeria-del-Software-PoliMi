@@ -1,9 +1,5 @@
 
--Gestione ping lato client: lomi(?)
-
-- Gestione del ping lato server
-
--Gestione del pint lato client: andrea
+-Gestione del ping: andrea
 
 - Rifare stampa personal card
 
@@ -20,3 +16,5 @@
 - Chat, scrivere da chi proviene il messaggio (rendere più bella?):
 
 - Pattern adapter per il client controller: lomi - figio
+
+- Passare la porta al nuovo server GameController

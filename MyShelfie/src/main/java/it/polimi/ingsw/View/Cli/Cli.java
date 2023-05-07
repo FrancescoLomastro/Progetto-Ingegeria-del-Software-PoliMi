@@ -8,8 +8,10 @@ import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.ClientState;
 import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Enums.Type;
 import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
+import it.polimi.ingsw.model.Utility.PrinterUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -21,6 +23,8 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     private boolean chatAvailable;
     private ClientState state;
     private String inputRequestBuffer;
+
+    private String divisor="\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
     /**Constructor
      * @author: Riccardo Figini*/
     public Cli(ClientModel clientModel)
@@ -29,6 +33,24 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         clientModel.addObserver(this);
         chatAvailable=false;
         state=ClientState.CHAT;
+    }
+
+    private void printTitle()
+    {
+        System.out.println("" +
+                "  _________________     ________________________   _________________\n" +
+                "  |        ||  |  |     |     ||  |  |     ||  |   |     ||  |     |\n" +
+                "  |  _  _  ||  !  |     |  ___!|  !  |  ___!|  |   |  ___!|  |  ___!\n" +
+                "  |  |  |  |!_   _!     !__   ||     |  __|_|  !___|  __| |  |  __|_\n" +
+                "  |  |  |  | |   |      |     ||  |  |     ||     ||  |   |  |     |\n" +
+                "  !__!__!__! !___!      !_____!!__!__!_____!!_____!!__!   !__!_____!\n\n");
+    }
+
+    @Override
+    public void startView() {
+        printTitle();
+        setChanged();
+        notifyObservers(new OBS_OnlyTypeMessage(OBS_MessageType.START));
     }
 
     public void askInitialInfo()
@@ -41,9 +63,9 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
             chosenPort=askPort(defaultRMIPort);
         else
             chosenPort=askPort(defaultSocketPort);
+        System.out.println("\n>> Connection to server...");
 
         OBS_Message msg = new OBS_InitialInfoMessage(chosenUsername,chosenTechnology,chosenAddress,chosenPort);
-
         setChanged();
         notifyObservers(msg);
     }
@@ -51,7 +73,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
 
     public String askUsername()
     {
-        System.out.print("Type your username: ");
+        System.out.print(">> Type your username: ");
         return getInputRequest();
     }
 
@@ -63,8 +85,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         do
         {
             badInput=false;
-            System.out.println("Select the communication technology to use,");
-            System.out.print("RMI = '0'; Socket = '1': ");
+            System.out.print(">> Select the communication technology to use [RMI = '0'; Socket = '1']: ");
             input = getInputRequest();
             try
             {
@@ -77,7 +98,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
             finally
             {
                 if(badInput)
-                    System.out.println("ERROR: You typed an invalid input, please retry.\n");
+                    System.out.println("ERROR >> You typed an invalid input, please retry.\n");
             }
         }while (badInput);
         return parsedInput;
@@ -87,7 +108,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     public String askAddress()
     {
         String input;
-        System.out.print("Type a server address [Default: 'localhost']: ");
+        System.out.print(">> Type a server address [Default: 'localhost']: ");
         input = getInputRequest();
         if(input.equals(""))
             return "localhost";
@@ -104,7 +125,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         do
         {
             badInput=false;
-            System.out.print("Type a server port number [Default: ");
+            System.out.print(">> Type a server port number [Default: ");
             parsedInput=defaultPort;
             System.out.print(parsedInput+"]: ");
             input = getInputRequest();
@@ -121,7 +142,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
                 finally
                 {
                     if(badInput)
-                        System.out.println("ERROR: You typed an invalid input, please retry.\n");
+                        System.out.println("ERROR >> You typed an invalid input, please retry.\n");
                 }
             }
         }while (badInput);
@@ -135,9 +156,9 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @param s String to print
      * */
     @Override
-    public void printAString(String s)
+    public void printMessage(String s)
     {
-        System.out.println(s);
+        System.out.println("\n>> "+s);
     }
     /**Ask number of player
      * @author: Riccardo Figini
@@ -152,7 +173,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         int value=0;
         do
         {
-            System.out.println("You are the first player, please type the number of players,");
+            System.out.println("\n>> You are the first player, please type the number of players,");
             System.out.print("[Number must be between " + min + " and " + max+"]: ");
             badInput=false;
             input = getInputRequest();
@@ -169,7 +190,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
             }
             if(badInput)
             {
-                System.out.println("ERROR: You typed an invalid number, please retry\n");
+                System.out.println("ERROR >> You typed an invalid number, please retry\n");
             }
         }while(badInput);
 
@@ -183,7 +204,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     @Override
     public void onInvalidUsername()
     {
-        System.out.println("The typed username was already used, please type another username or try later");
+        System.out.println(">> The typed username was already used, please type another username or try later");
         OBS_Message msg = new OBS_ChangedUsernameMessage(askUsername());
 
         setChanged();
@@ -196,9 +217,13 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     @Override
     public void showGrid(ObjectCard[][] matrice)
     {
+        String title="Living room grid:   ";
+        String title_space= PrinterUtils.printEquivalentSpace(title);
         String top_header = "|   |";
         String valoreStringa;
-        System.out.println("Living room grid:");
+
+        System.out.println(divisor);
+        System.out.print(title_space);
         for(int colonna=1; colonna<=matrice.length;colonna++)
         {
             top_header+="| "+colonna+" |";
@@ -207,7 +232,10 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
 
 
         for (int riga = 0; riga < matrice.length; riga++) {
-            System.out.print((riga+1) + " -> ");
+            if(riga==matrice.length/2)
+                System.out.print(title+(riga+1) + " -> ");
+            else
+                System.out.print(title_space+(riga+1) + " -> ");
             for (int colonna = 0; colonna < matrice[0].length; colonna++) {
 
                 if(matrice[riga][colonna]==null)
@@ -220,7 +248,6 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
             }
             System.out.println();
         }
-
     }
     /**
      * Show Library of specific player
@@ -229,27 +256,29 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * */
     @Override
     public void showLibrary(ObjectCard[][] library, String username){
-        if(library == null)
-            System.err.println("Library is null, somethings goes wrong");
-        System.out.println(username + "'s library");
+        String title=""+username + "'s library   ";
+        String title_space= PrinterUtils.printEquivalentSpace(title);
+
         String bottom_header = "|   |";
-        String bottom_row = "";
         for(int colonna=1; colonna<=library[0].length;colonna++)
         {
             bottom_header+="| "+colonna+" |";
-            bottom_row+="-----";
         }
 
-        for(int i=0; i<library.length; i++)
+        System.out.println("");
+        for(int riga=0; riga<library.length; riga++)
         {
-            System.out.print((i+1)+" -> ");
-            for(int j=0; j<library[0].length; j++)
+            if(riga==library.length/2)
+                System.out.print(title+(riga+1) + " -> ");
+            else
+                System.out.print(title_space+(riga+1) + " -> ");
+            for(int colonna=0; colonna<library[0].length; colonna++)
             {
-                System.out.print("| "+library[i][j]+" |");
+                System.out.print("| "+library[riga][colonna]+" |");
             }
             System.out.println();
         }
-        System.out.println(bottom_header);
+        System.out.println(title_space+bottom_header);
     }
     /**Ask cli to do something
      * @param arg type of message to manage
@@ -292,10 +321,9 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * */
     @Override
     public void printAll(ClientModel clientObject) {
-        clearScreen();
         showGrid(clientObject.getGrid());
-        System.out.println("First common goal: " + clientObject.getDescriptionFirstCommonGoal());
-        System.out.println("Second common goal: " + clientObject.getDescriptionSecondCommonGoal());
+        System.out.println("\nFirst common goal: " + clientObject.getDescriptionFirstCommonGoal());
+        System.out.println("\nSecond common goal: " + clientObject.getDescriptionSecondCommonGoal());
         printPersonalGaol(clientObject.getGoalList());
         Map<String, ObjectCard[][]> map = clientObject.getAllLibrary();
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
@@ -326,14 +354,28 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @param goalVector Personal goal card vector
      * */
     private void printPersonalGaol(ArrayList<Couple> goalVector) {
-        System.out.println("Here personal goal card: ");
-        if(goalVector==null)
-            System.err.println("Error, list of goal vector null");
+        Position p;
+        Color c;
+
+        ObjectCard[][] matrix = new ObjectCard[goalVector.size()][goalVector.size()];
         for(int i=0; i<goalVector.size(); i++){
-            Position p = (Position) (goalVector.get(i).getFirst());
-            Color c = (Color) (goalVector.get(i).getSecond());
-            System.out.println("row: " + (p.getRow()+1) + ", column: " + (p.getColumn()+1)+", color: "+ c);
+            p = (Position) (goalVector.get(i).getFirst());
+            c = (Color) (goalVector.get(i).getSecond());
+            matrix[p.getRow()][p.getColumn()]= new ObjectCard("",c, Type.FIRST);
         }
+
+        for(int riga =0; riga<6;riga++)
+        {
+           for(int colonna =0; colonna<5;colonna++)
+           {
+                if(matrix[riga][colonna]==null)
+                {
+                    matrix[riga][colonna]=new ObjectCard("",Color.EMPTY,Type.FIRST);
+                }
+           }
+        }
+
+        showLibrary(matrix,"Your Personal Goal Card is:");
     }
     /**Ask position in which extract cards
      * @author: Riccardo Figini
@@ -398,14 +440,6 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         setChanged();
         notifyObservers(msg);
 
-    }
-
-    /**Clear the screen
-     * @author: Riccardo Figini
-     * */
-    private void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 
 

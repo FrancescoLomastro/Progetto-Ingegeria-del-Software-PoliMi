@@ -15,7 +15,6 @@ import it.polimi.ingsw.View.OBSMessages.*;
 import it.polimi.ingsw.model.Utility.Couple;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
@@ -26,8 +25,6 @@ public class ClientController implements Observer<View, OBS_Message> {
     private ClientModel clientModel;
     private MessageQueueHandler messageReceiver;
     private Client client;
-    private final int rmiPort = 9000;
-    private final int socketPort = 8000;
 
     public ClientController(String viewMode)
     {
@@ -41,20 +38,17 @@ public class ClientController implements Observer<View, OBS_Message> {
             this.view = ViewFactory.getInstance();
         }
         view.addObserver(this);
+
         new Thread(view).start();
     }
 
-    public void startView() {
-        view.askInitialInfo();
+    public void turnOnView(){
+        view.startView();
     }
-
-
     public void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
         try {
-            System.out.println(chosenPort);
             switch (chosenTechnology) {
                 case 0 -> {
-
                     client = new RMI_Client(chosenUsername, chosenAddress, chosenPort);
                 }
                 case 1 -> {
@@ -79,7 +73,7 @@ public class ClientController implements Observer<View, OBS_Message> {
         {
             case ACCEPTED_LOGIN_MESSAGE ->
             {
-                view.printAString("Connection accepted, waiting for other players");
+                view.printMessage("Connection accepted, waiting for other players");
             }
             case PLAYER_NUMBER_REQUEST ->
             {
@@ -89,8 +83,8 @@ public class ClientController implements Observer<View, OBS_Message> {
             case LOBBY_UPDATE_MESSAGE ->
             {
                 LobbyUpdateMessage msg = (LobbyUpdateMessage) message;
-                view.printAString("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players.");
-                view.printAString("Members: " + msg.getUsernames());
+                view.printMessage("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players. "
+                        +"Members: " + msg.getUsernames());
             }
             case INVALID_USERNAME_MESSAGE ->
             {
@@ -102,17 +96,17 @@ public class ClientController implements Observer<View, OBS_Message> {
                 if(client instanceof RMI_Client c) {
                     c.changeServer(msg);
                 }
-                view.printAString("Server moved to a game");
+                view.printMessage("Server moved to a game");
             }
             case START_GAME_MESSAGE ->
             {
-                view.printAString("Game started");
+                view.printMessage("Game started");
                 view.startChat();
             }
             case CHAT_MESSAGE ->
             {
                 String text = ((ChatMessage) message).getText();
-                view.printAString("CHAT >> "+ text);
+                view.printMessage("CHAT >> "+ text);
             }
             case MY_MOVE_REQUEST ->
             {
@@ -122,23 +116,23 @@ public class ClientController implements Observer<View, OBS_Message> {
             case AFTER_MOVE_NEGATIVE ->
             {
                 MessageAfterMoveNegative msg = (MessageAfterMoveNegative) message;
-                view.printAString(msg.getInvalidMessage());
+                view.printMessage(msg.getInvalidMessage());
                 view.askMove();
             }
             case WINNER ->
             {
                 MessageWinner msg = (MessageWinner) message;
                 view.printPoints(clientModel);
-                view.printAString("The game is ended\nYour points: "+msg.getMyPoints()+"\nWinner: "+msg.getWinner());
+                view.printMessage("The game is ended\nYour points: "+msg.getMyPoints()+"\nWinner: "+msg.getWinner());
             }
             case ALMOST_OVER ->
             {
-                view.printAString("A player has completed his library, last turn concluding");
+                view.printMessage("A player has completed his library, last turn concluding");
             }
             case ERROR ->
             {
                 ErrorMessage msg = (ErrorMessage) message;
-                view.printAString(msg.getString());
+                view.printMessage(msg.getString());
                 System.exit(0);
             }
             case COMMON_GOAL -> {
@@ -146,12 +140,12 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case AFTER_MOVE_POSITIVE ->
             {
-                view.printAString("Move performed successfully");
+                view.printMessage("Move performed successfully");
                 if(((MessageAfterMovePositive) message).getGainedPointsFirstCard()>0){
-                    view.printAString("Points gained from first common goal: " + ((MessageAfterMovePositive) message).getGainedPointsFirstCard());
+                    view.printMessage("Points gained from first common goal: " + ((MessageAfterMovePositive) message).getGainedPointsFirstCard());
                 }
                 if(((MessageAfterMovePositive) message).getGainedPointsSecondCard()>0){
-                    view.printAString("Points gained from second common goal: " + ((MessageAfterMovePositive) message).getGainedPointsSecondCard());
+                    view.printMessage("Points gained from second common goal: " + ((MessageAfterMovePositive) message).getGainedPointsSecondCard());
                 }
             }
             case INIT_PLAYER_MESSAGE -> {
@@ -172,7 +166,7 @@ public class ClientController implements Observer<View, OBS_Message> {
                 clientModel.setPersonalGoalCard(msg.getGoalVector());
             }
             case RETURN_TO_OLD_GAME_MESSAGE -> {
-                view.printAString("You are joining in your old game");
+                view.printMessage("You are joining in your old game");
             }
             case POINTS_MESSAGE -> {
                 ArrayList<Couple<String, Integer>> list = ((MessagePoints) message).getList();
@@ -181,7 +175,7 @@ public class ClientController implements Observer<View, OBS_Message> {
                 }
             }
             case GAME_IS_OVER -> {
-                view.printAString("Game is over");
+                view.printMessage("Game is over");
             }
         }
 
@@ -195,10 +189,9 @@ public class ClientController implements Observer<View, OBS_Message> {
             {
                 view.askInitialInfo();
             }
-            case INITIAL_INFO -> {
-
+            case INITIAL_INFO ->
+            {
                 OBS_InitialInfoMessage message = (OBS_InitialInfoMessage) arg;
-                System.out.println("--"+message.getChosenUsername()+"--"+message.getChosenTechnology()+"--"+message.getChosenAddress()+"--"+message.getChosenPort());
                 createClient(message.getChosenUsername(), message.getChosenTechnology(),
                         message.getChosenAddress(), message.getChosenPort());
             }

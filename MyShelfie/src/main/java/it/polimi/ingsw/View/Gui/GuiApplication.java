@@ -7,10 +7,8 @@ import javafx.stage.Stage;
 
 public class GuiApplication extends Application {
 
-    ViewFactory viewFactory;
     @Override
     public void start(Stage stage) throws Exception {
-        viewFactory= ViewFactory.getInstance();
-        viewFactory.showStart();
+        ViewFactory.getInstance().showStart();
     }
 }
