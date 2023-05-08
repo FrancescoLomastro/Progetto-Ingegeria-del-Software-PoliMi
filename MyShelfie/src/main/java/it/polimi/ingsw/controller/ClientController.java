@@ -6,7 +6,7 @@ import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Messages.ChatMessage;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
-import it.polimi.ingsw.Network.Servers.ClientPingThread;
+//import it.polimi.ingsw.Network.Servers.ClientPingThread;
 import it.polimi.ingsw.Network.Servers.PingTaskServer;
 import it.polimi.ingsw.Network.Servers.Socket.PingTimer;
 import it.polimi.ingsw.View.*;
@@ -60,9 +60,9 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             messageReceiver = new MessageQueueHandler(client, this);
 
-            ClientPingThread clientPingThread = new ClientPingThread(client, 10000, chosenUsername);
-            Thread t = new Thread(clientPingThread);
-            t.start();
+//            ClientPingThread clientPingThread = new ClientPingThread(client, 10000, chosenUsername);
+//            Thread t = new Thread(clientPingThread);
+//            t.start();
 
             client.connect();
             new Thread(messageReceiver).start();

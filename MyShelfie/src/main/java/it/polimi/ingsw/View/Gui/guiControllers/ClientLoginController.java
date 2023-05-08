@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
+import it.polimi.ingsw.View.OBSMessages.OBS_InitialInfoMessage;
 import it.polimi.ingsw.controller.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -24,7 +25,7 @@ public class ClientLoginController implements Initializable {
     public Button login_button;
     public Label title_label;
     private String chosenUsername;
-    private String chosenTechnology;
+    private int chosenTechnology;
     private String chosenIPAddress;
     private int chosenPort;
     private ClientController clientController;
@@ -33,7 +34,7 @@ public class ClientLoginController implements Initializable {
         this.chosenUsername = chosenUsername;
     }
 
-    public void setChosenTechnology(String chosenTechnology) {
+    public void setChosenTechnology(int chosenTechnology) {
         this.chosenTechnology = chosenTechnology;
     }
 
@@ -80,9 +81,9 @@ public class ClientLoginController implements Initializable {
     public void getServerTechnologyFromInput(RadioButton radioButton) {
 
         if (radioButton.getText().equals("RMI")) {
-            setChosenTechnology("RMI");
+            setChosenTechnology(0);
         } else {
-            setChosenTechnology("Socket");
+            setChosenTechnology(1);
         }
 
         rmi_button.setDisable(true);
@@ -98,11 +99,15 @@ public class ClientLoginController implements Initializable {
             String server_ip = server_textfield.getText().trim();
 
             if (server_ip.length() > 0) {
-                setChosenIPAddress(server_ip);
+
+                if (server_ip.contains("Default")) {
+                    setChosenIPAddress("localhost");
+                }
+
                 server_textfield.setDisable(true);
                 port_number_textfield.setDisable(false);
 
-                if (chosenTechnology =="RMI") {
+                if (chosenTechnology == 0) {
                     port_number_textfield.setText("Default RMI port number");
                 } else {
                     port_number_textfield.setText("Default Socket port number");
@@ -122,7 +127,7 @@ public class ClientLoginController implements Initializable {
             server_port = port_number_textfield.getText().trim();
 
             if (server_port.contains("Default")) {
-                if (chosenTechnology.equals("Socket")) {
+                if (chosenTechnology == 1) {
                     setChosenPort(8000);
                 } else {
                     setChosenPort(9000);
@@ -153,11 +158,14 @@ public class ClientLoginController implements Initializable {
     }
 
     public void onLogin(ActionEvent event) {
-
-        boolean first_player = true;
-
-        if (first_player) {
-            ViewFactory.getInstance().showPlayerNumberRequest(event);
-        }
+//
+//        boolean first_player = true;
+//
+//        if (first_player) {
+//            ViewFactory.getInstance().showPlayerNumberRequest(event);
+//        }
+        ViewFactory.getInstance().setEvent(event);
+        OBS_InitialInfoMessage initialInfoMessage = new OBS_InitialInfoMessage(chosenUsername,chosenTechnology,chosenIPAddress,chosenPort);
+        ViewFactory.getInstance().notifyAllOBS(initialInfoMessage);
     }
 }
