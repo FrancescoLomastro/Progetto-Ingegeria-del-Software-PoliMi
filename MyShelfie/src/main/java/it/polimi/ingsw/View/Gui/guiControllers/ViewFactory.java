@@ -25,6 +25,8 @@ import javafx.stage.Modality;
  */
 public class ViewFactory extends View {
 
+    private Event event;
+
     private static ViewFactory instance = null;
 
     public static ViewFactory getInstance() {
@@ -34,8 +36,13 @@ public class ViewFactory extends View {
         return instance;
     }
 
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
-
+    public Event getEvent() {
+        return this.event;
+    }
 
     /*showLoginClient è diventato getiInitialInfo*/
 
@@ -96,7 +103,7 @@ public class ViewFactory extends View {
 
     public void showPlayerNumberRequest(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-        switchScene(loader,event);
+        switchScene(loader,getEvent());
     }
 
     public void showAcceptedLogin(KeyEvent event) {
@@ -156,7 +163,7 @@ public class ViewFactory extends View {
     @Override
     public void askInitialInfo() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-        createStage(loader,700,900,false);
+        switchScene(loader,getEvent());
     }
 
 
@@ -167,7 +174,8 @@ public class ViewFactory extends View {
 
     @Override
     public void askNumberOfPlayers(int min, int max) {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
+        switchScene(loader,getEvent());
     }
 
     @Override
