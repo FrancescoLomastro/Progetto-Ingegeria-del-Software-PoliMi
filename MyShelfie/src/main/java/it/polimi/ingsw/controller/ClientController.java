@@ -6,9 +6,8 @@ import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Messages.ChatMessage;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
-import it.polimi.ingsw.Network.Servers.ClientPingThread;
-import it.polimi.ingsw.Network.Servers.PingTaskServer;
-import it.polimi.ingsw.Network.Servers.Socket.PingTimer;
+import it.polimi.ingsw.Network.Servers.PingTaskClient;
+import it.polimi.ingsw.Network.Servers.PingTimer;
 import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.View.Cli.Cli;
@@ -28,6 +27,7 @@ public class ClientController implements Observer<View, OBS_Message> {
     private ClientModel clientModel;
     private MessageQueueHandler messageReceiver;
     private Client client;
+    private PingTimer pingTimer;
 
     public ClientController(String viewMode)
     {
@@ -41,6 +41,8 @@ public class ClientController implements Observer<View, OBS_Message> {
             this.view = ViewFactory.getInstance();
         }
         view.addObserver(this);
+
+        pingTimer = new PingTimer();
 
         new Thread(view).start();
     }
@@ -60,9 +62,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             messageReceiver = new MessageQueueHandler(client, this);
 
-            ClientPingThread clientPingThread = new ClientPingThread(client, 10000, chosenUsername);
-            Thread t = new Thread(clientPingThread);
-            t.start();
+            pingTimer.schedule(new PingTaskClient(), 10000);
 
             client.connect();
             new Thread(messageReceiver).start();
@@ -75,7 +75,7 @@ public class ClientController implements Observer<View, OBS_Message> {
     }
 
     //messaggi ricevuti dalla rete
-    public void onMessage(Message message) {
+    public void onMessage(Message message) throws IOException {
         System.out.println(ANSI_YELLOW + "Message has arrived: " + message.getType() + ANSI_RESET);
         switch (message.getType())
         {
@@ -184,6 +184,16 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case GAME_IS_OVER -> {
                 view.printMessage("Game is over");
+            }
+            case PING_MESSAGE -> {
+
+                pingTimer.cancel();
+
+                ServerPingMessage serverPingMessage = new ServerPingMessage(client.getUsername());
+                client.sendMessage(serverPingMessage);
+
+                pingTimer = new PingTimer();
+                pingTimer.schedule(new PingTaskClient(), 10000);
             }
         }
 

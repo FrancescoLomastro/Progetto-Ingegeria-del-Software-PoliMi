@@ -4,7 +4,7 @@ import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.Connection;
 import it.polimi.ingsw.Network.Servers.PingTaskServer;
 import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
-import it.polimi.ingsw.Network.Servers.Socket.PingTimer;
+import it.polimi.ingsw.Network.Servers.PingTimer;
 import it.polimi.ingsw.model.Game;
 
 import java.io.*;
@@ -126,6 +126,10 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                     if(pt.getPlayerUsername().equals(((ServerPingMessage) message).getPlayerUsername())){
 
                         pt.cancel();
+
+                        ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
+                        sendMessageToASpecificUser(serverPingMessage, pt.getPlayerUsername());
+
                         pt = new PingTimer();
                         pt.setPlayerUsername(((ServerPingMessage) message).getPlayerUsername());
                         pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
@@ -152,9 +156,14 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             game.setNextPlayer(key);
         }
 
+
+        ServerPingMessage initPingMessage = new ServerPingMessage("SERVER");
+        notifyAllMessage(initPingMessage);
+
         // inizializzo l'array di pingTimers per dare a ogni timer lo username del rispettivo player e inizio il timeout
         for (int i = 0; i < game.getNumPlayers(); i++){
 
+            pingTimers[i] = new PingTimer();
             pingTimers[i].setPlayerUsername(game.getPlayers()[i].getName());
             pingTimers[i].schedule(new PingTaskServer(pingTimers[i].getPlayerUsername()), 10000);
         }

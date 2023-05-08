@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.Servers.Socket;
+package it.polimi.ingsw.Network.Servers;
 
 import java.util.Timer;
 
