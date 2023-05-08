@@ -1,8 +1,6 @@
 
 -Gestione del ping: andrea
 
-- Rifare stampa personal card
-
 - Sistemare chat
 
 - Prima o poi fare una partita per ogni common goal card
