@@ -1,0 +1,45 @@
+.chatContainer {
+    -fx-background-image: url("Start.jpg");
+    -fx-background-position: center center;
+    -fx-background-size: 900 700;
+    -fx-background-repeat: repeat;
+}
+
+.messageSection{
+    -fx-background-image: url("base_pagina2.jpg");
+    -fx-background-radius: 30 30 30 30;
+    -fx-background-position: center;
+    -fx-background-repeat: repeat;
+    -fx-alignment: center;
+    -fx-label-padding: 15 5 5 5;
+    -fx-border-color: #FFDEAD;
+    -fx-padding: 3 3 3 3;
+    -fx-border-insets: 5 5 5 5;
+}
+
+.titleChat{
+    -fx-font-size: 40pt;
+    -fx-text-fill: #8B4513;
+    -fx-text-stroke: #FFDEAD;
+    -fx-text-stroke-width: 3;
+    -fx-effect: dropshadow(three-pass-box, #FDF5E6 , 10, 0, 0, 0);
+}
+
+.text-area-chat{
+    -fx-background-color: #8B4513;
+    -fx-end-margin: 5;
+    -fx-label-padding: 15 5 5 5;
+    -fx-alignment: center;
+    -fx-border-color: #8B4513;
+    -fx-text-fill: #8B4513;
+}
+
+.label-message-arrived{
+    -fx-border-radius: 30 30 30 30;
+    -fx-background-color: #FFDEAD;
+}
+
+.label-message-send{
+    -fx-border-radius: 30 30 30 30;
+    -fx-background-color: #FDF5E6;
+}
