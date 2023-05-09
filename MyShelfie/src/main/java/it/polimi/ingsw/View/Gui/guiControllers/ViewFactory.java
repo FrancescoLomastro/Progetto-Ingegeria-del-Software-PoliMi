@@ -8,6 +8,7 @@ import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -24,96 +25,14 @@ import javafx.stage.Modality;
  * @author Alberto Aniballi
  */
 public class ViewFactory extends View {
-
-    private Event event;
-
     private static ViewFactory instance = null;
+    private Stage stage;
 
     public static ViewFactory getInstance() {
         if (instance==null) {
             instance = new ViewFactory();
         }
         return instance;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Event getEvent() {
-        return this.event;
-    }
-
-    /*showLoginClient è diventato getiInitialInfo*/
-
-    public void showStart() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
-        createStage(loader,700,900,false);
-    }
-
-// COME PASSARE VARIABILI//
-     /* @Override
-    public void askInitialInfo(String s) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-
-        // Personalizza il controller per passare il parametro 's'
-        loader.setControllerFactory(controllerClass -> {
-            ClientLoginController controller = new ClientLoginController();
-            controller.setInitialInfo(s);                                          //da implementare in ogni controller
-            return controller;
-        });
-
-        createStage(loader, 700, 900, false);
-    }
-    ///////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////
-
-    public class ennesimaScenaController implements Initializable {
-
-    @FXML
-    private String initialInfo;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Utilizza la variabile 'initialInfo' come desideri
-        System.out.println("Initial Info: " + initialInfo);
-        //oppure assegnala ad una label
-    }
-
-    // ... altri metodi del controller
-}
-
-    */
-
-
-    public void showClientLogin() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-        switchScene(loader,getEvent(),false);
-    }
-
-    public void showInvalidPort() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
-        createStage(loader,200,320,true);
-    }
-
-    public void showInvalidNumPlayers() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
-        createStage(loader,200,320,true);
-    }
-
-    public void showPlayerNumberRequest() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-        switchScene(loader,getEvent(),false);
-    }
-
-    public void showAcceptedLogin() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
-        switchScene(loader,getEvent(),false);
-    }
-
-    public void showLivingroom() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Livingroom.fxml"));
-        switchScene(loader,getEvent(),true);
     }
 
     private Scene loadScene(FXMLLoader loader) {
@@ -127,24 +46,17 @@ public class ViewFactory extends View {
 
         return scene;
     }
-
-    private void switchScene(FXMLLoader loader, Event event, boolean toFullScreen) {
+    private void switchScene(FXMLLoader loader) {
 
         Scene scene = loadScene(loader);
-        Node node = (Node) event.getSource();
-        Stage currentStage = (Stage) node.getScene().getWindow();
-
-        currentStage.setScene(scene);
-
-        if (toFullScreen) {
-            currentStage.setFullScreen(true);
-        }
+        stage.setScene(scene);
     }
 
     private void createStage(FXMLLoader loader,int minHeight,int minWidth,boolean lockStage) {
 
         Scene scene = loadScene(loader);
         Stage stage = new Stage();
+        this.stage= stage;
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setMinHeight(minHeight);
@@ -157,6 +69,30 @@ public class ViewFactory extends View {
             stage.show();
         }
     }
+    public void showStart() {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
+            createStage(loader,700,900,false);
+        });
+    }
+
+
+
+    public void showInvalidPort() {
+        Platform.runLater(()->
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
+            createStage(loader,200,320,true);
+        });
+    }
+
+    public void showInvalidNumPlayers() {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
+            createStage(loader,200,320,true);
+        });
+
+    }
 
     public void closeStage(Stage stage) {
         stage.close();
@@ -166,13 +102,14 @@ public class ViewFactory extends View {
     @Override
     public void startView() {
         Application.launch(GuiApplication.class);
-
     }
 
     @Override
     public void askInitialInfo() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-        switchScene(loader,getEvent(),false);
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
+            switchScene(loader);
+        });
     }
 
 
@@ -183,8 +120,11 @@ public class ViewFactory extends View {
 
     @Override
     public void askNumberOfPlayers(int min, int max) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-        switchScene(loader,getEvent(),false);
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
+            switchScene(loader);
+        });
+
     }
 
     @Override
@@ -199,7 +139,15 @@ public class ViewFactory extends View {
 
     @Override
     public void printMessage(String string) {
-
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
+            loader.setControllerFactory(controllerClass -> {
+                AcceptedLoginController controller = new AcceptedLoginController();
+                controller.setString(string);
+                return controller;
+            });
+            switchScene(loader);
+        });
     }
 
     @Override

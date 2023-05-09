@@ -35,7 +35,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private int sendMessageToSpecific =0;
     ArrayList<String> testArray = new ArrayList<>();
     Controller controller;
-    Map<String, PingTimer> pingTimerMap;
+   // Map<String, PingTimer> pingTimerMap;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -126,9 +126,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             case CHAT_MESSAGE -> notifyAllMessage(message);
             case PING_MESSAGE -> {
 
-                PingTimer pt = pingTimerMap.get(message.getUsername());
+                //PingTimer pt = pingTimerMap.get(message.getUsername());
 
-                pt.cancel();
+                //pt.cancel();
 
                 ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
                 try {
@@ -136,9 +136,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                pt = new PingTimer();
-                pingTimerMap.put(message.getUsername(), pt);
-                pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
+                //pt = new PingTimer();
+                //pingTimerMap.put(message.getUsername(), pt);
+                //pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
 
 
             }
@@ -170,7 +170,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         for (int i = 0; i < game.getNumPlayers(); i++){
 
             PingTimer pt = new PingTimer();
-            pingTimerMap.put(game.getPlayers()[i].getName(), pt);
+            //pingTimerMap.put(game.getPlayers()[i].getName(), pt);
             pt.schedule(new PingTaskServer(pt.getPlayerUsername()), 10000);
         }
 

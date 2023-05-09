@@ -333,7 +333,7 @@ public class Controller implements ServerReceiver
                 case PING_MESSAGE ->
                 {
 
-                    PingTimer pt = pingTimerMap.get(message.getUsername());
+                   /* PingTimer pt = pingTimerMap.get(message.getUsername());
 
                     pt.cancel();
 
@@ -347,7 +347,7 @@ public class Controller implements ServerReceiver
                     pingTimerMap.put(message.getUsername(), pt);
                     pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
 
-
+*/
                 }
             }
     }

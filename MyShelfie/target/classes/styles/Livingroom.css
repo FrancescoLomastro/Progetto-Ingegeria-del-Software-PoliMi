@@ -1,0 +1,13 @@
+.livingroom_container {
+    -fx-background-image: url("livingroom.png");
+    -fx-background-position: center center;
+    -fx-background-size: 800 800;
+    -fx-background-color: #000000;
+    /*-fx-background-size: cover;*/
+    -fx-background-repeat: no-repeat;
+}
+
+.livingroom_container Button {
+    -fx-pref-width: 79;
+    -fx-pref-height: 79;
+}

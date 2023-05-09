@@ -189,7 +189,7 @@ public class ClientController implements Observer<View, OBS_Message> {
                 view.printMessage("Game is over");
             }
             case PING_MESSAGE -> {
-
+/*
                 pingTimer.cancel();
 
                 ServerPingMessage serverPingMessage = new ServerPingMessage(client.getUsername());
@@ -200,7 +200,7 @@ public class ClientController implements Observer<View, OBS_Message> {
                 }
 
                 pingTimer = new PingTimer();
-                pingTimer.schedule(new PingTaskClient(), 10000);
+                pingTimer.schedule(new PingTaskClient(), 10000);*/
             }
         }
 

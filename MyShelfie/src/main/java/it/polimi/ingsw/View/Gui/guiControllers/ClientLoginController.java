@@ -158,17 +158,7 @@ public class ClientLoginController implements Initializable {
     }
 
     public void onLogin(ActionEvent event) {
-//
-//        boolean first_player = true;
-//
-//        if (first_player) {
-//            ViewFactory.getInstance().showPlayerNumberRequest(event);
-//        }
-        ViewFactory.getInstance().setEvent(event);
-        ViewFactory.getInstance().showPlayerNumberRequest();
-        /*
         OBS_InitialInfoMessage initialInfoMessage = new OBS_InitialInfoMessage(chosenUsername,chosenTechnology,chosenIPAddress,chosenPort);
         ViewFactory.getInstance().notifyAllOBS(initialInfoMessage);
-         */
     }
 }
