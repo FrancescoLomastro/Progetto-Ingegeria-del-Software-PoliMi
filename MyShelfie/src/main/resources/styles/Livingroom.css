@@ -6,3 +6,8 @@
     /*-fx-background-size: cover;*/
     -fx-background-repeat: no-repeat;
 }
+
+.livingroom_container Button {
+    -fx-pref-width: 79;
+    -fx-pref-height: 79;
+}
