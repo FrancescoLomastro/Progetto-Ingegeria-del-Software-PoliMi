@@ -297,7 +297,11 @@ public class Controller implements ServerReceiver
 
     @Override
     synchronized public void onMessage(Message message) {
-        System.out.println(message.getType());
+        if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
+
+            System.out.println(message.getType());
+        }
+
             MessageType type = message.getType();
             switch (type)
             {
