@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
+import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -45,7 +46,8 @@ public class PlayerNumberRequestController implements Initializable {
                     } else {
                         setNumPlayers(Integer.parseInt(numPlayers_Input));
                         input_number_players.setDisable(true);
-                        ViewFactory.getInstance().showAcceptedLogin(keyEvent);
+                        ViewFactory.getInstance().setEvent(keyEvent);
+                        ViewFactory.getInstance().showAcceptedLogin();
                     }
                 }
             }

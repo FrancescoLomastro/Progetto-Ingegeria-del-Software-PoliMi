@@ -24,6 +24,7 @@ public class StartController implements Initializable {
 //        Stage currentStage = (Stage) node.getScene().getWindow();
 //        currentStage.close();
         ViewFactory.getInstance().setEvent(event);
-        ViewFactory.getInstance().notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START));
+        ViewFactory.getInstance().showClientLogin();
+        //ViewFactory.getInstance().notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START));
     }
 }

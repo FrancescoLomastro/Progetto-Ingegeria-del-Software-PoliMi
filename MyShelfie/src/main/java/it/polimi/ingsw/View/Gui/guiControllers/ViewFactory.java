@@ -88,7 +88,7 @@ public class ViewFactory extends View {
 
     public void showClientLogin() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-        createStage(loader,700,900,false);
+        switchScene(loader,getEvent(),false);
     }
 
     public void showInvalidPort() {
@@ -101,14 +101,19 @@ public class ViewFactory extends View {
         createStage(loader,200,320,true);
     }
 
-    public void showPlayerNumberRequest(ActionEvent event) {
+    public void showPlayerNumberRequest() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-        switchScene(loader,getEvent());
+        switchScene(loader,getEvent(),false);
     }
 
-    public void showAcceptedLogin(KeyEvent event) {
+    public void showAcceptedLogin() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
-        switchScene(loader,event);
+        switchScene(loader,getEvent(),false);
+    }
+
+    public void showLivingroom() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Livingroom.fxml"));
+        switchScene(loader,getEvent(),true);
     }
 
     private Scene loadScene(FXMLLoader loader) {
@@ -123,13 +128,17 @@ public class ViewFactory extends View {
         return scene;
     }
 
-    private void switchScene(FXMLLoader loader, Event event) {
+    private void switchScene(FXMLLoader loader, Event event, boolean toFullScreen) {
 
         Scene scene = loadScene(loader);
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
 
         currentStage.setScene(scene);
+
+        if (toFullScreen) {
+            currentStage.setFullScreen(true);
+        }
     }
 
     private void createStage(FXMLLoader loader,int minHeight,int minWidth,boolean lockStage) {
@@ -163,7 +172,7 @@ public class ViewFactory extends View {
     @Override
     public void askInitialInfo() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-        switchScene(loader,getEvent());
+        switchScene(loader,getEvent(),false);
     }
 
 
@@ -175,7 +184,7 @@ public class ViewFactory extends View {
     @Override
     public void askNumberOfPlayers(int min, int max) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-        switchScene(loader,getEvent());
+        switchScene(loader,getEvent(),false);
     }
 
     @Override

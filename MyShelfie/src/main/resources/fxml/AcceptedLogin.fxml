@@ -19,6 +19,8 @@
                 </ImageView>
                 <Label styleClass="internal_vbox_container_label1" text="Connection accepted,&#13; waiting for other players to join." />
                 <Label fx:id="current_numPlayers_label" styleClass="internal_vbox_container_label1" />
+                <Button fx:id="login_button" mnemonicParsing="false" styleClass="internal_form_container_logInButton"
+                        text="show livingroom"/>
             </VBox>
         </children>
     </AnchorPane>
