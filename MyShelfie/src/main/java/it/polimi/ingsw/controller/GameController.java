@@ -297,4 +297,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
         controller.deleteGame(gameId);
     }
+
+    public Map<String, Connection> getClients() {
+        return clients;
+    }
 }

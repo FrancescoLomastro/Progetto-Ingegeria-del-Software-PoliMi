@@ -6,6 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.Connection;
+import it.polimi.ingsw.Network.Servers.PingTaskServer;
+import it.polimi.ingsw.Network.Servers.PingTimer;
 import it.polimi.ingsw.model.Utility.Request;
 
 import java.io.*;
@@ -21,13 +23,14 @@ public class Controller implements ServerReceiver
     private final int minimumPlayers = 2;
     private final int maximumPlayers = 4;
     String pathFileWithNumberOfGame="src/main/resources/gameFile/gameNumbers.json";
-
+    ArrayList<PingTimer> pingTimers;
     public Controller() {
         games = new ArrayList<>();
         currentGame= new GameController(choseNewNumberForGame(), this);
         waitedRequest=null;
         isAsking=false;
         manageOldPlayer();
+        pingTimers = new ArrayList<>();
     }
 
     private void manageOldPlayer(){
@@ -145,9 +148,20 @@ public class Controller implements ServerReceiver
 
     private void addPlayer(String username, Connection connection) {
         currentGame.addPlayer(username,connection);
+
+        PingTimer pt = new PingTimer();
+        pt.setPlayerUsername(username);
+        pingTimers.add(pt);
+        pt.schedule(new PingTaskServer(username), 10000);
+
         games.add(currentGame);
         if(currentGame.getSize()==currentGame.getLimitOfPlayers())
         {
+
+            for(PingTimer ptm: pingTimers){
+
+                ptm.cancel();
+            }
             writeNewGameInExecution(currentGame.getGameId());
             new Thread(currentGame).start();
             int num = choseNewNumberForGame();
@@ -301,6 +315,27 @@ public class Controller implements ServerReceiver
                         } finally {
 
                             waitedRequest = null;
+                        }
+                    }
+                }
+                case PING_MESSAGE ->
+                {
+                    for(PingTimer pt: pingTimers){
+
+                        if(pt.getPlayerUsername().equals(((ServerPingMessage) message).getPlayerUsername())){
+
+                            pt.cancel();
+
+                            ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
+                            try {
+                                currentGame.getClients().get(pt.getPlayerUsername()).sendMessage(serverPingMessage);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            pt = new PingTimer();
+                            pt.setPlayerUsername(((ServerPingMessage) message).getPlayerUsername());
+                            pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
                         }
                     }
                 }
