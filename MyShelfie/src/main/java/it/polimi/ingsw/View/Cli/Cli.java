@@ -329,7 +329,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
             showLibrary(clientObject.getLibrary(entry.getKey()), entry.getKey() );
         }
-        System.out.println("Points:");
+        System.out.println("Points:\n");
         printPoints(clientObject);
     }
     /**Prints points
@@ -357,7 +357,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         Position p;
         Color c;
 
-        ObjectCard[][] matrix = new ObjectCard[goalVector.size()][goalVector.size()];
+        ObjectCard[][] matrix = new ObjectCard[6][5];
         for(int i=0; i<goalVector.size(); i++){
             p = (Position) (goalVector.get(i).getFirst());
             c = (Color) (goalVector.get(i).getSecond());
@@ -426,8 +426,8 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     public void askMove()  {
         int column, numberOfCards;
         Position[] position;
-        System.out.println("It's your turn, please make your move");
-        System.out.println("How many card do you want? (minimum 1, max 3)");
+        System.out.println("\n>> It's your turn, please make your move");
+        System.out.println("How many card do you want? [minimum 1, max 3");
         numberOfCards = getNumberWithLimit(3);
 
         position = askPositions(numberOfCards);
