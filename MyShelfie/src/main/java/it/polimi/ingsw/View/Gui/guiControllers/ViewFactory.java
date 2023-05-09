@@ -23,7 +23,7 @@ import javafx.stage.Modality;
  *
  * @author Alberto Aniballi
  */
-public class ViewFactory  {
+public class ViewFactory extends View {
 
     private Event event;
 
@@ -154,7 +154,6 @@ public class ViewFactory  {
     }
 
 
-    /*
     @Override
     public void startView() {
         Application.launch(GuiApplication.class);
@@ -233,5 +232,4 @@ public class ViewFactory  {
         setChanged();
         notifyObservers(msg);
     }
-     */
 }

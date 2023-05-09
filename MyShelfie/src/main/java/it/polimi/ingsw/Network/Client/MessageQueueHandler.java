@@ -3,7 +3,6 @@ package it.polimi.ingsw.Network.Client;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.controller.ClientController;
 
-import java.io.IOException;
 import java.util.ArrayList;
 /**This class manages queue containing messages. It has a thread that every n-millisecond controls if something is arrived from server*/
 public class MessageQueueHandler implements Runnable {
@@ -35,13 +34,7 @@ public class MessageQueueHandler implements Runnable {
             list=client.getMessageQueue();
             if(list!=null && list.size()!=0)
             {
-                list.forEach(x-> {
-                    try {
-                        clientController.onMessage(x);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                list.forEach(x->clientController.onMessage(x));
 
                 timeThread.interrupt();
                 try {

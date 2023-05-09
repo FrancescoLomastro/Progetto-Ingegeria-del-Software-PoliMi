@@ -165,11 +165,7 @@ public class ClientLoginController implements Initializable {
 //            ViewFactory.getInstance().showPlayerNumberRequest(event);
 //        }
         ViewFactory.getInstance().setEvent(event);
-        ViewFactory.getInstance().askNumberOfPlayers(2,4);
-        /*
-        DA RIMETTERE DOPO CHE FUNZIONA
         OBS_InitialInfoMessage initialInfoMessage = new OBS_InitialInfoMessage(chosenUsername,chosenTechnology,chosenIPAddress,chosenPort);
         ViewFactory.getInstance().notifyAllOBS(initialInfoMessage);
-         */
     }
 }
