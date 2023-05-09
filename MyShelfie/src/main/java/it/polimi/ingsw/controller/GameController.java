@@ -35,7 +35,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private int sendMessageToSpecific =0;
     ArrayList<String> testArray = new ArrayList<>();
     Controller controller;
-    PingTimer[] pingTimers;
+    Map<String, PingTimer> pingTimerMap;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -121,20 +121,21 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             case CHAT_MESSAGE -> notifyAllMessage(message);
             case PING_MESSAGE -> {
 
-                for(PingTimer pt: pingTimers){
+                PingTimer pt = pingTimerMap.get(message.getUsername());
 
-                    if(pt.getPlayerUsername().equals(((ServerPingMessage) message).getPlayerUsername())){
+                pt.cancel();
 
-                        pt.cancel();
-
-                        ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
-                        sendMessageToASpecificUser(serverPingMessage, pt.getPlayerUsername());
-
-                        pt = new PingTimer();
-                        pt.setPlayerUsername(((ServerPingMessage) message).getPlayerUsername());
-                        pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
-                    }
+                ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
+                try {
+                    clients.get(message.getUsername()).sendMessage(serverPingMessage);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+                pt = new PingTimer();
+                pingTimerMap.put(message.getUsername(), pt);
+                pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
+
+
             }
         }
     }
@@ -163,9 +164,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         // inizializzo l'array di pingTimers per dare a ogni timer lo username del rispettivo player e inizio il timeout
         for (int i = 0; i < game.getNumPlayers(); i++){
 
-            pingTimers[i] = new PingTimer();
-            pingTimers[i].setPlayerUsername(game.getPlayers()[i].getName());
-            pingTimers[i].schedule(new PingTaskServer(pingTimers[i].getPlayerUsername()), 10000);
+            PingTimer pt = new PingTimer();
+            pingTimerMap.put(game.getPlayers()[i].getName(), pt);
+            pt.schedule(new PingTaskServer(pt.getPlayerUsername()), 10000);
         }
 
         this.turnController = new TurnController(game, this);

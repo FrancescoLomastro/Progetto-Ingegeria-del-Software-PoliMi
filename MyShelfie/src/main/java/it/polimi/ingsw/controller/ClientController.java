@@ -62,8 +62,6 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             messageReceiver = new MessageQueueHandler(client, this);
 
-            pingTimer.schedule(new PingTaskClient(), 10000);
-
             client.connect();
             new Thread(messageReceiver).start();
         }
@@ -75,7 +73,7 @@ public class ClientController implements Observer<View, OBS_Message> {
     }
 
     //messaggi ricevuti dalla rete
-    public void onMessage(Message message) throws IOException {
+    public void onMessage(Message message)  {
         System.out.println(ANSI_YELLOW + "Message has arrived: " + message.getType() + ANSI_RESET);
         switch (message.getType())
         {
@@ -190,7 +188,11 @@ public class ClientController implements Observer<View, OBS_Message> {
                 pingTimer.cancel();
 
                 ServerPingMessage serverPingMessage = new ServerPingMessage(client.getUsername());
-                client.sendMessage(serverPingMessage);
+                try {
+                    client.sendMessage(serverPingMessage);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 pingTimer = new PingTimer();
                 pingTimer.schedule(new PingTaskClient(), 10000);
