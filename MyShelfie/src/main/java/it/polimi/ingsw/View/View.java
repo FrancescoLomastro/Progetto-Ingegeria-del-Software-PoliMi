@@ -22,4 +22,6 @@ public abstract class View extends Observable<OBS_Message> implements Runnable {
     public abstract void startChat();
     public abstract void printPoints(ClientModel clientObject);
     public abstract void errorCreatingClient(String chosenAddress, int chosenPort);
+
+    public abstract void StartGame();
 }

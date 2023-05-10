@@ -111,7 +111,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case START_GAME_MESSAGE ->
             {
-                view.printMessage("Game started");
+                view.StartGame();
                 view.startChat();
             }
             case CHAT_MESSAGE ->

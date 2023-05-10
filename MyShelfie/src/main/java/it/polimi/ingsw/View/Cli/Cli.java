@@ -349,6 +349,13 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         System.out.println("Error >> It was impossible to create a client and contact the server at [" + chosenAddress + "," + chosenPort + "]");
     }
 
+    @Override
+    public void StartGame() {
+        /*
+        DA IMPLEMENTARE
+         */
+    }
+
     /**Print personal goal card
      * @author: Riccardo Figini
      * @param goalVector Personal goal card vector
