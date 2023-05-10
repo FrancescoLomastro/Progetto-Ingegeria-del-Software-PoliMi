@@ -1,3 +1,17 @@
+.clientLogin_container {
+    -fx-background-image: url("Display_3.jpg");
+    -fx-background-position: center center;
+    -fx-background-size: 900 700;
+    /*-fx-background-size: cover;*/
+    -fx-background-repeat: no-repeat;
+}
+
+
+.external_options_container {
+    -fx-background-color: #8B4513;
+    -fx-opacity: 1;
+}
+
 .external_invalid_port_container {
     -fx-background-color: #8B4513;
     -fx-opacity: 1;
