@@ -29,11 +29,7 @@ public class MessageQueueHandler implements Runnable {
             if(list!=null && list.size()!=0)
             {
                 list.forEach(x-> {
-                    try {
-                        clientController.onMessage(x);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    clientController.onMessage(x);
                 });
             }
             else

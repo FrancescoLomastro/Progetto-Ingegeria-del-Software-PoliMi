@@ -36,7 +36,7 @@ public class Controller implements ServerReceiver
         isAsking=false;
         System.out.println("Do you want restor memory?");
         System.out.println(" - Yes(1)");
-        System.out.println(" - No(0), in this case memory will be destroyed (so all game)");
+        System.out.println(" - No(0), in this case memory will be destroyed (all games)");
         Scanner scanner = new Scanner(System.in);
         String decision;
         while(true) {
@@ -280,17 +280,11 @@ public class Controller implements ServerReceiver
     }
 
     private boolean availableUsername(String username) {
-        synchronized (games) {
-            for (GameController gc : games) {
-                if (gc.getNamesOfPlayer() == null || gc.getNamesOfPlayer().size() == 0) {
-                    games.remove(gc);
-                    continue;
-                }
-                if (gc.getNamesOfPlayer().contains(username))
-                    return false;
-            }
-            return true;
+        for (GameController gc : games) {
+            if (gc.getNamesOfPlayer().contains(username))
+                return false;
         }
+        return true;
     }
 
     /**It adds player if his game has been re-loaded from file, otherwise load game and then add player
@@ -489,6 +483,7 @@ public class Controller implements ServerReceiver
         } catch (IOException e) {
             System.out.println(ANSI_BLU + "Impossible delete file" + ANSI_RESET);
         }
+        games.remove(gameController);
     }
     /**It destroys game controller and warn every player
      * @author: Riccardo Figini
@@ -511,6 +506,13 @@ public class Controller implements ServerReceiver
         } catch (IOException e) {
             System.out.println(ANSI_BLU + "Impossible delete file" + ANSI_RESET);
         }
+        games.remove(gameController);
+        /*
+    * if (gc.getNamesOfPlayer() == null || gc.getNamesOfPlayer().size() == 0) {
+                games.remove(gc);
+                continue;
+            }
+     */
     }
     /**It removes player from specific not in execution game
      * @author: Riccardo Figini
