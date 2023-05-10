@@ -9,14 +9,23 @@ import java.util.ResourceBundle;
 
 public class AcceptedLoginController implements Initializable {
     public Label current_numPlayers_label;
-    private String string;
+    public Label member_players;
+    private String current_numPlayers;
+    private String members;
 
-    public void setString(String string) {
-        this.string = string;
+
+    public void setCurrent_numPlayers(String current_numPlayers) {
+        this.current_numPlayers = current_numPlayers;
+    }
+
+    public void setMember_players(String members) {
+        this.members = members;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        current_numPlayers_label.setText(string);
+
+        current_numPlayers_label.setText(current_numPlayers);
+        member_players.setText(members);
     }
 }

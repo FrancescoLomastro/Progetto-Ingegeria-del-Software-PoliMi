@@ -1,8 +1,20 @@
+.invalid_username_container {
+    -fx-background-image: url("Display_3.jpg");
+    -fx-background-position: center center;
+    -fx-background-size: 900 700;
+    /*-fx-background-size: cover;*/
+    -fx-background-repeat: no-repeat;
+}
+
+
+.external_options_container {
+    -fx-background-color: #8B4513;
+    -fx-opacity: 1;
+}
+
 .external_invalid_port_container {
     -fx-background-color: #8B4513;
     -fx-opacity: 1;
-    -fx-pref-height: 200;
-    -fx-pref-width: 300;
 }
 
 .internal_vbox_container {
@@ -10,13 +22,6 @@
     -fx-opacity: 0.75;
     -fx-spacing: 10;
     -fx-alignment: top-center;
-    -fx-pref-width: 190;
-    -fx-pref-height: 270;
-}
-
-.internal_vbox_container ImageView {
-    -fx-pref-height: 70;
-    -fx-pref-width: 290;
 }
 
 .internal_vbox_container_label1 {
@@ -27,6 +32,7 @@
 
 .internal_vbox_container_label2 {
     -fx-text-fill: #ff0000;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 

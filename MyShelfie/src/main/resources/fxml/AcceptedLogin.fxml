@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="clientLogin_container" stylesheets="@../styles/ClientLogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.AcceptedLoginController">
     <AnchorPane layoutX="275.0" layoutY="225.0" prefHeight="250.0" prefWidth="350.0" styleClass="external_player_number_request_container" stylesheets="@../styles/PlayerNumberRequest.css" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="225.0">
@@ -19,8 +17,7 @@
                 </ImageView>
                 <Label styleClass="internal_vbox_container_label1" text="Connection accepted,&#13; waiting for other players to join." />
                 <Label fx:id="current_numPlayers_label" styleClass="internal_vbox_container_label1" />
-                <Button fx:id="login_button" mnemonicParsing="false" styleClass="internal_form_container_logInButton"
-                        text="show livingroom"/>
+            <Label fx:id="member_players" styleClass="internal_vbox_container_label1"  />
             </VBox>
         </children>
     </AnchorPane>

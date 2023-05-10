@@ -40,3 +40,8 @@
     -fx-cursor: hand;
     -fx-background-color: #800000;
 }
+
+.internal_form_container_input_username {
+    -fx-text-fill: #000000;
+    -fx-max-width: 250;
+}
