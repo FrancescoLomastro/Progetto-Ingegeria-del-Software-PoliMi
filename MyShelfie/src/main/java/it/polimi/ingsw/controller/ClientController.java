@@ -111,13 +111,21 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case START_GAME_MESSAGE ->
             {
-                view.printMessage("Game started");
+                view.startGame("Game started");
                 view.startChat();
+                view.printMessage("\033[34mChat is on, you can use it while it's not your turn\033[0m");
             }
             case CHAT_MESSAGE ->
             {
-                String text = ((ChatMessage) message).getText();
-                view.printMessage("CHAT >> "+ text);
+                ChatMessage msg = (ChatMessage) message;
+                String text = msg.getText();
+
+                String username = msg.getUsername();
+                if(username.equals(client.getUsername()))
+                {
+                    username="You";
+                }
+                view.chatMessage(username,text);
             }
             case MY_MOVE_REQUEST ->
             {
@@ -151,13 +159,15 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case AFTER_MOVE_POSITIVE ->
             {
-                view.printMessage("Move performed successfully");
+                view.printMessage("Move performed successfully\n" +
+                        ">> \033[34mYou can use the chat while waiting for your turn, try type something!\033[0m");
                 if(((MessageAfterMovePositive) message).getGainedPointsFirstCard()>0){
                     view.printMessage("Points gained from first common goal: " + ((MessageAfterMovePositive) message).getGainedPointsFirstCard());
                 }
                 if(((MessageAfterMovePositive) message).getGainedPointsSecondCard()>0){
                     view.printMessage("Points gained from second common goal: " + ((MessageAfterMovePositive) message).getGainedPointsSecondCard());
                 }
+
             }
             case INIT_PLAYER_MESSAGE -> {
                 clientModel.addPlayer(((MessageInitPlayer) message).getPlayer());

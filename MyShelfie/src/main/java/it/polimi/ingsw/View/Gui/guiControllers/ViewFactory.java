@@ -119,6 +119,11 @@ public class ViewFactory extends View {
     }
 
     @Override
+    public void chatMessage(String username, String text) {
+
+    }
+
+    @Override
     public void askNumberOfPlayers(int min, int max) {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));

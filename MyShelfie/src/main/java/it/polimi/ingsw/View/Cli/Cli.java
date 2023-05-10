@@ -5,6 +5,7 @@ import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.OBSMessages.*;
 import it.polimi.ingsw.View.OBSMessages.OBS_ChatMessage;
 import it.polimi.ingsw.View.View;
+import it.polimi.ingsw.exceptions.ResetMoveException;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.ClientState;
 import it.polimi.ingsw.model.Enums.Color;
@@ -349,6 +350,11 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         System.out.println("Error >> It was impossible to create a client and contact the server at [" + chosenAddress + "," + chosenPort + "]");
     }
 
+    @Override
+    public void chatMessage(String username, String text) {
+        System.out.println("\n["+username+"]\n  "+text);
+    }
+
     /**Print personal goal card
      * @author: Riccardo Figini
      * @param goalVector Personal goal card vector
@@ -382,16 +388,15 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @param numberOfCards Number of card in input
      * @return {@code Position[]} Vector with position
      * */
-    private Position[] askPositions(int numberOfCards)
-    {
+    private Position[] askPositions(int numberOfCards) throws ResetMoveException {
         int row, column;
         Position[] positions = new Position[numberOfCards];
-        System.out.println("Now draw "+numberOfCards+" cards");
+        System.out.println("Now draw "+(numberOfCards+1)+" cards");
         for(int i=0; i<numberOfCards; i++){
-            System.out.println("Card number " + i);
-            System.out.println("Row: ");
+            System.out.println("Card number " + (i+1));
+            System.out.println("Row: [type \"RESET\" to cancel]");
             row= getNumberWithLimit(10)-1;
-            System.out.println("Column: ");
+            System.out.println("Column: [type \"RESET\" to cancel]");
             column= getNumberWithLimit(10)-1;
             positions[i] = new Position(row, column);
         }
@@ -402,13 +407,15 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @param limit Upper limit
      * @return {@code int} inseted number
      * */
-    private int getNumberWithLimit(int limit)
+    private int getNumberWithLimit(int limit) throws ResetMoveException
     {
         String input;
         int number;
         input = getInputRequest();
         while (true) {
             try {
+                if(input.equals("RESET"))
+                    throw new ResetMoveException();
                 number = Integer.parseInt(input);
                 if(number<=0 || number>limit)
                     throw new NumberFormatException();
@@ -424,16 +431,24 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
      * @return {@code messahe} Message with move (Column and positions)*/
     @Override
     public void askMove()  {
-        int column, numberOfCards;
-        Position[] position;
+        int column=0, numberOfCards;
+        Position[] position=null;
         System.out.println("\n>> It's your turn, please make your move");
-        System.out.println("How many card do you want? [minimum 1, max 3");
-        numberOfCards = getNumberWithLimit(3);
-
-        position = askPositions(numberOfCards);
-
-        System.out.println("In which column do you want insert this cards?");
-        column= getNumberWithLimit(5)-1;
+        boolean reset;
+        do 
+        {
+            try 
+            {
+                reset=false;
+                System.out.println("How many card do you want? [minimum 1, max 3]");
+                numberOfCards = getNumberWithLimit(3);
+                position = askPositions(numberOfCards);
+                System.out.println("In which column do you want insert this cards? [type \"RESET\" to cancel]");
+                column = getNumberWithLimit(5) - 1;
+            } catch (ResetMoveException e) {
+                reset=true;
+            }
+        }while(reset);
 
         OBS_Message msg = new OBS_MoveMessage(position, column);
 
