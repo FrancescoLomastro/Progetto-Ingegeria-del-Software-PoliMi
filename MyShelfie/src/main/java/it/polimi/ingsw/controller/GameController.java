@@ -34,8 +34,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private int sendMessageAll =0;
     private int sendMessageToSpecific =0;
     ArrayList<String> testArray = new ArrayList<>();
-    Controller controller;
-   // Map<String, PingTimer> pingTimerMap;
+    transient Controller controller;
+    // Map<String, PingTimer> pingTimerMap;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -79,7 +79,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             registry.bind(serverNameRMI, gameShared);
         }
         catch (Exception e){
-            throw new RuntimeException(e);
+            System.out.println("Fallimento durante la creazione di Gameserver RMI");//throw new RuntimeException(e);
         }
         newServerMessages();
         initGame();

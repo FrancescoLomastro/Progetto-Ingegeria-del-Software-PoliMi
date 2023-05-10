@@ -1,8 +1,6 @@
 
 -Gestione del ping: andrea
 
-- Sistemare chat
-
 - Prima o poi fare una partita per ogni common goal card
 
 - Svolgere un intera partita per vedere se funziona tutto correttamente: figio (fatto e funziona)
@@ -11,8 +9,4 @@
 
 - Gestione messaggio "GAME_IS_OVER" lato cliet, con stampa che la partita è terminata: figio
 
-- Chat, scrivere da chi proviene il messaggio (rendere più bella?):
-
 - Pattern adapter per il client controller: lomi - figio
-
-- Passare la porta al nuovo server GameController

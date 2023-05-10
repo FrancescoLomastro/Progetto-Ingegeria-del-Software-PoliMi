@@ -25,6 +25,5 @@ public abstract class View extends Observable<OBS_Message> implements Runnable {
 
     public abstract void chatMessage(String username, String text);
 
-    public void startGame(String gameStarted) {
-    }
+    public abstract void startGame();
 }

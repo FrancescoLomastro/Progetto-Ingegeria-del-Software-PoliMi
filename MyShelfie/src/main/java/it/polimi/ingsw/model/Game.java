@@ -108,13 +108,23 @@ public class Game implements Serializable {
      */
     private Message checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards){
         int points1=0, points2=0;
-        if(commonGoalCards[0].isSatisfied(player.getLibrary())){
-            points1=commonGoalCards[0].getScoreWithDecrease();
-            player.addPoints(points1);
+        boolean goalCards[] = player.getLibrary().getSatisfiedGoal();
+        if(goalCards[0]==false)
+        {
+            if (commonGoalCards[0].isSatisfied(player.getLibrary())) {
+                player.getLibrary().satisfyCommonGoal(0);
+                points1 = commonGoalCards[0].getScoreWithDecrease();
+                player.addPoints(points1);
+            }
         }
-        if(commonGoalCards[1].isSatisfied(player.getLibrary())){
-            points2=commonGoalCards[1].getScoreWithDecrease();
-            player.addPoints(points2);
+        if(goalCards[1]==false)
+        {
+            if (commonGoalCards[1].isSatisfied(player.getLibrary()))
+            {
+                player.getLibrary().satisfyCommonGoal(1);
+                points2 = commonGoalCards[1].getScoreWithDecrease();
+                player.addPoints(points2);
+            }
         }
         return new MessageAfterMovePositive(points1, points2);
     }

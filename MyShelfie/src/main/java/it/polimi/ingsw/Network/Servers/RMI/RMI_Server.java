@@ -19,6 +19,8 @@ public class RMI_Server {
 
     public void turnOn() throws Exception{
         String address = getLocalIp();
+        if(address==null)
+            address="127.0.0.1";
         System.setProperty("java.rmi.server.hostname", address);
         System.out.println("Server RMI on at "+address);
         RMIShared sharedObject = new RMIShared(serverReceiver);

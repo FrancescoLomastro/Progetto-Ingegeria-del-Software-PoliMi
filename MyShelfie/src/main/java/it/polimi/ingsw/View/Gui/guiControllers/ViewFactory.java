@@ -119,6 +119,18 @@ public class ViewFactory extends View {
     }
 
     @Override
+    public void startGame() {
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Livingroom.fxml"));
+            stage.setMinHeight(800);
+            stage.setMinWidth(800);
+            stage.setWidth(800);
+            stage.setHeight(800);
+            switchScene(loader);
+        });
+    }
+
+    @Override
     public void chatMessage(String username, String text) {
 
     }
@@ -139,7 +151,10 @@ public class ViewFactory extends View {
 
     @Override
     public void onInvalidUsername() {
-
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidUsername.fxml"));
+            switchScene(loader);
+        });
     }
 
     @Override
@@ -148,7 +163,11 @@ public class ViewFactory extends View {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
             loader.setControllerFactory(controllerClass -> {
                 AcceptedLoginController controller = new AcceptedLoginController();
-                controller.setString(string);
+                int indexSplitter = 33;
+                String currNum_players = string.substring(0,indexSplitter);
+                String member_names = string.substring(indexSplitter);
+                controller.setCurrent_numPlayers(currNum_players);
+                controller.setMember_players(member_names);
                 return controller;
             });
             switchScene(loader);

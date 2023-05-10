@@ -3,8 +3,7 @@ import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.OBSMessages.*;
-import it.polimi.ingsw.View.OBSMessages.OBS_ChatMessage;
-import it.polimi.ingsw.View.View;
+import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.exceptions.ResetMoveException;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.ClientState;
@@ -355,6 +354,11 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         System.out.println("\n["+username+"]\n  "+text);
     }
 
+    @Override
+    public void startGame() {
+        System.out.println("\nGame started");
+    }
+
     /**Print personal goal card
      * @author: Riccardo Figini
      * @param goalVector Personal goal card vector
@@ -372,13 +376,13 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
 
         for(int riga =0; riga<6;riga++)
         {
-           for(int colonna =0; colonna<5;colonna++)
-           {
+            for(int colonna =0; colonna<5;colonna++)
+            {
                 if(matrix[riga][colonna]==null)
                 {
                     matrix[riga][colonna]=new ObjectCard("",Color.EMPTY,Type.FIRST);
                 }
-           }
+            }
         }
 
         showLibrary(matrix,"Your Personal Goal Card is:");
@@ -435,9 +439,9 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         Position[] position=null;
         System.out.println("\n>> It's your turn, please make your move");
         boolean reset;
-        do 
+        do
         {
-            try 
+            try
             {
                 reset=false;
                 System.out.println("How many card do you want? [minimum 1, max 3]");
@@ -478,6 +482,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     {
         String input;
         OBS_Message msg;
+        System.out.println("\033[34mChat is on, you can use it while it's not your turn\033[0m");
         while (true)
         {
             input=scanner.nextLine();

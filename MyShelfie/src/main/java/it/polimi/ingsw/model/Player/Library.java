@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Enums.Direction;
 import it.polimi.ingsw.model.Utility.Position;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -19,6 +20,7 @@ public class Library implements Serializable {
     private final int numberOfRows=6;
     private final int numberOfColumns=5;
     private ObjectCard[][] matrix;
+    private boolean[] satisfiedGoal;
 
     /**
      * Constructor of Library instances
@@ -27,7 +29,27 @@ public class Library implements Serializable {
      */
     public Library() {
          matrix = new ObjectCard[numberOfRows][numberOfColumns];
+         satisfiedGoal = new boolean[]{false,false};
     }
+    /**
+     * It gets a boolean vector that indicates which cards are already satisfied
+     *
+     * @return: boolean vector with 2 cells, if the cell with index i is false means that the i card has never been satisfied by the player who owns the library
+     *  @author Lo Mastro Francesco
+     */
+    public boolean[] getSatisfiedGoal() {
+        return Arrays.copyOf(satisfiedGoal,satisfiedGoal.length);
+    }
+
+    /**
+     * It sets the card identified by the parameter as satisfied
+     * @param index the index of the commonGoalCard to be set as satisfied
+     * @author Lo Mastro Francesco
+     */
+    public void satisfyCommonGoal(int index) {
+        satisfiedGoal[index]=true;
+    }
+
 
     /**
      * It gets the library number of columns
@@ -135,8 +157,6 @@ public class Library implements Serializable {
      */
     public void insertCardsInLibrary(int chosenColumn, ObjectCard... cards) throws InvalidMoveException {
         int row;
-
-
         isMoveAvailable(chosenColumn, cards);
 
         row=findNumberOfFreeCells(chosenColumn)-1;

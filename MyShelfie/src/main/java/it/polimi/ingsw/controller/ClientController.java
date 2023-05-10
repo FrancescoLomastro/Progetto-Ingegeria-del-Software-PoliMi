@@ -111,9 +111,9 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case START_GAME_MESSAGE ->
             {
-                view.startGame("Game started");
+                view.startGame();
+                //da adeguare alla GUi
                 view.startChat();
-                view.printMessage("\033[34mChat is on, you can use it while it's not your turn\033[0m");
             }
             case CHAT_MESSAGE ->
             {
