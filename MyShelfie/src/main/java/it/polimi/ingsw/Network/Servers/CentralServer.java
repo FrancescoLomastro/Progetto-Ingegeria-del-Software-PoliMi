@@ -13,20 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CentralServer {
-    private final int socketPort = 8000;
-    private final int rmiPort = 9000;
-    private Controller controller;
-    private Map<String,Connection> clients;
-
-
-    public CentralServer()
-    {
+    public final static int socketPort = 8000;
+    public final static int rmiPort = 9000;
+    private final Controller controller;
+    public CentralServer() {
         controller= new Controller();
-        clients = new HashMap<>();
     }
-
-    public void start()
-    {
+    public void start() {
         RMI_Server rmiServer = new RMI_Server(controller,rmiPort);
         try {
             rmiServer.turnOn();
@@ -40,21 +33,11 @@ public class CentralServer {
             System.out.println("Failed to create Socket server" + e);
         }
     }
-
     public static void main(String[] args) {
         CentralServer centralServer = new CentralServer();
         centralServer.start();
     }
-
-    public void login(String username,Connection connection)
-    {
-        controller.login(username,connection);
-    }
-
-
     public void onMessage(Message message) {
         controller.onMessage(message);
     }
-
-
 }

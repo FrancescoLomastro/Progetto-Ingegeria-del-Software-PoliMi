@@ -4,6 +4,9 @@ package it.polimi.ingsw.Network.Servers.Socket;
 
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.Connection;
+import it.polimi.ingsw.Network.StatusNetwork;
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.ServerReceiver;
 
 import java.io.IOException;
@@ -12,42 +15,38 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class SocketConnection implements Connection,Runnable {
-
+    StatusNetwork statusNetwork;
     private ServerReceiver serverReceiver;
     private final Socket socket;
     private final ObjectInputStream in;
     private final ObjectOutputStream out;
-
-    boolean connected=false;
+    private String playerName;
 
     public SocketConnection(ServerReceiver serverReceiver, Socket clientSocket) throws IOException {
         this.serverReceiver = serverReceiver;
         this.socket = clientSocket;
         this.in = new ObjectInputStream(socket.getInputStream());
         this.out = new ObjectOutputStream(socket.getOutputStream());
+        statusNetwork=StatusNetwork.AFTER_ACCEPTION_SOCKET_BEFORE_LOGIN_MESSAGE;
     }
 
     @Override
     public void run() {
-        while (true)
+        boolean continueCicle=true;
+        while (continueCicle)
         {
             try {
                 Message message = (Message) in.readObject();
                 onMessage(message);
-            } catch (IOException e) {
-                System.out.println("Failed communication with client's socket\n[Details]\n" + e);
-                System.out.println("Closing remote socket...");
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println(Controller.ANSI_BLU + "Failed communication with client's socket: " + e + GameController.ANSI_RESET);
                 try {
                     socket.close();
                 } catch (IOException ex) {
-                    System.out.println("Failed closing socket\n[Details]\n" + ex);
+                    System.out.println(Controller.ANSI_BLU + "Failed closing socket\n[Details]\n" + ex + GameController.ANSI_RESET);
                 }
-                finally
-                {
-                    break;
-                }
-            } catch (ClassNotFoundException e) {
-                System.out.println("Failed to cast client message, message dropped\n[Details]\n" + e);
+                serverReceiver.tryToDisconnect(this, playerName);
+                continueCicle=false;
             }
         }
     }
@@ -75,7 +74,29 @@ public class SocketConnection implements Connection,Runnable {
             out.writeObject(message);
             out.reset();
         }
-        else throw new IOException();
+        else {
+            throw new IOException();
+        }
+    }
+
+    @Override
+    public StatusNetwork getStatusNetwork() {
+        return statusNetwork;
+    }
+
+    @Override
+    public void setStatusNetwork(StatusNetwork statusNetwork) {
+        this.statusNetwork=statusNetwork;
+    }
+
+    @Override
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    @Override
+    public void setPlayerName(String playerName) {
+        this.playerName=playerName;
     }
 
 }

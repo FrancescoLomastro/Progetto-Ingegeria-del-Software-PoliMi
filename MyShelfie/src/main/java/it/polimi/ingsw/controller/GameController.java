@@ -1,10 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.Network.Servers.CentralServer;
 import it.polimi.ingsw.Network.Servers.Connection;
-import it.polimi.ingsw.Network.Servers.PingTaskServer;
 import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
-import it.polimi.ingsw.Network.Servers.PingTimer;
+import it.polimi.ingsw.Network.StatusNetwork;
 import it.polimi.ingsw.model.Game;
 
 import java.io.*;
@@ -29,13 +29,13 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private transient Map<String, Connection> clients;
     private int limitOfPlayers;
     private final String serverNameRMI;
-    private final int portServerRMI=9000;
     private String gameFilePath;
     private int sendMessageAll =0;
     private int sendMessageToSpecific =0;
-    ArrayList<String> testArray = new ArrayList<>();
-    transient Controller controller;
-    // Map<String, PingTimer> pingTimerMap;
+    private final ArrayList<String> testArray = new ArrayList<>();
+    private transient Controller controller;
+    private boolean gameInGame;
+    //private PingTimer[] pingTimers;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -45,8 +45,10 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         this.gameId = gameId;
         this.serverNameRMI="ServerGame"+gameId;
         this.controller = controller;
+        gameInGame=false;
     }
-    public void reloadPlayer(){
+    public void reloadPlayerCreatingNewMap(Controller controller){
+        this.controller = controller;
         clients = new LinkedHashMap<>();
     }
     /**
@@ -56,15 +58,15 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * */
     public void addPlayer(String username, Connection connection) {
         clients.put(username,connection);
-        if(game == null || (testArray != null && testArray.size() != game.getNumPlayers()))
+        if(game == null || (testArray.size() != game.getNumPlayers()))
             testArray.add(username);
         List<String> usernames = clients.keySet().stream().toList();
         clients.values().forEach(x->
         {
             try {
-                x.sendMessage(new LobbyUpdateMessage(usernames,limitOfPlayers));
+                x.sendMessage(new LobbyUpdateMessage(usernames,limitOfPlayers, "New player join"));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                tryToDisconnect(connection, username);
             }
         });
     }
@@ -75,16 +77,19 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     public void run() {
         try {
             RMIShared gameShared = new RMIShared(this);
-            Registry registry = LocateRegistry.getRegistry(portServerRMI);
+            Registry registry = LocateRegistry.getRegistry(CentralServer.rmiPort);
             registry.bind(serverNameRMI, gameShared);
         }
         catch (Exception e){
-            System.out.println("Fallimento durante la creazione di Gameserver RMI");//throw new RuntimeException(e);
+            System.out.println(Controller.ANSI_BLU + "Impossible to allocate server game. Game will be closed" + ANSI_RESET);
+            gameNeedToBeClosed("Server cannot create new server for game");
         }
         newServerMessages();
         initGame();
         initGameFile();
         System.out.println("Inizializzata partita e mandato il messaggio");
+        controller.changeStatusToEveryone(StatusNetwork.IN_GAME, this);
+        gameInGame=true;
     }
 
     private void initGameFile() {
@@ -95,7 +100,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             out.writeObject(this);
             out.close();
         } catch (IOException e) {
-            System.out.println("Initialization of game file has problems, " + e);
+            System.out.println(Controller.ANSI_BLU + "Initialization of game file has problems, " + e + ANSI_RESET);
+            gameNeedToBeClosed("Game's file cannot be created, game will be closed");
         }
     }
 
@@ -105,55 +111,70 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     public void newServerMessages(){
         for(Map.Entry<String, Connection> entry : clients.entrySet()){
             try {
-                entry.getValue().sendMessage(new NewGameServerMessage(serverNameRMI, portServerRMI, this));
-
+                entry.getValue().sendMessage(new NewGameServerMessage(serverNameRMI, CentralServer.rmiPort, this));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(Controller.ANSI_BLU + "Error in sending message " + e + ANSI_RESET);
+                gameNeedToBeClosed(entry.getKey(), entry.getKey()+ " has some problem, game will be closed and delete");
             }
         }
     }
 
     @Override
     synchronized public void onMessage(Message message) {
-
-        if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
-
-            System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
-        }
-
+        System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
         switch (message.getType()){
             case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
             case CHAT_MESSAGE -> notifyAllMessage(message);
-            case PING_MESSAGE -> {
+            /*case PING_MESSAGE -> {
 
-                //PingTimer pt = pingTimerMap.get(message.getUsername());
+                for(PingTimer pt: pingTimers){
 
-                //pt.cancel();
+                    if(pt.getPlayerUsername().equals(((ServerPingMessage) message).getPlayerUsername())){
 
-                ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
-                try {
-                    clients.get(message.getUsername()).sendMessage(serverPingMessage);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                        pt.cancel();
+
+                        ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
+                        sendMessageToASpecificUser(serverPingMessage, pt.getPlayerUsername());
+
+                        pt = new PingTimer();
+                        pt.setPlayerUsername(((ServerPingMessage) message).getPlayerUsername());
+                        pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
+                    }
                 }
-                //pt = new PingTimer();
-                //pingTimerMap.put(message.getUsername(), pt);
-                //pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
-
-
-            }
+            }*/
         }
     }
 
+    @Override
+    public void tryToDisconnect(Connection connection, String playerName) {
+        switch (connection.getStatusNetwork()){
+            case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED -> {
+                System.out.println(Controller.ANSI_BLU + "Problem in contacting " + playerName + " during closing, droping the message..." + ANSI_RESET);
+            }
+            case IN_GAME, NEW_GAME_IS_STARTING -> {
+                System.out.println(Controller.ANSI_BLU + "Closing game for some problem..." + ANSI_RESET);
+                gameNeedToBeClosed(playerName,"Problem with a player, game will be closed and destroy");
+            }
+        }
+    }
+    private void gameNeedToBeClosed(String message){
+        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
+        controller.destroyGame(message, this);
+    }
+    private void gameNeedToBeClosed(String message, String player){
+        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
+        controller.destroyGame(player, message, this);
+    }
     /**
      * initialization of a game
      * */
     public void initGame(){
-        // inizializzo il game
+
         try {
             game = new Game(clients.size());
         }catch(IOException e){
-            throw new RuntimeException("Error" + e);
+            System.out.println(Controller.ANSI_BLU + "Error in game creation" + e + ANSI_RESET);
+            gameNeedToBeClosed("Game has some problem in allocation, game will be closed");
         }
 
         //inizializzo i giocatori nel game
@@ -162,32 +183,21 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             game.setNextPlayer(key);
         }
 
-
+        /*
         ServerPingMessage initPingMessage = new ServerPingMessage("SERVER");
         notifyAllMessage(initPingMessage);
 
         // inizializzo l'array di pingTimers per dare a ogni timer lo username del rispettivo player e inizio il timeout
         for (int i = 0; i < game.getNumPlayers(); i++){
 
-            PingTimer pt = new PingTimer();
-            //pingTimerMap.put(game.getPlayers()[i].getName(), pt);
-            pt.schedule(new PingTaskServer(pt.getPlayerUsername()), 10000);
+            pingTimers[i] = new PingTimer();
+            pingTimers[i].setPlayerUsername(game.getPlayers()[i].getName());
+            pingTimers[i].schedule(new PingTaskServer(pingTimers[i].getPlayerUsername()), 10000);
         }
+
+         */
 
         this.turnController = new TurnController(game, this);
-    }
-    /**
-     * sends the start game message
-     * */
-    public void startGameMessages(){
-        for(Map.Entry<String, Connection> entry : clients.entrySet()){
-            try {
-                entry.getValue().sendMessage(new MessageGame(MessageType.START_GAME_MESSAGE));
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     /**
@@ -202,7 +212,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                 Connection value = entry.getValue();
                 value.sendMessage(message);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                tryToDisconnect(clients.get(entry.getKey()), entry.getKey());
             }
         }
     }
@@ -212,13 +222,13 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param username : the username who will receive that message
      * */
     public void sendMessageToASpecificUser(Message message, String username){
-        System.out.println(sendMessageToSpecific + ") Message send specific, Type: " + message.getType());
+        System.out.println(sendMessageToSpecific + ") Message send specific, Type: " + message.getType() + ", " + username);
         sendMessageToSpecific++;
         try {
             clients.get(username).sendMessage(message);
         }
         catch (Exception e){
-            System.out.println("Error in sending message" + e);
+            tryToDisconnect(clients.get(username), username);
         }
     }
     /**Save Game data on a file
@@ -232,7 +242,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             out.close();
             System.out.println("Memory updated");
         } catch (IOException e) {
-            System.out.println("Updating file error, " + e);
+            System.out.println(Controller.ANSI_BLU + "Updating file error, " + e + ANSI_RESET);
+            System.out.println(Controller.ANSI_BLU + "This turn is not saved" + ANSI_RESET);
         }
     }
 
@@ -240,7 +251,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @author: Riccardo Figini
      * @return {@code ArrayList<String>} List of player
      * */
-    public ArrayList<String> getNameOfPlayer(){
+    public ArrayList<String> getNamesOfPlayer(){
         return testArray;
     }
     public int getGameId() {
@@ -257,17 +268,16 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     /**
      * @return the size of the hashmap that contains the players
      * */
-    public int getSize()
+    public int getSizeArrayConnection()
     {
         return clients.size();
     }
-
     /**
      * @param username : a player's username
      * @return true if this player is registered in this game
      * */
     public boolean isRegistered(String username) {
-        return clients.keySet().contains(username);
+        return clients.containsKey(username);
     }
     /**It initialized game (model and client) when a game is restarted
      * */
@@ -277,6 +287,10 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         newServerMessages();
         notifyAllMessage(new MessageGame(MessageType.START_GAME_MESSAGE));
         turnController.initClientObjectInPlayer();
+        for(Map.Entry<String, Connection> entry: clients.entrySet()){
+            entry.getValue().setPlayerName(entry.getKey());
+            entry.getValue().setStatusNetwork(StatusNetwork.IN_GAME);
+        }
         player = turnController.getPlayerAfterReload();
         sendMessageToASpecificUser(new MessageMove(), player);
     }
@@ -285,11 +299,12 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private void setUpOldServerGame() {
         try {
             RMIShared gameShared = new RMIShared(this);
-            Registry registry = LocateRegistry.getRegistry(portServerRMI);
+            Registry registry = LocateRegistry.getRegistry(CentralServer.rmiPort);
             registry.bind(serverNameRMI, gameShared);
         }
         catch (Exception e){
-            throw new RuntimeException(e);
+            System.out.println((Controller.ANSI_BLU + "GameController can be loaded on registry " + e + ANSI_RESET));
+            gameNeedToBeClosed("Game Controller server cannot be allocated");
         }
     }
     /**Delete file game when it is over
@@ -298,13 +313,21 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         String path = gameFilePath;
         try {
             Files.delete(Paths.get(path));
+            controller.deleteGameFromArrayContainer(gameId);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(Controller.ANSI_BLU + "File game can't be deleted, name cannot be used again" + ANSI_RESET);
         }
-        controller.deleteGame(gameId);
     }
 
-    public Map<String, Connection> getClients() {
-        return clients;
+    public void removePlayer(String name){
+        for(int i=0; i<testArray.size(); i++) {
+            if (testArray.get(i).equals(name)) {
+                testArray.remove(i);
+                break;
+            }
+        }
+        clients.remove(name);
+        if(!gameInGame)
+            notifyAllMessage(new LobbyUpdateMessage(clients.keySet().stream().toList(),limitOfPlayers, "Players left"));
     }
 }

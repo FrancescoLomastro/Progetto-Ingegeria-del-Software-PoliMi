@@ -66,76 +66,71 @@ public class TurnController implements Runnable, Serializable {
      * @param message : the message to save
      * */
     public void startTheTurn(MessageMove message){
-        if(message.getUsername().equals(currentPlayer)){
+        if(message!= null && message.getUsername().equals(currentPlayer)){
             this.message = message;
             new Thread(this).start();
+        }
+        else {
+            gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer);
         }
     }
 
     /**
      * implementation of Runnable interface's method run
      * */
-    public void run(){
-
+    public void run() {
         Message moveResult;
-        if(message != null){
-            moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
-            if(moveResult.getType() == AFTER_MOVE_POSITIVE){
+        moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
+        if (moveResult.getType() == AFTER_MOVE_POSITIVE) {
 
-                MessageGrid messageGrid = new MessageGrid(game.getGrid());
-                gameController.notifyAllMessage(messageGrid);
+            MessageGrid messageGrid = new MessageGrid(game.getGrid());
+            gameController.notifyAllMessage(messageGrid);
 
-                MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername());
-                gameController.notifyAllMessage(messageLibrary);
+            MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername());
+            gameController.notifyAllMessage(messageLibrary);
 
-                gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa è adnata a buon fine
+            gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa è adnata a buon fine
 
-                /*Controllo se la sua libraria è terminata, allora attivo il countdown*/
-                if(game.checkEndLibrary(message.getUsername()) && !flagCountdown) {
-                    flagCountdown = true;
-                    gameController.notifyAllMessage(new MessageGame(ALMOST_OVER));
-                }
-
-
-
-                //se il player ha completato almeno un obiettivo comune, informo tutti i giocatori
-                if(((MessageAfterMovePositive)moveResult).getGainedPointsFirstCard() > 0 || ((MessageAfterMovePositive)moveResult).getGainedPointsSecondCard() > 0){
-
-                    // copio nel messaggio del common goal i punti guadagnati, di cui ho tenuto traccia nel messageAfterMovePositive
-                    MessageCommonGoal messageCommonGoal = new MessageCommonGoal(
-                            ((MessageAfterMovePositive)moveResult).getGainedPointsFirstCard(),
-                            ((MessageAfterMovePositive)moveResult).getGainedPointsSecondCard(),
-                            message.getUsername(),
-                            game.getCommonGoalCard()[0].getPoints(),
-                            game.getCommonGoalCard()[1].getPoints()
-                    );
-
-                    // e notifico a tutti i giocatori
-                    gameController.notifyAllMessage(messageCommonGoal);
-                }
-
-
-
-                currPlayerIndex ++;
-                if(currPlayerIndex == game.getNumPlayers()){
-
-                    currPlayerIndex = 0;
-                }
-                currentPlayer = game.getPlayers()[currPlayerIndex].getName();
-
-                if(flagCountdown && currPlayerIndex==0) {
-                    handleEndGame();
-                    return;
-                }
-                gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer); // richiedo la mossa al giocatore successivo
-                gameController.updateFile();
+            /*Controllo se la sua libraria è terminata, allora attivo il countdown*/
+            if (game.checkEndLibrary(message.getUsername()) && !flagCountdown) {
+                flagCountdown = true;
+                gameController.notifyAllMessage(new MessageGame(ALMOST_OVER));
             }
-            else if(moveResult.getType()==AFTER_MOVE_NEGATIVE){
-                gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa non è andata a buon fine
+
+
+            //se il player ha completato almeno un obiettivo comune, informo tutti i giocatori
+            if (((MessageAfterMovePositive) moveResult).getGainedPointsFirstCard() > 0 || ((MessageAfterMovePositive) moveResult).getGainedPointsSecondCard() > 0) {
+
+                // copio nel messaggio del common goal i punti guadagnati, di cui ho tenuto traccia nel messageAfterMovePositive
+                MessageCommonGoal messageCommonGoal = new MessageCommonGoal(
+                        ((MessageAfterMovePositive) moveResult).getGainedPointsFirstCard(),
+                        ((MessageAfterMovePositive) moveResult).getGainedPointsSecondCard(),
+                        message.getUsername(),
+                        game.getCommonGoalCard()[0].getPoints(),
+                        game.getCommonGoalCard()[1].getPoints()
+                );
+
+                // e notifico a tutti i giocatori
+                gameController.notifyAllMessage(messageCommonGoal);
             }
+
+
+            currPlayerIndex++;
+            if (currPlayerIndex == game.getNumPlayers()) {
+
+                currPlayerIndex = 0;
+            }
+            currentPlayer = game.getPlayers()[currPlayerIndex].getName();
+
+            if (flagCountdown && currPlayerIndex == 0) {
+                handleEndGame();
+                return;
+            }
+            gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer); // richiedo la mossa al giocatore successivo
+            gameController.updateFile();
+        } else if (moveResult.getType() == AFTER_MOVE_NEGATIVE) {
+            gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa non è andata a buon fine
         }
-        else
-            throw new RuntimeException("messaggio non valido");
     }
 
     private void handleEndGame() {
