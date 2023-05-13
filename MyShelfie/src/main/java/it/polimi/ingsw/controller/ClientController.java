@@ -67,8 +67,11 @@ public class ClientController implements Observer<View, OBS_Message> {
         }
         catch (Exception e){
             view.errorCreatingClient(chosenAddress,chosenPort);
+            /*
             throw new RuntimeException("It was impossible to create a client and contact " +
                     "the server at [" + chosenAddress + "," + chosenPort + "]\n" + e);
+
+             */
         }
     }
 

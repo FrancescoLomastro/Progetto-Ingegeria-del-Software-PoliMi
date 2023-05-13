@@ -6,7 +6,7 @@
 }
 
 .messageSection{
-    -fx-background-image: url("base_pagina2.jpg");
+    -fx-background-image: url("images/developed/base_pagina2.jpg");
     -fx-background-radius: 30 30 30 30;
     -fx-background-position: center;
     -fx-background-repeat: repeat;

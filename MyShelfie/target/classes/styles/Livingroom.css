@@ -1,5 +1,5 @@
 .livingroom_container {
-    -fx-background-image: url("livingroom.png");
+    -fx-background-image: url("../images/originals/boards/livingroom.png");
     -fx-background-position: center center;
     -fx-background-size: 800 800;
     -fx-background-color: #000000;

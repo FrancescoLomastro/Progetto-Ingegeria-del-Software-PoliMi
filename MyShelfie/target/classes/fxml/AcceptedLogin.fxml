@@ -12,7 +12,7 @@
             <VBox prefHeight="240" prefWidth="320" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                 <ImageView fitHeight="90.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../styles/Title_2000x618px.png" />
+                        <Image url="@../images/originals/PublisherMaterial/Title_2000x618px.png" />
                     </image>
                 </ImageView>
                 <Label styleClass="internal_vbox_container_label1" text="Connection accepted,&#13; waiting for other players to join." />

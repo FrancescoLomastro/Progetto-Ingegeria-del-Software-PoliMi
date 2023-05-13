@@ -112,7 +112,16 @@ public class ViewFactory extends View {
 
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
-
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(("/fxml/ErrorClientCreation.fxml")));
+            loader.setControllerFactory(controllerClass -> {
+                ErrorClientCreationController controller = new ErrorClientCreationController();
+                controller.setChosenAddress(chosenAddress);
+                controller.setChosenPort(chosenPort);
+                return controller;
+            });
+            switchScene(loader);
+        });
     }
 
     @Override
