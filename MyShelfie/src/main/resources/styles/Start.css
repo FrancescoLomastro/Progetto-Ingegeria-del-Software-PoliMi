@@ -1,8 +1,7 @@
 .start_container {
-    -fx-background-image: url("Start.jpg");
+    -fx-background-image: url("../images/developed/Start.jpg");
     -fx-background-position: center center;
     -fx-background-size: 900 700;
-    /*-fx-background-size: cover;*/
     -fx-background-repeat: no-repeat;
 }
 

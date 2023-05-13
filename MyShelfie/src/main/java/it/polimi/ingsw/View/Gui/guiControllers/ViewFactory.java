@@ -1,20 +1,14 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
-import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.View.Gui.GuiApplication;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 
@@ -26,7 +20,7 @@ import javafx.stage.Modality;
  */
 public class ViewFactory extends View {
     private static ViewFactory instance = null;
-    private Stage stage;
+    private Stage primaryStage;
 
     public static ViewFactory getInstance() {
         if (instance==null) {
@@ -36,46 +30,49 @@ public class ViewFactory extends View {
     }
 
     private Scene loadScene(FXMLLoader loader) {
-
         Scene scene = null;
         try {
             scene = new Scene(loader.load());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return scene;
     }
     private void switchScene(FXMLLoader loader) {
-
         Scene scene = loadScene(loader);
-        stage.setScene(scene);
+        primaryStage.setScene(scene);
     }
-
     private void createStage(FXMLLoader loader,int minHeight,int minWidth,boolean lockStage) {
-
+        Stage newStage = new Stage();
         Scene scene = loadScene(loader);
-        Stage stage = new Stage();
-        this.stage= stage;
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setMinHeight(minHeight);
-        stage.setMinWidth(minWidth);
+        newStage.setScene(scene);
+        newStage.setResizable(false);
+        newStage.setMinHeight(minHeight);
+        newStage.setMinWidth(minWidth);
 
         if (lockStage) {
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            newStage.initOwner(primaryStage);
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            newStage.showAndWait();
         } else {
-            stage.show();
+            newStage.show();
         }
     }
+    public void setPrimaryStage(Stage primaryStage)
+    {
+        this.primaryStage = primaryStage;
+    }
+
     public void showStart() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
-            createStage(loader,700,900,false);
+            primaryStage.setMinHeight(700);
+            primaryStage.setMinWidth(900);
+            primaryStage.setResizable(false);
+            switchScene(loader);
+            primaryStage.show();
         });
     }
-
 
 
     public void showInvalidPort() {
@@ -122,10 +119,10 @@ public class ViewFactory extends View {
     public void startGame() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Livingroom.fxml"));
-            stage.setMinHeight(800);
-            stage.setMinWidth(800);
-            stage.setWidth(800);
-            stage.setHeight(800);
+            primaryStage.setMinHeight(800);
+            primaryStage.setMinWidth(800);
+            primaryStage.setWidth(800);
+            primaryStage.setHeight(800);
             switchScene(loader);
         });
     }
