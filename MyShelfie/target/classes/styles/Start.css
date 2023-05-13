@@ -1,35 +1,4 @@
-.start_container {
-    -fx-background-image: url("../images/developed/Start.jpg");
-    -fx-background-position: center center;
-    -fx-background-size: 900 700;
-    -fx-background-repeat: no-repeat;
+#initialLabel {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, black, 1, 1, 0, 0);
 }
-
-.start_container Button {
-    -fx-background-color: linear-gradient(to right,#AA0000, #EF0107);
-    -fx-background-radius: 8;
-    -fx-text-fill: #FFFFFF;
-    -fx-font: 55px 'Calibri Light';
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(three-pass-box,#AAAAAA,3,0,0,3);
-    -fx-border-color: #c9250c;
-    -fx-border-width: 10;
-    -fx-border-radius: 8;
-    -fx-border-insets: -3;
-    -fx-border-style: solid;
-}
-
-.start_container Button:hover {
-    -fx-cursor: hand;
-    -fx-background-color: linear-gradient(to right,#AA0000, #EF0107);
-    -fx-background-radius: 8;
-    -fx-text-fill: #FFFFFF;
-    -fx-font: 56px 'Calibri Light';
-    -fx-font-weight: bold;
-    -fx-border-color: #EF0120;
-    -fx-border-width: 10;
-    -fx-border-radius: 8;
-    -fx-border-insets: -3;
-    -fx-border-style: solid;
-}
-

@@ -13,7 +13,7 @@
             <children>
                 <ImageView fitHeight="70.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/originals/PublisherMaterial/Title_2000x618px.png" />
+                        <Image url="@../images/originals/publisherMaterial/Title_2000x618px.png" />
                     </image>
                 </ImageView>
                 <Label styleClass="internal_vbox_container_label1" text="Warning:" />

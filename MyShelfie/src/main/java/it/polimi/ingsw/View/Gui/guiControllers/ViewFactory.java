@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 
@@ -66,9 +67,10 @@ public class ViewFactory extends View {
     public void showStart() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
-            primaryStage.setMinHeight(700);
-            primaryStage.setMinWidth(900);
-            primaryStage.setResizable(false);
+            primaryStage.setMaximized(true);
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitHint("");
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             switchScene(loader);
             primaryStage.show();
         });
