@@ -47,7 +47,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
                 showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary());
             }
-            case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
+            //case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
         }
     }
 

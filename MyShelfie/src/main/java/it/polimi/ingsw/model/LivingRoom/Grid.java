@@ -215,14 +215,21 @@ public class Grid implements Serializable {
             setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
         }
 
-        for(int i=numPlayers+1; i<=4; i++)
-        {
+        if(numPlayers==2){
+            arrayOfJsonCells = jsonObject.getAsJsonArray("3_Player_New_Positions");
             for (JsonElement jsonCellElement : arrayOfJsonCells) {
-                arrayOfJsonCells = jsonObject.getAsJsonArray((i)+"_Player_New_Positions");
                 jsonCell = jsonCellElement.getAsJsonArray();
                 setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
             }
         }
+        if(numPlayers==2 || numPlayers==3){
+            arrayOfJsonCells = jsonObject.getAsJsonArray("4_Player_New_Positions");
+            for (JsonElement jsonCellElement : arrayOfJsonCells) {
+                jsonCell = jsonCellElement.getAsJsonArray();
+                setOfPositions.add(new Position(jsonCell.get(0).getAsInt(),jsonCell.get(1).getAsInt()));
+            }
+        }
+
         try {
             reader.close();
         } catch (IOException e) {

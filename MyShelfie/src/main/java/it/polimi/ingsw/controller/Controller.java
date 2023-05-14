@@ -51,8 +51,8 @@ public class Controller implements ServerReceiver
         else {
             try {
                 destroyAllFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (IOException ignored) {
+
             }
         }
     }
