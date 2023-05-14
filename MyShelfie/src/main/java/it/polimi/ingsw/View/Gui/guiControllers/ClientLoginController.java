@@ -10,6 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
@@ -24,6 +25,8 @@ public class ClientLoginController implements Initializable {
     public TextField port_number_textfield;
     public Button login_button;
     public Label title_label;
+    public AnchorPane external_options_container;
+    public AnchorPane clientLoging_container;
     private String chosenUsername;
     private int chosenTechnology;
     private String chosenIPAddress;

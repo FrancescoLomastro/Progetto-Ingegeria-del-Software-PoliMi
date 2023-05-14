@@ -107,6 +107,7 @@ public class ViewFactory extends View {
     public void askInitialInfo() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
+            //primaryStage.setFullScreen(true);
             switchScene(loader);
         });
     }
