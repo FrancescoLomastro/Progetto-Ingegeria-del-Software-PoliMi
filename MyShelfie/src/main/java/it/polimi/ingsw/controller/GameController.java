@@ -10,8 +10,10 @@ import it.polimi.ingsw.model.Game;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.rmi.NoSuchObjectException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 /**
@@ -35,6 +37,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private final ArrayList<String> testArray = new ArrayList<>();
     private transient Controller controller;
     private boolean gameInGame;
+    private transient RMIShared gameShared;
     //private PingTimer[] pingTimers;
     /**
      * constructor
@@ -76,7 +79,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     @Override
     public void run() {
         try {
-            RMIShared gameShared = new RMIShared(this);
+            gameShared = new RMIShared(this);
             Registry registry = LocateRegistry.getRegistry(CentralServer.rmiPort);
             registry.bind(serverNameRMI, gameShared);
         }
@@ -144,7 +147,12 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             }*/
         }
     }
-
+    /**
+     * It manages error that can came from network
+     * @author: Riccardo Figini
+     * @param connection Connection that raise a problem
+     * @param playerName player that causes the problem
+     * */
     @Override
     public void tryToDisconnect(Connection connection, String playerName) {
         switch (connection.getStatusNetwork()){
@@ -155,18 +163,37 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                 System.out.println(Controller.ANSI_BLU + "Closing game for some problem..." + ANSI_RESET);
                 gameNeedToBeClosed(playerName,"Problem with a player, game will be closed and destroy");
             }
+            case END_OF_THE_GAME -> {
+                System.out.println(Controller.ANSI_BLU +"Player left server, game is finished correctly"+ ANSI_RESET);
+            }
+            default -> {
+                System.out.println(Controller.ANSI_BLU + "Somethings goes wrong with state of network. Game will be closed" + ANSI_RESET);
+                System.out.println(Controller.ANSI_BLU + "Player: "+ playerName + ", Status:  " + connection.getStatusNetwork() + ANSI_RESET);
+                gameNeedToBeClosed(playerName,"Problem with a player, game will be closed and destroy");
+            }
         }
     }
+    /**It is called when occurs an error and game need to be closed
+     * @author: Riccardo Figini
+     * @param message Message with motivation of error
+     * */
     private void gameNeedToBeClosed(String message){
         controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
         controller.destroyGame(message, this);
     }
+    /**It is called when occurs an error and game need to be closed. It sends an warn message to every one in the lobby
+     * except the player passed
+     * @author: Riccardo Figini
+     * @param message Message with motivation of error
+     * @param player Player that left the game, it will not receive the error message
+     * */
     private void gameNeedToBeClosed(String message, String player){
         controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
         controller.destroyGame(player, message, this);
     }
     /**
      * initialization of a game
+     * @author: Riccardo Figini
      * */
     public void initGame(){
 
@@ -202,6 +229,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
 
     /**
      * it sends a message to all the users in the game
+     *  @author: Riccardo Figini
      * @param message : the message to send
      * */
     public void notifyAllMessage(Message message){
@@ -272,14 +300,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     {
         return clients.size();
     }
-    /**
-     * @param username : a player's username
-     * @return true if this player is registered in this game
-     * */
-    public boolean isRegistered(String username) {
-        return clients.containsKey(username);
-    }
     /**It initialized game (model and client) when a game is restarted
+     *  @author: Riccardo Figini
      * */
     public void restartGameAfterReload(){
         String player;
@@ -295,10 +317,11 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         sendMessageToASpecificUser(new MessageMove(), player);
     }
     /**Set server game when a game is restarted
+     *  @author: Riccardo Figini
      * */
     private void setUpOldServerGame() {
         try {
-            RMIShared gameShared = new RMIShared(this);
+            gameShared = new RMIShared(this);
             Registry registry = LocateRegistry.getRegistry(CentralServer.rmiPort);
             registry.bind(serverNameRMI, gameShared);
         }
@@ -307,7 +330,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             gameNeedToBeClosed("Game Controller server cannot be allocated");
         }
     }
-    /**Delete file game when it is over
+    /**Delete file game when it is over (it can be called also when game is not over). Remove gameServer from registry
+     *  @author: Riccardo Figini
      * */
     public void closeGame() {
         String path = gameFilePath;
@@ -317,8 +341,19 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         } catch (IOException e) {
             System.out.println(Controller.ANSI_BLU + "File game can't be deleted, name cannot be used again" + ANSI_RESET);
         }
+        controller.changeStatusToEveryone(StatusNetwork.END_OF_THE_GAME, this);
+        try {
+            UnicastRemoteObject.unexportObject(gameShared, true);
+        } catch (NoSuchObjectException e) {
+            System.out.println(Controller.ANSI_BLU + "Impossible to close server game "+ gameId + ANSI_RESET);
+        }
+        controller.removeGame(this);
     }
-
+    /**
+     * Remove player from lobby
+     * @author: Riccardo Figini
+     * @param name Name of player to be removed
+     * */
     public void removePlayer(String name){
         for(int i=0; i<testArray.size(); i++) {
             if (testArray.get(i).equals(name)) {

@@ -1,9 +1,10 @@
 .clientLogin_container {
     -fx-background-image: url("../images/originals/publisherMaterial/Display_3.jpg");
     -fx-background-position: center center;
-    -fx-background-size: 900 700;
-    /*-fx-background-size: cover;*/
+    /*-fx-background-size: 900 700;*/
+    -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
+    -fx-background-color: #FFFFFF;
 }
 
 

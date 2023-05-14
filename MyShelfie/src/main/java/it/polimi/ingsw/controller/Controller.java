@@ -417,7 +417,7 @@ public class Controller implements ServerReceiver
             //Giocatore scartato, tanto non era stato svolto alcun cambiamento
             case SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD->
                     System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", droping the message..." + ANSI_RESET);
-            case NEW_GAME_IS_STARTING -> {
+            default ->{
                 for (GameController gameController: games){
                     if(gameController.getNamesOfPlayer().contains(playerName)) {
                         gameController.tryToDisconnect(connection, playerName);
@@ -552,5 +552,9 @@ public class Controller implements ServerReceiver
         Connection connection = currentPlayerConnectionReferences.get(player);
         if(connection!=null)
             connection.setStatusNetwork(statusNetwork);
+    }
+
+    public void removeGame(GameController gameController) {
+        games.remove(gameController);
     }
 }
