@@ -1,7 +1,6 @@
 package it.polimi.ingsw.View.Cli;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.*;
-import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.OBSMessages.*;
 import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.exceptions.ResetMoveException;
@@ -23,10 +22,8 @@ public class Cli extends View implements Runnable {
     private boolean chatAvailable;
     private ClientState state;
     private String inputRequestBuffer;
-
     private String divisor="\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
-    /**Constructor
-     * @author: Riccardo Figini*/
+
     public Cli()
     {
         clientModel=new ClientModel();
@@ -36,6 +33,27 @@ public class Cli extends View implements Runnable {
         state=ClientState.CHAT;
     }
 
+
+
+
+
+    /**
+     * Turns on a thread to handle user input for the CLI
+     */
+    @Override
+    public void startView() {
+        new Thread(this).start();
+        printTitle();
+        setChanged();
+        notifyObservers(new OBS_OnlyTypeMessage(OBS_MessageType.START));
+    }
+
+
+
+
+    /**
+     * Prints the game title
+     */
     private void printTitle()
     {
         System.out.println("" +
@@ -47,13 +65,12 @@ public class Cli extends View implements Runnable {
                 "  !__!__!__! !___!      !_____!!__!__!_____!!_____!!__!   !__!_____!\n\n");
     }
 
-    @Override
-    public void startView() {
-        printTitle();
-        setChanged();
-        notifyObservers(new OBS_OnlyTypeMessage(OBS_MessageType.START));
-    }
 
+    /**
+     * Asks the user for all the initial information required to connect to a server
+     * notifies the controller with the information collected
+     */
+    @Override
     public void askInitialInfo()
     {
         String chosenUsername=askUsername();
@@ -72,100 +89,12 @@ public class Cli extends View implements Runnable {
     }
 
 
-    public String askUsername()
-    {
-        System.out.print(">> Type your username: ");
-        return getInputRequest();
-    }
-
-    public int askTechnology()
-    {
-        String input;
-        int parsedInput=0;
-        boolean badInput;
-        do
-        {
-            badInput=false;
-            System.out.print(">> Select the communication technology to use [RMI = '0'; Socket = '1']: ");
-            input = getInputRequest();
-            try
-            {
-                parsedInput = Integer.parseInt(input);
-                if (parsedInput > 1 || parsedInput < 0)
-                    badInput = true;
-            } catch (NumberFormatException e) {
-                badInput = true;
-            }
-            finally
-            {
-                if(badInput)
-                    System.out.println("ERROR >> You typed an invalid input, please retry.\n");
-            }
-        }while (badInput);
-        return parsedInput;
-    }
-
-
-    public String askAddress()
-    {
-        String input;
-        System.out.print(">> Type a server address [Default: 'localhost']: ");
-        input = getInputRequest();
-        if(input.equals(""))
-            return "localhost";
-        else
-            return input;
-    }
-
-
-    public int askPort(int defaultPort)
-    {
-        String input;
-        int parsedInput;
-        boolean badInput;
-        do
-        {
-            badInput=false;
-            System.out.print(">> Type a server port number [Default: ");
-            parsedInput=defaultPort;
-            System.out.print(parsedInput+"]: ");
-            input = getInputRequest();
-            if(!input.equals(""))
-            {
-                try
-                {
-                    parsedInput = Integer.parseInt(input);
-                    if (parsedInput <= 0)
-                        badInput = true;
-                } catch (NumberFormatException e) {
-                    badInput = true;
-                }
-                finally
-                {
-                    if(badInput)
-                        System.out.println("ERROR >> You typed an invalid input, please retry.\n");
-                }
-            }
-        }while (badInput);
-        return parsedInput;
-    }
-
-
-
-    /**Print generic string
-     * @author: Riccardo Figini
-     * @param s String to print
-     * */
-    @Override
-    public void printMessage(String s)
-    {
-        System.out.println("\n>> "+s);
-    }
-    /**Ask number of player
-     * @author: Riccardo Figini
-     * @param min Minimum number of players
-     * @param max Maximum number of player
-     * @return {@code int} Number of player*/
+    /**
+     * Asks the user for the number of player that will populate the lobby
+     * the number must be between from the two parameters
+     * @param min inferior limit
+     * @param max superior limit
+     */
     @Override
     public void askNumberOfPlayers(int min, int max)
     {
@@ -199,9 +128,11 @@ public class Cli extends View implements Runnable {
         setChanged();
         notifyObservers(msg);
     }
-    /**It handles invalid username chosen
-     * @return {@code String} Username
-     * */
+
+
+    /**
+     * Asks a new username to by used by the user
+     */
     @Override
     public void onInvalidUsername()
     {
@@ -211,8 +142,117 @@ public class Cli extends View implements Runnable {
         setChanged();
         notifyObservers(msg);
     }
+
+
     /**
-     * Show grid
+     * Message to be printed as the server changes for the game
+     */
+    @Override
+    public void onServerChanged() {
+        System.out.println("Server changed to a game");
+    }
+
+
+    /**
+     * Message to be printed as the game starts
+     */
+    @Override
+    public void startGame() {
+        System.out.println("\nGame started");
+    }
+
+
+    /**
+     * Prints the chat message
+     * @param username  the username of the sender
+     * @param text  the text of the mesage
+     */
+    @Override
+    public void chatMessage(String username, String text) {
+        System.out.println("\n["+username+"]\n  "+text);
+    }
+
+
+    /**Prints everything in client model
+     * @author: Riccardo Figini
+     * */
+    @Override
+    public void printAll() {
+        showGrid(clientModel.getGrid());
+        System.out.println("\nFirst common goal: " + clientModel.getDescriptionFirstCommonGoal());
+        System.out.println("\nSecond common goal: " + clientModel.getDescriptionSecondCommonGoal());
+        printPersonalGoal(clientModel.getGoalList());
+        Map<String, ObjectCard[][]> map = clientModel.getAllLibrary();
+        for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
+            showLibrary(clientModel.getLibrary(entry.getKey()), entry.getKey() );
+        }
+        System.out.println("Points:\n");
+        printPoints();
+    }
+
+
+    /** Asks the user to perform his move
+     * @author: Riccardo Figini*
+     * @return {@code messahe} Message with move (Column and positions)*/
+    @Override
+    public void askMove()  {
+        int column=0, numberOfCards;
+        Position[] position=null;
+        boolean reset;
+        do
+        {
+            try
+            {
+                reset=false;
+                System.out.println("How many card do you want? [minimum 1, max 3]");
+                numberOfCards = getNumberWithLimit(3);
+                position = askPositions(numberOfCards);
+                System.out.println("In which column do you want insert this cards? [type \"RESET\" to cancel]");
+                column = getNumberWithLimit(5) - 1;
+            } catch (ResetMoveException e) {
+                reset=true;
+            }
+        }while(reset);
+
+        OBS_Message msg = new OBS_MoveMessage(position, column);
+        setChanged();
+        notifyObservers(msg);
+    }
+
+
+    /**
+     * @author: Riccardo Figini
+     * */
+    @Override
+    public void printPoints() {
+        Map<String, Integer> map1 = clientModel.getPointsMap();
+        for(Map.Entry<String, Integer> entry : map1.entrySet()){
+            System.out.println("- "+entry.getKey()+": "+entry.getValue());
+        }
+    }
+
+    /**
+     * This method allow turns on chat messages input
+     */
+    @Override
+    public void startChat() {
+        chatAvailable=true;
+    }
+
+
+    /**Prints generic string
+     * @author: Riccardo Figini
+     * @param s String to print
+     * */
+    @Override
+    public void printMessage(String s)
+    {
+        System.out.println("\n>> "+s);
+    }
+
+
+    /**
+     * Prints the grid passed as parameter
      * @author: Riccardo Figini
      * */
     @Override
@@ -250,6 +290,8 @@ public class Cli extends View implements Runnable {
             System.out.println();
         }
     }
+
+
     /**
      * Show Library of specific player
      * @author: Riccardo Figini
@@ -282,6 +324,7 @@ public class Cli extends View implements Runnable {
         System.out.println(title_space+bottom_header);
     }
 
+
     /**It prints points (from common goal card) achieved from specific player
      * @param arg Message with all information about points achieved from common goal card. It re-used an existing class to
      * pass paramter. Player contained in arg is who has achieved common goal. Points gained are conteined in "getGainedPointsFirstCard".
@@ -298,55 +341,24 @@ public class Cli extends View implements Runnable {
         System.out.println("Point for common goal card 1: " + arg.getPointAvailable1());
         System.out.println("Point for common goal card 2: " + arg.getPointAvailable2());
     }
-    /**Print everything in client model
-     * @author: Riccardo Figini
-     * @param clientObject Copy of model kept by severer
-     * */
-    @Override
-    public void printAll(ClientModel clientObject) {
-        showGrid(clientObject.getGrid());
-        System.out.println("\nFirst common goal: " + clientObject.getDescriptionFirstCommonGoal());
-        System.out.println("\nSecond common goal: " + clientObject.getDescriptionSecondCommonGoal());
-        printPersonalGaol(clientObject.getGoalList());
-        Map<String, ObjectCard[][]> map = clientObject.getAllLibrary();
-        for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
-            showLibrary(clientObject.getLibrary(entry.getKey()), entry.getKey() );
-        }
-        System.out.println("Points:\n");
-        printPoints(clientObject);
-    }
-    /**Prints points
-     * @author: Riccardo Figini
-     * @param clientObject model lato cliet
-     * */
-    @Override
-    public void printPoints(ClientModel clientObject) {
-        Map<String, Integer> map1 = clientObject.getPointsMap();
-        for(Map.Entry<String, Integer> entry : map1.entrySet()){
-            System.out.println("- "+entry.getKey()+": "+entry.getValue());
-        }
-    }
 
+    /**
+     * Prints a message to be displayed as an error occurs when creating a client
+     * @param chosenAddress
+     * @param chosenPort
+     */
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
         System.out.println("Error >> It was impossible to create a client and contact the server at [" + chosenAddress + "," + chosenPort + "]");
     }
 
-    @Override
-    public void chatMessage(String username, String text) {
-        System.out.println("\n["+username+"]\n  "+text);
-    }
 
-    @Override
-    public void startGame() {
-        System.out.println("\nGame started");
-    }
 
-    /**Print personal goal card
+    /**Prints a personal goal card
      * @author: Riccardo Figini
      * @param goalVector Personal goal card vector
      * */
-    private void printPersonalGaol(ArrayList<Couple> goalVector) {
+    private void printPersonalGoal(ArrayList<Couple> goalVector) {
         Position p;
         Color c;
 
@@ -370,6 +382,120 @@ public class Cli extends View implements Runnable {
 
         showLibrary(matrix,"Your Personal Goal Card is:");
     }
+
+
+    /**
+     * Method used to ask a generic input to a user
+     * @return
+     */
+    private String getInputRequest()
+    {
+        synchronized (this)
+        {
+            state=ClientState.REQUEST;
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return inputRequestBuffer;
+    }
+
+
+    /**
+     * Asks the username for the client
+     * @return
+     */
+    public String askUsername() {
+        System.out.print(">> Type your username: ");
+        return getInputRequest();
+    }
+
+
+    /**
+     * Asks the technology to use for the game
+     * @return
+     */
+    public int askTechnology() {
+        String input;
+        int parsedInput=0;
+        boolean badInput;
+        do
+        {
+            badInput=false;
+            System.out.print(">> Select the communication technology to use [RMI = '0'; Socket = '1']: ");
+            input = getInputRequest();
+            try
+            {
+                parsedInput = Integer.parseInt(input);
+                if (parsedInput > 1 || parsedInput < 0)
+                    badInput = true;
+            } catch (NumberFormatException e) {
+                badInput = true;
+            }
+            finally
+            {
+                if(badInput)
+                    System.out.println("ERROR >> You typed an invalid input, please retry.\n");
+            }
+        }while (badInput);
+        return parsedInput;
+    }
+
+
+    /**
+     * Asks the remote server IP
+     * @return
+     */
+    public String askAddress() {
+        String input;
+        System.out.print(">> Type a server address [Default: 'localhost']: ");
+        input = getInputRequest();
+        if(input.equals(""))
+            return "localhost";
+        else
+            return input;
+    }
+
+
+    /**
+     * Asks the remote server port number
+     * @param defaultPort
+     * @return
+     */
+    public int askPort(int defaultPort) {
+        String input;
+        int parsedInput;
+        boolean badInput;
+        do
+        {
+            badInput=false;
+            System.out.print(">> Type a server port number [Default: ");
+            parsedInput=defaultPort;
+            System.out.print(parsedInput+"]: ");
+            input = getInputRequest();
+            if(!input.equals(""))
+            {
+                try
+                {
+                    parsedInput = Integer.parseInt(input);
+                    if (parsedInput <= 0)
+                        badInput = true;
+                } catch (NumberFormatException e) {
+                    badInput = true;
+                }
+                finally
+                {
+                    if(badInput)
+                        System.out.println("ERROR >> You typed an invalid input, please retry.\n");
+                }
+            }
+        }while (badInput);
+        return parsedInput;
+    }
+
+
     /**Ask position in which extract cards
      * @author: Riccardo Figini
      * @param numberOfCards Number of card in input
@@ -389,13 +515,14 @@ public class Cli extends View implements Runnable {
         }
         return positions;
     }
+
+
     /**Get a generic number with lower limit = 0 and upper limit as parameter
      * @author: Riccardo Figini
      * @param limit Upper limit
      * @return {@code int} inseted number
      * */
-    private int getNumberWithLimit(int limit) throws ResetMoveException
-    {
+    private int getNumberWithLimit(int limit) throws ResetMoveException {
         String input;
         int number;
         input = getInputRequest();
@@ -413,59 +540,16 @@ public class Cli extends View implements Runnable {
             input = getInputRequest();
         }
     }
-    /**Ask move
-     * @author: Riccardo Figini*
-     * @return {@code messahe} Message with move (Column and positions)*/
-    @Override
-    public void askMove()  {
-        int column=0, numberOfCards;
-        Position[] position=null;
-        System.out.println("\n>> It's your turn, please make your move");
-        boolean reset;
-        do
-        {
-            try
-            {
-                reset=false;
-                System.out.println("How many card do you want? [minimum 1, max 3]");
-                numberOfCards = getNumberWithLimit(3);
-                position = askPositions(numberOfCards);
-                System.out.println("In which column do you want insert this cards? [type \"RESET\" to cancel]");
-                column = getNumberWithLimit(5) - 1;
-            } catch (ResetMoveException e) {
-                reset=true;
-            }
-        }while(reset);
-
-        OBS_Message msg = new OBS_MoveMessage(position, column);
-
-        setChanged();
-        notifyObservers(msg);
-
-    }
 
 
-    private String getInputRequest()
-    {
-        synchronized (this)
-        {
-            state=ClientState.REQUEST;
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return inputRequestBuffer;
-    }
-
-
+    /**
+     * Thread that ask input in loop, and it notifies the observers whit the collected inputs
+     */
     @Override
     public void run()
     {
         String input;
         OBS_Message msg;
-        System.out.println("\033[34mChat is on, you can use it while it's not your turn\033[0m");
         while (true)
         {
             input=scanner.nextLine();
@@ -490,10 +574,25 @@ public class Cli extends View implements Runnable {
         }
     }
 
+
+    /**
+     * Method handles messages coming from the model
+     * @param o
+     * @param arg
+     */
     @Override
-    public void startChat() {
-        chatAvailable=true;
+    public void update(ClientModel o, Message arg) {
+        switch (arg.getType())
+        {
+            case UPDATE_GRID_MESSAGE -> {
+                ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
+                showGrid(obs);
+            }
+            case UPDATE_LIBRARY_MESSAGE -> {
+                ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
+                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary());
+            }
+            case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
+        }
     }
-
-
 }

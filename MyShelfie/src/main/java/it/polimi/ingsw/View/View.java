@@ -26,9 +26,9 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     public abstract void printMessage(String string);
     public abstract void showGrid(ObjectCard[][] grid);
     public abstract void showLibrary(ObjectCard[][] library, String username);
-    public abstract void printAll(ClientModel clientObject);
+    public abstract void printAll();
     public abstract void startChat();
-    public abstract void printPoints(ClientModel clientObject);
+    public abstract void printPoints();
     public abstract void errorCreatingClient(String chosenAddress, int chosenPort);
 
     public abstract void chatMessage(String username, String text);
@@ -51,8 +51,9 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
         }
     }
 
+
     public ClientModel getClientModel() {
         return clientModel;
     }
-
+    public abstract void onServerChanged();
 }

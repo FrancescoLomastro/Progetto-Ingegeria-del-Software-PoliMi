@@ -18,23 +18,16 @@ public class BoardSceneController implements Initializable {
     @FXML
     AnchorPane anchorPane;
     @FXML
-    ImageView wholeBackground;
-    @FXML
     GridPane gridPane;
-    private ObjectCard[][] grid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeGrid();
-        if(grid!=null)
-        testFill();
     }
-//funziona ma non useremo questa
-    private void testFill() {
+    public void updateGrid(ObjectCard[][] grid) {
         for (Node node : gridPane.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
             Integer columnIndex = GridPane.getColumnIndex(node);
-
 
             if (grid[rowIndex][columnIndex] != null) {
                 node.getStyleClass().remove("invisibleCells");
@@ -60,7 +53,5 @@ public class BoardSceneController implements Initializable {
         }
     }
 
-    public void setGrid(ObjectCard[][] grid) {
-        this.grid =grid;
-    }
+
 }

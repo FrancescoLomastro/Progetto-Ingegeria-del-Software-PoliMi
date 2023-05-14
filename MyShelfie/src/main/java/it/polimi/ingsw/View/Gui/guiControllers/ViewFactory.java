@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.Cards.ObjectCard;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
@@ -23,8 +24,13 @@ import javafx.stage.Modality;
  */
 public class ViewFactory extends View implements Observer<ClientModel, Message> {
     private static ViewFactory instance = null;
+    private Initializable currentController;
     private Stage primaryStage;
 
+    /**
+     * Returns or creates the only instance of the ViewFactory
+     * @return
+     */
     public static ViewFactory getInstance() {
         if (instance==null) {
             instance = new ViewFactory();
@@ -35,6 +41,15 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public ViewFactory() {
         clientModel=new ClientModel();
         clientModel.addObserver(this);
+    }
+
+
+    /**
+     * Starts the main FX thread
+     */
+    @Override
+    public void startView() {
+        Application.launch(GuiApplication.class);
     }
 
     private Scene loadScene(FXMLLoader loader) {
@@ -70,7 +85,14 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     {
         this.primaryStage = primaryStage;
     }
+    public void closeStage(Stage stage) {
+        stage.close();
+    }
 
+
+    /**
+     * Shows the start scene
+     */
     public void showStart() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
@@ -84,6 +106,161 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
 
+    /**
+     * Shows the form that collects the initial info of the user
+     */
+    @Override
+    public void askInitialInfo() {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
+            //primaryStage.setFullScreen(true);
+            switchScene(loader);
+        });
+    }
+
+
+    /**
+     * Shows the form that collects the number of player to build the lobby
+     * @param min
+     * @param max
+     */
+    @Override
+    public void askNumberOfPlayers(int min, int max) {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
+            switchScene(loader);
+        });
+    }
+
+
+    /**
+     * Scene/Message to show when the game starts
+     */
+    @Override
+    public void startGame() {
+       //Commentato per il momento perchè altrimenti non mostra la griglia
+       /* Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
+            switchScene(loader);
+        });*/
+    }
+
+
+    /**
+     * Shows the board scene
+     */
+    @Override
+    public void onServerChanged() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoardScene.fxml"));
+        loader.setControllerFactory(controllerClass -> {
+            BoardSceneController controller = new BoardSceneController();
+            currentController = controller;
+            return controller;
+        });
+        Platform.runLater(() -> {
+            switchScene(loader);
+        });
+    }
+
+
+    /**
+     * Shows the form that collect the new username that the user will use
+     */
+    @Override
+    public void onInvalidUsername() {
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidUsername.fxml"));
+            switchScene(loader);
+        });
+    }
+
+
+    @Override
+    public void chatMessage(String username, String text) {
+    }
+
+
+    @Override
+    public void askMove() {
+    }
+
+
+
+
+
+    @Override
+    public void showGrid(ObjectCard[][] grid) {
+        Platform.runLater(() ->
+        {
+            BoardSceneController boardSceneController = (BoardSceneController) currentController;
+            boardSceneController.updateGrid(grid);
+        });
+    }
+
+    @Override
+    public void showLibrary(ObjectCard[][] library, String username) {
+
+    }
+
+    @Override
+    public void printAll() {
+
+    }
+
+    @Override
+    public void startChat() {
+
+    }
+
+    @Override
+    public void printPoints() {
+
+    }
+
+
+
+    @Override
+    public void run() {
+        //per ora lascialo stare
+    }
+
+
+
+
+    @Override
+    public void printMessage(String string) {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
+            loader.setControllerFactory(controllerClass -> {
+                AcceptedLoginController controller = new AcceptedLoginController();
+
+
+                int indexSplitter = 33;
+                String currNum_players = string.substring(0,indexSplitter);
+                String member_names = string.substring(indexSplitter);
+                controller.setCurrent_numPlayers(currNum_players);
+                controller.setMember_players(member_names);
+
+
+                return controller;
+            });
+            switchScene(loader);
+        });
+    }
+
+    @Override
+    public void errorCreatingClient(String chosenAddress, int chosenPort) {
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(("/fxml/ErrorClientCreation.fxml")));
+            loader.setControllerFactory(controllerClass -> {
+                ErrorClientCreationController controller = new ErrorClientCreationController();
+                controller.setChosenAddress(chosenAddress);
+                controller.setChosenPort(chosenPort);
+                return controller;
+            });
+            switchScene(loader);
+        });
+    }
     public void showInvalidPort() {
         Platform.runLater(()->
         {
@@ -100,140 +277,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     }
 
-    public void closeStage(Stage stage) {
-        stage.close();
-    }
-
-
-    @Override
-    public void startView() {
-        Application.launch(GuiApplication.class);
-    }
-
-    @Override
-    public void askInitialInfo() {
-        Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-            //primaryStage.setFullScreen(true);
-            switchScene(loader);
-        });
-    }
-
-
-    @Override
-    public void errorCreatingClient(String chosenAddress, int chosenPort) {
-        Platform.runLater(() -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(("/fxml/ErrorClientCreation.fxml")));
-            loader.setControllerFactory(controllerClass -> {
-                ErrorClientCreationController controller = new ErrorClientCreationController();
-                controller.setChosenAddress(chosenAddress);
-                controller.setChosenPort(chosenPort);
-                return controller;
-            });
-            switchScene(loader);
-        });
-    }
-
-    @Override
-    public void startGame() {
-       //Commentato per il momento perchè altrimenti non mostra la griglia
-       /* Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
-            switchScene(loader);
-        });*/
-    }
-
-    @Override
-    public void chatMessage(String username, String text) {
-
-    }
-
-    @Override
-    public void askNumberOfPlayers(int min, int max) {
-        Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-            switchScene(loader);
-        });
-
-    }
-
-    @Override
-    public void askMove() {
-
-    }
-
-    @Override
-    public void onInvalidUsername() {
-        Platform.runLater(() -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidUsername.fxml"));
-            switchScene(loader);
-        });
-    }
-
-    @Override
-    public void printMessage(String string) {
-        Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
-            loader.setControllerFactory(controllerClass -> {
-                AcceptedLoginController controller = new AcceptedLoginController();
-                int indexSplitter = 33;
-                String currNum_players = string.substring(0,indexSplitter);
-                String member_names = string.substring(indexSplitter);
-                controller.setCurrent_numPlayers(currNum_players);
-                controller.setMember_players(member_names);
-                return controller;
-            });
-            switchScene(loader);
-        });
-    }
-
-    @Override
-    public void showGrid(ObjectCard[][] grid) {
-        Platform.runLater(() -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoardScene.fxml"));
-            loader.setControllerFactory(controllerClass -> {
-                BoardSceneController controller = new BoardSceneController();
-                controller.setGrid(grid);
-                return controller;
-            });
-            switchScene(loader);
-        });
-    }
-
-    @Override
-    public void showLibrary(ObjectCard[][] library, String username) {
-
-    }
-
-    @Override
-    public void printAll(ClientModel clientObject) {
-
-    }
-
-    @Override
-    public void startChat() {
-
-    }
-
-    @Override
-    public void printPoints(ClientModel clientObject) {
-
-    }
-
-
-
-    @Override
-    public void run() {
-        //per ora lascialo stare
-    }
-
-
-    //Chiama questo metodo dai controllers delle scene pr notificare gli osservatori
-    public void notifyAllOBS(OBS_Message msg)
-    {
+    public void notifyAllOBS(OBS_Message msg) {
         setChanged();
         notifyObservers(msg);
     }
-
 
 }

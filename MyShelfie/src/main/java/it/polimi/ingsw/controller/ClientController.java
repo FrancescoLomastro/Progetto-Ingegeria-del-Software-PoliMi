@@ -42,13 +42,25 @@ public class ClientController implements Observer<View, OBS_Message> {
         clientModel = view.getClientModel();
         view.addObserver(this);
         pingTimer = new PingTimer();
-
-        new Thread(view).start();
     }
 
+
+
+    /** This method runs generic view as it was an independent component
+     *
+     */
     public void turnOnView(){
         view.startView();
     }
+
+
+    /** This method handles the creation of a client contacting a remote server
+     *
+     * @param chosenUsername the username of the client chosen by the user
+     * @param chosenTechnology the technology chosen by the user
+     * @param chosenAddress the remote server ip address
+     * @param chosenPort the remote server port number
+     */
     public void createClient(String chosenUsername, int chosenTechnology, String chosenAddress, int chosenPort) {
         try {
             switch (chosenTechnology) {
@@ -74,7 +86,13 @@ public class ClientController implements Observer<View, OBS_Message> {
         }
     }
 
-    //messaggi ricevuti dalla rete
+
+
+
+    /**
+     * This method handles all the message coming from the network
+     * @param message the message coming from the network
+     */
     public void onMessage(Message message)  {
 
         if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
@@ -84,41 +102,35 @@ public class ClientController implements Observer<View, OBS_Message> {
 
         switch (message.getType())
         {
-            case ACCEPTED_LOGIN_MESSAGE ->
-            {
+            case ACCEPTED_LOGIN_MESSAGE -> {
                 view.printMessage("Connection accepted, waiting for other players");
             }
-            case PLAYER_NUMBER_REQUEST ->
-            {
+            case PLAYER_NUMBER_REQUEST -> {
                 PlayerNumberRequest msg = (PlayerNumberRequest)message;
                 view.askNumberOfPlayers(msg.getMinimumPlayers(), msg.getMaximumPlayers());
-            }
-            case LOBBY_UPDATE_MESSAGE ->
-            {
-                LobbyUpdateMessage msg = (LobbyUpdateMessage) message;
-                view.printMessage("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players. "
-                        +"Members: " + msg.getUsernames());
             }
             case INVALID_USERNAME_MESSAGE ->
             {
                 view.onInvalidUsername();
             }
-            case NEW_GAME_SERVER_MESSAGE ->
-            {
+            case LOBBY_UPDATE_MESSAGE -> {
+                LobbyUpdateMessage msg = (LobbyUpdateMessage) message;
+                view.printMessage("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players. "
+                        +"Members: " + msg.getUsernames());
+            }
+            case NEW_GAME_SERVER_MESSAGE -> {
                 NewGameServerMessage msg = (NewGameServerMessage) message;
                 if(client instanceof RMI_Client c) {
                     c.changeServer(msg);
                 }
-                view.printMessage("Server moved to a game");
+                view.onServerChanged();
             }
-            case START_GAME_MESSAGE ->
-            {
+            case START_GAME_MESSAGE -> {
                 view.startGame();
                 //da adeguare alla GUi
                 view.startChat();
             }
-            case CHAT_MESSAGE ->
-            {
+            case CHAT_MESSAGE -> {
                 ChatMessage msg = (ChatMessage) message;
                 String text = msg.getText();
 
@@ -129,29 +141,24 @@ public class ClientController implements Observer<View, OBS_Message> {
                 }
                 view.chatMessage(username,text);
             }
-            case MY_MOVE_REQUEST ->
-            {
-                view.printAll(clientModel);
+            case MY_MOVE_REQUEST -> {
+                view.printAll();
                 view.askMove();
             }
-            case AFTER_MOVE_NEGATIVE ->
-            {
+            case AFTER_MOVE_NEGATIVE -> {
                 MessageAfterMoveNegative msg = (MessageAfterMoveNegative) message;
                 view.printMessage(msg.getInvalidMessage());
                 view.askMove();
             }
-            case WINNER ->
-            {
+            case WINNER -> {
                 MessageWinner msg = (MessageWinner) message;
-                view.printPoints(clientModel);
+                view.printPoints();
                 view.printMessage("The game is ended\nYour points: "+msg.getMyPoints()+"\nWinner: "+msg.getWinner());
             }
-            case ALMOST_OVER ->
-            {
+            case ALMOST_OVER -> {
                 view.printMessage("A player has completed his library, last turn concluding");
             }
-            case ERROR ->
-            {
+            case ERROR -> {
                 ErrorMessage msg = (ErrorMessage) message;
                 view.printMessage(msg.getString());
                 System.exit(0);
@@ -159,8 +166,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             case COMMON_GOAL -> {
                 clientModel.addPoint((MessageCommonGoal) message);
             }
-            case AFTER_MOVE_POSITIVE ->
-            {
+            case AFTER_MOVE_POSITIVE -> {
                 view.printMessage("Move performed successfully\n" +
                         ">> \033[34mYou can use the chat while waiting for your turn, try type something!\033[0m");
                 if(((MessageAfterMovePositive) message).getGainedPointsFirstCard()>0){
@@ -174,16 +180,18 @@ public class ClientController implements Observer<View, OBS_Message> {
             case INIT_PLAYER_MESSAGE -> {
                 clientModel.addPlayer(((MessageInitPlayer) message).getPlayer());
             }
-            case UPDATE_GRID_MESSAGE ->
-                    clientModel.setGrid(((MessageGrid) message).getGrid());
+            case UPDATE_GRID_MESSAGE -> {
+                clientModel.setGrid(((MessageGrid) message).getGrid());
+            }
             case UPDATE_LIBRARY_MESSAGE -> {
                 MessageLibrary msg = (MessageLibrary) message;
                 clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary());
-            }case INIT_COMMON_GOAL -> {
-            MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
-            clientModel.setDescriptionFirstCommonGoal(msg.getDescription1());
-            clientModel.setDescriptionSecondCommonGoal(msg.getDescription2());
-        }
+            }
+            case INIT_COMMON_GOAL -> {
+                MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
+                clientModel.setDescriptionFirstCommonGoal(msg.getDescription1());
+                clientModel.setDescriptionSecondCommonGoal(msg.getDescription2());
+            }
             case INIT_PERSONAL_GOAL -> {
                 MessagePersonalGoal msg = (MessagePersonalGoal) message;
                 clientModel.setPersonalGoalCard(msg.getGoalVector());
@@ -219,6 +227,13 @@ public class ClientController implements Observer<View, OBS_Message> {
     }
 
 
+
+
+    /** Collects all the messages coming from the view
+     *
+     * @param o the observable view
+     * @param arg the OBS_Message coming from the view
+     */
     @Override
     public void update(View o, OBS_Message arg) {
         switch (arg.getType()) {
