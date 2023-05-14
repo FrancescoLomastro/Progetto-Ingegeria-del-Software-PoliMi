@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Scanner;
 /**This class handles input and output in cli version
  * @author: Riccardo Figini*/
-public class Cli extends View implements Observer<ClientModel,Message>,Runnable {
+public class Cli extends View implements Runnable {
     private final Scanner scanner;
     private boolean chatAvailable;
     private ClientState state;
@@ -27,10 +27,11 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
     private String divisor="\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
     /**Constructor
      * @author: Riccardo Figini*/
-    public Cli(ClientModel clientModel)
+    public Cli()
     {
-        scanner = new Scanner(System.in);
+        clientModel=new ClientModel();
         clientModel.addObserver(this);
+        scanner = new Scanner(System.in);
         chatAvailable=false;
         state=ClientState.CHAT;
     }
@@ -280,25 +281,7 @@ public class Cli extends View implements Observer<ClientModel,Message>,Runnable 
         }
         System.out.println(title_space+bottom_header);
     }
-    /**Ask cli to do something
-     * @param arg type of message to manage
-     * @param o client model
-     * */
-    @Override
-    public void update(ClientModel o, Message arg) {
-        switch (arg.getType())
-        {
-            case UPDATE_GRID_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
-                showGrid(obs);
-            }
-            case UPDATE_LIBRARY_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary());
-            }
-            case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
-        }
-    }
+
     /**It prints points (from common goal card) achieved from specific player
      * @param arg Message with all information about points achieved from common goal card. It re-used an existing class to
      * pass paramter. Player contained in arg is who has achieved common goal. Points gained are conteined in "getGainedPointsFirstCard".

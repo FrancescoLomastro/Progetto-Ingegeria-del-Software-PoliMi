@@ -31,17 +31,16 @@ public class ClientController implements Observer<View, OBS_Message> {
 
     public ClientController(String viewMode)
     {
-        this.clientModel = new ClientModel();
         if(viewMode.equals("CLI"))
         {
-            view = new Cli(clientModel);
+            view = new Cli();
         }
         else
         {
             this.view = ViewFactory.getInstance();
         }
+        clientModel = view.getClientModel();
         view.addObserver(this);
-
         pingTimer = new PingTimer();
 
         new Thread(view).start();

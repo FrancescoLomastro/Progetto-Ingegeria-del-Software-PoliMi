@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../styles/BoardScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.BoardSceneController">
+   <children>
+      <BorderPane layoutX="860.0" layoutY="440.0" prefHeight="1080.0" prefWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <Pane fx:id="centralPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane fx:id="gridPane" layoutX="29.0" layoutY="33.0" prefHeight="634.0" prefWidth="636.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="78.0" minWidth="70.0" prefWidth="72.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="78.0" minWidth="63.0" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="77.0" minWidth="65.0" prefWidth="71.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="76.0" minWidth="66.0" prefWidth="71.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="79.0" minWidth="67.0" prefWidth="71.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="75.0" minWidth="62.0" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="78.0" minWidth="65.0" prefWidth="71.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="70.0" minWidth="63.0" prefWidth="70.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints vgrow="NEVER" prefHeight="70.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="78.0" minHeight="70.0" prefHeight="72.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="78.0" minHeight="63.0" prefHeight="69.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="77.0" minHeight="65.0" prefHeight="71.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="76.0" minHeight="66.0" prefHeight="70.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="79.0" minHeight="67.0" prefHeight="71.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="75.0" minHeight="62.0" prefHeight="70.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="78.0" minHeight="65.0" prefHeight="71.0" />
+                        <RowConstraints vgrow="NEVER" maxHeight="70.0" minHeight="63.0" prefHeight="70.0" />
+                    </rowConstraints>
+                  </GridPane>
+               </children>
+            </Pane>
+         </center>
+         <left>
+            <VBox prefHeight="1080.0" prefWidth="434.0" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <VBox prefHeight="1080.0" prefWidth="464.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>

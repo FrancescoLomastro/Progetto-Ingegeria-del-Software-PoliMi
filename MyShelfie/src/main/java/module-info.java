@@ -4,6 +4,7 @@ module MyShelfie {
     requires com.google.gson;
     requires java.rmi;
 
+    opens it.polimi.ingsw.View.Gui.guiControllers to javafx.fxml;
     opens it.polimi.ingsw to javafx.fxml;
     exports it.polimi.ingsw;
     exports it.polimi.ingsw.controller;

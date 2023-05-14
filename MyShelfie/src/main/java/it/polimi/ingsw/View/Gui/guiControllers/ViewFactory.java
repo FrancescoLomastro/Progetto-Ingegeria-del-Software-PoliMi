@@ -1,6 +1,8 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.Gui.GuiApplication;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.View.View;
@@ -19,7 +21,7 @@ import javafx.stage.Modality;
  *
  * @author Alberto Aniballi
  */
-public class ViewFactory extends View {
+public class ViewFactory extends View implements Observer<ClientModel, Message> {
     private static ViewFactory instance = null;
     private Stage primaryStage;
 
@@ -28,6 +30,11 @@ public class ViewFactory extends View {
             instance = new ViewFactory();
         }
         return instance;
+    }
+
+    public ViewFactory() {
+        clientModel=new ClientModel();
+        clientModel.addObserver(this);
     }
 
     private Scene loadScene(FXMLLoader loader) {
@@ -129,14 +136,11 @@ public class ViewFactory extends View {
 
     @Override
     public void startGame() {
-        Platform.runLater(() -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Livingroom.fxml"));
-            primaryStage.setMinHeight(800);
-            primaryStage.setMinWidth(800);
-            primaryStage.setWidth(800);
-            primaryStage.setHeight(800);
+       //Commentato per il momento perchè altrimenti non mostra la griglia
+       /* Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
             switchScene(loader);
-        });
+        });*/
     }
 
     @Override
@@ -185,7 +189,15 @@ public class ViewFactory extends View {
 
     @Override
     public void showGrid(ObjectCard[][] grid) {
-
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoardScene.fxml"));
+            loader.setControllerFactory(controllerClass -> {
+                BoardSceneController controller = new BoardSceneController();
+                controller.setGrid(grid);
+                return controller;
+            });
+            switchScene(loader);
+        });
     }
 
     @Override
@@ -222,4 +234,6 @@ public class ViewFactory extends View {
         setChanged();
         notifyObservers(msg);
     }
+
+
 }
