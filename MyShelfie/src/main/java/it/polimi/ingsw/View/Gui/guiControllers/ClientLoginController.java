@@ -4,14 +4,17 @@ import it.polimi.ingsw.View.OBSMessages.OBS_InitialInfoMessage;
 import it.polimi.ingsw.controller.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Screen;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,6 +30,8 @@ public class ClientLoginController implements Initializable {
     public Label title_label;
     public AnchorPane external_options_container;
     public AnchorPane clientLoging_container;
+    public AnchorPane container_anchorPane;
+    public ImageView backgound_image;
     private String chosenUsername;
     private int chosenTechnology;
     private String chosenIPAddress;
@@ -51,6 +56,15 @@ public class ClientLoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        backgound_image.setFitWidth(bounds.getWidth());
+        backgound_image.setFitHeight(bounds.getHeight());
+        backgound_image.setScaleX(1.25);
+        backgound_image.setScaleY(1.1);
+
         socket_button.setDisable(true);
         rmi_button.setDisable(true);
         server_textfield.setDisable(true);
@@ -72,10 +86,11 @@ public class ClientLoginController implements Initializable {
 
             if (username_text.length() > 0) {
                 setChosenUsername(username_text);
-                title_label.setText("Welcome " +username_text + "!");
+                //title_label.setText("Welcome " +username_text + "!");
                 username_textfield.setDisable(true);
                 rmi_button.setDisable(false);
                 socket_button.setDisable(false);
+                title_label.setStyle("-fx-text-alignment: center");
             }
         }
 

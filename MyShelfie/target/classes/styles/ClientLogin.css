@@ -30,6 +30,7 @@
     -fx-font-size: 3.5em;
     -fx-font-weight: bold;
     -fx-text-fill: #8B4513;
+    -fx-text-alignment: center;
 }
 
 .internal_form_container TextField {
