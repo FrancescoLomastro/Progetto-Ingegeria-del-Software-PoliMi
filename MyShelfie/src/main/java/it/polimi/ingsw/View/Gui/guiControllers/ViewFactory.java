@@ -259,6 +259,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 return controller;
             });
             switchScene(loader);
+            primaryStage.setFullScreen(true);
         });
     }
     public void showInvalidPort() {
