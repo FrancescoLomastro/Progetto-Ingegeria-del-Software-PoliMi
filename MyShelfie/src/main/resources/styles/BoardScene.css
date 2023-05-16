@@ -93,3 +93,8 @@ Pane
 .texture_5_2 {
     -fx-background-image: url("../images/originals/objectCards/5_2.png");
 }
+.library {
+    -fx-background-image: url("../images/originals/boards/bookshelf.png");
+    -fx-background-size: 100% 100%;
+    
+}

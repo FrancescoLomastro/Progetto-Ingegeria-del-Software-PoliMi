@@ -121,6 +121,9 @@ public class ClientLoginController implements Initializable {
                 if (server_ip.contains("Default")) {
                     setChosenIPAddress("localhost");
                 }
+                else {
+                    setChosenIPAddress(server_ip);
+                }
 
                 server_textfield.setDisable(true);
                 port_number_textfield.setDisable(false);
