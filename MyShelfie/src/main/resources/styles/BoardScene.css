@@ -9,9 +9,12 @@
     -fx-background-size: cover;
 }
 
+#anchorPane_library1{
+    -fx-background-image: url("../images/originals/boards/bookshelf.png");
+    -fx-background-size: cover;
+}
 Pane
 {
-
     -fx-background-size: cover;
 }
 .invisibleCells

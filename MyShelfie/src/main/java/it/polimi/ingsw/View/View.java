@@ -9,6 +9,7 @@ import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Utility.Position;
 
 public abstract class View extends Observable<OBS_Message> implements Runnable, Observer<ClientModel,Message> {
 
@@ -24,8 +25,8 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
 
 
     public abstract void printMessage(String string);
-    public abstract void showGrid(ObjectCard[][] grid);
-    public abstract void showLibrary(ObjectCard[][] library, String username);
+    public abstract void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage);
+    public abstract void showLibrary(ObjectCard[][] library, String username, Position[] old, Position[] inTable);
     public abstract void printAll();
     public abstract void startChat();
     public abstract void printPoints();
@@ -41,11 +42,11 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
         {
             case UPDATE_GRID_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
-                showGrid(obs);
+                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage() );
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary());
+                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(), ((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr());
             }
             //case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
         }

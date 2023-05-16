@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../styles/BoardScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.BoardSceneController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../styles/BoardScene.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.BoardSceneController">
    <children>
       <BorderPane layoutX="860.0" layoutY="440.0" prefHeight="1080.0" prefWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -27,22 +21,77 @@
                         <ColumnConstraints hgrow="NEVER" maxWidth="70.0" minWidth="63.0" prefWidth="70.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints vgrow="NEVER" prefHeight="70.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="78.0" minHeight="70.0" prefHeight="72.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="78.0" minHeight="63.0" prefHeight="69.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="77.0" minHeight="65.0" prefHeight="71.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="76.0" minHeight="66.0" prefHeight="70.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="79.0" minHeight="67.0" prefHeight="71.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="75.0" minHeight="62.0" prefHeight="70.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="78.0" minHeight="65.0" prefHeight="71.0" />
-                        <RowConstraints vgrow="NEVER" maxHeight="70.0" minHeight="63.0" prefHeight="70.0" />
+                      <RowConstraints prefHeight="70.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="78.0" minHeight="70.0" prefHeight="72.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="78.0" minHeight="63.0" prefHeight="69.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="77.0" minHeight="65.0" prefHeight="71.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="76.0" minHeight="66.0" prefHeight="70.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="79.0" minHeight="67.0" prefHeight="71.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="75.0" minHeight="62.0" prefHeight="70.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="78.0" minHeight="65.0" prefHeight="71.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="70.0" minHeight="63.0" prefHeight="70.0" vgrow="NEVER" />
                     </rowConstraints>
                   </GridPane>
                </children>
             </Pane>
          </center>
          <left>
-            <VBox prefHeight="1080.0" prefWidth="434.0" BorderPane.alignment="CENTER" />
+            <VBox prefHeight="1080.0" prefWidth="434.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane fx:id="anchorPane_library1" prefHeight="397.0" prefWidth="434.0">
+                     <children>
+                        <GridPane fx:id="gridPane_library1" layoutX="51.0" layoutY="31.0" prefHeight="344.0" prefWidth="326.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="31.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </children></VBox>
          </left>
          <right>
             <VBox prefHeight="1080.0" prefWidth="464.0" BorderPane.alignment="CENTER" />

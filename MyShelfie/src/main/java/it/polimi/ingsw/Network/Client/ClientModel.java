@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Enums.Type;
 import it.polimi.ingsw.model.Utility.Couple;
+import it.polimi.ingsw.model.Utility.Position;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,19 +43,19 @@ public class ClientModel extends Observable<Message> {
 
 
 
-    public void setGrid(ObjectCard[][] grid) {
+    public void setGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
         ObjectCard[][] obs = getObjectCards(grid);
         this.grid = obs;
         setChanged();
-        notifyObservers(new MessageGrid(this.grid));
+        notifyObservers(new MessageGrid(this.grid, typeOfGridMessage) );
         //notifyObservers(new MessageGrid(copy(grid))); //da chiedere ai prof
     }
 
-    public void setLibrary(String name, ObjectCard[][] library) {
+    public void setLibrary(String name, ObjectCard[][] library, Position[] oldInGrid, Position[] newInLibrary) {
         ObjectCard[][] obs = getObjectCards(library);
         librariesMap.replace(name, obs);
         setChanged();
-        notifyObservers(new MessageLibrary(obs, name));
+        notifyObservers(new MessageLibrary(obs, name, oldInGrid, newInLibrary));
         //notifyObservers(new MessageLibrary(copy(library), name)); //da chiedere ai prof
     }
 

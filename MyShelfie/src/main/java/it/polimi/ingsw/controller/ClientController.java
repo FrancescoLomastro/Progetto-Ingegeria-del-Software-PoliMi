@@ -181,11 +181,11 @@ public class ClientController implements Observer<View, OBS_Message> {
                 clientModel.addPlayer(((MessageInitPlayer) message).getPlayer());
             }
             case UPDATE_GRID_MESSAGE -> {
-                clientModel.setGrid(((MessageGrid) message).getGrid());
+                clientModel.setGrid(((MessageGrid) message).getGrid(), ((MessageGrid) message).getTypeOfGridMessage() );
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 MessageLibrary msg = (MessageLibrary) message;
-                clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary());
+                clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary(), msg.getCardInGrid(), msg.getCardInLibr());
             }
             case INIT_COMMON_GOAL -> {
                 MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;

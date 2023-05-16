@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.Enums.Type;
 import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
 import it.polimi.ingsw.model.Utility.PrinterUtils;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -178,13 +179,13 @@ public class Cli extends View implements Runnable {
      * */
     @Override
     public void printAll() {
-        showGrid(clientModel.getGrid());
+        showGrid(clientModel.getGrid(), MessageGrid.TypeOfGridMessage.NEED_TO_BE_PRINTED);
         System.out.println("\nFirst common goal: " + clientModel.getDescriptionFirstCommonGoal());
         System.out.println("\nSecond common goal: " + clientModel.getDescriptionSecondCommonGoal());
         printPersonalGoal(clientModel.getGoalList());
         Map<String, ObjectCard[][]> map = clientModel.getAllLibrary();
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
-            showLibrary(clientModel.getLibrary(entry.getKey()), entry.getKey() );
+            showLibrary(clientModel.getLibrary(entry.getKey()), entry.getKey(), null, null );
         }
         System.out.println("Points:\n");
         printPoints();
@@ -256,9 +257,16 @@ public class Cli extends View implements Runnable {
      * @author: Riccardo Figini
      * */
     @Override
-    public void showGrid(ObjectCard[][] matrice)
+    public void showGrid(ObjectCard[][] matrice, MessageGrid.TypeOfGridMessage typeOfGridMessage)
     {
-        String title="Living room grid:   ";
+        String action;
+        if(typeOfGridMessage == MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE)
+            action="is updated";
+        else if(typeOfGridMessage == MessageGrid.TypeOfGridMessage.INIT)
+            action="is initialized";
+        else
+            action="";
+        String title="Living room grid " + action+ ":   ";
         String title_space= PrinterUtils.printEquivalentSpace(title);
         String top_header = "|   |";
         String valoreStringa;
@@ -298,7 +306,7 @@ public class Cli extends View implements Runnable {
      * @param library library to print
      * */
     @Override
-    public void showLibrary(ObjectCard[][] library, String username){
+    public void showLibrary(ObjectCard[][] library, String username, Position[] oldInGrid, Position[] newInLibrary){
         String title=""+username + "'s library   ";
         String title_space= PrinterUtils.printEquivalentSpace(title);
 
@@ -322,8 +330,17 @@ public class Cli extends View implements Runnable {
             System.out.println();
         }
         System.out.println(title_space+bottom_header);
+        if(newInLibrary!= null && oldInGrid!= null) {
+            System.out.print("New element in library in position: ");
+            for (int i = 0; i < newInLibrary.length; i++)
+                System.out.print("(" + newInLibrary[i].getRow() + ";" + newInLibrary[i].getColumn() + ") , ");
+            System.out.println("");
+            System.out.print("Grid's position now with nothings: ");
+            for (int i = 0; i < oldInGrid.length; i++)
+                System.out.print("(" + oldInGrid[i].getRow() + ";" + oldInGrid[i].getColumn() + ") , ");
+            System.out.println("");
+        }
     }
-
 
     /**It prints points (from common goal card) achieved from specific player
      * @param arg Message with all information about points achieved from common goal card. It re-used an existing class to
@@ -380,7 +397,7 @@ public class Cli extends View implements Runnable {
             }
         }
 
-        showLibrary(matrix,"Your Personal Goal Card is:");
+        showLibrary(matrix,"Your Personal Goal Card is:", null, null);
     }
 
 
@@ -586,11 +603,11 @@ public class Cli extends View implements Runnable {
         {
             case UPDATE_GRID_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
-                showGrid(obs);
+                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage());
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary());
+                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
             }
             case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
         }

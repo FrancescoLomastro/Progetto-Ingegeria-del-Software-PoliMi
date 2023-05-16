@@ -1,8 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Utility.Couple;
+import it.polimi.ingsw.model.Utility.Position;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -42,7 +44,7 @@ public class TurnController implements Runnable, Serializable {
     }
 
     public void initClientObjectInPlayer() {
-        gameController.notifyAllMessage(new MessageGrid(game.getGrid()));
+        gameController.notifyAllMessage(new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.INIT));
         for(int i=0; i<game.getNumPlayers(); i++){
             gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
             gameController.notifyAllMessage(new MessageLibrary(game.getLibrary(game.getPlayers()[i].getName()), game.getPlayers()[i].getName()));
@@ -83,10 +85,12 @@ public class TurnController implements Runnable, Serializable {
         moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
         if (moveResult.getType() == AFTER_MOVE_POSITIVE) {
 
-            MessageGrid messageGrid = new MessageGrid(game.getGrid());
+            MessageGrid messageGrid = new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE);
             gameController.notifyAllMessage(messageGrid);
 
-            MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername());
+            ObjectCard[][] oldLibrary = game.getLibrary(message.getUsername());
+            MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername(),
+                    message.getMove(), findFilledPositionInLibrary(message.getColumn(), message.getMove(), oldLibrary) );
             gameController.notifyAllMessage(messageLibrary);
 
             gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa è adnata a buon fine
@@ -132,16 +136,39 @@ public class TurnController implements Runnable, Serializable {
             gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa non è andata a buon fine
         }
     }
-
+    /**it returns cells are be filled with the move in library
+     * @author: Riccardo Figini
+     * @param column Column where card are been inserted
+     * @param move Move
+     * @param oldLibrary Old library, before move
+     * @return {@code Position[]} Array with position
+     * */
+    private Position[] findFilledPositionInLibrary(int column, Position[] move, ObjectCard[][] oldLibrary) {
+        Position[] tmp = new Position[move.length];
+        int index=5;
+        for(; index>=0; index--)
+            if(oldLibrary[index][column]==null)
+                break;
+        index++;
+        int i=move.length-1;
+        for(; i>=0; i--){
+            tmp[i]=new Position(index, column);
+            index++;
+        }
+        return tmp;
+    }
+    /**It handles researches of a winner and close the game
+     * @author: Riccardo Figini
+     * */
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findWinner();
         gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
         countActualPointAndShare();
-        for(int i=0; i<list.size(); i++) {
+        for (Couple<String, Integer> stringIntegerCouple : list) {
             gameController.sendMessageToASpecificUser(new MessageWinner(
                             list.get(0).getFirst(),
-                            list.get(i).getSecond()),
-                    list.get(i).getFirst());
+                            stringIntegerCouple.getSecond()),
+                    stringIntegerCouple.getFirst());
         }
         gameController.closeGame();
     }

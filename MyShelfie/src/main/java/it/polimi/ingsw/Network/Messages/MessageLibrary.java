@@ -1,8 +1,19 @@
 package it.polimi.ingsw.Network.Messages;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Utility.Position;
+
 public class MessageLibrary extends MessageGame{
     private final ObjectCard[][] library;
     private final String player;
+    private Position[] cardInGrid=null;
+    private Position[] cardInLibr=null;
+    public MessageLibrary(ObjectCard[][]library, String player, Position[] cardInGrid, Position[] cardInLibr){
+        super(MessageType.UPDATE_LIBRARY_MESSAGE);
+        this.library=library;
+        this.player=player;
+        this.cardInGrid=cardInGrid;
+        this.cardInLibr=cardInLibr;
+    }
     public MessageLibrary(ObjectCard[][]library, String player){
         super(MessageType.UPDATE_LIBRARY_MESSAGE);
         this.library=library;
@@ -13,5 +24,14 @@ public class MessageLibrary extends MessageGame{
     }
     public ObjectCard[][] getLibrary() {
         return library;
+    }
+    public String getPlayer() {
+        return player;
+    }
+    public Position[] getCardInGrid() {
+        return cardInGrid;
+    }
+    public Position[] getCardInLibr() {
+        return cardInLibr;
     }
 }
