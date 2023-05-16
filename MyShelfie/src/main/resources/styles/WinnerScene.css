@@ -1,0 +1,49 @@
+#anchor_pane{
+
+    -fx-background-color: #ffff4d;
+}
+
+
+
+#winner_label_pane{
+
+    -fx-background-color: #ffcc00;
+    -fx-background-color: linear-gradient(to bottom, #ffff4d, #ffcc00);
+}
+
+#biggest_pane{
+
+    -fx-background-color: #ffff4d;
+    -fx-background-color: linear-gradient(to top, #ffff4d, #ffcc00);
+}
+
+#winner_label{
+
+
+}
+
+#winner_image_pane{
+
+    <!--inserire immagine -->
+    -fx-background-size: 100% 100%;
+}
+
+#button_show_library{
+
+    -fx-background-color: #cc9838;
+    -fx-background-color: linear-gradient(to top, #ffcc00, #ffff4d);
+}
+
+#mini_library{
+
+    -fx-background-image: url("../images/originals/boards/bookshelf.png");
+    -fx-background-size: 100% 100%;
+}
+
+#first_label{
+
+}
+
+#others_label{
+
+}
