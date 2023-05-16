@@ -2,11 +2,13 @@ package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageGrid;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.Gui.GuiApplication;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Utility.Position;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -189,17 +191,24 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
 
     @Override
-    public void showGrid(ObjectCard[][] grid) {
-        Platform.runLater(() ->
-        {
-            BoardSceneController boardSceneController = (BoardSceneController) currentController;
-            boardSceneController.updateGrid(grid);
-        });
+    public void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
+        if (typeOfGridMessage != MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE) {
+            Platform.runLater(() ->
+            {
+                BoardSceneController boardSceneController = (BoardSceneController) currentController;
+                boardSceneController.updateGrid(grid);
+            });
+        }
     }
 
     @Override
-    public void showLibrary(ObjectCard[][] library, String username) {
-
+    public void showLibrary(ObjectCard[][] library, String username, Position[] oldGrid, Position[] newLibrary) {
+        if(oldGrid!=null && newLibrary!=null) {
+            Platform.runLater(() -> {
+                BoardSceneController boardSceneController = (BoardSceneController) currentController;
+                boardSceneController.runAMove(library, username, oldGrid, newLibrary);
+            });
+        }
     }
 
     @Override

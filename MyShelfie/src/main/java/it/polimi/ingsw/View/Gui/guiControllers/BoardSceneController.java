@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -75,9 +76,10 @@ public class BoardSceneController implements Initializable {
         for(int i=0; i<oldInGrid.length; i++){
             Node node = gridPane.getChildren().get(oldInGrid[i].getRow()*gridPane.getColumnCount()+oldInGrid[i].getColumn());
             point2D_Start_End[i][0] = node.localToScene(0,0);
-            System.out.println("SOMMA: " + newInLibrary[i].getRow()*gridPane_library1.getColumnCount()+newInLibrary[i].getColumn());
             node = gridPane_library1.getChildren().get(newInLibrary[i].getRow()*gridPane_library1.getColumnCount()+newInLibrary[i].getColumn());
-            point2D_Start_End[i][1] = node.localToScene(0,0);
+            Point2D tmp = node.localToScene(0,0);
+            Scene scene = node.getScene();
+            point2D_Start_End[i][1] = scene.getRoot().localToScreen(tmp);
             System.out.println(point2D_Start_End[i][0].getX() + " " + point2D_Start_End[i][0].getY() );
             System.out.println(point2D_Start_End[i][1].getX() + " " + point2D_Start_End[i][1].getY() );
         }
@@ -98,6 +100,7 @@ public class BoardSceneController implements Initializable {
             anchorPane.getChildren().add(panes[i]);
         }
         //ridimensionamento delle immagine con una transizione
+        /*
         ScaleTransition[] scaleTransitions=new ScaleTransition[oldInGrid.length];
         double h = ((Pane)gridPane_library1.getChildren().get(0)).getHeight();
         double w = ((Pane)gridPane_library1.getChildren().get(0)).getWidth();
@@ -109,6 +112,8 @@ public class BoardSceneController implements Initializable {
             scaleTransitions[i].setCycleCount(1);
             scaleTransitions[i].setNode(panes[i]);
         }
+
+         */
         //creazione dei percorsi
         PathTransition[] pathTransitions = new PathTransition[oldInGrid.length];
         for(int i=0; i<oldInGrid.length; i++){
@@ -127,7 +132,7 @@ public class BoardSceneController implements Initializable {
         //Aggiunto tutto quello che ho appena creato ed elimino le immagini dalla griglia
         for(int i=0; i<oldInGrid.length; i++) {
             pathTransitions[i].play();
-            scaleTransitions[i].play();
+            //scaleTransitions[i].play();
             gridPane.getChildren().get(oldInGrid[i].getRow()*gridPane.getColumnCount()+oldInGrid[i].getColumn()).getStyleClass().remove(
                     gridPane.getChildren().get(oldInGrid[i].getRow()*gridPane.getColumnCount()+oldInGrid[i].getColumn()).getStyleClass());
             gridPane.getChildren().get(oldInGrid[i].getRow()*gridPane.getColumnCount()+oldInGrid[i].getColumn()).getStyleClass().add("invisibleCells");
