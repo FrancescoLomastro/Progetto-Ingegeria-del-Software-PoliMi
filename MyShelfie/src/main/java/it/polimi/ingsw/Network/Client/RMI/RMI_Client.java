@@ -7,13 +7,16 @@ import it.polimi.ingsw.Network.Client.RMIClientConnection;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.NewGameServerMessage;
 import it.polimi.ingsw.Network.Messages.RMILoginMessage;
+import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
 import it.polimi.ingsw.Network.Servers.RMI.RMISharedInterface;
 import it.polimi.ingsw.View.View;
 
+import java.net.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Enumeration;
 
 public class RMI_Client extends Client implements RMIClientConnection {
     private RMISharedInterface server;
@@ -91,4 +94,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
             messageQueue.add(message);
         }
     }
+
+
+
 }

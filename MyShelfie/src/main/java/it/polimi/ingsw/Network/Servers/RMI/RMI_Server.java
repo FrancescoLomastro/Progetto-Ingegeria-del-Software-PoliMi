@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Servers.RMI;
 
+import it.polimi.ingsw.Network.UtilsForRMI;
 import it.polimi.ingsw.controller.ServerReceiver;
 
 import java.net.*;
@@ -18,7 +19,7 @@ public class RMI_Server {
     }
 
     public void turnOn() throws Exception{
-        String address = getLocalIp();
+        String address = UtilsForRMI.getLocalIp();
         if(address==null)
             address="127.0.0.1";
         System.setProperty("java.rmi.server.hostname", address);
@@ -29,25 +30,5 @@ public class RMI_Server {
     }
 
 
-    private String getLocalIp() {
-        try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface ni = interfaces.nextElement();
-                if (!ni.isLoopback() && ni.isUp()) {
-                    for (InterfaceAddress address : ni.getInterfaceAddresses())
-                    {
-                        InetAddress inetAddress = address.getAddress();
-                        if (inetAddress != null && inetAddress instanceof Inet4Address)
-                        {
-                            return inetAddress.getHostAddress();
-                        }
-                    }
-                }
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }
