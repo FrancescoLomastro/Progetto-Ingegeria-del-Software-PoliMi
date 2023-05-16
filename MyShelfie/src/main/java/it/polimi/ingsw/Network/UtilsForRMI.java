@@ -9,7 +9,7 @@ public class UtilsForRMI {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
             while (interfaces.hasMoreElements()) {
                 NetworkInterface ni = interfaces.nextElement();
-                if (!ni.isLoopback() && ni.isUp() && !ni.isVirtual() && !ni.getDisplayName().toLowerCase().contains("VMnet")) {
+                if (!ni.isLoopback() && ni.isUp() && !ni.isVirtual() && !ni.getDisplayName().toLowerCase().contains("vmnet")) {
                     for (InterfaceAddress address : ni.getInterfaceAddresses())
                     {
                         InetAddress inetAddress = address.getAddress();
