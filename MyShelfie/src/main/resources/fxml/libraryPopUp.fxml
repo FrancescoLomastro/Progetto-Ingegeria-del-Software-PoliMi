@@ -7,63 +7,77 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="488.0" stylesheets="@../styles/libraryPopUp.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="537.0" prefWidth="557.0" stylesheets="@../styles/libraryPopUp.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="library_gridPane" layoutX="60.0" layoutY="27.0" prefHeight="315.0" prefWidth="370.0">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.20001220703125" minWidth="10.0" prefWidth="68.60003662109375" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.19999999999999" minWidth="10.0" prefWidth="80.59996337890624" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.20001220703126" minWidth="10.0" prefWidth="71.6" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="84.39996337890625" minWidth="10.0" prefWidth="77.60002441406249" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.20001220703125" minWidth="10.0" prefWidth="74.79998779296875" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="52.400000000000006" minHeight="10.0" prefHeight="52.400000000000006" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="52.39999999999998" minHeight="10.0" prefHeight="52.39999999999998" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <Pane fx:id="library_pane" prefHeight="634.0" prefWidth="558.0">
+               <children>
+                  <GridPane fx:id="library_gridPane" layoutX="62.0" layoutY="26.0" prefHeight="387.0" prefWidth="433.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.20001220703125" minWidth="10.0" prefWidth="68.60003662109375" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.39999999999999" minWidth="10.0" prefWidth="94.39999999999999" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.39997558593751" minWidth="10.0" prefWidth="86.40000000000003" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.40003662109376" minWidth="10.0" prefWidth="81.60002441406249" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.20001220703125" minWidth="10.0" prefWidth="75.99996337890627" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="67.99999084472657" minHeight="10.0" prefHeight="67.99999084472657" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="86.4" minHeight="10.0" prefHeight="60.80000915527344" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="98.79999389648437" minHeight="10.0" prefHeight="59.19999999999999" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="97.59999999999997" minHeight="10.0" prefHeight="51.20000610351562" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="76.80000000000001" minHeight="10.0" prefHeight="44.80000000000001" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="64.80000000000001" minHeight="10.0" prefHeight="64.80000000000001" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+            <Pane fx:id="label_pane" prefHeight="214.0" prefWidth="600.0">
+               <children>
+                  <Label fx:id="username_label" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="11.0" prefHeight="39.0" prefWidth="204.0" text="griglia di player1" textFill="#10100c">
+                     <font>
+                        <Font name="Calibri Light" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
-      </GridPane>
-      <Label fx:id="username_label" alignment="CENTER" contentDisplay="CENTER" layoutX="144.0" layoutY="356.0" prefHeight="30.0" prefWidth="204.0" text="griglia di player1" textFill="#332f12">
-         <font>
-            <Font name="Calibri Light" size="18.0" />
-         </font>
-      </Label>
+      </VBox>
    </children>
 </AnchorPane>

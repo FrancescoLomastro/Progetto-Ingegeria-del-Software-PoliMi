@@ -1,13 +1,19 @@
-#anchorPane
+#library_pane
 {
     -fx-background-image: url("../images/originals/boards/bookshelf.png");
     -fx-background-size: 100% 100%;
 }
 
+#label_pane{
+
+    -fx-background-color: #c68c53;
+}
+
 #username_label
 {
-    -fx-background-color: #b37700;
-    -fx-text-alignment: center;
+    -fx-background-color: #996600;
+    -fx-background-radius: 30%;
+    -fx-background-color: linear-gradient(to right, #cc9838, #e0ca88);
 }
 
 #library_gridPane
