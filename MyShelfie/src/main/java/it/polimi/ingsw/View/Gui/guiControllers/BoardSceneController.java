@@ -7,6 +7,7 @@ import javafx.animation.PathTransition;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -77,9 +78,13 @@ public class BoardSceneController implements Initializable {
             Node node = gridPane.getChildren().get(oldInGrid[i].getRow()*gridPane.getColumnCount()+oldInGrid[i].getColumn());
             point2D_Start_End[i][0] = node.localToScene(0,0);
             node = gridPane_library1.getChildren().get(newInLibrary[i].getRow()*gridPane_library1.getColumnCount()+newInLibrary[i].getColumn());
-            Point2D tmp = node.localToScene(0,0);
+
+            Bounds cellBounds = node.localToScene(node.getBoundsInLocal());
+            Point2D cellPosition = new Point2D(cellBounds.getMinX(), cellBounds.getMinY());
             Scene scene = node.getScene();
-            point2D_Start_End[i][1] = scene.getRoot().localToScreen(tmp);
+            Point2D tmp = scene.getRoot().sceneToLocal(cellPosition);
+
+            point2D_Start_End[i][1] = tmp;
             System.out.println(point2D_Start_End[i][0].getX() + " " + point2D_Start_End[i][0].getY() );
             System.out.println(point2D_Start_End[i][1].getX() + " " + point2D_Start_End[i][1].getY() );
         }
