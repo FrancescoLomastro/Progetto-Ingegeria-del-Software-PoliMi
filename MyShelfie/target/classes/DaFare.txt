@@ -9,4 +9,16 @@
 
 - Fare stampare la nuova stringa che arriva col login
 
-- Controllare (anche se ho già fatto più che ho potuto) le eccezioni
+- Controllare (anche se ho già fatto più che ho potuto) le eccezioni una volta inserito il ping
+
+- Problema figio con la grafica. Il mio computer ha un impostazione in cui setta il 150% della risoluzione. Con questa impostazione
+mi sballa tutte le dimensioni. Lo schermo è nel sistema operativo un 1920 ma java lo vede 1280x800. SceneBuilder lo vede piccolo e non riesco a veder le immagini
+come dovrebbero
+
+- Problema RMI di linux
+
+- Input per le mosse versio GUI
+
+- tutto ciò che manca nella gui
+
+- Impostare una pagina piccola, non più tutto schermo, per la partita. Questa si può al massimo ingrandire

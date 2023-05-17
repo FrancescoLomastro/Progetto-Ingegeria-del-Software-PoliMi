@@ -154,9 +154,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      */
     @Override
     public void onServerChanged() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoardScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NuovaBoardProposta.fxml"));
         loader.setControllerFactory(controllerClass -> {
-            BoardSceneController controller = new BoardSceneController();
+            NuovaBoardController controller = new NuovaBoardController();
             currentController = controller;
             return controller;
         });
@@ -197,7 +197,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         if (typeOfGridMessage != MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE) {
             Platform.runLater(() ->
             {
-                BoardSceneController boardSceneController = (BoardSceneController) currentController;
+                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
                 boardSceneController.updateGrid(grid);
             });
         }
@@ -207,7 +207,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void showLibrary(ObjectCard[][] library, String username, Position[] oldGrid, Position[] newLibrary) {
         if(oldGrid!=null && newLibrary!=null) {
             Platform.runLater(() -> {
-                BoardSceneController boardSceneController = (BoardSceneController) currentController;
+                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
                 boardSceneController.runAMove(library, username, oldGrid, newLibrary);
             });
         }
