@@ -99,7 +99,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
             primaryStage.setMaximized(true);
-            primaryStage.setFullScreen(true);
+            //primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("");
             primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             switchScene(loader);
@@ -131,6 +131,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
             switchScene(loader);
+            primaryStage.setFullScreen(true);
         });
     }
 
@@ -173,6 +174,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidUsername.fxml"));
             switchScene(loader);
+            primaryStage.setFullScreen(true);
         });
     }
 
@@ -254,6 +256,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 return controller;
             });
             switchScene(loader);
+            primaryStage.setFullScreen(true);
         });
     }
 
