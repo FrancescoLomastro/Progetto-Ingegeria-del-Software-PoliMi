@@ -97,6 +97,7 @@ public class Library implements Serializable {
      * @param row    the specific row to be checked
      * @param col the specific column to be checked
      * @return: boolean that is true if the cell is empty, otherwise false
+     * @author Alberto Aniballi
      */
     private boolean isCellEmpty(int row, int col) {
         if (matrix[row][col] != null) {
@@ -110,7 +111,7 @@ public class Library implements Serializable {
      * It checks if the library is full
      *
      * @return: boolean that is true if the library is full, otherwise false
-     *  @author Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public boolean isFull() {
         int highest_row = 0;
