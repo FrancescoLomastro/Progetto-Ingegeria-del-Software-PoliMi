@@ -22,7 +22,7 @@ import java.net.Socket;
  *
  * @author Alberto Aniballi
  */
-public class SocketConnection implements Connection,Runnable {
+public class SocketConnection extends Connection implements Runnable {
     StatusNetwork statusNetwork;
     private ServerReceiver serverReceiver;
     private final Socket socket;

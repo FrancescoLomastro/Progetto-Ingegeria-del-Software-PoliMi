@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.Connection;
 import it.polimi.ingsw.Network.StatusNetwork;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Utility.Request;
 
 import java.io.*;
@@ -203,9 +204,10 @@ public class Controller implements ServerReceiver
     }
 
     private void addPlayer(String username, Connection connection) {
-        currentGame.addPlayer(username,connection);
-        currentPlayerConnectionReferences.put(username, connection);
         games.add(currentGame);
+        currentGame.addPlayer(username,connection);
+        currentGame.startTimer(username,connection,this);
+        currentPlayerConnectionReferences.put(username, connection);
         if(currentGame.getSizeArrayConnection()==currentGame.getLimitOfPlayers())
         {
             writeNewGameInExecution(currentGame.getGameId());
@@ -384,6 +386,15 @@ public class Controller implements ServerReceiver
                                 waitedRequest.getUsername());
                         waitedRequest = null;
                     }
+                }
+            }
+            case PING_MESSAGE -> {
+                String username = message.getUsername();
+                for(int i = games.size()-1; i>=0; i--)
+                {
+                    GameController gc = games.get(i);
+                    if (gc.getNamesOfPlayer().contains(username))
+                        gc.renewTimer(username);
                 }
             }
         }

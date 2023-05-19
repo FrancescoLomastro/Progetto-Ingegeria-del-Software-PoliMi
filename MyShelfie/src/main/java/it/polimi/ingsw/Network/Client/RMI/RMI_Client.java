@@ -5,18 +5,18 @@ package it.polimi.ingsw.Network.Client.RMI;
 import it.polimi.ingsw.Network.Client.Client;
 import it.polimi.ingsw.Network.Client.RMIClientConnection;
 import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Messages.NewGameServerMessage;
 import it.polimi.ingsw.Network.Messages.RMILoginMessage;
-import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
 import it.polimi.ingsw.Network.Servers.RMI.RMISharedInterface;
+import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.View.View;
 
-import java.net.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Enumeration;
+import java.util.Optional;
 
 public class RMI_Client extends Client implements RMIClientConnection {
     private RMISharedInterface server;
@@ -89,12 +89,14 @@ public class RMI_Client extends Client implements RMIClientConnection {
      * @param message Generic Message*/
     @Override
     public void onMessage(Message message) {
-        synchronized (messageQueue)
-        {
-            messageQueue.add(message);
+        if (message.getType() == MessageType.PING_MESSAGE) {
+            synchronized (pingMessage) {
+                pingMessage = Optional.of(message);
+            }
+        } else {
+            synchronized (communicationMessageQueue) {
+                communicationMessageQueue.add(message);
+            }
         }
     }
-
-
-
 }

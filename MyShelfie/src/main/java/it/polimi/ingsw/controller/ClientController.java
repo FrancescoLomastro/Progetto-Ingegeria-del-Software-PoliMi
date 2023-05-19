@@ -6,8 +6,6 @@ import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Messages.ChatMessage;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
-import it.polimi.ingsw.Network.Servers.PingTimer;
-import it.polimi.ingsw.Network.UtilsForRMI;
 import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.View.Cli.Cli;
@@ -25,9 +23,9 @@ public class ClientController implements Observer<View, OBS_Message> {
     public static final String ANSI_RESET = "\u001B[0m";
     private View view;
     private ClientModel clientModel;
-    private MessageQueueHandler messageReceiver;
+    private CommunicationQueueHandler communicationQueueHandler;
+    private PingHandler pingHandler;
     private Client client;
-    private PingTimer pingTimer;
 
     public ClientController(String viewMode)
     {
@@ -41,7 +39,6 @@ public class ClientController implements Observer<View, OBS_Message> {
         }
         clientModel = view.getClientModel();
         view.addObserver(this);
-        pingTimer = new PingTimer();
     }
 
 
@@ -65,20 +62,18 @@ public class ClientController implements Observer<View, OBS_Message> {
         try {
             switch (chosenTechnology) {
                 case 0 -> {
-                    String address = UtilsForRMI.getLocalIp();
-                    if(address==null)
-                        address="127.0.0.1";
-                    System.setProperty("java.rmi.server.hostname", address);
                     client = new RMI_Client(chosenUsername, chosenAddress, chosenPort);
                 }
                 case 1 -> {
                     client = new Socket_Client(chosenUsername, chosenAddress, chosenPort);
                 }
             }
-            messageReceiver = new MessageQueueHandler(client, this);
+            communicationQueueHandler = new CommunicationQueueHandler(client, this);
+            pingHandler = new PingHandler(client, this);
 
             client.connect();
-            new Thread(messageReceiver).start();
+            new Thread(communicationQueueHandler).start();
+            new Thread(pingHandler).start();
         }
         catch (Exception e){
             view.errorCreatingClient(chosenAddress,chosenPort);
@@ -205,20 +200,6 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case GAME_IS_OVER -> {
                 view.printMessage("Game is over");
-            }
-            case PING_MESSAGE -> {
-/*
-                pingTimer.cancel();
-
-                ServerPingMessage serverPingMessage = new ServerPingMessage(client.getUsername());
-                try {
-                    client.sendMessage(serverPingMessage);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                pingTimer = new PingTimer();
-                pingTimer.schedule(new PingTaskClient(), 10000);*/
             }
         }
 

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Timer;
 
 /**
@@ -14,36 +15,38 @@ public abstract class Client extends UnicastRemoteObject {
     private String username;
     private final String serverAddress;
     private final int serverPort;
-    protected final transient ArrayList<Message> messageQueue;
-    protected final transient long TIMEOUT = 15000;
-    protected Timer timer;
+    protected final transient ArrayList<Message> communicationMessageQueue;
+    protected transient Optional<Message> pingMessage;
 
     /**Construtor
      * @author: Riccardo Figini
      * */
     public Client(String username, String address, int port) throws RemoteException {
         super();
-        this.messageQueue= new ArrayList<>();
+        this.communicationMessageQueue= new ArrayList<>();
+        this.pingMessage=  Optional.empty();
         this.username = username;
         this.serverAddress = address;
         this.serverPort = port;
-        this.timer=new Timer();
     }
 
-    /**
-     * This method is called from MessageQueueHandler thread and return list of message
-     * @author: Riccardo Figini
-     * @return {@code ArrayList<Message>} list of generic message*/
-    public ArrayList<Message> getMessageQueue() {
+    public ArrayList<Message> getCommunicationMessageQueue() {
         ArrayList<Message> list;
-        synchronized (messageQueue)
+        synchronized (communicationMessageQueue)
         {
-            list= new ArrayList<>(messageQueue);
-            messageQueue.clear();
+            list= new ArrayList<>(communicationMessageQueue);
+            communicationMessageQueue.clear();
         }
         return list;
     }
-
+    public Message getPingMessage() {
+        Message msg;
+        synchronized (pingMessage)
+        {
+            msg= pingMessage.orElse(null);
+        }
+        return msg;
+    }
 
     public void changeUsername(String username)
     {

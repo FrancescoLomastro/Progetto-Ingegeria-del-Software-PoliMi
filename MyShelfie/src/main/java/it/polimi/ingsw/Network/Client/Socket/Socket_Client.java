@@ -3,6 +3,7 @@ package it.polimi.ingsw.Network.Client.Socket;
 
 import it.polimi.ingsw.Network.Client.Client;
 import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Messages.SocketLoginMessage;
 import it.polimi.ingsw.View.View;
 
@@ -11,9 +12,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
-
 public class Socket_Client extends Client implements Runnable{
     private transient Socket socket;
     private transient ObjectInputStream in;
@@ -79,8 +80,18 @@ public class Socket_Client extends Client implements Runnable{
         {
             try {
                 Message message = (Message) in.readObject();
-                synchronized (messageQueue) {
-                    messageQueue.add(message);
+
+                if(message.getType()== MessageType.PING_MESSAGE)
+                {
+                    synchronized (pingMessage) {
+                        pingMessage = Optional.of(message);
+                    }
+                }
+                else
+                {
+                    synchronized (communicationMessageQueue) {
+                        communicationMessageQueue.add(message);
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException("Failed communication with server " + e);

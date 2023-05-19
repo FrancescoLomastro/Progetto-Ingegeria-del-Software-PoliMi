@@ -4,16 +4,12 @@ package it.polimi.ingsw.Network.Servers.RMI;
 
 import it.polimi.ingsw.Network.Client.RMIClientConnection;
 import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.Messages.MessageType;
-import it.polimi.ingsw.Network.Messages.NewGameServerMessage;
 import it.polimi.ingsw.Network.Servers.Connection;
 import it.polimi.ingsw.Network.StatusNetwork;
-import it.polimi.ingsw.controller.ServerReceiver;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 
-public class RMIConnection implements Connection {
+public class RMIConnection extends Connection {
     private RMIClientConnection clientConnection;
     private StatusNetwork statusNetwork;
     private String playerName;

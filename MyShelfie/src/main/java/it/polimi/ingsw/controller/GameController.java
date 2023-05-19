@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.CentralServer;
 import it.polimi.ingsw.Network.Servers.Connection;
+import it.polimi.ingsw.Network.Servers.PingTaskServer;
 import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
 import it.polimi.ingsw.Network.StatusNetwork;
 import it.polimi.ingsw.model.Game;
@@ -38,7 +39,27 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private transient Controller controller;
     private boolean gameInGame;
     private transient RMIShared gameShared;
-    //private PingTimer[] pingTimers;
+    private int PING_TIMEOUT = 10000;
+
+    public void startTimer(String username,Connection connection,ServerReceiver server)
+    {
+        connection.startTimer(PING_TIMEOUT,server);
+        try {
+            connection.sendMessage(new ServerPingMessage(username));
+        } catch (IOException e) {
+            tryToDisconnect(connection, username);
+        }
+    }
+    public void renewTimer(String username)
+    {
+        Connection conn= clients.get(username);
+        conn.resetTimer(PING_TIMEOUT,this);
+        try {
+            conn.sendMessage(new ServerPingMessage(username));
+        } catch (IOException e) {
+            tryToDisconnect(clients.get(username), username);
+        }
+    }
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -128,23 +149,10 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         switch (message.getType()){
             case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
             case CHAT_MESSAGE -> notifyAllMessage(message);
-            /*case PING_MESSAGE -> {
-
-                for(PingTimer pt: pingTimers){
-
-                    if(pt.getPlayerUsername().equals(((ServerPingMessage) message).getPlayerUsername())){
-
-                        pt.cancel();
-
-                        ServerPingMessage serverPingMessage = new ServerPingMessage("SERVER");
-                        sendMessageToASpecificUser(serverPingMessage, pt.getPlayerUsername());
-
-                        pt = new PingTimer();
-                        pt.setPlayerUsername(((ServerPingMessage) message).getPlayerUsername());
-                        pt.schedule(new PingTaskServer(((ServerPingMessage) message).getPlayerUsername()), 10000);
-                    }
-                }
-            }*/
+            case PING_MESSAGE -> {
+                String username = message.getUsername();
+                renewTimer(username);
+            }
         }
     }
     /**
@@ -209,20 +217,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             String key = entry.getKey();
             game.setNextPlayer(key);
         }
-
-        /*
-        ServerPingMessage initPingMessage = new ServerPingMessage("SERVER");
-        notifyAllMessage(initPingMessage);
-
-        // inizializzo l'array di pingTimers per dare a ogni timer lo username del rispettivo player e inizio il timeout
-        for (int i = 0; i < game.getNumPlayers(); i++){
-
-            pingTimers[i] = new PingTimer();
-            pingTimers[i].setPlayerUsername(game.getPlayers()[i].getName());
-            pingTimers[i].schedule(new PingTaskServer(pingTimers[i].getPlayerUsername()), 10000);
-        }
-
-         */
 
         this.turnController = new TurnController(game, this);
     }
