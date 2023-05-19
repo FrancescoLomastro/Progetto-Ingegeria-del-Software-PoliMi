@@ -129,7 +129,7 @@ public class Board_C implements Initializable {
                     Pane pane = new Pane();
                     pane.prefWidthProperty().bind(libraryGrid.getColumnConstraints().get(c).prefWidthProperty());
                     pane.prefHeightProperty().bind(libraryGrid.getRowConstraints().get(r).prefHeightProperty());//è giusto così, height non funziona
-                    pane.getStyleClass().add("texture_5_2");
+                    pane.getStyleClass().add("invisible");
 
                     libraryGrid.setRowIndex(pane, r);
                     libraryGrid.setColumnIndex(pane, c);
