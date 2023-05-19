@@ -98,8 +98,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void showStart() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
-            primaryStage.setMaximized(true);
-            //primaryStage.setFullScreen(true);
+           primaryStage.setMaximized(true);
+            primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("");
             primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             switchScene(loader);
@@ -154,10 +154,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      */
     @Override
     public void onServerChanged() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NuovaBoardProposta.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
         loader.setControllerFactory(controllerClass -> {
-            NuovaBoardController controller = new NuovaBoardController();
-            currentController = controller;
+            Board_C controller = new Board_C();
+            currentController=controller;
             return controller;
         });
         Platform.runLater(() -> {
@@ -194,23 +194,36 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     @Override
     public void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
-        if (typeOfGridMessage != MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE) {
+        /*if (typeOfGridMessage != MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE) {
+//            Platform.runLater(() ->
+//            {
+//                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
+//                boardSceneController.updateGrid(grid);
+//            });
+        }
+        else
+        {*/
             Platform.runLater(() ->
             {
-                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
+                Board_C boardSceneController = (Board_C) currentController;
                 boardSceneController.updateGrid(grid);
             });
-        }
+        //}
     }
 
     @Override
     public void showLibrary(ObjectCard[][] library, String username, Position[] oldGrid, Position[] newLibrary) {
-        if(oldGrid!=null && newLibrary!=null) {
-            Platform.runLater(() -> {
-                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
-                boardSceneController.runAMove(library, username, oldGrid, newLibrary);
-            });
-        }
+//        if(oldGrid!=null && newLibrary!=null) {
+//            Platform.runLater(() -> {
+//                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
+//                boardSceneController.runAMove(library, username, oldGrid, newLibrary);
+//            });
+//        }
+        Platform.runLater(() ->
+        {
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.updateLibrary(library,username);
+        });
     }
 
     @Override

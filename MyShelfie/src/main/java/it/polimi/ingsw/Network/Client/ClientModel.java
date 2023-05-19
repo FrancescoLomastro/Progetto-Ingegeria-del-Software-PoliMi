@@ -23,9 +23,17 @@ public class ClientModel extends Observable<Message> {
     private String descriptionFirstCommonGoal;
     private String descriptionSecondCommonGoal;
     private int pointsCommonGoalCards[];
-    private  ObjectCard[][] defaultLibrary;
 
-    //private final ViewFactory viewFactory;
+    public void setNumOfPlayers(int numOfPlayers) {
+        this.numOfPlayers = numOfPlayers;
+    }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
+
+    private int numOfPlayers;
+    private  ObjectCard[][] defaultLibrary;
 
     public ClientModel(){
         librariesMap = new HashMap<>();
@@ -33,7 +41,6 @@ public class ClientModel extends Observable<Message> {
         pointsCommonGoalCards = new int[] {8,8};
         defaultLibrary = new ObjectCard[6][5];
         //this.viewFactory = new ViewFactory();
-
         for(int i=0; i<6; i++){
             for(int j=0; j<5; j++){
                 defaultLibrary[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
@@ -70,6 +77,14 @@ public class ClientModel extends Observable<Message> {
             }
         }
         return obs;
+    }
+    private static ObjectCard[][][] getObjectCards(ObjectCard[][][] objectCards) {
+        ObjectCard[][][] toReturn= new ObjectCard[objectCards.length][][];
+        for(int k=0;k<objectCards.length;k++)
+        {
+            toReturn[k]=getObjectCards(objectCards[k]);
+        }
+        return toReturn;
     }
 
 
@@ -185,6 +200,29 @@ public class ClientModel extends Observable<Message> {
 
     public Map<String, Integer> getPointsMap() {
         return pointsMap;
+    }
+
+    public void setup(SetupMessage msg)
+    {
+        setDescriptionFirstCommonGoal(msg.getDescription1());
+        setDescriptionSecondCommonGoal(msg.getDescription2());
+        setPersonalGoalCard(msg.getPersonalGoalCard());
+        for(int i=0; i<msg.getPlayersName().length;i++)
+        {
+            addPlayer(msg.getPlayersName()[i]);
+            librariesMap.replace(msg.getPlayersName()[i],getObjectCards(msg.getPlayersLibraries()[i]));
+        }
+        this.grid=msg.getGrid();
+        setChanged();
+        notifyObservers(new SetupMessage(getObjectCards(grid),
+                msg.getPlayersName(),
+                msg.getPersonalGoalCard(),
+                new String[]{msg.getDescription1(),msg.getDescription2()},
+                getObjectCards(msg.getPlayersLibraries())));
+    }
+    public String[] getPlayerNames()
+    {
+        return librariesMap.keySet().toArray(new String[0]);
     }
 }
 

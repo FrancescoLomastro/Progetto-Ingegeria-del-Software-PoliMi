@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Cards.PersonalGoalCard;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
@@ -43,14 +44,28 @@ public class TurnController implements Runnable, Serializable {
                 new MessageMove(), game.getPlayers()[0].getName());
     }
 
-    public void initClientObjectInPlayer() {
-        gameController.notifyAllMessage(new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.INIT));
-        for(int i=0; i<game.getNumPlayers(); i++){
-            gameController.notifyAllMessage(new MessageInitPlayer(game.getPlayers()[i].getName()));
-            gameController.notifyAllMessage(new MessageLibrary(game.getLibrary(game.getPlayers()[i].getName()), game.getPlayers()[i].getName()));
-            gameController.sendMessageToASpecificUser(new MessagePersonalGoal(game.getPlayers()[i].getPersonalGoalCard().getGoalVector()), game.getPlayers()[i].getName());
-            gameController.notifyAllMessage(
-                    new MessaggeInitCommondGoal(game.getCommonGoalCard()[0].getDescription(), game.getCommonGoalCard()[1].getDescription()));
+    public void initClientObjectInPlayer()
+    {
+        String[] playerNames= new String[game.getNumPlayers()];
+        ObjectCard[][][] playerLibraries = new ObjectCard[game.getNumPlayers()][][];
+        String[] commonGoals = new String[2];
+        commonGoals[0] = game.getCommonGoalCard()[0].getDescription();
+        commonGoals[1] = game.getCommonGoalCard()[1].getDescription();
+        for(int i=0; i<game.getNumPlayers(); i++)
+        {
+            playerNames[i]=game.getPlayers()[i].getName();
+            playerLibraries[i]=game.getLibrary(game.getPlayers()[i].getName());
+        }
+
+        for(int i=0; i<game.getNumPlayers(); i++)
+        {
+            SetupMessage message= new SetupMessage(
+                    game.getGrid(),
+                    playerNames,
+                    game.getPlayers()[i].getPersonalGoalCard().getGoalVector(),
+                    commonGoals,
+                    playerLibraries);
+            gameController.sendMessageToASpecificUser(message,playerNames[i]);
         }
         countActualPointAndShare();
     }

@@ -601,6 +601,14 @@ public class Cli extends View implements Runnable {
     public void update(ClientModel o, Message arg) {
         switch (arg.getType())
         {
+            case SETUP_MESSAGE -> {
+                SetupMessage msg = (SetupMessage) arg;
+                showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
+                for (int i=0; i<msg.getPlayersName().length;i++)
+                {
+                    showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
+                }
+            }
             case UPDATE_GRID_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
                 showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage());

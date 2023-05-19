@@ -6,7 +6,6 @@ import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Messages.ChatMessage;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
-import it.polimi.ingsw.Network.Servers.PingTaskClient;
 import it.polimi.ingsw.Network.Servers.PingTimer;
 import it.polimi.ingsw.Network.UtilsForRMI;
 import it.polimi.ingsw.View.*;
@@ -18,9 +17,7 @@ import it.polimi.ingsw.View.OBSMessages.*;
 import it.polimi.ingsw.model.Utility.Couple;
 
 import java.io.IOException;
-import java.net.*;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 
 public class ClientController implements Observer<View, OBS_Message> {
@@ -110,7 +107,9 @@ public class ClientController implements Observer<View, OBS_Message> {
         switch (message.getType())
         {
             case ACCEPTED_LOGIN_MESSAGE -> {
+                AcceptedLoginMessage msg = (AcceptedLoginMessage)message;
                 view.printMessage("Connection accepted, waiting for other players");
+                clientModel.setNumOfPlayers(((AcceptedLoginMessage) message).getNumberOfPlayers());
             }
             case PLAYER_NUMBER_REQUEST -> {
                 PlayerNumberRequest msg = (PlayerNumberRequest)message;
@@ -184,8 +183,9 @@ public class ClientController implements Observer<View, OBS_Message> {
                 }
 
             }
-            case INIT_PLAYER_MESSAGE -> {
-                clientModel.addPlayer(((MessageInitPlayer) message).getPlayer());
+            case SETUP_MESSAGE -> {
+                SetupMessage msg = (SetupMessage) message;
+                clientModel.setup(msg);
             }
             case UPDATE_GRID_MESSAGE -> {
                 clientModel.setGrid(((MessageGrid) message).getGrid(), ((MessageGrid) message).getTypeOfGridMessage() );
@@ -193,15 +193,6 @@ public class ClientController implements Observer<View, OBS_Message> {
             case UPDATE_LIBRARY_MESSAGE -> {
                 MessageLibrary msg = (MessageLibrary) message;
                 clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary(), msg.getCardInGrid(), msg.getCardInLibr());
-            }
-            case INIT_COMMON_GOAL -> {
-                MessaggeInitCommondGoal msg = (MessaggeInitCommondGoal) message;
-                clientModel.setDescriptionFirstCommonGoal(msg.getDescription1());
-                clientModel.setDescriptionSecondCommonGoal(msg.getDescription2());
-            }
-            case INIT_PERSONAL_GOAL -> {
-                MessagePersonalGoal msg = (MessagePersonalGoal) message;
-                clientModel.setPersonalGoalCard(msg.getGoalVector());
             }
             case RETURN_TO_OLD_GAME_MESSAGE -> {
                 view.printMessage("You are joining in your old game");

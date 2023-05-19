@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: yellow;" stylesheets="@../../styles/BoardScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Common_C">
+   <children>
+      <VBox alignment="CENTER" layoutX="50.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane fx:id="image" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: yellow;" styleClass="common">
+               <children>
+                  <Pane fx:id="point" layoutX="119.0" layoutY="28.0" prefHeight="55.0" prefWidth="55.0" rotate="-8.0" style="-fx-background-color: green;" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

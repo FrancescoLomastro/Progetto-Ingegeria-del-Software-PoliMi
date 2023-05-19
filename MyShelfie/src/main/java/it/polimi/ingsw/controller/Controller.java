@@ -173,7 +173,7 @@ public class Controller implements ServerReceiver
                 } else {
                     connection.setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE);
                     try {
-                        connection.sendMessage(new AcceptedLoginMessage());
+                        connection.sendMessage(new AcceptedLoginMessage(currentGame.getLimitOfPlayers()));
                         addPlayer(username, connection);
                     } catch (IOException e) {
                         tryToDisconnect(connection, username);
@@ -325,7 +325,7 @@ public class Controller implements ServerReceiver
         try {
             gameController.addPlayer(username, connection);
             connection.sendMessage(new MessageReturnToGame(MessageType.RETURN_TO_OLD_GAME_MESSAGE));
-            connection.sendMessage(new AcceptedLoginMessage());
+            connection.sendMessage(new AcceptedLoginMessage(currentGame.getLimitOfPlayers()));
         } catch (IOException e) {
             tryToDisconnect(connection, username);
         }
@@ -373,9 +373,9 @@ public class Controller implements ServerReceiver
                 if (waitedRequest.getUsername().equals(message.getUsername())) {
                     waitedRequest.getConnection().setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER);
                     try {
-                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage());
                         PlayerNumberAnswer msg = (PlayerNumberAnswer) message;
                         currentGame.setLimitOfPlayers(msg.getPlayerNumber());
+                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage(currentGame.getLimitOfPlayers()));
                         isAsking=false;
                         addPlayer(waitedRequest.getUsername(), waitedRequest.getConnection());
                     } catch (IOException e) {

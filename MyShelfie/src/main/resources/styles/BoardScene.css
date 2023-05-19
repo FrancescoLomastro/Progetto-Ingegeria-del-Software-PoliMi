@@ -1,4 +1,4 @@
-#anchorPane
+#externalAnchorPane
 {
     -fx-background-image: url("../images/originals/misc/sfondoParquet.jpg");
 }
@@ -28,18 +28,7 @@ Pane
 {
     -fx-background-size: cover;
 }
-.invisibleCells
-{
-    -fx-managed: false;
-    -fx-visible: false;
-}
 
-
-.library_background{
-    -fx-background-image: url("../images/originals/boards/bookshelf_orth.png");
-    -fx-background-size: cover;
-    -fx-background-position: center center;
-}
 .texture_0_0
 {
     -fx-background-image: url("../images/originals/objectCards/0_0.png");
@@ -74,9 +63,6 @@ Pane
 
 .texture_2_2 {
     -fx-background-image: url("../images/originals/objectCards/2_2.png");
-    -fx-background-size: 90% 90%;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
 }
 
 .texture_3_0 {
@@ -85,16 +71,10 @@ Pane
 
 .texture_3_1 {
     -fx-background-image: url("../images/originals/objectCards/3_1.png");
-    -fx-background-size: 90% 90%;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
 }
 
 .texture_3_2 {
     -fx-background-image: url("../images/originals/objectCards/3_2.png");
-    -fx-background-size: 90% 90%;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
 }
 
 .texture_4_0 {
@@ -122,6 +102,26 @@ Pane
 }
 .library {
     -fx-background-image: url("../images/originals/boards/bookshelf.png");
-    -fx-background-size: 100% 100%;
     
+}
+.centralGrid
+{
+    -fx-background-image: url("../images/originals/boards/livingroom.png");
+    -fx-background-size: 100% 100%;
+}
+
+.invisibleCells
+{
+    -fx-managed: false;
+    -fx-visible: false;
+}
+.common
+{
+    -fx-background-image: url("../images/originals/commonGoalCards/10.jpg");
+    -fx-background-size: 100% 100%;
+}
+.personal
+{
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals2.png");
+    -fx-background-size: 100% 100%;
 }

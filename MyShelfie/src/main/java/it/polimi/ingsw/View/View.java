@@ -1,10 +1,7 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
-import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.Messages.MessageCommonGoal;
-import it.polimi.ingsw.Network.Messages.MessageGrid;
-import it.polimi.ingsw.Network.Messages.MessageLibrary;
+import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
@@ -40,13 +37,21 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     public void update(ClientModel o, Message arg) {
         switch (arg.getType())
         {
+            case SETUP_MESSAGE -> {
+                SetupMessage msg = (SetupMessage) arg;
+                showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
+                for (int i=0; i<msg.getPlayersName().length;i++)
+                {
+                    showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
+                }
+            }
             case UPDATE_GRID_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
-                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage() );
+                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage());
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(), ((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr());
+                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
             }
             //case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
         }
