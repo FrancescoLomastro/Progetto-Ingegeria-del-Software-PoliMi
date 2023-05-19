@@ -14,6 +14,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * This class serves as connection for the management of network communication via Socket technology.
+ * The class takes care of receiving messages by creating an ObjectInputStream that will be used for receiving Socket message and
+ * sending socket messages by creating an ObjectOutputStream. The two stream are dedicated to a specific client.
+ * Moreover, it is used to check and validate network status.
+ *
+ * @author Alberto Aniballi
+ */
 public class SocketConnection implements Connection,Runnable {
     StatusNetwork statusNetwork;
     private ServerReceiver serverReceiver;
@@ -22,6 +30,15 @@ public class SocketConnection implements Connection,Runnable {
     private final ObjectOutputStream out;
     private String playerName;
 
+    /**
+     * Constructor of SocketConnection instances.
+     * It is used to instantiate a new serverReceiver and a socket that will manage server-side communication using specific
+     * OutputStream and InputStream.
+     *
+     * @param serverReceiver: it is the controller that will act as serverReceiver.
+     * @param clientSocket: it is the socket dedicated to listening to a specific client messages.
+     * @author Alberto Aniballi
+     */
     public SocketConnection(ServerReceiver serverReceiver, Socket clientSocket) throws IOException {
         this.serverReceiver = serverReceiver;
         this.socket = clientSocket;
@@ -30,6 +47,14 @@ public class SocketConnection implements Connection,Runnable {
         statusNetwork=StatusNetwork.AFTER_ACCEPTION_SOCKET_BEFORE_LOGIN_MESSAGE;
     }
 
+
+    /**
+     * This method activates the socket server-side thread that is used to continuously listen to client requests
+     * using a specific ObjectInputStream dedicated to socket connection with this client.
+     * It also takes care of alerting the client in case of failed communication with the socket server.
+     *
+     * @author Alberto Aniballi
+     */
     @Override
     public void run() {
         boolean continueCicle=true;
@@ -51,6 +76,13 @@ public class SocketConnection implements Connection,Runnable {
         }
     }
 
+
+    /**
+     * This method takes care of activating the socket server-side controller for receiving client requests.
+     *
+     * @param message: it is the specific message to which the controller must respond.
+     * @author Alberto Aniballi
+     */
     public void onMessage(Message message) {
         if(message.getType()== MessageType.SOCKET_LOGIN_REQUEST)
         {
@@ -64,6 +96,14 @@ public class SocketConnection implements Connection,Runnable {
         }
     }
 
+
+    /**
+     * This method takes care of activating the socket server-side controller for sending answers to client using the specif ObjectOutputStream.
+     * The method is also responsible for alerting the creation of a new Server for managing the game socket communication.
+     *
+     * @param message: it is the specific message that the controller sends as answer to a client request.
+     * @author Alberto Aniballi
+     */
     @Override
     public void sendMessage(Message message) throws IOException {
         if(out!=null) {
@@ -79,21 +119,42 @@ public class SocketConnection implements Connection,Runnable {
         }
     }
 
+    /**
+     * It gets current network status.
+     *
+     * @author Alberto Aniballi
+     */
     @Override
     public StatusNetwork getStatusNetwork() {
         return statusNetwork;
     }
 
+    /**
+     * It sets the network status.
+     *
+     * @param statusNetwork: the network status to be set.
+     * @author Alberto Aniballi
+     */
     @Override
     public void setStatusNetwork(StatusNetwork statusNetwork) {
         this.statusNetwork=statusNetwork;
     }
 
+    /**
+     * It gets the player name dedicated to this socketConnection.
+     *
+     * @author Alberto Aniballi
+     */
     @Override
     public String getPlayerName() {
         return playerName;
     }
 
+    /**
+     * It sets the player name dedicated to this socketConnection.
+     *
+     * @author Alberto Aniballi
+     */
     @Override
     public void setPlayerName(String playerName) {
         this.playerName=playerName;
