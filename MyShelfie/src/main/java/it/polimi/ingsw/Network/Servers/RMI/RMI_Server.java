@@ -12,7 +12,7 @@ import java.util.Enumeration;
 
 /**
  * This class serves as server for the management of network communication via RMI technology.
- * The class takes care of receiving messages by creating the serverReceiver that will be used for receiving any kind of RMI message.
+ * The class takes care of receiving messages by creating the serverReceiver that will be used for receiving RMI message.
  *
  * @author Alberto Aniballi
  */
