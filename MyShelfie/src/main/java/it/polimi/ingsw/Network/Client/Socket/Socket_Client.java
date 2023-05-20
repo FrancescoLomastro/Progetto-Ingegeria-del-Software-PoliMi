@@ -19,6 +19,8 @@ public class Socket_Client extends Client implements Runnable{
     private transient Socket socket;
     private transient ObjectInputStream in;
     private transient ObjectOutputStream out;
+
+    private final Object outLock = new Object();
     /**
      * Constructor
      * @author: Riccardo Figini
@@ -64,10 +66,13 @@ public class Socket_Client extends Client implements Runnable{
     @Override
     public void sendMessage(Message message) throws IOException {
         message.setUserName(getUsername());
-        if (out != null) {
-            out.writeObject(message);
-            out.reset();
+        synchronized (outLock) {
+            if (out != null) {
+                out.writeObject(message);
+                out.reset();
+            }
         }
+
     }
     /**
      * This thread is called when client calls method connection. It continues to read

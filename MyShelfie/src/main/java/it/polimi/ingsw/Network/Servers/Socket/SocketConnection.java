@@ -30,6 +30,9 @@ public class SocketConnection extends Connection implements Runnable {
     private final ObjectOutputStream out;
     private String playerName;
 
+    private final Object outLock = new Object();
+    private final Object inLock = new Object();
+
     /**
      * Constructor of SocketConnection instances.
      * It is used to instantiate a new serverReceiver and a socket that will manage server-side communication using specific
@@ -60,8 +63,13 @@ public class SocketConnection extends Connection implements Runnable {
         boolean continueCicle=true;
         while (continueCicle)
         {
-            try {
-                Message message = (Message) in.readObject();
+            try
+            {
+                Message message;
+                synchronized (inLock)
+                {
+                   message = (Message) in.readObject();
+                }
                 onMessage(message);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println(Controller.ANSI_BLU + "Failed communication with client's socket: " + e + GameController.ANSI_RESET);
@@ -111,8 +119,10 @@ public class SocketConnection extends Connection implements Runnable {
                 NewGameServerMessage msg = (NewGameServerMessage) message;
                 serverReceiver =msg.getGameController();
             }
-            out.writeObject(message);
-            out.reset();
+            synchronized (outLock) {
+                out.writeObject(message);
+                out.reset();
+            }
         }
         else {
             throw new IOException();
