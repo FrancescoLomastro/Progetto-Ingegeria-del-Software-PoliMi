@@ -29,4 +29,7 @@ public abstract class Connection {
         timer = new Timer();
         timer.schedule(new PingTaskServer(playerName,server,this),time);
     }
+    public void destroyPing(){
+        timer.cancel();
+    }
 }

@@ -25,7 +25,7 @@ public class BoardSceneController implements Initializable {
     @FXML
     HBox bottomArea;
     @FXML
-    HBox topArea;Z
+    HBox topArea;
     @FXML
     VBox central;
     double leftRatioW,rightRatioW;
