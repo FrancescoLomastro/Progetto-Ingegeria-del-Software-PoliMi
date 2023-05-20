@@ -186,6 +186,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     @Override
     public void askMove() {
+        Platform.runLater(() ->
+        {
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.onAskMove();
+        });
     }
 
 

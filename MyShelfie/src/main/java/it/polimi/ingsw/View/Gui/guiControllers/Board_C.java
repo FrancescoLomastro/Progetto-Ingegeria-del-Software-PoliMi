@@ -6,11 +6,17 @@ import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Libreria_C;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Personal_C;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +24,7 @@ import java.util.*;
 
 public class Board_C implements Initializable {
 
+    public Label moveLabel;
     @FXML
     AnchorPane anchor;
     @FXML
@@ -44,6 +51,12 @@ public class Board_C implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        moveLabel.setVisible(false);
+        moveLabel.setStyle("-fx-text-fill: white;" +
+                "-fx-font-size: 20px;" +
+                "-fx-effect: dropshadow(gaussian, black, 1, 1, 0, 0);" +
+                "-fx-text-alignment: center center");
+
         bottomRatio = bottom.getPrefHeight()/anchor.getPrefHeight();
         topRatio = top.getPrefHeight()/anchor.getPrefHeight();
         leftRatio = left.getPrefWidth()/anchor.getPrefWidth();
@@ -202,4 +215,25 @@ public class Board_C implements Initializable {
             }
         }
     }
+
+    public void onAskMove() {
+        moveLabel.setVisible(true);
+        moveLabel.getStyle();
+
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
+
+        SequentialTransition sequentialTransition = new SequentialTransition(pauseTransition);
+        sequentialTransition.setCycleCount(sequentialTransition.INDEFINITE);
+        sequentialTransition.setAutoReverse(true);
+        sequentialTransition.play();
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), moveLabel);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setCycleCount(sequentialTransition.INDEFINITE);
+        fadeTransition.setAutoReverse(true);
+        fadeTransition.play();
+    }
+
+
 }
