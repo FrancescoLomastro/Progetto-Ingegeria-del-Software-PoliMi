@@ -174,7 +174,7 @@ public class Controller implements ServerReceiver
                 } else {
                     connection.setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE);
                     try {
-                        connection.sendMessage(new AcceptedLoginMessage(currentGame.getLimitOfPlayers()));
+                        connection.sendMessage(new AcceptedLoginMessage());
                         addPlayer(username, connection);
                     } catch (IOException e) {
                         tryToDisconnect(connection, username);
@@ -327,7 +327,7 @@ public class Controller implements ServerReceiver
         try {
             gameController.addPlayer(username, connection);
             connection.sendMessage(new MessageReturnToGame(MessageType.RETURN_TO_OLD_GAME_MESSAGE));
-            connection.sendMessage(new AcceptedLoginMessage(currentGame.getLimitOfPlayers()));
+            connection.sendMessage(new AcceptedLoginMessage());
         } catch (IOException e) {
             tryToDisconnect(connection, username);
         }
@@ -377,7 +377,7 @@ public class Controller implements ServerReceiver
                     try {
                         PlayerNumberAnswer msg = (PlayerNumberAnswer) message;
                         currentGame.setLimitOfPlayers(msg.getPlayerNumber());
-                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage(currentGame.getLimitOfPlayers()));
+                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage());
                         isAsking=false;
                         addPlayer(waitedRequest.getUsername(), waitedRequest.getConnection());
                     } catch (IOException e) {
@@ -393,8 +393,10 @@ public class Controller implements ServerReceiver
                 for(int i = games.size()-1; i>=0; i--)
                 {
                     GameController gc = games.get(i);
-                    if (gc.getNamesOfPlayer().contains(username))
+                    if (gc.getNamesOfPlayer().contains(username)) {
                         gc.renewTimer(username);
+                        break;
+                    }
                 }
             }
         }

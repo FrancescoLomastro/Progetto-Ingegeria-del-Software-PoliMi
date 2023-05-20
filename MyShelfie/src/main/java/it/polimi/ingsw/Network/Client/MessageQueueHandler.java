@@ -25,7 +25,7 @@ public class MessageQueueHandler implements Runnable {
         ArrayList<Message> list = null;
         while (true)
         {
-            list=client.getMessageQueue();
+            list=client.getCommunicationMessageQueue();
             if(list!=null && list.size()!=0)
             {
                 list.forEach(x-> {

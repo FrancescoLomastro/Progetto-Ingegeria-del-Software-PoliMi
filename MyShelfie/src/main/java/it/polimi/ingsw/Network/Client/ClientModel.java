@@ -23,15 +23,6 @@ public class ClientModel extends Observable<Message> {
     private String descriptionFirstCommonGoal;
     private String descriptionSecondCommonGoal;
     private int pointsCommonGoalCards[];
-
-    public void setNumOfPlayers(int numOfPlayers) {
-        this.numOfPlayers = numOfPlayers;
-    }
-
-    public int getNumOfPlayers() {
-        return numOfPlayers;
-    }
-
     private int numOfPlayers;
     private  ObjectCard[][] defaultLibrary;
 

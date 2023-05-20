@@ -145,7 +145,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
 
     @Override
     synchronized public void onMessage(Message message) {
-        System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
+        if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
+            System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
+        }
         switch (message.getType()){
             case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
             case CHAT_MESSAGE -> notifyAllMessage(message);

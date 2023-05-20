@@ -104,7 +104,6 @@ public class ClientController implements Observer<View, OBS_Message> {
             case ACCEPTED_LOGIN_MESSAGE -> {
                 AcceptedLoginMessage msg = (AcceptedLoginMessage)message;
                 view.printMessage("Connection accepted, waiting for other players");
-                clientModel.setNumOfPlayers(((AcceptedLoginMessage) message).getNumberOfPlayers());
             }
             case PLAYER_NUMBER_REQUEST -> {
                 PlayerNumberRequest msg = (PlayerNumberRequest)message;
