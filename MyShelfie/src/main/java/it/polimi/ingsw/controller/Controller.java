@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Servers.Connection;
 import it.polimi.ingsw.Network.StatusNetwork;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Utility.Request;
 
 import java.io.*;
@@ -167,8 +166,8 @@ public class Controller implements ServerReceiver
                         try {
                             connection.sendMessage(new PlayerNumberRequest(minimumPlayers, maximumPlayers));
                         } catch (IOException e) {
-                            tryToDisconnect(connection, username);
                             waitedRequest = null;
+                            tryToDisconnect(connection, username);
                         }
                     }
                 } else {
@@ -306,6 +305,7 @@ public class Controller implements ServerReceiver
         if(gameController == null){
             try {
                 gameController = reloadGame(gameId);
+                gameController.setStatusGame(GameController.StatusGame.BEFORE_GAME);
             }
             catch (RuntimeException | IOException | ClassNotFoundException e){
                 connection.setStatusNetwork(StatusNetwork.SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD);
@@ -368,6 +368,7 @@ public class Controller implements ServerReceiver
             case LOGIN_REQUEST ->
             {
                 LoginMessage msg = (LoginMessage) message;
+                msg.getClientConnection().setPlayerName(message.getUsername());
                 login(msg.getUsername(),msg.getClientConnection());
             }
             case PLAYER_NUMBER_ANSWER ->
@@ -390,14 +391,7 @@ public class Controller implements ServerReceiver
             }
             case PING_MESSAGE -> {
                 String username = message.getUsername();
-                for(int i = games.size()-1; i>=0; i--)
-                {
-                    GameController gc = games.get(i);
-                    if (gc.getNamesOfPlayer().contains(username)) {
-                        gc.renewTimer(username);
-                        break;
-                    }
-                }
+                searchGameController(message.getUsername()).renewTimer(username);
             }
         }
     }
@@ -407,14 +401,15 @@ public class Controller implements ServerReceiver
         switch (connection.getStatusNetwork()){
             case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER -> {
                 changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
+                currentGame.destroyEveryPing();
                 destroyGame(playerName, "First player left, game will be closed", currentGame);
                 currentGame = new GameController(choseNewNumberForGame(), this);
                 waitedRequest = null;
                 isAsking =false;
             }
-            case AFTER_JOIN_LOBBY_OLD_PLAYER, AFTER_SEND_ACCEPT_MESSAGE -> {
+            case AFTER_SEND_ACCEPT_MESSAGE, AFTER_JOIN_LOBBY_OLD_PLAYER -> {
                 System.out.println(ANSI_BLU + "Couldn't contanct client " + playerName + ANSI_RESET);
-                disconnectPlayerFromCurrentGame(playerName);
+                disconnectPlayerFromGame(playerName);
             }
             case AFTER_REQUEST_NUMBER_PLAYER ->{
                 System.out.println(ANSI_BLU + "Couldn't ask number to the client " + playerName + ", dropping the request..." + ANSI_RESET);
@@ -424,22 +419,21 @@ public class Controller implements ServerReceiver
             }
             case AFTER_SEND_INVALID_NAME_MESSAGE ->
                     System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping the request..." + ANSI_RESET);
-            //Giocatore scartato, tanto non era stato svolto alcun cambiamento
-            case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED ->
-                    System.out.println(ANSI_BLU + "Couldn't ask number to the client " + playerName + ", dropping the request..." + ANSI_RESET);
-            //Giocatore scartato, tanto non era stato svolto alcun cambiamento
-            case SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD->
+            case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD ->
                     System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", droping the message..." + ANSI_RESET);
             default ->{
-                for (GameController gameController: games){
-                    if(gameController.getNamesOfPlayer().contains(playerName)) {
-                        gameController.tryToDisconnect(connection, playerName);
-                    }
-                }
+                searchGameController(playerName).tryToDisconnect(connection, playerName);
             }
         }
     }
-
+    public GameController searchGameController(String playerName){
+        for (GameController gameController: games){
+            if(gameController.getNamesOfPlayer().contains(playerName)) {
+                return gameController;
+            }
+        }
+        return null;
+    }
     /**Delete number game from file
      * @author: Riccardo Figini
      * @param gameId Game's id
@@ -494,7 +488,7 @@ public class Controller implements ServerReceiver
         try {
             deleteGameFile("src/main/resources/gameFile/ServerGame"+gameController.getGameId()+".bin");
         } catch (IOException e) {
-            System.out.println(ANSI_BLU + "Impossible delete file" + ANSI_RESET);
+            System.out.println(ANSI_BLU + "File deletion failed" + ANSI_RESET);
         }
         games.remove(gameController);
     }
@@ -520,18 +514,12 @@ public class Controller implements ServerReceiver
             System.out.println(ANSI_BLU + "Impossible delete file" + ANSI_RESET);
         }
         games.remove(gameController);
-        /*
-    * if (gc.getNamesOfPlayer() == null || gc.getNamesOfPlayer().size() == 0) {
-                games.remove(gc);
-                continue;
-            }
-     */
     }
     /**It removes player from specific not in execution game
      * @author: Riccardo Figini
      * @param playerName Name of player to remove
      * */
-    public void disconnectPlayerFromCurrentGame(String playerName) {
+    public void disconnectPlayerFromGame(String playerName) {
         ArrayList<String> players;
 
         players = currentGame.getNamesOfPlayer();

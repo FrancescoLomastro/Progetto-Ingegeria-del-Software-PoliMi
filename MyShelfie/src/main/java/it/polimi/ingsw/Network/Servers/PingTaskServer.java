@@ -18,7 +18,7 @@ public class PingTaskServer extends TimerTask {
     @Override
     public void run()
     {
-        System.out.println("Connessione scaduta con "+playerUsername);
+        System.out.println("Time out connection, player: "+playerUsername);
         server.tryToDisconnect(connection,playerUsername);
     }
 }
