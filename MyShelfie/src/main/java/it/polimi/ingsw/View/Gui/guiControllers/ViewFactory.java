@@ -308,6 +308,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     }
 
+    public void showInvalidNumberOfCards() {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumObjCards.fxml"));
+            createStage(loader,200,320,true);
+        });
+    }
+
     public void notifyAllOBS(OBS_Message msg) {
         setChanged();
         notifyObservers(msg);
