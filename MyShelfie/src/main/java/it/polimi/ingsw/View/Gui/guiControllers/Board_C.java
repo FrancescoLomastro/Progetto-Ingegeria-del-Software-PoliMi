@@ -278,6 +278,9 @@ public class Board_C implements Initializable {
                 ViewFactory.getInstance().setPositions(arrayPos);
                 ViewFactory.getInstance().showColumnQuestion();
 
+                don_button.setVisible(false);
+                moveLabel.setVisible(false);
+
             } else {
                 ViewFactory.getInstance().showInvalidNumberOfCards();
 
