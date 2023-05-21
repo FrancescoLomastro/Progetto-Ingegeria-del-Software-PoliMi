@@ -197,7 +197,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void showColumnQuestion() {
         Platform.runLater(()->
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ColumnInsertionQuestions.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ColumnInsertionQuestion.fxml"));
             createStage(loader,250,350,true);
         });
     }

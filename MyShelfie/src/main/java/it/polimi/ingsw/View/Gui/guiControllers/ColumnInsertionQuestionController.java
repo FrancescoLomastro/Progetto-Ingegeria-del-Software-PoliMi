@@ -4,11 +4,13 @@ import it.polimi.ingsw.View.OBSMessages.OBS_MoveMessage;
 import it.polimi.ingsw.View.OBSMessages.OBS_NumberOfPlayerMessage;
 import it.polimi.ingsw.model.Utility.Position;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +47,11 @@ public class ColumnInsertionQuestionController implements Initializable {
                     {
                         Position[] positions = ViewFactory.getInstance().getPositions();
                         ViewFactory.getInstance().notifyAllOBS(new OBS_MoveMessage(positions,parsedChosenColumn));
+                        System.out.println("Move message sent!");
+
+                        Node node = (Node) event.getSource();
+                        Stage currentStage = (Stage) node.getScene().getWindow();
+                        currentStage.close();
                     }
                 }
             }
