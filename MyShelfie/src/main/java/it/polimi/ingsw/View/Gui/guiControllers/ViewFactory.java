@@ -28,6 +28,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     private static ViewFactory instance = null;
     private Initializable currentController;
     private Stage primaryStage;
+    private Position[] positions;
+    private int chosenColumnMove;
 
     /**
      * Returns or creates the only instance of the ViewFactory
@@ -184,6 +186,22 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
 
+    public void setPositions(Position[] positions) {
+        this.positions = positions;
+    }
+
+    public Position[] getPositions() {
+        return positions;
+    }
+
+    public void showColumnQuestion() {
+        Platform.runLater(()->
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ColumnInsertionQuestions.fxml"));
+            createStage(loader,250,350,true);
+        });
+    }
+
     @Override
     public void askMove() {
         Platform.runLater(() ->
@@ -192,10 +210,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.onAskMove();
         });
     }
-
-
-
-
 
     @Override
     public void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {

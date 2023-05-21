@@ -266,7 +266,18 @@ public class Board_C implements Initializable {
         don_button.setOnAction(ActionEvent -> {
             if ( positions.size()>=1 && positions.size()<=3 ){
                 System.out.println("RETURN POSITIONS");
-                //return positions
+
+                Position[] arrayPos = new Position[positions.size()];
+                int pos_index = 0;
+
+                for(Position pos : positions) {
+                    arrayPos[pos_index] = pos;
+                    pos_index+=1;
+                }
+
+                ViewFactory.getInstance().setPositions(arrayPos);
+                //ViewFactory.getInstance().showColumnQuestion();
+
             } else {
                 ViewFactory.getInstance().showInvalidNumberOfCards();
 
