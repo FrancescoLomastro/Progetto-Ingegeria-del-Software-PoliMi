@@ -1,30 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="661.0" prefWidth="1194.0" styleClass="start_container" stylesheets="@../styles/Start.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.StartController">
-    <ImageView fx:id="background" fitHeight="705.0" fitWidth="1194.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@../images/developed/InitialBackground.jpg" />
-        </image>
-    </ImageView>
-    <BorderPane layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="673.0" prefWidth="1194.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <center>
-            <Label fx:id="initialLabel" text="Click to start" textFill="WHITE" BorderPane.alignment="CENTER">
-                <font>
-                    <Font name="System Bold" size="40.0" />
-                </font>
-                <opaqueInsets>
-                    <Insets />
-                </opaqueInsets>
-                <padding>
-                    <Insets top="500.0" />
-                </padding>
-            </Label>
-        </center>
-    </BorderPane>
+
+<AnchorPane fx:id="background" prefHeight="600.0" prefWidth="1000.0" styleClass="start_container" stylesheets="@../styles/Start.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.StartController">
+   <children>
+      <Label fx:id="initialLabel" alignment="CENTER" prefWidth="${background.width}" text="Press a key to start" textFill="WHITE" AnchorPane.bottomAnchor="100">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

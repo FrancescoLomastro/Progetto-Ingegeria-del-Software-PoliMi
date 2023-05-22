@@ -6,6 +6,8 @@ import it.polimi.ingsw.Network.Messages.MessageGrid;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.Gui.GuiApplication;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
+import it.polimi.ingsw.View.OBSMessages.OBS_MessageType;
+import it.polimi.ingsw.View.OBSMessages.OBS_OnlyTypeMessage;
 import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Utility.Position;
@@ -14,9 +16,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
+
+import java.io.IOException;
 
 /**
  * ViewFactory class contains methods related to the creation of stages during our program lifecycle.
@@ -28,8 +31,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     private static ViewFactory instance = null;
     private Initializable currentController;
     private Stage primaryStage;
+    private Scene primaryScene;
     private Position[] positions;
-    private int chosenColumnMove;
+    private final int MIN_HEIGHT = 600;
+    private final int MIN_WIDTH = 900 ;
 
     /**
      * Returns or creates the only instance of the ViewFactory
@@ -56,22 +61,23 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Application.launch(GuiApplication.class);
     }
 
-    private Scene loadScene(FXMLLoader loader) {
+    private Scene loadScene_old(FXMLLoader loader) {
         Scene scene = null;
-        try {
+        try
+        {
             scene = new Scene(loader.load());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return scene;
     }
-    private void switchScene(FXMLLoader loader) {
-        Scene scene = loadScene(loader);
+    private void switchScene_old(FXMLLoader loader) {
+        Scene scene = loadScene_old(loader);
         primaryStage.setScene(scene);
     }
-    private void createStage(FXMLLoader loader,int minHeight,int minWidth,boolean lockStage) {
+    private void createStage_old(FXMLLoader loader, int minHeight, int minWidth, boolean lockStage) {
         Stage newStage = new Stage();
-        Scene scene = loadScene(loader);
+        Scene scene = loadScene_old(loader);
         newStage.setScene(scene);
         newStage.setResizable(false);
         newStage.setMinHeight(minHeight);
@@ -93,19 +99,38 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         stage.close();
     }
 
+    private void createMainStage(FXMLLoader loader)
+    {
+        primaryStage.setMinHeight(MIN_HEIGHT);
+        primaryStage.setMinWidth(MIN_WIDTH);
+        primaryStage.setMinHeight(MIN_HEIGHT);
+        primaryStage.setMinWidth(MIN_WIDTH);
+        try {
+            primaryScene = new Scene(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        primaryStage.setScene(primaryScene);
+    }
+    private void changeRoot(FXMLLoader loader)
+    {
+        try {
+            primaryStage.getScene().setRoot(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * Shows the start scene
      */
     public void showStart() {
         Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
-           primaryStage.setMaximized(true);
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("");
-            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-            switchScene(loader);
-            primaryStage.show();
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Start.fxml"));
+          createMainStage(loader);
+          primaryStage.getScene().setOnKeyPressed(keyEvent -> notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START)));
+          primaryStage.show();
         });
     }
 
@@ -117,8 +142,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void askInitialInfo() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
-            switchScene(loader);
-            primaryStage.setFullScreen(true);
+            changeRoot(loader);
         });
     }
 
@@ -132,8 +156,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void askNumberOfPlayers(int min, int max) {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-            switchScene(loader);
-            primaryStage.setFullScreen(true);
+            switchScene_old(loader);
         });
     }
 
@@ -163,7 +186,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             return controller;
         });
         Platform.runLater(() -> {
-            switchScene(loader);
+            switchScene_old(loader);
         });
     }
 
@@ -175,7 +198,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void onInvalidUsername() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidUsername.fxml"));
-            switchScene(loader);
+            switchScene_old(loader);
             primaryStage.setFullScreen(true);
         });
     }
@@ -198,7 +221,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(()->
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ColumnInsertionQuestion.fxml"));
-            createStage(loader,250,350,true);
+            createStage_old(loader,250,350,true);
         });
     }
 
@@ -287,7 +310,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
                 return controller;
             });
-            switchScene(loader);
+            switchScene_old(loader);
             primaryStage.setFullScreen(true);
         });
     }
@@ -302,7 +325,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 controller.setChosenPort(chosenPort);
                 return controller;
             });
-            switchScene(loader);
+            switchScene_old(loader);
             primaryStage.setFullScreen(true);
         });
     }
@@ -310,14 +333,14 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(()->
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
-            createStage(loader,200,320,true);
+            createStage_old(loader,200,320,true);
         });
     }
 
     public void showInvalidNumPlayers() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
-            createStage(loader,200,320,true);
+            createStage_old(loader,200,320,true);
         });
 
     }
@@ -325,7 +348,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void showInvalidNumberOfCards() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumObjCards.fxml"));
-            createStage(loader,200,320,true);
+            createStage_old(loader,200,320,true);
         });
     }
 
