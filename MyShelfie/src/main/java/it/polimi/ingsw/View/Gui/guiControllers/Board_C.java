@@ -252,13 +252,34 @@ public class Board_C implements Initializable {
 
             node.setOnMouseClicked(event -> {
 
-                node.setStyle("-fx-border-color: RED;" +
-                        "-fx-border-width: 1.5;");
-
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer columnIndex = GridPane.getColumnIndex(node);
-                Position position = new Position(rowIndex,columnIndex);
-                positions.add(position);
+
+                if (((node.getStyle().contains("-fx-border-color: RED")))) {
+
+                    node.setStyle("-fx-border-color: BLACK;" +
+                            "-fx-border-width: 0;");
+
+                    int positionToEliminate = 0;
+                    for (int index = 0; index < positions.size(); index++) {
+                        if (positions.get(index).getRow()==rowIndex &&
+                                positions.get(index).getColumn()==columnIndex) {
+
+                            positionToEliminate = index;
+
+                        }
+                    }
+                    positions.remove(positionToEliminate);
+
+                } else {
+
+                    node.setStyle("-fx-border-color: RED;" +
+                            "-fx-border-width: 1.5;");
+
+                    Position position = new Position(rowIndex,columnIndex);
+                    positions.add(position);
+
+                }
             });
 
         }
