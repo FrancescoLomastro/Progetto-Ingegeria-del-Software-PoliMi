@@ -15,14 +15,18 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import static it.polimi.ingsw.controller.GameController.ANSI_RESET;
+import static it.polimi.ingsw.controller.GameController.PING_TIMEOUT;
 
 public class Controller implements ServerReceiver
 {
     public final static String ANSI_BLU ="\u001B[34m ";
+    public static final String ANSI_PURPLE = "\u001B[35m ";
     private Map<String, String> oldPlayer;
     private final ArrayList<GameController> games;
     private GameController currentGame;
     private Map<String, Connection> currentPlayerConnectionReferences;
+    private Map<String, Connection> playerBeforeJoiningLobby;
+
     private Request waitedRequest;
     private boolean isAsking;
     private static final int minimumPlayers = 2;
@@ -32,6 +36,7 @@ public class Controller implements ServerReceiver
         games = new ArrayList<>();
         currentGame= new GameController(choseNewNumberForGame(), this);
         currentPlayerConnectionReferences = new HashMap<>();
+        playerBeforeJoiningLobby = new HashMap<>();
         waitedRequest=null;
         isAsking=false;
         System.out.println("Do you want restor memory?");
@@ -56,7 +61,96 @@ public class Controller implements ServerReceiver
             }
         }
     }
+    @Override
+    public void tryToDisconnect(Connection connection, String playerName) {
+        switch (connection.getStatusNetwork()){
+            case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER -> {
+                changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
+                currentGame.destroyEveryPing();
+                destroyGame(playerName, "First player left, game will be closed", currentGame);
+                currentGame = new GameController(choseNewNumberForGame(), this);
+                waitedRequest = null;
+                isAsking =false;
+            }
+            case AFTER_SEND_ACCEPT_MESSAGE, AFTER_JOIN_LOBBY_OLD_PLAYER -> {
+                System.out.println(ANSI_BLU + "Couldn't contanct client " + playerName + ANSI_RESET);
+                disconnectPlayerFromGame(playerName);
+            }
+            case AFTER_REQUEST_NUMBER_PLAYER ->{
+                System.out.println(ANSI_BLU + "Couldn't ask number to the client " + playerName + ", dropping the request..." + ANSI_RESET);
+                currentGame = new GameController(choseNewNumberForGame(), this);
+                waitedRequest = null;
+                isAsking =false;
+                playerBeforeJoiningLobby.get(playerName).destroyPing();
+                playerBeforeJoiningLobby.remove(playerName);
+            }
+            case AFTER_SEND_INVALID_NAME_MESSAGE -> {
+                System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping the request..." + ANSI_RESET);
+                playerBeforeJoiningLobby.get(playerName).destroyPing();
+                playerBeforeJoiningLobby.remove(playerName);
+            }
+            case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD ->{
+                System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", droping the message..." + ANSI_RESET);
+                playerBeforeJoiningLobby.get(playerName).destroyPing();
+                playerBeforeJoiningLobby.remove(playerName);
+            }
+            default ->{
+                searchGameController(playerName).tryToDisconnect(connection, playerName);
+            }
+        }
+    }
+    @Override
+    synchronized public void onMessage(Message message) {
 
+        if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
+            System.out.println(ANSI_PURPLE + "Message has arrived in controller: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
+        }
+
+        MessageType type = message.getType();
+        switch (type)
+        {
+            case LOGIN_REQUEST ->
+            {
+                currentGame.startTimer(message.getUsername(), ((LoginMessage)message).getClientConnection());
+                playerBeforeJoiningLobby.put(message.getUsername(), ((LoginMessage)message).getClientConnection());
+                LoginMessage msg = (LoginMessage) message;
+                msg.getClientConnection().setPlayerName(message.getUsername());
+                login(msg.getUsername(),msg.getClientConnection());
+            }
+            case PLAYER_NUMBER_ANSWER ->
+            {
+                if (waitedRequest.getUsername().equals(message.getUsername())) {
+                    waitedRequest.getConnection().setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER);
+                    try {
+                        PlayerNumberAnswer msg = (PlayerNumberAnswer) message;
+                        currentGame.setLimitOfPlayers(msg.getPlayerNumber());
+                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage());
+                        isAsking=false;
+                        addPlayer(waitedRequest.getUsername(), waitedRequest.getConnection());
+                    } catch (IOException e) {
+                        System.out.println(ANSI_BLU + "Couldn't contact client " + waitedRequest.getUsername() + ANSI_RESET);
+                        tryToDisconnect(waitedRequest.getConnection(),
+                                waitedRequest.getUsername());
+                        waitedRequest = null;
+                    }
+                }
+            }
+            case PING_MESSAGE -> {
+                String username = message.getUsername();
+                if(playerBeforeJoiningLobby.containsKey(username)) {
+                    Connection connection = playerBeforeJoiningLobby.get(username);
+                    connection.resetTimer(PING_TIMEOUT, this);
+                    try {
+                        connection.sendMessage(new ServerPingMessage(username));
+                    } catch (IOException e) {
+                        tryToDisconnect(connection, username);
+                    }
+                }
+                else
+                    searchGameController(username).renewTimer(username);
+            }
+        }
+    }
     private void destroyAllFile() throws IOException {
         JsonObject j =  getArrayJsonWithNumberGame();
 
@@ -205,12 +299,12 @@ public class Controller implements ServerReceiver
     private void addPlayer(String username, Connection connection) {
         games.add(currentGame);
         currentGame.addPlayer(username,connection);
-        currentGame.startTimer(username,connection,this);
         currentPlayerConnectionReferences.put(username, connection);
+        playerBeforeJoiningLobby.remove(username);
         if(currentGame.getSizeArrayConnection()==currentGame.getLimitOfPlayers())
         {
             writeNewGameInExecution(currentGame.getGameId());
-            changeStatusToEveryone(StatusNetwork.NEW_GAME_IS_STARTING, currentGame);
+            changeStatusToEveryone(StatusNetwork.NEW_GAME_IS_STARTING, currentGame, currentPlayerConnectionReferences);
             new Thread(currentGame).start();
             int num = choseNewNumberForGame();
             currentGame=new GameController(num, this);
@@ -228,7 +322,7 @@ public class Controller implements ServerReceiver
 
         if(jsonObject==null) {
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
-            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
+            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
             currentGame = new GameController(choseNewNumberForGame(), this);
             return;
@@ -238,7 +332,7 @@ public class Controller implements ServerReceiver
 
         if(jsonArray==null) {
             System.out.println(ANSI_BLU + "Impossible to open jsonArray" + ANSI_RESET);
-            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
+            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
             currentGame = new GameController(choseNewNumberForGame(), this);
             return;
@@ -253,7 +347,7 @@ public class Controller implements ServerReceiver
             writer.close();
         }catch (IOException e) {
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
-            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
+            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
             currentGame = new GameController(choseNewNumberForGame(), this);
         }
@@ -359,73 +453,6 @@ public class Controller implements ServerReceiver
         return gameController;
     }
 
-
-    @Override
-    synchronized public void onMessage(Message message) {
-        MessageType type = message.getType();
-        switch (type)
-        {
-            case LOGIN_REQUEST ->
-            {
-                LoginMessage msg = (LoginMessage) message;
-                msg.getClientConnection().setPlayerName(message.getUsername());
-                login(msg.getUsername(),msg.getClientConnection());
-            }
-            case PLAYER_NUMBER_ANSWER ->
-            {
-                if (waitedRequest.getUsername().equals(message.getUsername())) {
-                    waitedRequest.getConnection().setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER);
-                    try {
-                        PlayerNumberAnswer msg = (PlayerNumberAnswer) message;
-                        currentGame.setLimitOfPlayers(msg.getPlayerNumber());
-                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage());
-                        isAsking=false;
-                        addPlayer(waitedRequest.getUsername(), waitedRequest.getConnection());
-                    } catch (IOException e) {
-                        System.out.println(ANSI_BLU + "Couldn't contact client " + waitedRequest.getUsername() + ANSI_RESET);
-                        tryToDisconnect(waitedRequest.getConnection(),
-                                waitedRequest.getUsername());
-                        waitedRequest = null;
-                    }
-                }
-            }
-            case PING_MESSAGE -> {
-                String username = message.getUsername();
-                searchGameController(message.getUsername()).renewTimer(username);
-            }
-        }
-    }
-
-    @Override
-    public void tryToDisconnect(Connection connection, String playerName) {
-        switch (connection.getStatusNetwork()){
-            case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER -> {
-                changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
-                currentGame.destroyEveryPing();
-                destroyGame(playerName, "First player left, game will be closed", currentGame);
-                currentGame = new GameController(choseNewNumberForGame(), this);
-                waitedRequest = null;
-                isAsking =false;
-            }
-            case AFTER_SEND_ACCEPT_MESSAGE, AFTER_JOIN_LOBBY_OLD_PLAYER -> {
-                System.out.println(ANSI_BLU + "Couldn't contanct client " + playerName + ANSI_RESET);
-                disconnectPlayerFromGame(playerName);
-            }
-            case AFTER_REQUEST_NUMBER_PLAYER ->{
-                System.out.println(ANSI_BLU + "Couldn't ask number to the client " + playerName + ", dropping the request..." + ANSI_RESET);
-                currentGame = new GameController(choseNewNumberForGame(), this);
-                waitedRequest = null;
-                isAsking =false;
-            }
-            case AFTER_SEND_INVALID_NAME_MESSAGE ->
-                    System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping the request..." + ANSI_RESET);
-            case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD ->
-                    System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", droping the message..." + ANSI_RESET);
-            default ->{
-                searchGameController(playerName).tryToDisconnect(connection, playerName);
-            }
-        }
-    }
     public GameController searchGameController(String playerName){
         for (GameController gameController: games){
             if(gameController.getNamesOfPlayer().contains(playerName)) {
@@ -539,9 +566,9 @@ public class Controller implements ServerReceiver
      * @author: Riccardo Figini
      * @param statusNetwork network's status
      * */
-    public void changeStatusToEveryone(StatusNetwork statusNetwork, GameController gameController){
+    public void changeStatusToEveryone(StatusNetwork statusNetwork, GameController gameController, Map<String, Connection> clients){
         for(int i=0; i<gameController.getNamesOfPlayer().size(); i++){
-            changeStatusOfConnection(gameController.getNamesOfPlayer().get(i), statusNetwork);
+            changeStatusOfConnection(gameController.getNamesOfPlayer().get(i), statusNetwork, clients);
         }
     }
     /**It changes status of specific player in game
@@ -549,8 +576,8 @@ public class Controller implements ServerReceiver
      * @param player Player's name
      * @param statusNetwork Network's status
      * */
-    public void changeStatusOfConnection(String player, StatusNetwork statusNetwork){
-        Connection connection = currentPlayerConnectionReferences.get(player);
+    public void changeStatusOfConnection(String player, StatusNetwork statusNetwork, Map<String, Connection> clients){
+        Connection connection = clients.get(player);
         if(connection!=null)
             connection.setStatusNetwork(statusNetwork);
     }

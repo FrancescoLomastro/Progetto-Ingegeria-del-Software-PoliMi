@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="200" prefWidth="320.0" styleClass="external_invalid_numPlayers_container" stylesheets="@../styles/InvalidNumPlayers.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.InvalidNumObjCardsController">
+    <children>
+        <VBox prefHeight="190" prefWidth="310" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <ImageView fitHeight="70.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/originals/publisherMaterial/Title_2000x618px.png" />
+                    </image>
+                </ImageView>
+                <Label styleClass="internal_vbox_container_label1" text="Warning:" />
+                <Label styleClass="internal_vbox_container_label2" text="Remember to choose a number of cards &#13; between 1 and 3." />
+                <Button fx:id="retry_btn" mnemonicParsing="false" text="retry" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

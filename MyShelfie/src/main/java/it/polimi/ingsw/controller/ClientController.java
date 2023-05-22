@@ -16,6 +16,7 @@ import it.polimi.ingsw.model.Utility.Couple;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ClientController implements Observer<View, OBS_Message> {
@@ -77,11 +78,6 @@ public class ClientController implements Observer<View, OBS_Message> {
         }
         catch (Exception e){
             view.errorCreatingClient(chosenAddress,chosenPort);
-            /*
-            throw new RuntimeException("It was impossible to create a client and contact " +
-                    "the server at [" + chosenAddress + "," + chosenPort + "]\n" + e);
-
-             */
         }
     }
 
@@ -242,7 +238,6 @@ public class ClientController implements Observer<View, OBS_Message> {
                 try {
                     client.sendMessage(new MessageMove(message.getMove(), message.getColumn()));
                 } catch (IOException e) {
-                    //TODO capire cosa fare
                     System.out.println("Impossible send move to server, " + e);
                 }
             }

@@ -8,7 +8,7 @@ public class PingTaskServer extends TimerTask {
 
     private final ServerReceiver server;
     private final Connection connection;
-    private String playerUsername;
+    private final String playerUsername;
 
     public PingTaskServer(String playerUsername, ServerReceiver server, Connection connection){
         this.playerUsername = playerUsername;

@@ -25,7 +25,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private static final long serialVersionUID = 1L;
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
-    public enum StatusGame {BEFORE_GAME, IN_GAME, ABORT;}
+    public enum StatusGame {BEFORE_GAME, IN_GAME, ABORT}
     private Game game;
     private TurnController turnController;
     private final int gameId;
@@ -39,11 +39,21 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private transient Controller controller;
     private StatusGame statusGame;
     private transient RMIShared gameShared;
-    private int PING_TIMEOUT = 10000;
-
-    public void startTimer(String username,Connection connection,ServerReceiver server)
+    public static int PING_TIMEOUT = 10000;
+    /**
+     * constructor
+     * @param gameId : identifies the game that game controller is controlling
+     * */
+    public GameController(int gameId, Controller controller) {
+        this.clients= new LinkedHashMap<>();
+        this.gameId = gameId;
+        this.serverNameRMI="ServerGame"+gameId;
+        this.controller = controller;
+        statusGame = StatusGame.BEFORE_GAME;
+    }
+    public void startTimer(String username,Connection connection)
     {
-        connection.startTimer(PING_TIMEOUT,server);
+        connection.startTimer(PING_TIMEOUT,controller);
         try {
             connection.sendMessage(new ServerPingMessage(username));
         } catch (IOException e) {
@@ -75,17 +85,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         Connection connection = clients.get(name);
         connection.destroyPing();
     }
-    /**
-     * constructor
-     * @param gameId : identifies the game that game controller is controlling
-     * */
-    public GameController(int gameId, Controller controller) {
-        this.clients= new LinkedHashMap<>();
-        this.gameId = gameId;
-        this.serverNameRMI="ServerGame"+gameId;
-        this.controller = controller;
-        statusGame = StatusGame.BEFORE_GAME;
-    }
+
     public void reloadPlayerCreatingNewMap(Controller controller){
         this.controller = controller;
         clients = new LinkedHashMap<>();
@@ -127,7 +127,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         initGame();
         initGameFile();
         System.out.println("Inizializzata partita e mandato il messaggio");
-        controller.changeStatusToEveryone(StatusNetwork.IN_GAME, this);
+        controller.changeStatusToEveryone(StatusNetwork.IN_GAME, this, clients);
         statusGame=StatusGame.IN_GAME;
     }
 
@@ -163,12 +163,14 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
             System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
         }
-        switch (message.getType()){
-            case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
-            case CHAT_MESSAGE -> notifyAllMessage(message);
-            case PING_MESSAGE -> {
-                String username = message.getUsername();
-                renewTimer(username);
+        if(statusGame!=StatusGame.ABORT) {
+            switch (message.getType()) {
+                case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
+                case CHAT_MESSAGE -> notifyAllMessage(message);
+                case PING_MESSAGE -> {
+                    String username = message.getUsername();
+                    renewTimer(username);
+                }
             }
         }
     }
@@ -180,26 +182,28 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * */
     @Override
     public void tryToDisconnect(Connection connection, String playerName) {
-        if(statusGame!=StatusGame.ABORT) {
-            switch (connection.getStatusNetwork()) {
-                case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED -> {
-                    System.out.println(Controller.ANSI_BLU + "Problem in contacting " + playerName + " during closing, droping the message..." + ANSI_RESET);
-                }
-                case IN_GAME, NEW_GAME_IS_STARTING -> {
-                    System.out.println(Controller.ANSI_BLU + "Closing game for some problem..." + ANSI_RESET);
-                    gameNeedToBeClosed(playerName, "Problem with a player, game will be closed and destroy");
-                }
-                case END_OF_THE_GAME -> {
-                    System.out.println(Controller.ANSI_BLU + "Player left server, game is finished correctly" + ANSI_RESET);
-                }
-                case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER -> {
-                    controller.tryToDisconnect(connection, playerName);
-                }
-                default -> {
-                    System.out.println(Controller.ANSI_BLU + "Somethings goes wrong. Game will be closed" + ANSI_RESET);
-                    System.out.println(Controller.ANSI_BLU + "Player: " + playerName + ", Status:  " + connection.getStatusNetwork() + ANSI_RESET);
-                    gameNeedToBeClosed(playerName, "Problem with a player, game will be closed and destroy");
-                }
+        switch (connection.getStatusNetwork()) {
+            case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED -> {
+                System.out.println(Controller.ANSI_BLU + "Problem in contacting " + playerName + " during closing, droping the message..." + ANSI_RESET);
+            }
+            case IN_GAME, NEW_GAME_IS_STARTING -> {
+                System.out.println(Controller.ANSI_BLU + "Closing game for some problem..." + ANSI_RESET);
+                gameNeedToBeClosed(playerName, "Problem with a player, game will be closed and destroy");
+            }
+            case END_OF_THE_GAME -> {
+                System.out.println(Controller.ANSI_BLU + "Player left server, game is finished correctly" + ANSI_RESET);
+            }
+            case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER, AFTER_SEND_ACCEPT_MESSAGE -> {
+                controller.tryToDisconnect(connection, playerName);
+                /*TODO: non ho idea perché servi questo, non dovrebbero proprio arrivare qua questi messaggi perché il
+                *  server receiver è ancora il controllor, non so se ci sia qualcosa di sbagliato nella mia costruzione
+                *  o nel ping
+                * */
+            }
+            default -> {
+                System.out.println(Controller.ANSI_BLU + "Somethings goes wrong. Game will be closed" + ANSI_RESET);
+                System.out.println(Controller.ANSI_BLU + "Player: " + playerName + ", Status:  " + connection.getStatusNetwork() + ANSI_RESET);
+                gameNeedToBeClosed(playerName, "Problem with a player, game will be closed and destroy");
             }
         }
     }
@@ -208,7 +212,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param message Message with motivation of error
      * */
     private void gameNeedToBeClosed(String message){
-        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
+        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this, clients);
         destroyEveryPing();
         statusGame=StatusGame.ABORT;
         controller.destroyGame(message, this);
@@ -220,7 +224,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param player Player that left the game, it will not receive the error message
      * */
     private void gameNeedToBeClosed(String message, String player){
-        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
+        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this, clients);
         destroyEveryPing();
         statusGame=StatusGame.ABORT;
         controller.destroyGame(player, message, this);
@@ -362,7 +366,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         } catch (IOException e) {
             System.out.println(Controller.ANSI_BLU + "File game can't be deleted, name cannot be used again" + ANSI_RESET);
         }
-        controller.changeStatusToEveryone(StatusNetwork.END_OF_THE_GAME, this);
+        controller.changeStatusToEveryone(StatusNetwork.END_OF_THE_GAME, this, clients);
         try {
             UnicastRemoteObject.unexportObject(gameShared, true);
         } catch (NoSuchObjectException e) {
@@ -387,11 +391,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             notifyAllMessage(new LobbyUpdateMessage(clients.keySet().stream().toList(),limitOfPlayers, "Players left"));
         destroyPing(name);
     }
-
-    public StatusGame getStatusGame() {
-        return statusGame;
-    }
-
     public void setStatusGame(StatusGame statusGame) {
         this.statusGame = statusGame;
     }

@@ -28,8 +28,6 @@ public class SocketConnection extends Connection implements Runnable {
     private final Socket socket;
     private final ObjectInputStream in;
     private final ObjectOutputStream out;
-    private String playerName;
-
     private final Object outLock = new Object();
     private final Object inLock = new Object();
 

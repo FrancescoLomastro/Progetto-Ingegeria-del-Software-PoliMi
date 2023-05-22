@@ -232,12 +232,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     @Override
     public void showLibrary(ObjectCard[][] library, String username, Position[] oldGrid, Position[] newLibrary) {
-//        if(oldGrid!=null && newLibrary!=null) {
-//            Platform.runLater(() -> {
-//                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
-//                boardSceneController.runAMove(library, username, oldGrid, newLibrary);
-//            });
-//        }
+        if(oldGrid!=null && newLibrary!=null) {
+           Platform.runLater(() -> {
+               Board_C boardSceneController = (Board_C) currentController;
+               boardSceneController.runAMove(library, username, oldGrid, newLibrary);
+            });
+        }
         Platform.runLater(() ->
         {
             Board_C boardSceneController = (Board_C) currentController;

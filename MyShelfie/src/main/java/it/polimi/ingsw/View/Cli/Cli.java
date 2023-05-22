@@ -11,7 +11,7 @@ import it.polimi.ingsw.model.Enums.Type;
 import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
 import it.polimi.ingsw.model.Utility.PrinterUtils;
-import javafx.geometry.Pos;
+
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class Cli extends View implements Runnable {
     private boolean chatAvailable;
     private ClientState state;
     private String inputRequestBuffer;
-    private String divisor="\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+    private final String divisor="\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
 
     public Cli()
     {
@@ -57,13 +57,15 @@ public class Cli extends View implements Runnable {
      */
     private void printTitle()
     {
-        System.out.println("" +
-                "  _________________     ________________________   _________________\n" +
-                "  |        ||  |  |     |     ||  |  |     ||  |   |     ||  |     |\n" +
-                "  |  _  _  ||  !  |     |  ___!|  !  |  ___!|  |   |  ___!|  |  ___!\n" +
-                "  |  |  |  |!_   _!     !__   ||     |  __|_|  !___|  __| |  |  __|_\n" +
-                "  |  |  |  | |   |      |     ||  |  |     ||     ||  |   |  |     |\n" +
-                "  !__!__!__! !___!      !_____!!__!__!_____!!_____!!__!   !__!_____!\n\n");
+        System.out.println("""
+                  _________________     ________________________   _________________
+                  |        ||  |  |     |     ||  |  |     ||  |   |     ||  |     |
+                  |  _  _  ||  !  |     |  ___!|  !  |  ___!|  |   |  ___!|  |  ___!
+                  |  |  |  |!_   _!     !__   ||     |  __|_|  !___|  __| |  |  __|_
+                  |  |  |  | |   |      |     ||  |  |     ||     ||  |   |  |     |
+                  !__!__!__! !___!      !_____!!__!__!_____!!_____!!__!   !__!_____!
+
+                """);
     }
 
 
@@ -77,7 +79,7 @@ public class Cli extends View implements Runnable {
         String chosenUsername=askUsername();
         int chosenTechnology=askTechnology();
         String chosenAddress=askAddress();
-        int chosenPort=0;
+        int chosenPort;
         if(chosenTechnology==0)
             chosenPort=askPort(defaultRMIPort);
         else
@@ -194,7 +196,7 @@ public class Cli extends View implements Runnable {
 
     /** Asks the user to perform his move
      * @author: Riccardo Figini*
-     * @return {@code messahe} Message with move (Column and positions)*/
+     */
     @Override
     public void askMove()  {
         int column=0, numberOfCards;
@@ -331,13 +333,20 @@ public class Cli extends View implements Runnable {
         }
         System.out.println(title_space+bottom_header);
         if(newInLibrary!= null && oldInGrid!= null) {
+            int row, column;
             System.out.print("New element in library in position: ");
-            for (int i = 0; i < newInLibrary.length; i++)
-                System.out.print("(" + newInLibrary[i].getRow() + ";" + newInLibrary[i].getColumn() + ") , ");
+            for (Position position : newInLibrary) {
+                row = position.getRow() + 1;
+                column = position.getColumn() + 1;
+                System.out.print("(" + row + ";" + column + ")  ");
+            }
             System.out.println("");
             System.out.print("Grid's position now with nothings: ");
-            for (int i = 0; i < oldInGrid.length; i++)
-                System.out.print("(" + oldInGrid[i].getRow() + ";" + oldInGrid[i].getColumn() + ") , ");
+            for (Position position : oldInGrid) {
+                row = position.getRow() + 1;
+                column = position.getColumn() + 1;
+                System.out.print("(" + row + ";" + column + ")  ");
+            }
             System.out.println("");
         }
     }
