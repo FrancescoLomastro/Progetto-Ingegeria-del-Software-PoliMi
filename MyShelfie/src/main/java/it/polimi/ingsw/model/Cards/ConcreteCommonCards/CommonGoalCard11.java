@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.Player.Library;
  */
 public class CommonGoalCard11 extends CommonGoalCard {
     public CommonGoalCard11(){
+        num=12;
         setDescription("Five columns of increasing or decreasing " +
                 "height. Starting from the first column on " +
                 "the left or on the right, each next column " +

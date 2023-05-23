@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public abstract class CommonGoalCard extends Card implements Serializable {
     private static final long serialVersionUID = 1L;
+    protected int num;
     private ScorePointCard scorePointCard;
     /**Constructor
      * @author Riccardo Figini
@@ -37,5 +38,7 @@ public abstract class CommonGoalCard extends Card implements Serializable {
 
         return scorePointCard.getScoreWithDecrease();
     }
-
+    public int getNum() {
+        return num;
+    }
 }

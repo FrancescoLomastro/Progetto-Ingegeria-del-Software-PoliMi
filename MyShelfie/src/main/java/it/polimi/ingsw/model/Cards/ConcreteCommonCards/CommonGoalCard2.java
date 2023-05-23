@@ -16,6 +16,7 @@ import java.util.HashSet;
  * */
 public class CommonGoalCard2 extends CommonGoalCard {
     public CommonGoalCard2(){
+        num=3;
         setDescription("Four groups each containing at least " +
                 "4 tiles of the same type (not necessarily " +
                 "in the depicted shape). " +

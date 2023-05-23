@@ -9,10 +9,12 @@ import java.util.ArrayList;
 
 
 public class PersonalGoalCard extends Card {
+    private final int num;
     private final ArrayList<Couple> goalVector;
-    public PersonalGoalCard(ArrayList<Couple> goalVector){
+    public PersonalGoalCard(ArrayList<Couple> goalVector, int num){
         super();
         this.goalVector=goalVector;
+        this.num=num;
     }
     /**This method counts and returns point of personal goal card. It will be called at the end of the game.
      * @author: Riccardo Figini
@@ -52,6 +54,10 @@ public class PersonalGoalCard extends Card {
     public ArrayList<Couple> getGoalVector() {
 
         return goalVector;
+    }
+
+    public int getNum() {
+        return num;
     }
 
     @Override

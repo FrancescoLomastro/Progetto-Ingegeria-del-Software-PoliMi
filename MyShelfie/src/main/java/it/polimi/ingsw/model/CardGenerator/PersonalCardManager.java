@@ -128,7 +128,7 @@ public class PersonalCardManager implements Serializable {
                 );
                 couples.add(couple);
             }
-            return new PersonalGoalCard(couples);
+            return new PersonalGoalCard(couples, personalGoalCardId+1);
         }
         return null;
     }

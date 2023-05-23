@@ -60,6 +60,9 @@ public class TurnController implements Runnable, Serializable {
         for(int i=0; i<game.getNumPlayers(); i++)
         {
             SetupMessage message= new SetupMessage(
+                    game.getPlayers()[i].getNumPersonalGoal(),
+                    game.getNumCommonGoal(0),
+                    game.getNumCommonGoal(1),
                     game.getGrid(),
                     playerNames,
                     game.getPlayers()[i].getPersonalGoalCard().getGoalVector(),

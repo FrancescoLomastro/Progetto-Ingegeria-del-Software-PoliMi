@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
+import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Common_C;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Griglia_C;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Libreria_C;
@@ -94,17 +95,21 @@ public class Board_C implements Initializable {
         initializeLibraries();
 
 
-        int numGoals = 3;
-        setupGoals(numGoals);
+
+        setupGoals();
     }
 
 
-    private void setupGoals(int numGoals) {
+    private void setupGoals() {
+        ClientModel clientModel = ViewFactory.getInstance().getClientModel();
         loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/CommonGoal.fxml"));
         try {
             son = loader.load();
             Common_C controller = loader.getController();
-            controller.setListeners(right,numGoals+0.5);
+            controller.setListeners(right,3.5);
+            controller.setListeners(right,3+0.5);
+            controller.getImage().getStyleClass().add("common"+clientModel.getNumCom1());
+            controller.getPoint().getStyleClass().add("point8");
             right.getChildren().add(son);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -115,7 +120,10 @@ public class Board_C implements Initializable {
         try {
             son = loader.load();
             Common_C controller = loader.getController();
-            controller.setListeners(right,numGoals+0.5);
+            controller.setListeners(right,3.5);
+            controller.setListeners(right,3+0.5);
+            controller.getImage().getStyleClass().add("common"+clientModel.getNumCom2());
+            controller.getPoint().getStyleClass().add("point8");
             right.getChildren().add(son);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -125,13 +133,14 @@ public class Board_C implements Initializable {
         try {
             son = loader.load();
             Personal_C controller = loader.getController();
-            controller.setListeners(right,numGoals+0.5);
+            controller.setListeners(right,3.5);
+            controller.getImage().getStyleClass().add("personal"+clientModel.getPersonalGoalCardNum());
+            controller.setListeners(right,3+0.5);
             right.getChildren().add(son);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
     private void initializeLibraries() {
         libraries= new HashMap<>();
         String[] players= ViewFactory.getInstance().getClientModel().getPlayerNames();

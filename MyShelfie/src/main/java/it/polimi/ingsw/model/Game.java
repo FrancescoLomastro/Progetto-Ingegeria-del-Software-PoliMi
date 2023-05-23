@@ -180,4 +180,11 @@ public class Game implements Serializable {
     public CommonGoalCard[] getCommonGoalCard(){
         return livingRoom.getCommonGoalCards();
     }
+
+    public int getNumCommonGoal(int index) {
+        if(index!=0 && index!=1)
+            throw new RuntimeException("Invalid number common goal card");
+        else
+            return livingRoom.getCommonGoalCards()[index].getNum();
+    }
 }

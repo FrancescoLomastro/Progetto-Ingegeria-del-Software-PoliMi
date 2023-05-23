@@ -52,4 +52,8 @@ public class Player implements Serializable {
     public boolean isCommonGoalCardSatisfied(CommonGoalCard commonGoalCard) {
         return commonGoalCard.isSatisfied(getLibrary());
     }
+
+    public int getNumPersonalGoal(){
+        return personalGoalCard.getNum();
+    }
 }

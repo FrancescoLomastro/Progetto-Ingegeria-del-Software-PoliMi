@@ -21,6 +21,9 @@ public class ClientModel extends Observable<Message> {
     private ArrayList<Couple> goalList;
     private Map<String, Integer> pointsMap;
     private String descriptionFirstCommonGoal;
+    private int numCom1;
+    private int numCom2;
+    private int personalGoalCardNum;
     private String descriptionSecondCommonGoal;
     private int pointsCommonGoalCards[];
     private  ObjectCard[][] defaultLibrary;
@@ -194,6 +197,9 @@ public class ClientModel extends Observable<Message> {
 
     public void setup(SetupMessage msg)
     {
+        numCom1=msg.getNumCom1();
+        numCom2=msg.getNumCom2();
+        personalGoalCardNum=msg.getPersonalNumber();
         setDescriptionFirstCommonGoal(msg.getDescription1());
         setDescriptionSecondCommonGoal(msg.getDescription2());
         setPersonalGoalCard(msg.getPersonalGoalCard());
@@ -204,7 +210,10 @@ public class ClientModel extends Observable<Message> {
         }
         this.grid=msg.getGrid();
         setChanged();
-        notifyObservers(new SetupMessage(getObjectCards(grid),
+        notifyObservers(new SetupMessage(msg.getPersonalNumber(),
+                msg.getNumCom1(),
+                msg.getNumCom2(),
+                getObjectCards(grid),
                 msg.getPlayersName(),
                 msg.getPersonalGoalCard(),
                 new String[]{msg.getDescription1(),msg.getDescription2()},
@@ -221,6 +230,18 @@ public class ClientModel extends Observable<Message> {
 
     public void setMyName(String myName) {
         this.myName = myName;
+    }
+
+    public int getNumCom1() {
+        return numCom1;
+    }
+
+    public int getPersonalGoalCardNum() {
+        return personalGoalCardNum;
+    }
+
+    public int getNumCom2() {
+        return numCom2;
     }
 }
 

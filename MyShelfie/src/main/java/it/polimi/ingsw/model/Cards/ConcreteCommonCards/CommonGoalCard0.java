@@ -15,7 +15,9 @@ import java.util.HashSet;
  * @author: Alberto Aniballi
  * */
 public class CommonGoalCard0 extends CommonGoalCard {
+
     public CommonGoalCard0(){
+        num=1;
         setDescription("Six groups each containing at least " +
                 "2 tiles of the same type (not necessarily " +
                 "in the depicted shape). " +
@@ -56,4 +58,5 @@ public class CommonGoalCard0 extends CommonGoalCard {
         }
         return false;
     }
+
 }

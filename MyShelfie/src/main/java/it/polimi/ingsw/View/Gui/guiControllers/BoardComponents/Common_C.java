@@ -66,6 +66,14 @@ public class Common_C {
         point.setLayoutY(anchor.getHeight()*layoutYRatio);
 
     }
+
+    public Pane getPoint() {
+        return point;
+    }
+
+    public Pane getImage() {
+        return image;
+    }
 }
 
 

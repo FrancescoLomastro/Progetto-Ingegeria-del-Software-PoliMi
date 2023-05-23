@@ -51,6 +51,10 @@ public class Personal_C {
     private void maintainProportion() {
         image.setPrefWidth(anchor.getWidth()*imageRatio);
     }
+
+    public Pane getImage() {
+        return image;
+    }
 }
 
 
