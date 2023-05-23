@@ -59,7 +59,7 @@
          <bottom>
             <HBox fx:id="bottom" alignment="CENTER" prefHeight="42.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="nameLabel" styleClass="libraryObj" text="Label">
+                  <Label fx:id="nameLabel" styleClass="libraryObj" text="Label" textFill="#8B4513">
                      <font>
                         <Font name="System Bold Italic"  />
                      </font>

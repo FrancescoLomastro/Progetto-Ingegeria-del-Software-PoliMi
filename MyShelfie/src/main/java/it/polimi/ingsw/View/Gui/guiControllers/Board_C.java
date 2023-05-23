@@ -30,8 +30,10 @@ import java.util.*;
 
 public class Board_C implements Initializable {
 
+    @FXML
     public Label moveLabel;
-    public Button don_button;
+    @FXML
+    public Button doneButton;
     @FXML
     AnchorPane anchor;
     @FXML
@@ -66,13 +68,10 @@ public class Board_C implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        don_button.setVisible(false);
+        doneButton.setVisible(false);
 
         moveLabel.setVisible(false);
-        moveLabel.setStyle("-fx-text-fill: white;" +
-                "-fx-font-size: 20px;" +
-                "-fx-effect: dropshadow(gaussian, black, 1, 1, 0, 0);" +
-                "-fx-text-alignment: center center");
+
 
         bottomRatio = bottom.getPrefHeight()/anchor.getPrefHeight();
         topRatio = top.getPrefHeight()/anchor.getPrefHeight();
@@ -252,11 +251,10 @@ public class Board_C implements Initializable {
 
 
     public void onAskMove() {
-        don_button.setVisible(true);
+        doneButton.setVisible(true);
         moveLabel.setVisible(true);
-        moveLabel.getStyle();
 
-        /*PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
 
         SequentialTransition sequentialTransition = new SequentialTransition(pauseTransition);
         sequentialTransition.setCycleCount(sequentialTransition.INDEFINITE);
@@ -268,7 +266,7 @@ public class Board_C implements Initializable {
         fadeTransition.setToValue(0.0);
         fadeTransition.setCycleCount(sequentialTransition.INDEFINITE);
         fadeTransition.setAutoReverse(true);
-        fadeTransition.play();*/
+        fadeTransition.play();
 
         ArrayList<Position> positions = new ArrayList<>();
         for(Node node : centralGrid.getChildren()){
@@ -315,7 +313,7 @@ public class Board_C implements Initializable {
 
         }
 
-        don_button.setOnAction(ActionEvent -> {
+        doneButton.setOnAction(ActionEvent -> {
             if ( positions.size()>=1 && positions.size()<=3 ){
                 System.out.println("RETURN POSITIONS");
 
@@ -330,7 +328,7 @@ public class Board_C implements Initializable {
                 ViewFactory.getInstance().setPositions(arrayPos);
                 ViewFactory.getInstance().showColumnQuestion();
 
-                don_button.setVisible(false);
+                doneButton.setVisible(false);
                 moveLabel.setVisible(false);
 
             } else {

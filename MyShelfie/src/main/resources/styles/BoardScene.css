@@ -9,11 +9,7 @@
     -fx-background-size: cover;
 }
 
-.libraryObj Label
-{
-    -fx-text-fill: #8B4513;
-    -fx-font-size: 2vw;
-}
+
 
 #anchorPane_library1{
     -fx-background-image: url("../images/originals/boards/bookshelf_orth.png");
@@ -121,21 +117,22 @@ Pane
     -fx-background-size: 100% 100%;
 }
 
-.internal_form_container_doneButton {
-    -fx-background-color: #8B4513;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-weight: bold;
-    -fx-pref-width: 100;
-    -fx-pref-height: 40;
-    -fx-font-size: 1.5em;
-    -fx-border-radius: 15px;
-    -fx-alignment: center center;
-}
-
-.internal_form_container_doneButton :hover {
+.button_container Button:hover
+{
     -fx-cursor: hand;
     -fx-background-color: #800000;
 }
+.doneButton
+{
+    -fx-background-color: #8B4513;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 15px;
+}
+
+
 
 
 .common1 {
