@@ -33,35 +33,14 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
 
     public abstract void startGame();
 
-    @Override
-    public void update(ClientModel o, Message arg) {
-        switch (arg.getType())
-        {
-            case SETUP_MESSAGE -> {
-                SetupMessage msg = (SetupMessage) arg;
-                showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
-                for (int i=0; i<msg.getPlayersName().length;i++)
-                {
-                    showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
-                }
-            }
-            case UPDATE_GRID_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
-                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage());
-            }
-            case UPDATE_LIBRARY_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
-            }
-            //case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
-        }
-    }
+
+    public abstract void update(ClientModel o, Message arg);
 
 
     public ClientModel getClientModel() {
         return clientModel;
     }
-    public abstract void onServerChanged();
+    public abstract void onServerChanged();                    //NON SERVE, POSSIAMO TOGLIERLO
 
     public int getDefaultRMIPort() {
         return defaultRMIPort;

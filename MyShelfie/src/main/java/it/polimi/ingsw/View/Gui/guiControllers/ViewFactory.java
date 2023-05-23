@@ -3,6 +3,8 @@ package it.polimi.ingsw.View.Gui.guiControllers;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageGrid;
+import it.polimi.ingsw.Network.Messages.MessageLibrary;
+import it.polimi.ingsw.Network.Messages.SetupMessage;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.Gui.GuiApplication;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
@@ -168,28 +170,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      */
     @Override
     public void startGame() {
-       //Commentato per il momento perchè altrimenti non mostra la griglia
-       /* Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
-            switchScene(loader);
-        });*/
+
     }
 
 
-    /**
-     * Shows the board scene
-     */
+
     @Override
     public void onServerChanged() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
-        loader.setControllerFactory(controllerClass -> {
-            Board_C controller = new Board_C();
-            currentController=controller;
-            return controller;
-        });
-        Platform.runLater(() -> {
-            switchScene_old(loader);
-        });
     }
 
 
@@ -400,4 +387,46 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+
+    @Override
+    public void update(ClientModel o, Message arg) {
+        switch (arg.getType())
+        {
+            case SETUP_MESSAGE -> {
+                showBoard(arg);
+            }
+            case UPDATE_GRID_MESSAGE -> {
+                ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
+                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage());
+            }
+            case UPDATE_LIBRARY_MESSAGE -> {
+                ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
+                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
+            }
+        }
+    }
+
+    private void showBoard(Message arg) {
+        createBoard();
+        Platform.runLater(() -> {
+            SetupMessage msg = (SetupMessage) arg;
+            showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
+            for (int i=0; i<msg.getPlayersName().length;i++)
+            {
+                showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
+            }
+        });
+    }
+
+    private void createBoard() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
+        loader.setControllerFactory(controllerClass -> {
+            Board_C controller = new Board_C();
+            currentController=controller;
+            return controller;
+        });
+        Platform.runLater(() -> {
+            changeRoot(loader);
+        });
+    }
 }

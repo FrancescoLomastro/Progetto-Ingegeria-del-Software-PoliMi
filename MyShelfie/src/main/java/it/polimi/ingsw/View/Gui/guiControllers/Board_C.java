@@ -163,8 +163,6 @@ public class Board_C implements Initializable {
 
                     handleLibrariesClick("rickyfigio");
                 });
-
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -185,6 +183,7 @@ public class Board_C implements Initializable {
                 }
             }
         }
+
     }
 
     private void maintainProportion() {
@@ -229,8 +228,6 @@ public class Board_C implements Initializable {
             Integer rowIndex = GridPane.getRowIndex(node);
             Integer columnIndex = GridPane.getColumnIndex(node);
 
-
-
             if (grid[rowIndex][columnIndex] != null && grid[rowIndex][columnIndex].getColor()!= Color.EMPTY) {
                 node.getStyleClass().remove("invisibleCells");
                 node.getStyleClass().add("texture_"+grid[rowIndex][columnIndex].getColor().getRelativeInt()+
@@ -240,8 +237,6 @@ public class Board_C implements Initializable {
     }
 
     public void updateLibrary(ObjectCard[][] library, String username) {
-        System.out.println(username);
-        System.out.println(libraries);
         GridPane libraryPane= libraries.get(username).getGrid();
         for (Node node : libraryPane.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
