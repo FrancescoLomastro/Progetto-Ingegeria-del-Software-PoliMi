@@ -268,7 +268,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(() ->
         {
             Board_C boardSceneController = (Board_C) currentController;
-            boardSceneController.onAskMove(clientModel.getMyName());
+            boardSceneController.onAskMove();
         });
     }
 
@@ -375,6 +375,29 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void notifyAllOBS(OBS_Message msg) {
         setChanged();
         notifyObservers(msg);
+    }
+
+    public void onLibraryClick(String username) {
+
+        System.out.println(username + " view");
+        ObjectCard[][] lib = clientModel.getLibrary(username);
+
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/libraryPopUp.fxml"));
+
+            loader.setControllerFactory(controllerClass -> {
+
+                LibraryPopUpController libraryPopUpController = new LibraryPopUpController();
+
+                libraryPopUpController.setUsername(username);
+
+                libraryPopUpController.setLibrary(lib);
+
+                return libraryPopUpController;
+            });
+
+            createStage_old(loader, 200, 320, true);
+        });
     }
 
 }

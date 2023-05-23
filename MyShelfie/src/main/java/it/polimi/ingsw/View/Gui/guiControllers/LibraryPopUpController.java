@@ -29,7 +29,11 @@ public class LibraryPopUpController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         username_label.setText(username);
+        this.initLibrary();
+        this.updateLibrary(library);
+        System.out.println(username + " initialized_OK");
     }
+
 
     public void initLibrary(){
 
@@ -61,12 +65,19 @@ public class LibraryPopUpController implements Initializable {
         }
 
     }
-
     public ObjectCard[][] getLibrary() {
         return library;
     }
 
     public void setLibrary(ObjectCard[][] library) {
         this.library = library;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

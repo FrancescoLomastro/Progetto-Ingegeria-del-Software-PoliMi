@@ -55,6 +55,13 @@ public class Board_C implements Initializable {
     GridPane centralGrid;
     Map<String,Libreria_C> libraries;
 
+    @FXML
+    private void handleLibrariesClick(String username) {
+        System.out.println(username + " metodo");
+        ViewFactory.getInstance().onLibraryClick(username);
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -140,6 +147,15 @@ public class Board_C implements Initializable {
                 controller.setText(players[i]);
                 libraries.put(players[i],controller);
                 left.getChildren().add(son);
+
+                Integer index = i;
+
+                son.setOnMouseClicked(mouseEvent -> {
+
+                    handleLibrariesClick("rickyfigio");
+                });
+
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
