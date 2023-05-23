@@ -1,7 +1,9 @@
 package it.polimi.ingsw.View.Gui.guiControllers.BoardComponents;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
 public class Libreria_C {
     @FXML
@@ -14,6 +16,8 @@ public class Libreria_C {
     Pane left;
     @FXML
     Pane right;
+    @FXML
+    Label nameLabel;
     double bottomRatio;
     double topRatio;
     double leftRatio;
@@ -25,7 +29,7 @@ public class Libreria_C {
     double gridRatioH;
     double layoutXRatio,layoutYRatio;
     double hGapRatio;
-    double centerRatio;
+    int i=0;
 
     public void setListeners(VBox father,double parts)
     {
@@ -76,12 +80,18 @@ public class Libreria_C {
 
     private void maintainProportion() {
         bottom.setPrefHeight(anchor.getPrefHeight()*bottomRatio);
+        nameLabel.setFont(Font.font(anchor.getPrefHeight()*bottomRatio));
         top.setPrefHeight(anchor.getPrefHeight()*topRatio);
         left.setPrefWidth(anchor.getPrefWidth()*leftRatio);
         right.setPrefWidth(anchor.getPrefWidth()*rightRatio);
+        System.out.println("sadsasd");
     }
     public GridPane getGrid()
     {
         return grid;
+    }
+    public void setText(String text)
+    {
+        nameLabel.setText(text);
     }
 }

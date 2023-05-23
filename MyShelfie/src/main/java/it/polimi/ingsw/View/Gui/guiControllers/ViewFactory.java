@@ -158,7 +158,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void askNumberOfPlayers(int min, int max) {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PlayerNumberRequest.fxml"));
-            switchScene_old(loader);
+            changeRoot(loader);
         });
     }
 
@@ -203,6 +203,30 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             switchScene_old(loader);
             primaryStage.setFullScreen(true);
         });
+    }
+
+    @Override
+    public void lobbyUpdate(String string) {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
+            loader.setControllerFactory(controllerClass -> {
+                AcceptedLoginController controller = new AcceptedLoginController();
+
+                int indexSplitter = 33;
+                String currNum_players = string.substring(0,indexSplitter);
+                String member_names = string.substring(indexSplitter);
+                controller.setCurrent_numPlayers(currNum_players);
+                controller.setMember_players(member_names);
+
+                return controller;
+            });
+            changeRoot(loader);
+        });
+    }
+
+    @Override
+    public void acceptedLogin() {
+        //da aggiornare il Accept
     }
 
 
@@ -309,24 +333,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     @Override
     public void printMessage(String string) {
-        Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AcceptedLogin.fxml"));
-            loader.setControllerFactory(controllerClass -> {
-                AcceptedLoginController controller = new AcceptedLoginController();
 
-
-                int indexSplitter = 33;
-                String currNum_players = string.substring(0,indexSplitter);
-                String member_names = string.substring(indexSplitter);
-                controller.setCurrent_numPlayers(currNum_players);
-                controller.setMember_players(member_names);
-
-
-                return controller;
-            });
-            switchScene_old(loader);
-            primaryStage.setFullScreen(true);
-        });
     }
 
     @Override
@@ -339,8 +346,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 controller.setChosenPort(chosenPort);
                 return controller;
             });
-            switchScene_old(loader);
-            primaryStage.setFullScreen(true);
+            changeRoot(loader);
         });
     }
     public void showInvalidPort() {

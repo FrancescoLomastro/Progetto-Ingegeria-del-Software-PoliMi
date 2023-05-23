@@ -98,8 +98,8 @@ public class ClientController implements Observer<View, OBS_Message> {
         switch (message.getType())
         {
             case ACCEPTED_LOGIN_MESSAGE -> {
-                AcceptedLoginMessage msg = (AcceptedLoginMessage)message;
-                view.printMessage("Connection accepted, waiting for other players");
+                AcceptedLoginMessage msg = (AcceptedLoginMessage)message;s
+                view.acceptedLogin();
                 clientModel.setMyName(msg.getName());
             }
             case PLAYER_NUMBER_REQUEST -> {
@@ -112,7 +112,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case LOBBY_UPDATE_MESSAGE -> {
                 LobbyUpdateMessage msg = (LobbyUpdateMessage) message;
-                view.printMessage("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players. "
+                view.lobbyUpdate("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players. "
                         +"Members: " + msg.getUsernames());
             }
             case NEW_GAME_SERVER_MESSAGE -> {

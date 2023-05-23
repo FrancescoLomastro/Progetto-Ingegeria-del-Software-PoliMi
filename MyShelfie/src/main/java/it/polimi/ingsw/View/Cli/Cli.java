@@ -146,6 +146,16 @@ public class Cli extends View implements Runnable {
         notifyObservers(msg);
     }
 
+    @Override
+    public void lobbyUpdate(String string) {
+
+    }
+
+    @Override
+    public void acceptedLogin() {
+        System.out.println("Connection accepted, waiting for other players");
+    }
+
 
     /**
      * Message to be printed as the server changes for the game

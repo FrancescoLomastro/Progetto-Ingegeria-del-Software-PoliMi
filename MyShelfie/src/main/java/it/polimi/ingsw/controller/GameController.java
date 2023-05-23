@@ -39,7 +39,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private transient Controller controller;
     private StatusGame statusGame;
     private transient RMIShared gameShared;
-    public static int PING_TIMEOUT = 10000;
+    public static int PING_TIMEOUT = 1000000;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling

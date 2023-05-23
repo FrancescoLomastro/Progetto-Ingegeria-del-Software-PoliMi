@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.StackPane?>
-<AnchorPane fx:id="container_anchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/ClientLogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.ErrorClientCreationController">
+<AnchorPane fx:id="container_anchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/ClientLogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.ErrorClientCreationController">
     <children>
-        <StackPane layoutX="200.0" layoutY="125.0" prefHeight="150.0" prefWidth="167.0" stylesheets="@../styles/InvalidUsername.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackPane layoutX="200.0" layoutY="125.0" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/InvalidUsername.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fx:id="backgound_image" fitHeight="760.0" fitWidth="1142.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/originals/publisherMaterial/Display_3.jpg" />
-                    </image>
-                </ImageView>
-                <AnchorPane maxHeight="229.0" maxWidth="338.0" minHeight="229.0" minWidth="338.0" prefHeight="229.0" prefWidth="338.0" styleClass="external_invalid_port_container">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="229.0" minWidth="338.0" prefHeight="300.0" prefWidth="400.0" styleClass="external_invalid_port_container">
                     <children>
-                        <VBox prefHeight="210" prefWidth="340" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <VBox prefHeight="300.0" prefWidth="400.0" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                             <children>
                                 <ImageView fitHeight="80.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../images/originals/publisherMaterial/Title_2000x618px.png" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="errorConnection_label" styleClass="internal_vbox_container_label2" />
+                                <Label fx:id="errorConnection_label" prefHeight="117.0" prefWidth="343.0" styleClass="internal_vbox_container_label2" text="testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova" wrapText="true" />
                                 <Button fx:id="retry_btn" prefWidth="75" text="Retry" />
                             </children>
                         </VBox>

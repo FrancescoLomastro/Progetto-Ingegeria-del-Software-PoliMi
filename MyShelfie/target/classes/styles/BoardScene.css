@@ -1,23 +1,17 @@
-#externalAnchorPane
+.sfondo
 {
     -fx-background-image: url("../images/originals/misc/sfondoParquet.jpg");
+    -fx-background-size: 100% 100%;
 }
-.sfondo{
-    -fx-background-image: url("../images/originals/misc/sfondoParquet.jpg");
-}
-
 #centralPane
 {
     -fx-background-image: url("../images/originals/boards/livingroom.png");
     -fx-background-size: cover;
 }
 
-.central_pane_class{
-    -fx-background-image: url("../images/originals/boards/livingroom.png");
-    -fx-background-size: 80% 100%;
-    -fx-background-insets: 1;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
+.libraryObj Label
+{
+    -fx-text-fill: #8B4513;
 }
 
 #anchorPane_library1{

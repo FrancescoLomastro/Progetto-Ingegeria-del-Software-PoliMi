@@ -7,31 +7,31 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="anchor" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.Board_C">
+<AnchorPane fx:id="anchor" prefHeight="400.0" prefWidth="600.0" styleClass="sfondo" stylesheets="@../styles/BoardScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.Board_C">
    <children>
-      <BorderPane style="-fx-background-color: rgba(0, 0, 0, 0);" layoutX="200.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox style="-fx-background-color: rgba(0, 0, 0, 0);" fx:id="left" alignment="CENTER" prefHeight="400.0" prefWidth="150.0"  BorderPane.alignment="CENTER_LEFT" />
+            <VBox fx:id="left" alignment="CENTER" prefHeight="400.0" prefWidth="150.0" style="-fx-background-color: rgba(0, 0, 0, 0);" BorderPane.alignment="CENTER_LEFT" />
          </left>
          <right>
-            <VBox style="-fx-background-color: rgba(0, 0, 0, 0);" fx:id="right" alignment="CENTER" prefHeight="200.0" prefWidth="150.0"  BorderPane.alignment="CENTER" />
+            <VBox fx:id="right" alignment="CENTER" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: rgba(0, 0, 0, 0);" BorderPane.alignment="CENTER" />
          </right>
          <center>
-            <BorderPane style="-fx-background-color: rgba(0, 0, 0, 0);" fx:id="internalBorderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <BorderPane fx:id="internalBorderPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0, 0, 0, 0);" BorderPane.alignment="CENTER">
                <top>
-                  <HBox style="-fx-background-color: rgba(0, 0, 0, 0);" fx:id="top" prefHeight="70.0" prefWidth="200.0"  BorderPane.alignment="CENTER">
+                  <HBox fx:id="top" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: rgba(0, 0, 0, 0);" BorderPane.alignment="CENTER">
                      <children>
                         <Label fx:id="moveLabel" text="It's your turn! &#13; Select a minimum of 1 and a maximum of 3 cards" textFill="WHITE" BorderPane.alignment="CENTER" />
                      </children></HBox>
                </top>
                <bottom>
-                  <HBox  style="-fx-background-color: rgba(0, 0, 0, 0);" fx:id="bottom" prefHeight="70.0" prefWidth="200.0"  BorderPane.alignment="CENTER">
+                  <HBox fx:id="bottom" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: rgba(0, 0, 0, 0);" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="don_button" alignment="BOTTOM_CENTER" mnemonicParsing="false" styleClass="internal_form_container_doneButton" stylesheets="@../styles/BoardScene.css" text="Done" />
                      </children></HBox>
                </bottom>
                <center>
-                  <BorderPane style="-fx-background-color: rgba(0, 0, 0, 0);" fx:id="center" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                  <BorderPane fx:id="center" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0, 0, 0, 0);" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </center>

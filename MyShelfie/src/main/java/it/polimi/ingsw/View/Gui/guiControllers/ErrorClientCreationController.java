@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 public class ErrorClientCreationController implements Initializable {
     public Label errorConnection_label;
     public Button retry_btn;
-    public ImageView backgound_image;
     public AnchorPane container_anchorPane;
 
     private int chosenPort;
@@ -34,11 +33,6 @@ public class ErrorClientCreationController implements Initializable {
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-
-        backgound_image.setFitWidth(bounds.getWidth());
-        backgound_image.setFitHeight(bounds.getHeight());
-        backgound_image.setScaleX(1.25);
-        backgound_image.setScaleY(1.1);
 
         errorConnection_label.setStyle("-fx-text-alignment: center");
         errorConnection_label.setText("WARNING: \n It was impossible to create a client \n and contact the server at ["+chosenAddress+","+chosenPort+"]");

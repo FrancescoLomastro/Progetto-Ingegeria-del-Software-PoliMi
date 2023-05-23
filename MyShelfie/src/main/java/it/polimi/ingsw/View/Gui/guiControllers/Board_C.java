@@ -137,6 +137,7 @@ public class Board_C implements Initializable {
                 son = loader.load();
                 controller= loader.getController();
                 controller.setListeners(left,players.length+0.5);
+                controller.setText(players[i]);
                 libraries.put(players[i],controller);
                 left.getChildren().add(son);
             } catch (IOException e) {
@@ -227,13 +228,13 @@ public class Board_C implements Initializable {
         }
     }
 
-    public void onAskMove(String myName) {
 
+    public void onAskMove() {
         don_button.setVisible(true);
         moveLabel.setVisible(true);
         moveLabel.getStyle();
 
-        PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
+        /*PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
 
         SequentialTransition sequentialTransition = new SequentialTransition(pauseTransition);
         sequentialTransition.setCycleCount(sequentialTransition.INDEFINITE);
@@ -245,7 +246,7 @@ public class Board_C implements Initializable {
         fadeTransition.setToValue(0.0);
         fadeTransition.setCycleCount(sequentialTransition.INDEFINITE);
         fadeTransition.setAutoReverse(true);
-        fadeTransition.play();
+        fadeTransition.play();*/
 
         ArrayList<Position> positions = new ArrayList<>();
         for(Node node : centralGrid.getChildren()){
