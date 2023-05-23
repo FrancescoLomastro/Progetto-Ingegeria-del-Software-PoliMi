@@ -1,11 +1,9 @@
-.clientLogin_container {
-    -fx-background-image: url("../images/originals/publisherMaterial/Display_3.jpg");
-    -fx-background-position: center center;
-    /*-fx-background-size: 900 700;*/
-    -fx-background-size: cover;
-    -fx-background-repeat: no-repeat;
-    -fx-background-color: #FFFFFF;
+#container_anchorPane
+{
+    -fx-background-image: url('../images/originals/publisherMaterial/Display_3.jpg');
+    -fx-background-size: 100% 100%;
 }
+
 
 
 .external_options_container {
@@ -27,7 +25,7 @@
 }
 
 .internal_form_container_Title_Label {
-    -fx-font-size: 3.5em;
+    -fx-font-size: 2em;
     -fx-font-weight: bold;
     -fx-text-fill: #8B4513;
     -fx-text-alignment: center;
@@ -67,7 +65,6 @@
 
 .internal_form_container_horizontal_box_3 {
     -fx-spacing: 20;
-    -fx-alignment: center;
     -fx-max-height: 40;
     -fx-max-width: 500;
     -fx-font-size: 0.9em;
@@ -79,7 +76,6 @@
     -fx-background-color: #8B4513;
     -fx-text-fill: #FFFFFF;
     -fx-font-weight: bold;
-    -fx-pref-width: 200;
     -fx-pref-height: 30;
     -fx-font-size: 1.2em;
     -fx-border-radius: 15px;

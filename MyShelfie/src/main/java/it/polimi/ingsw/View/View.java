@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.Utility.Position;
 public abstract class View extends Observable<OBS_Message> implements Runnable, Observer<ClientModel,Message> {
 
     protected ClientModel clientModel;
-
     protected final int defaultRMIPort = 9000;
     protected final int defaultSocketPort = 8000;
     public abstract void startView();
@@ -62,4 +61,12 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
         return clientModel;
     }
     public abstract void onServerChanged();
+
+    public int getDefaultRMIPort() {
+        return defaultRMIPort;
+    }
+
+    public int getDefaultSocketPort() {
+        return defaultSocketPort;
+    }
 }

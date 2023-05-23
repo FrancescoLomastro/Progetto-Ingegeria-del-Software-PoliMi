@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 
@@ -141,6 +142,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     @Override
     public void askInitialInfo() {
         Platform.runLater(()->{
+            primaryStage.getScene().setOnKeyPressed(null);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientLogin.fxml"));
             changeRoot(loader);
         });

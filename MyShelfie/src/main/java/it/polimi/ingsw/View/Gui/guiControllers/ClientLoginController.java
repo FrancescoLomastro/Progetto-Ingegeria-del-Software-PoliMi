@@ -1,7 +1,6 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.View.OBSMessages.OBS_InitialInfoMessage;
-import it.polimi.ingsw.controller.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -9,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,17 +24,14 @@ public class ClientLoginController implements Initializable {
     public RadioButton rmi_button;
     public TextField server_textfield;
     public TextField port_number_textfield;
-    public Button login_button;
+    public Button play_button;
     public Label title_label;
     public AnchorPane external_options_container;
-    public AnchorPane clientLoging_container;
     public AnchorPane container_anchorPane;
-    public ImageView backgound_image;
     private String chosenUsername;
     private int chosenTechnology;
     private String chosenIPAddress;
     private int chosenPort;
-    private ClientController clientController;
 
     public void setChosenUsername(String chosenUsername) {
         this.chosenUsername = chosenUsername;
@@ -60,23 +55,23 @@ public class ClientLoginController implements Initializable {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
-        backgound_image.setFitWidth(bounds.getWidth());
+        /*backgound_image.setFitWidth(bounds.getWidth());
         backgound_image.setFitHeight(bounds.getHeight());
         backgound_image.setScaleX(1.25);
-        backgound_image.setScaleY(1.1);
+        backgound_image.setScaleY(1.1);*/
 
         socket_button.setDisable(true);
         rmi_button.setDisable(true);
         server_textfield.setDisable(true);
         port_number_textfield.setDisable(true);
-        login_button.setVisible(false);
+        play_button.setVisible(false);
 
         username_textfield.setOnKeyPressed(event -> getUsernameFromInput(event));
         rmi_button.setOnAction(actionEvent -> getServerTechnologyFromInput(rmi_button));
         socket_button.setOnAction(actionEvent -> getServerTechnologyFromInput(socket_button));
         server_textfield.setOnKeyPressed(event -> getServerFromInput(event));
         port_number_textfield.setOnKeyPressed(event -> getPortFromInput(event));
-        login_button.setOnAction(event -> onLogin(event));
+        play_button.setOnAction(event -> onLogin(event));
     }
 
     public void getUsernameFromInput(KeyEvent keyEvent) {
@@ -86,11 +81,10 @@ public class ClientLoginController implements Initializable {
 
             if (username_text.length() > 0) {
                 setChosenUsername(username_text);
-                //title_label.setText("Welcome " +username_text + "!");
-                username_textfield.setDisable(true);
+                title_label.setText("Welcome " +username_text + "!");
                 rmi_button.setDisable(false);
                 socket_button.setDisable(false);
-                title_label.setStyle("-fx-text-alignment: center");
+                rmi_button.requestFocus();
             }
         }
 
@@ -100,15 +94,14 @@ public class ClientLoginController implements Initializable {
 
         if (radioButton.getText().equals("RMI")) {
             setChosenTechnology(0);
+            port_number_textfield.setText("Default ("+ViewFactory.getInstance().getDefaultRMIPort()+")");
         } else {
             setChosenTechnology(1);
+            port_number_textfield.setText("Default ("+ViewFactory.getInstance().getDefaultSocketPort()+")");
         }
-
-        rmi_button.setDisable(true);
-        socket_button.setDisable(true);
         server_textfield.setDisable(false);
         server_textfield.setText("Default localhost");
-
+        server_textfield.requestFocus();
     }
 
     public void getServerFromInput(KeyEvent keyEvent) {
@@ -118,22 +111,17 @@ public class ClientLoginController implements Initializable {
 
             if (server_ip.length() > 0) {
 
-                if (server_ip.contains("Default")) {
+                if (server_ip.equals("Default localhost"))
+                {
                     setChosenIPAddress("localhost");
                 }
-                else {
+                else
+                {
                     setChosenIPAddress(server_ip);
                 }
-
-                server_textfield.setDisable(true);
-                port_number_textfield.setDisable(false);
-
-                if (chosenTechnology == 0) {
-                    port_number_textfield.setText("Default RMI port number");
-                } else {
-                    port_number_textfield.setText("Default Socket port number");
-                }
             }
+            port_number_textfield.setDisable(false);
+            port_number_textfield.requestFocus();
         }
 
     }
@@ -141,20 +129,20 @@ public class ClientLoginController implements Initializable {
     public void getPortFromInput(KeyEvent keyEvent) {
 
         String server_port;
-        int parsed_port;
+        int parsed_port = 0;
         boolean invalid_input=false;
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
             server_port = port_number_textfield.getText().trim();
 
             if (server_port.contains("Default")) {
-                if (chosenTechnology == 1) {
-                    setChosenPort(8000);
+                if (chosenTechnology == 0) {
+                    setChosenPort(ViewFactory.getInstance().getDefaultRMIPort());
                 } else {
-                    setChosenPort(9000);
+                    setChosenPort(ViewFactory.getInstance().getDefaultSocketPort());
                 }
-                port_number_textfield.setDisable(true);
-                login_button.setVisible(true);
+                play_button.setVisible(true);
+                play_button.requestFocus();
 
             } else if (server_port.length() > 0) {
                 try {
@@ -169,9 +157,9 @@ public class ClientLoginController implements Initializable {
                         port_number_textfield.setText("");
                         ViewFactory.getInstance().showInvalidPort();
                     } else {
-                        setChosenPort(Integer.parseInt(server_port));
-                        port_number_textfield.setDisable(true);
-                        login_button.setVisible(true);
+                        setChosenPort(parsed_port);
+                        play_button.setVisible(true);
+                        play_button.requestFocus();
                     }
                 }
             }
