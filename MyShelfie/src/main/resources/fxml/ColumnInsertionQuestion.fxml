@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<AnchorPane fx:id="external_player_container" prefHeight="250.0" prefWidth="350.0" styleClass="external_player_number_request_container" stylesheets="@../styles/PlayerNumberRequest.css"
-            maxHeight="250" maxWidth="350" minHeight="250" minWidth="350"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.View.Gui.guiControllers.ColumnInsertionQuestionController">
+<AnchorPane fx:id="external_player_container" minHeight="350" minWidth="500"  prefWidth="500" prefHeight="350" styleClass="external_player_number_request_container" stylesheets="@../styles/PlayerNumberRequest.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.ColumnInsertionQuestionController">
     <children>
-        <VBox fx:id="internal_vbox_container" prefHeight="240" prefWidth="320" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox fx:id="internal_vbox_container" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
                 <ImageView fitHeight="90.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -27,4 +19,3 @@
         </VBox>
     </children>
 </AnchorPane>
-

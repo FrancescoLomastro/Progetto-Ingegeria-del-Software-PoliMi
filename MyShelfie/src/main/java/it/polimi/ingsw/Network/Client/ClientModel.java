@@ -23,9 +23,8 @@ public class ClientModel extends Observable<Message> {
     private String descriptionFirstCommonGoal;
     private String descriptionSecondCommonGoal;
     private int pointsCommonGoalCards[];
-    private int numOfPlayers;
     private  ObjectCard[][] defaultLibrary;
-
+    private String myName;
     public ClientModel(){
         librariesMap = new HashMap<>();
         pointsMap = new HashMap<>();
@@ -214,6 +213,14 @@ public class ClientModel extends Observable<Message> {
     public String[] getPlayerNames()
     {
         return librariesMap.keySet().toArray(new String[0]);
+    }
+
+    public String getMyName() {
+        return myName;
+    }
+
+    public void setMyName(String myName) {
+        this.myName = myName;
     }
 }
 

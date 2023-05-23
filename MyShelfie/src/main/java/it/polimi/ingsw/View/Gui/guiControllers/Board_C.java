@@ -8,14 +8,11 @@ import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Utility.Position;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -230,7 +227,7 @@ public class Board_C implements Initializable {
         }
     }
 
-    public void onAskMove() {
+    public void onAskMove(String myName) {
 
         don_button.setVisible(true);
         moveLabel.setVisible(true);
@@ -251,7 +248,14 @@ public class Board_C implements Initializable {
         fadeTransition.play();
 
         ArrayList<Position> positions = new ArrayList<>();
-
+        for(Node node : centralGrid.getChildren()){
+            Integer rowIndex = GridPane.getRowIndex(node);
+            Integer columnIndex = GridPane.getColumnIndex(node);
+            if (((node.getStyle().contains("-fx-border-color: RED")))){
+                Position position = new Position(rowIndex,columnIndex);
+                positions.add(position);
+            }
+        }
         for (Node node : centralGrid.getChildren()) {
 
             node.setOnMouseClicked(event -> {

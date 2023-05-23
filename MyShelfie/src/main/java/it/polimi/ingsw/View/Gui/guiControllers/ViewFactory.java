@@ -223,7 +223,19 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(()->
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ColumnInsertionQuestion.fxml"));
-            createStage_old(loader,250,350,true);
+            Stage newStage = new Stage();
+            loader.setControllerFactory(controller ->{
+                ColumnInsertionQuestionController controller1 = new ColumnInsertionQuestionController();
+                controller1.setStageAndSetupListeners(newStage, this);
+                controller1.setLibrary(clientModel.getLibrary(clientModel.getMyName()));
+                return controller1;
+            });
+            Scene scene = loadScene_old(loader);
+            newStage.setScene(scene);
+            newStage.setResizable(true);
+            newStage.initOwner(primaryStage);
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            newStage.showAndWait();
         });
     }
 
@@ -232,7 +244,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(() ->
         {
             Board_C boardSceneController = (Board_C) currentController;
-            boardSceneController.onAskMove();
+            boardSceneController.onAskMove(clientModel.getMyName());
         });
     }
 
