@@ -84,7 +84,6 @@ public class Libreria_C {
         top.setPrefHeight(anchor.getPrefHeight()*topRatio);
         left.setPrefWidth(anchor.getPrefWidth()*leftRatio);
         right.setPrefWidth(anchor.getPrefWidth()*rightRatio);
-        System.out.println("sadsasd");
     }
     public GridPane getGrid()
     {

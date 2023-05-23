@@ -231,6 +231,8 @@ public class Board_C implements Initializable {
     }
 
     public void updateLibrary(ObjectCard[][] library, String username) {
+        System.out.println(username);
+        System.out.println(libraries);
         GridPane libraryPane= libraries.get(username).getGrid();
         for (Node node : libraryPane.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);

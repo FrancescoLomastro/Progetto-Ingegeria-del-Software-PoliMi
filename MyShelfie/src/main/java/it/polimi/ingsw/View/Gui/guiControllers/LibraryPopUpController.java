@@ -14,12 +14,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LibraryPopUpController implements Initializable {
-    @FXML
-    AnchorPane anchorPane;
-    @FXML
-    GridPane gridPane;
 
     private ObjectCard[][] library;
+    @FXML
     public Label username_label;
     public GridPane library_gridPane;
     private String username;
@@ -27,15 +24,14 @@ public class LibraryPopUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         username_label.setText(username);
-        this.initLibrary();
-        this.updateLibrary(library);
+       // this.initLibrary();
+       // this.updateLibrary(library);
         System.out.println(username + " initialized_OK");
     }
 
 
-    public void initLibrary(){
+  /*  public void initLibrary(){
 
         for (int i=0;i<gridPane.getColumnCount();i++)
         {
@@ -51,9 +47,9 @@ public class LibraryPopUpController implements Initializable {
                 gridPane.getChildren().add(btn);
             }
         }
-    }
+    }*/
 
-    public void updateLibrary(ObjectCard[][] library){
+    /*public void updateLibrary(ObjectCard[][] library){
         for (Node node : gridPane.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
             Integer columnIndex = GridPane.getColumnIndex(node);
@@ -64,7 +60,7 @@ public class LibraryPopUpController implements Initializable {
             }
         }
 
-    }
+    }*/
     public ObjectCard[][] getLibrary() {
         return library;
     }

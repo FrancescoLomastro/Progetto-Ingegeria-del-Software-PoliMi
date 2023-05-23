@@ -98,7 +98,7 @@ public class ClientController implements Observer<View, OBS_Message> {
         switch (message.getType())
         {
             case ACCEPTED_LOGIN_MESSAGE -> {
-                AcceptedLoginMessage msg = (AcceptedLoginMessage)message;s
+                AcceptedLoginMessage msg = (AcceptedLoginMessage)message;
                 view.acceptedLogin();
                 clientModel.setMyName(msg.getName());
             }
