@@ -429,4 +429,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             changeRoot(loader);
         });
     }
+
+    public void resetGrid() {
+        Platform.runLater(() -> {
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.resetBorderInGrid();
+        });
+    }
 }

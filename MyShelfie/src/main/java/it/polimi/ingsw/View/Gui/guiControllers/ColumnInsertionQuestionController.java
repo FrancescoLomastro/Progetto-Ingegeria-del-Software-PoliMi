@@ -31,6 +31,8 @@ public class ColumnInsertionQuestionController implements Initializable {
     public TextField input_column_question;
     private ObjectCard[][] lib;
     Stage stage;
+    private ViewFactory viewFactory;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         input_column_question.setOnKeyPressed(event -> getColumnFromPlayer(event));
@@ -83,8 +85,7 @@ public class ColumnInsertionQuestionController implements Initializable {
                     {
                         Position[] positions = ViewFactory.getInstance().getPositions();
                         ViewFactory.getInstance().notifyAllOBS(new OBS_MoveMessage(positions,parsedChosenColumn));
-                        System.out.println("Move message sent!");
-
+                        viewFactory.resetGrid();
                         Node node = (Node) event.getSource();
                         Stage currentStage = (Stage) node.getScene().getWindow();
                         currentStage.close();
@@ -97,6 +98,7 @@ public class ColumnInsertionQuestionController implements Initializable {
 
     public void setStageAndSetupListeners(Stage stage, ViewFactory viewFactory) {
         this.stage=stage;
+        this.viewFactory=viewFactory;
         stage.setOnCloseRequest((event)->{
             viewFactory.askMove();
         });

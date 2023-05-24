@@ -372,15 +372,12 @@ public class Board_C implements Initializable {
             tmp = new Point2D(tmp.getX() + ((Pane)node2).getWidth()/2, tmp.getY() + ((Pane)node2).getHeight()/2 );
             point2D_Start_End[i][1] = tmp;
             //STAMPA NODI
-            System.out.println(point2D_Start_End[i][0].getX() + " " + point2D_Start_End[i][0].getY() );
-            System.out.println(point2D_Start_End[i][1].getX() + " " + point2D_Start_End[i][1].getY() );
         }
         //Creazione delle linee dai punti estrapolati prima
         Line[] lines = new Line[oldInGrid.length];
         for(int i=0; i<oldInGrid.length; i++){
             lines[i] = new Line(point2D_Start_End[i][0].getX(),point2D_Start_End[i][0].getY(), point2D_Start_End[i][1].getX(), point2D_Start_End[i][1].getY() );
             lines[i].setStroke(javafx.scene.paint.Color.RED);
-            anchor.getChildren().add(lines[i]);
         }
         //Prelevare le immagini da "trasportare"
         Rectangle[] panes = new Rectangle[oldInGrid.length];
@@ -431,6 +428,13 @@ public class Board_C implements Initializable {
                             child.setVisible(false);
                 }
             }
+        }
+    }
+
+    public void resetBorderInGrid() {
+        for (Node node : centralGrid.getChildren()) {
+            node.setStyle("-fx-border-color: BLACK;" +
+                    "-fx-border-width: 0;");
         }
     }
 }

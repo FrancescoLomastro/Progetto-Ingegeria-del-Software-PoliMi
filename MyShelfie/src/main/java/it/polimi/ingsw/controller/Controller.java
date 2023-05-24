@@ -146,8 +146,10 @@ public class Controller implements ServerReceiver
                         tryToDisconnect(connection, username);
                     }
                 }
-                else
-                    searchGameController(username).renewTimer(username);
+                else {
+                    if(searchGameController(username)!=null)
+                        searchGameController(username).renewTimer(username);
+                }
             }
         }
     }
