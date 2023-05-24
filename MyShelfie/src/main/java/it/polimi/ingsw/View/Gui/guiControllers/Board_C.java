@@ -228,6 +228,9 @@ public class Board_C implements Initializable {
             Integer columnIndex = GridPane.getColumnIndex(node);
 
             if (grid[rowIndex][columnIndex] != null && grid[rowIndex][columnIndex].getColor()!= Color.EMPTY) {
+                // Serve per sparizione carte dopo la scelta dalla grid
+                node.setVisible(true);
+                // ----------------------
                 node.getStyleClass().remove("invisibleCells");
                 node.getStyleClass().add("texture_"+grid[rowIndex][columnIndex].getColor().getRelativeInt()+
                         "_"+grid[rowIndex][columnIndex].getType().getRelativeInt());
@@ -389,17 +392,6 @@ public class Board_C implements Initializable {
             panes[i].getStyleClass().addAll(centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn()).getStyleClass());
             panes[i].toFront();
             anchor.getChildren().add(panes[i]);
-
-            // Rimozione object card scelte da griglia
-            /*
-            for (Node child : centralGrid.getChildren()) {
-                if (GridPane.getRowIndex(child) == oldInGrid[i].getRow() &&
-                        GridPane.getColumnIndex(child) == oldInGrid[i].getColumn()) {
-                            child.setVisible(false);
-                }
-            }
-             */
-
         }
         //ridimensionamento delle immagine con una transizione
         ScaleTransition[] scaleTransitions=new ScaleTransition[oldInGrid.length];
@@ -431,7 +423,14 @@ public class Board_C implements Initializable {
         for(int i=0; i<oldInGrid.length; i++) {
             pathTransitions[i].play();
             scaleTransitions[i].play();
-            //TODO da mettere che ha inizio transizione tolgo ciò che ho sulla griglia
+
+            // Rimozione object card scelte da griglia
+            for (Node child : centralGrid.getChildren()) {
+                if (GridPane.getRowIndex(child) == oldInGrid[i].getRow() &&
+                        GridPane.getColumnIndex(child) == oldInGrid[i].getColumn()) {
+                            child.setVisible(false);
+                }
+            }
         }
     }
 }
