@@ -389,6 +389,17 @@ public class Board_C implements Initializable {
             panes[i].getStyleClass().addAll(centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn()).getStyleClass());
             panes[i].toFront();
             anchor.getChildren().add(panes[i]);
+
+            // Rimozione object card scelte da griglia
+            /*
+            for (Node child : centralGrid.getChildren()) {
+                if (GridPane.getRowIndex(child) == oldInGrid[i].getRow() &&
+                        GridPane.getColumnIndex(child) == oldInGrid[i].getColumn()) {
+                            child.setVisible(false);
+                }
+            }
+             */
+
         }
         //ridimensionamento delle immagine con una transizione
         ScaleTransition[] scaleTransitions=new ScaleTransition[oldInGrid.length];
