@@ -29,7 +29,6 @@ public class LibraryPopUpController implements Initializable {
         username_label.setText(username);
         initLibrary();
         updateLibrary(library);
-        System.out.println(username + " initialized_OK");
     }
 
 

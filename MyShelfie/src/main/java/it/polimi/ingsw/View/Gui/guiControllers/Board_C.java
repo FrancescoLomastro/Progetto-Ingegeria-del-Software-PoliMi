@@ -60,7 +60,7 @@ public class Board_C implements Initializable {
 
     @FXML
     private void handleLibrariesClick(String username) {
-        System.out.println(username + " metodo");
+
         ViewFactory.getInstance().onLibraryClick(username);
     }
 

@@ -366,7 +366,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     public void onLibraryClick(String username) {
 
-        System.out.println(username + " view");
         ObjectCard[][] lib = clientModel.getLibrary(username);
 
         Platform.runLater(() -> {
@@ -434,6 +433,28 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(() -> {
             Board_C boardSceneController = (Board_C) currentController;
             boardSceneController.resetBorderInGrid();
+        });
+    }
+
+    public void showWinnerScene(String winner){
+
+        System.out.println(winner + " winner view OK");
+        ObjectCard[][] lib = clientModel.getLibrary(winner);
+
+        Platform.runLater(() -> {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/WinnerScene.fxml"));
+
+            loader.setControllerFactory(controllerClass -> {
+
+                WinnerSceneController winnerSceneController= new WinnerSceneController();
+
+                winnerSceneController.setWinner(winner);
+
+                return winnerSceneController;
+            });
+
+            createStage_old(loader, 200, 320, true);
         });
     }
 }
