@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: yellow;" stylesheets="@../../styles/BoardScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Personal_C">
+<AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0"  stylesheets="@../../styles/BoardScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Personal_C">
    <children>
       <HBox alignment="CENTER" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

@@ -237,11 +237,15 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             Stage newStage = new Stage();
             loader.setControllerFactory(controller ->{
                 ColumnInsertionQuestionController controller1 = new ColumnInsertionQuestionController();
-                controller1.setStageAndSetupListeners(newStage, this);
-                controller1.setLibrary(clientModel.getLibrary(clientModel.getMyName()));
+                controller1.setStageAndSetupListeners(newStage, this, clientModel.getLibrary(clientModel.getMyName()));
                 return controller1;
             });
-            Scene scene = loadScene_old(loader);
+            Scene scene;
+            try {
+                scene = new Scene(loader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             newStage.setScene(scene);
             newStage.setResizable(true);
             newStage.initOwner(primaryStage);

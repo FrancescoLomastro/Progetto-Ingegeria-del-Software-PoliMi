@@ -229,8 +229,8 @@ public class Board_C implements Initializable {
                 pane.prefHeightProperty().bind(centralGrid.getColumnConstraints().get(j).prefWidthProperty());//è giusto così, height non funziona
                 pane.getStyleClass().add("invisibleCells");
 
-                centralGrid.setRowIndex(pane, i);
-                centralGrid.setColumnIndex(pane, j);
+                GridPane.setRowIndex(pane, i);
+                GridPane.setColumnIndex(pane, j);
                 centralGrid.getChildren().add(pane);
             }
         }
@@ -245,9 +245,6 @@ public class Board_C implements Initializable {
             Integer columnIndex = GridPane.getColumnIndex(node);
 
             if (grid[rowIndex][columnIndex] != null && grid[rowIndex][columnIndex].getColor()!= Color.EMPTY) {
-                // Serve per sparizione carte dopo la scelta dalla grid
-                node.setVisible(true);
-                // ----------------------
                 node.getStyleClass().remove("invisibleCells");
                 node.getStyleClass().add("texture_"+grid[rowIndex][columnIndex].getColor().getRelativeInt()+
                         "_"+grid[rowIndex][columnIndex].getType().getRelativeInt());
@@ -335,7 +332,6 @@ public class Board_C implements Initializable {
 
         doneButton.setOnAction(ActionEvent -> {
             if ( positions.size()>=1 && positions.size()<=3 ){
-                System.out.println("RETURN POSITIONS");
 
                 Position[] arrayPos = new Position[positions.size()];
                 int pos_index = 0;
@@ -369,18 +365,18 @@ public class Board_C implements Initializable {
     }
 
     public void runAMove(ObjectCard[][] library, String name, Position[] oldInGrid, Position[] newInLibrary) {
-        System.out.println(oldInGrid[0].getRow() + " " + oldInGrid[0].getColumn());
-        System.out.println(newInLibrary[0].getRow() + " " + newInLibrary[0].getColumn());
         GridPane playerLibrary = libraries.get(name).getGrid();
         Point2D tmp;
         Point2D[][] point2D_Start_End = new Point2D[oldInGrid.length][2];
+        Node[] panesGrid = new Pane[oldInGrid.length];
         for(int i=0; i<oldInGrid.length; i++){
-            //NODO DI PARTENZA
-            Node node = centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn());
+            panesGrid[i]=centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn());
+        }
+        for(int i=0; i<oldInGrid.length; i++){
+            Node node = panesGrid[i];
             tmp = node.localToParent(0,0);
             tmp = new Point2D(tmp.getX() + ((Pane)node).getWidth()/2 + centralGrid.localToScene(0,0).getX(), tmp.getY() + ((Pane)node).getHeight()/2+ centralGrid.localToScene(0,0).getY() );
             point2D_Start_End[i][0] = tmp;
-            //NODO DI ARRIVO
             Node node2 = playerLibrary.getChildren().get(newInLibrary[i].getRow()*playerLibrary.getColumnCount()+newInLibrary[i].getColumn());
             Bounds cellBounds2 = node2.localToScene(node2.getBoundsInLocal());
             Point2D cellPosition2 = new Point2D(cellBounds2.getMinX(), cellBounds2.getMinY());
@@ -388,37 +384,29 @@ public class Board_C implements Initializable {
             tmp = scene2.getRoot().sceneToLocal(cellPosition2);
             tmp = new Point2D(tmp.getX() + ((Pane)node2).getWidth()/2, tmp.getY() + ((Pane)node2).getHeight()/2 );
             point2D_Start_End[i][1] = tmp;
-            //STAMPA NODI
         }
-        //Creazione delle linee dai punti estrapolati prima
         Line[] lines = new Line[oldInGrid.length];
         for(int i=0; i<oldInGrid.length; i++){
             lines[i] = new Line(point2D_Start_End[i][0].getX(),point2D_Start_End[i][0].getY(), point2D_Start_End[i][1].getX(), point2D_Start_End[i][1].getY() );
-            lines[i].setStroke(javafx.scene.paint.Color.RED);
         }
-        //Prelevare le immagini da "trasportare"
         Rectangle[] panes = new Rectangle[oldInGrid.length];
         for(int i=0; i<oldInGrid.length; i++){
-            double dim=((Pane)centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn())).getHeight();
+            double dim=((Pane)panesGrid[i]).getHeight();
             panes[i] = new Rectangle(dim,dim,dim,dim);
-            panes[i].getStyleClass().removeAll();
-            panes[i].setStyle(centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn()).getStyle());
-            panes[i].getStyleClass().addAll(centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn()).getStyleClass());
+            panes[i].getStyleClass().addAll((panesGrid[i]).getStyleClass());
             panes[i].toFront();
             anchor.getChildren().add(panes[i]);
         }
-        //ridimensionamento delle immagine con una transizione
         ScaleTransition[] scaleTransitions=new ScaleTransition[oldInGrid.length];
         double h = ((Pane)playerLibrary.getChildren().get(0)).getHeight();
         double w = ((Pane)playerLibrary.getChildren().get(0)).getWidth();
         for(int i=0; i<oldInGrid.length; i++){
             scaleTransitions[i] = new ScaleTransition(Duration.seconds(1), panes[i]);
-            scaleTransitions[i].setToX( w/ ((Pane)centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn())).getWidth() );
-            scaleTransitions[i].setToY( h/ ((Pane)centralGrid.getChildren().get(oldInGrid[i].getRow()*centralGrid.getColumnCount()+oldInGrid[i].getColumn())).getHeight());
+            scaleTransitions[i].setToX( w/ ((Pane)panesGrid[i]).getWidth() );
+            scaleTransitions[i].setToY( h/ ((Pane)panesGrid[i]).getHeight());
             scaleTransitions[i].setAutoReverse(false);
             scaleTransitions[i].setCycleCount(1);
         }
-        //creazione dei percorsi
         PathTransition[] pathTransitions = new PathTransition[oldInGrid.length];
         for(int i=0; i<oldInGrid.length; i++){
             pathTransitions[i] = new PathTransition();
@@ -433,18 +421,11 @@ public class Board_C implements Initializable {
             });
             pathTransitions[i].setNode(panes[i]);
         }
-        //Aggiunto tutto quello che ho appena creato ed elimino le immagini dalla griglia
         for(int i=0; i<oldInGrid.length; i++) {
             pathTransitions[i].play();
             scaleTransitions[i].play();
-
-            // Rimozione object card scelte da griglia
-            for (Node child : centralGrid.getChildren()) {
-                if (GridPane.getRowIndex(child) == oldInGrid[i].getRow() &&
-                        GridPane.getColumnIndex(child) == oldInGrid[i].getColumn()) {
-                            child.setVisible(false);
-                }
-            }
+            panesGrid[i].getStyleClass().removeAll(panesGrid[i].getStyleClass());
+            panesGrid[i].getStyleClass().add("invisibleCells");
         }
     }
 

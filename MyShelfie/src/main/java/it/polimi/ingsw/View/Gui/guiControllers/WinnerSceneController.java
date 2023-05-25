@@ -40,4 +40,7 @@ public class WinnerSceneController implements Initializable {
         third.setText("3rd: " + others[1].getName());
         fourth.setText("4th: " + others[2].getName());
     }
+
+    public void setWinner(String winner) {
+    }
 }
