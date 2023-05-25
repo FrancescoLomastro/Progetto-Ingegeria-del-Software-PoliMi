@@ -10,100 +10,75 @@
     -fx-text-fill: #331a00;
 }
 
-#description_label{
-
-    -fx-text-fill: #994d00;
-    -fx-wrap-text: true;
-    -fx-text-overrun: ellipsis;
-}
-
-#sfondo_description{
-
-    -fx-background-image: url("../images/sfondo_descrizione.png");
+.personal1 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
 
-#picture_pane{
-
-
-}
-
-#biggest_pane{
-
-
-}
-
-
-.common1 {
-    -fx-background-image: url("../images/originals/commonGoalCards/1.jpg");
+.personal2 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals2.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common2 {
-    -fx-background-image: url("../images/originals/commonGoalCards/2.jpg");
+.personal3 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals3.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common3 {
-    -fx-background-image: url("../images/originals/commonGoalCards/3.jpg");
+.personal4 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals4.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common4 {
-    -fx-background-image: url("../images/originals/commonGoalCards/4.jpg");
+.personal5 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals5.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common5 {
-    -fx-background-image: url("../images/originals/commonGoalCards/5.jpg");
+.personal6 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals6.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common6 {
-    -fx-background-image: url("../images/originals/commonGoalCards/6.jpg");
+.personal7 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals7.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common7 {
-    -fx-background-image: url("../images/originals/commonGoalCards/7.jpg");
+.personal8 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals8.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common8 {
-    -fx-background-image: url("../images/originals/commonGoalCards/8.jpg");
+.personal9 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals9.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common9 {
-    -fx-background-image: url("../images/originals/commonGoalCards/9.jpg");
+.personal10 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals10.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common10 {
-    -fx-background-image: url("../images/originals/commonGoalCards/10.jpg");
+.personal11 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals11.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
-.common11 {
-    -fx-background-image: url("../images/originals/commonGoalCards/11.jpg");
-    -fx-background-size: 100% 100%;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
-    -fx-translate-y: -2px;
-}
-.common12 {
-    -fx-background-image: url("../images/originals/commonGoalCards/12.jpg");
+.personal12 {
+    -fx-background-image: url("../images/originals/personalGoalCards/Personal_Goals12.png");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;

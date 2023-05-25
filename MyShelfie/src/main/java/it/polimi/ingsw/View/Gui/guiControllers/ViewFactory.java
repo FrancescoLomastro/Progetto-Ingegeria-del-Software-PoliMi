@@ -18,7 +18,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 
@@ -464,9 +463,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     public void onCommonGoalCardClick(String description, int num) {
 
-        System.out.println(description);
-        System.out.println(num);
-
         Platform.runLater(() -> {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CommonGoalCardDescription.fxml"));
@@ -480,6 +476,23 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 commonGoalCardDescriptionController.setNum(num);
 
                 return commonGoalCardDescriptionController;
+            });
+
+            createStage_old(loader, 200, 320, true);
+        });
+    }
+
+    public void onPersonalGoalCardClick() {
+
+        Platform.runLater(() -> {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PersonalGoalCardPopUp.fxml"));
+
+            loader.setControllerFactory(controllerClass -> {
+
+                PersonalGoalCardPopUpController personalGoalCardPopUpController= new PersonalGoalCardPopUpController();
+
+                return personalGoalCardPopUpController;
             });
 
             createStage_old(loader, 200, 320, true);

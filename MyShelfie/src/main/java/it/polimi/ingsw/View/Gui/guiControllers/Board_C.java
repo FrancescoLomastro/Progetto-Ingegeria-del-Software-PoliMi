@@ -104,6 +104,12 @@ public class Board_C implements Initializable {
         ViewFactory.getInstance().onCommonGoalCardClick(description, num);
     }
 
+    @FXML
+    private void handlePersonalGoalCardClick(){
+
+        ViewFactory.getInstance().onPersonalGoalCardClick();
+    }
+
     private void setupGoals() {
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
         loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/CommonGoal.fxml"));
@@ -153,6 +159,12 @@ public class Board_C implements Initializable {
             controller.getImage().getStyleClass().add("personal"+clientModel.getPersonalGoalCardNum());
             controller.setListeners(right,3+0.5);
             right.getChildren().add(son);
+
+            son.setOnMouseClicked(mouseEvent -> {
+
+                handlePersonalGoalCardClick();
+            });
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
