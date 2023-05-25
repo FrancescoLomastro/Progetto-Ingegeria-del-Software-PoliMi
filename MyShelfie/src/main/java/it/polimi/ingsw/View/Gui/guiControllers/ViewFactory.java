@@ -457,4 +457,28 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             createStage_old(loader, 200, 320, true);
         });
     }
+
+    public void onCommonGoalCardClick(String description, int num) {
+
+        System.out.println(description);
+        System.out.println(num);
+
+        Platform.runLater(() -> {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CommonGoalCardDescription.fxml"));
+
+            loader.setControllerFactory(controllerClass -> {
+
+                CommonGoalCardDescriptionController commonGoalCardDescriptionController= new CommonGoalCardDescriptionController();
+
+                commonGoalCardDescriptionController.setDescription(description);
+
+                commonGoalCardDescriptionController.setNum(num);
+
+                return commonGoalCardDescriptionController;
+            });
+
+            createStage_old(loader, 200, 320, true);
+        });
+    }
 }

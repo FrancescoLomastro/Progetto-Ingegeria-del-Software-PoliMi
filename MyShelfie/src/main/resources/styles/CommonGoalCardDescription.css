@@ -1,0 +1,75 @@
+#anchor_pane{
+
+    -fx-background-image: url("../images/originals/misc/sfondoParquet.jpg");
+    -fx-background-size: 100% 100%;
+}
+
+#title_label{
+
+    -fx-text-fill: ffbf00;
+}
+
+#description_label{
+
+    -fx-text-fill: ffbf00;
+}
+
+#picture_pane{
+
+
+}
+
+#biggest_pane{
+
+
+}
+
+
+.common1 {
+    -fx-background-image: url("../images/originals/commonGoalCards/1.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common2 {
+    -fx-background-image: url("../images/originals/commonGoalCards/2.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common3 {
+    -fx-background-image: url("../images/originals/commonGoalCards/3.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common4 {
+    -fx-background-image: url("../images/originals/commonGoalCards/4.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common5 {
+    -fx-background-image: url("../images/originals/commonGoalCards/5.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common6 {
+    -fx-background-image: url("../images/originals/commonGoalCards/6.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common7 {
+    -fx-background-image: url("../images/originals/commonGoalCards/7.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common8 {
+    -fx-background-image: url("../images/originals/commonGoalCards/8.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common9 {
+    -fx-background-image: url("../images/originals/commonGoalCards/9.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common10 {
+    -fx-background-image: url("../images/originals/commonGoalCards/10.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common11 {
+    -fx-background-image: url("../images/originals/commonGoalCards/11.jpg");
+    -fx-background-size: 100% 100%;
+}
+.common12 {
+    -fx-background-image: url("../images/originals/commonGoalCards/12.jpg");
+    -fx-background-size: 100% 100%;
+}

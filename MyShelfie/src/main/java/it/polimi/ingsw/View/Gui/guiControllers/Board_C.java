@@ -98,6 +98,11 @@ public class Board_C implements Initializable {
         setupGoals();
     }
 
+    @FXML
+    private void handleCommonGoalCardClick(String description, int num){
+
+        ViewFactory.getInstance().onCommonGoalCardClick(description, num);
+    }
 
     private void setupGoals() {
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
@@ -110,6 +115,12 @@ public class Board_C implements Initializable {
             controller.getImage().getStyleClass().add("common"+clientModel.getNumCom1());
             controller.getPoint().getStyleClass().add("point8");
             right.getChildren().add(son);
+
+            son.setOnMouseClicked(mouseEvent -> {
+
+                handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getDescriptionFirstCommonGoal(), 1);
+            });
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -124,6 +135,12 @@ public class Board_C implements Initializable {
             controller.getImage().getStyleClass().add("common"+clientModel.getNumCom2());
             controller.getPoint().getStyleClass().add("point8");
             right.getChildren().add(son);
+
+            son.setOnMouseClicked(mouseEvent -> {
+
+                handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getDescriptionSecondCommonGoal(), 2);
+            });
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

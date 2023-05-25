@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="637.0" stylesheets="@../styles/CommonGoalCardDescription.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.CommonGoalCardDescriptionController">
+   <children>
+      <Pane fx:id="title_pane" prefHeight="82.0" prefWidth="637.0">
+         <children>
+            <Label fx:id="title_label" alignment="CENTER" layoutX="64.0" layoutY="13.0" prefHeight="56.0" prefWidth="509.0">
+               <font>
+                  <Font name="Calibri Light" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="biggest_pane" layoutY="82.0" prefHeight="386.0" prefWidth="637.0">
+         <children>
+            <Pane fx:id="picture_pane" layoutX="219.0" layoutY="24.0" prefHeight="200.0" prefWidth="200.0" />
+            <Label fx:id="description_label" alignment="CENTER" layoutX="53.0" layoutY="249.0" prefHeight="123.0" prefWidth="531.0">
+               <font>
+                  <Font name="Calibri Light" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
