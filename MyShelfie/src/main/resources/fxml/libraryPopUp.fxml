@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="486.0" stylesheets="@../styles/libraryPopUp.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.LibraryPopUpController">
    <children>
-      <GridPane hgap="10.0" layoutX="55.0" layoutY="24.0" prefHeight="333.0" prefWidth="376.0" AnchorPane.bottomAnchor="123.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="24.0">
+      <GridPane fx:id="library_gridPane" hgap="10.0" layoutX="55.0" layoutY="24.0" prefHeight="333.0" prefWidth="376.0" AnchorPane.bottomAnchor="123.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="24.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,38 +26,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Pane fx:id="pane_prova1" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <Pane fx:id="pane_prova11" layoutX="88.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Pane fx:id="pane_prova12" layoutX="88.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-            <Pane fx:id="pane_prova13" layoutX="88.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" />
-            <Pane fx:id="pane_prova14" layoutX="88.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Pane fx:id="pane_prova111" layoutX="88.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
-            <Pane fx:id="pane_prova121" layoutX="10.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Pane fx:id="pane_prova131" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
-            <Pane fx:id="pane_prova15" layoutX="88.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Pane fx:id="pane_prova112" layoutX="88.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
-            <Pane fx:id="pane_prova122" layoutX="10.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Pane fx:id="pane_prova132" layoutX="320.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Pane fx:id="pane_prova141" layoutX="242.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Pane fx:id="pane_prova1111" layoutX="242.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Pane fx:id="pane_prova1211" layoutX="165.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Pane fx:id="pane_prova1311" layoutX="165.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
-            <Pane fx:id="pane_prova151" layoutX="88.0" layoutY="176.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Pane fx:id="pane_prova114" layoutX="88.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" />
-            <Pane fx:id="pane_prova124" layoutX="10.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-            <Pane fx:id="pane_prova134" layoutX="320.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Pane fx:id="pane_prova143" layoutX="242.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Pane fx:id="pane_prova1113" layoutX="242.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Pane fx:id="pane_prova1213" layoutX="165.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5" />
-            <Pane fx:id="pane_prova1313" layoutX="165.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-            <Pane fx:id="pane_prova152" layoutX="88.0" layoutY="176.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <Pane fx:id="pane_prova1121" layoutX="10.0" layoutY="176.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Pane fx:id="pane_prova1221" layoutX="320.0" layoutY="120.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Pane fx:id="pane_prova1321" layoutX="242.0" layoutY="120.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
-            <Pane fx:id="pane_prova1411" layoutX="165.0" layoutY="120.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <Pane fx:id="pane_prova12131" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-         </children>
+
       </GridPane>
       <Pane fx:id="library_pane" prefHeight="346.0" prefWidth="486.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Pane fx:id="label_pane" layoutY="414.0" prefHeight="66.0" prefWidth="486.0">

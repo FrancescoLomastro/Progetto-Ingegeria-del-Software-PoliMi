@@ -160,7 +160,7 @@ public class Board_C implements Initializable {
 
                 son.setOnMouseClicked(mouseEvent -> {
 
-                    handleLibrariesClick("rickyfigio");
+                    handleLibrariesClick(players[index]);
                 });
             } catch (IOException e) {
                 throw new RuntimeException(e);

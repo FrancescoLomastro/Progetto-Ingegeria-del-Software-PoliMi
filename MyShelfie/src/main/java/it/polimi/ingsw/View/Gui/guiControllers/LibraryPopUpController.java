@@ -18,39 +18,37 @@ public class LibraryPopUpController implements Initializable {
     private ObjectCard[][] library;
     @FXML
     public Label username_label;
+    @FXML
     public GridPane library_gridPane;
     private String username;
     private Player player;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         username_label.setText(username);
-       // this.initLibrary();
-       // this.updateLibrary(library);
+        initLibrary();
+        updateLibrary(library);
         System.out.println(username + " initialized_OK");
     }
 
 
-  /*  public void initLibrary(){
+    public void initLibrary() {
+        int rowCount = library_gridPane.getRowCount();
+        int columnCount = library_gridPane.getColumnCount();
 
-        for (int i=0;i<gridPane.getColumnCount();i++)
-        {
-            for (int j=0;j<gridPane.getRowCount();j++)
-            {
-                Pane btn = new Pane();
-                btn.prefWidthProperty().bind(gridPane.getColumnConstraints().get(i).prefWidthProperty());
-                btn.prefHeightProperty().bind(gridPane.getRowConstraints().get(j).prefHeightProperty());
-                btn.getStyleClass().add("invisibleCells");
-
-                gridPane.setRowIndex(btn, i);
-                gridPane.setColumnIndex(btn, j);
-                gridPane.getChildren().add(btn);
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                Pane emptyPane = new Pane();
+                library_gridPane.add(emptyPane, j, i);
             }
         }
-    }*/
+    }
 
-    /*public void updateLibrary(ObjectCard[][] library){
-        for (Node node : gridPane.getChildren()) {
+
+
+    public void updateLibrary(ObjectCard[][] library){
+        for (Node node : library_gridPane.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
             Integer columnIndex = GridPane.getColumnIndex(node);
 
@@ -60,7 +58,8 @@ public class LibraryPopUpController implements Initializable {
             }
         }
 
-    }*/
+    }
+
     public ObjectCard[][] getLibrary() {
         return library;
     }
