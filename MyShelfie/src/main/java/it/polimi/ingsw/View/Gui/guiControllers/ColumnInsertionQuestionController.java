@@ -29,14 +29,17 @@ public class ColumnInsertionQuestionController implements Initializable {
 
     public VBox internal_vbox_container;
     public TextField input_column_question;
+    public VBox ForLib;
     private ObjectCard[][] lib;
     Stage stage;
     private ViewFactory viewFactory;
+    private Libreria_C controller;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        input_column_question.setOnKeyPressed(event -> getColumnFromPlayer(event));
+        input_column_question.setOnKeyPressed(this::getColumnFromPlayer);
         ini();
+        updateLibrary(viewFactory.getClientModel().getLibrary(ViewFactory.getInstance().getClientModel().getMyName()));
     }
 
     public void ini(){
@@ -46,24 +49,40 @@ public class ColumnInsertionQuestionController implements Initializable {
         {
             Pane son = loader.load();
             controller= loader.getController();
-            controller.setListeners(internal_vbox_container,2);
-            internal_vbox_container.getChildren().add(son);
+            controller.setListeners(ForLib, 1);
+            controller.setText("Your library");
+            this.controller=controller;
+            ForLib.getChildren().add(son);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         GridPane libraryPane= controller.getGrid();
-        for (Node node : libraryPane.getChildren()) {
-            Integer rowIndex = GridPane.getRowIndex(node);
-            Integer columnIndex = GridPane.getColumnIndex(node);
-
-            if (lib[rowIndex][columnIndex] != null && lib[rowIndex][columnIndex].getColor()!= Color.EMPTY) {
-                node.getStyleClass().remove("invisibleCells");
-                node.getStyleClass().add("texture_"+lib[rowIndex][columnIndex].getColor().getRelativeInt()+
-                        "_"+lib[rowIndex][columnIndex].getType().getRelativeInt());
+        for (int i=0;i<libraryPane.getRowCount();i++)
+        {
+            for (int j=0;j<libraryPane.getColumnCount();j++)
+            {
+                Pane pane = new Pane();
+                pane.prefWidthProperty().bind(libraryPane.getColumnConstraints().get(0).prefWidthProperty());
+                pane.prefHeightProperty().bind(libraryPane.getColumnConstraints().get(0).prefWidthProperty());
+                pane.getStyleClass().add("invisibleCells");
+                GridPane.setRowIndex(pane, i);
+                GridPane.setColumnIndex(pane, j);
+                libraryPane.getChildren().add(pane);
             }
         }
     }
-
+    public void updateLibrary(ObjectCard[][] library) {
+        GridPane libraryPane= controller.getGrid();
+        for (Node node : libraryPane.getChildren()) {
+            Integer rowIndex = GridPane.getRowIndex(node);
+            Integer columnIndex = GridPane.getColumnIndex(node);
+            if (library[rowIndex][columnIndex] != null && library[rowIndex][columnIndex].getColor()!= Color.EMPTY) {
+                node.getStyleClass().remove("invisibleCells");
+                node.getStyleClass().add("texture_"+library[rowIndex][columnIndex].getColor().getRelativeInt()+
+                        "_"+library[rowIndex][columnIndex].getType().getRelativeInt());
+            }
+        }
+    }
     public void getColumnFromPlayer(KeyEvent event) {
 
         String numPlayers_Input;
@@ -96,15 +115,12 @@ public class ColumnInsertionQuestionController implements Initializable {
 
     }
 
-    public void setStageAndSetupListeners(Stage stage, ViewFactory viewFactory) {
+    public void setStageAndSetupListeners(Stage stage, ViewFactory viewFactory, ObjectCard[][] lib) {
         this.stage=stage;
         this.viewFactory=viewFactory;
+        this.lib=lib;
         stage.setOnCloseRequest((event)->{
             viewFactory.askMove();
         });
-    }
-
-    public void setLibrary(ObjectCard[][] libreria_c) {
-        this.lib=libreria_c;
     }
 }
