@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Network.Messages.*;
+import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Cards.PersonalGoalCard;
 import it.polimi.ingsw.model.Game;
@@ -180,6 +181,7 @@ public class TurnController implements Runnable, Serializable {
      * */
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findWinner();
+        ViewFactory.getInstance().showWinnerScene(list);
         gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
         countActualPointAndShare();
         for (Couple<String, Integer> stringIntegerCouple : list) {

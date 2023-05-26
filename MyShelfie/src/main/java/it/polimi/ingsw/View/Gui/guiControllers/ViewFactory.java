@@ -12,6 +12,7 @@ import it.polimi.ingsw.View.OBSMessages.OBS_MessageType;
 import it.polimi.ingsw.View.OBSMessages.OBS_OnlyTypeMessage;
 import it.polimi.ingsw.View.View;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.Modality;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * ViewFactory class contains methods related to the creation of stages during our program lifecycle.
@@ -439,10 +441,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
-    public void showWinnerScene(String winner){
-
-        System.out.println(winner + " winner view OK");
-        ObjectCard[][] lib = clientModel.getLibrary(winner);
+    public void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking){
 
         Platform.runLater(() -> {
 
@@ -452,7 +451,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
                 WinnerSceneController winnerSceneController= new WinnerSceneController();
 
-                winnerSceneController.setWinner(winner);
+                winnerSceneController.setWinner(finalRanking.get(0).getFirst());
+
+                winnerSceneController.setFinalRanking(finalRanking);
 
                 return winnerSceneController;
             });
