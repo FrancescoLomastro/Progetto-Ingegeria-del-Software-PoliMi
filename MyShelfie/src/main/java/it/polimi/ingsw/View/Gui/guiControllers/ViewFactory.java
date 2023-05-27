@@ -499,4 +499,25 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             createStage_old(loader, 200, 320, true);
         });
     }
+
+    public void showChat() {
+
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Chat.fxml"));
+            Scene scene = loadScene_old(loader);
+
+            Stage chatStage = new Stage();
+            chatStage.setScene(scene);
+
+            chatStage.setResizable(false);
+            chatStage.setMinHeight(600);
+            chatStage.setMinWidth(300);
+            chatStage.setMaxHeight(600);
+            chatStage.setMaxWidth(300);
+
+            chatStage.show();
+            //createStage_old(loader,200,320,true);
+        });
+
+    }
 }

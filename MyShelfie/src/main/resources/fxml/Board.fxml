@@ -31,7 +31,12 @@
                <bottom>
                   <HBox fx:id="bottom" alignment="CENTER" prefHeight="70.0" prefWidth="200.0" styleClass="button_container" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="doneButton" mnemonicParsing="false" styleClass="doneButton" text="Done" />
+                        <VBox fx:id="vbox_buttons" prefHeight="70.0" prefWidth="170.0" styleClass="vbox_button_container">
+                           <children>
+                              <Button fx:id="doneButton" alignment="TOP_CENTER" mnemonicParsing="false" styleClass="doneButton" text="Done" />
+                              <Button fx:id="openChatButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" styleClass="openChatButton" text="Open Chat" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                </bottom>

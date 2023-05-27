@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,6 +35,8 @@ public class Board_C implements Initializable {
     public Label moveLabel;
     @FXML
     public Button doneButton;
+    public Button openChatButton;
+    public VBox vbox_buttons;
     @FXML
     AnchorPane anchor;
     @FXML
@@ -68,7 +71,11 @@ public class Board_C implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        vbox_buttons.setAlignment(Pos.CENTER);
+        vbox_buttons.setSpacing(15);
+
         doneButton.setVisible(false);
+        openChatButton.setOnAction(actionEvent -> openChat());
 
         moveLabel.setVisible(false);
 
@@ -446,5 +453,9 @@ public class Board_C implements Initializable {
             node.setStyle("-fx-border-color: BLACK;" +
                     "-fx-border-width: 0;");
         }
+    }
+
+    public void openChat() {
+        ViewFactory.getInstance().showChat();
     }
 }
