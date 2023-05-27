@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
@@ -37,6 +38,7 @@ public class ChatController implements Initializable {
     public ScrollPane scrollPaneChat;
     @FXML
     public AnchorPane anchorScrollBar;
+    public Button closeChatButton;
     String style = "-fx-background-color: #FFDEAD; -fx-background-radius: 20";
     Map<String, String> colorPlayer;
     int index;
@@ -55,6 +57,7 @@ public class ChatController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle)  {
         textArea.setOnKeyPressed(this::manage);
 
+        closeChatButton.setOnAction(event -> closeChat());
     }
 
     private void manage(KeyEvent keyEvent) {
@@ -122,5 +125,9 @@ public class ChatController implements Initializable {
         String color = freeColor.get(index);
         index++;
         return color;
+    }
+
+    private void closeChat() {
+        ViewFactory.getInstance().getChatStage().setIconified(true);
     }
 }

@@ -43,3 +43,20 @@
     -fx-border-radius: 30 30 30 30;
     -fx-background-color: #FDF5E6;
 }
+
+.closeChatButton
+{
+    -fx-alignment: bottom_center;
+    -fx-background-color: #8B4513;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 15px;
+}
+
+.closeChatButton hover
+{
+    -fx-cursor: hand;
+    -fx-background-color: #800000;
+}
