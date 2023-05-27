@@ -67,7 +67,6 @@ public class Board_C implements Initializable {
         ViewFactory.getInstance().onLibraryClick(username);
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -365,6 +364,10 @@ public class Board_C implements Initializable {
 
                 doneButton.setVisible(false);
                 moveLabel.setVisible(false);
+
+                for (Node node: centralGrid.getChildren()) {
+                    node.setOnMouseClicked(null);
+                }
 
             } else {
                 ViewFactory.getInstance().showInvalidNumberOfCards();

@@ -124,8 +124,25 @@ Pane
     -fx-cursor: hand;
     -fx-background-color: #800000;
 }
+
+.vbox_button_container {
+    -fx-alignment: center;
+    -fx-spacing: 5;
+}
 .doneButton
 {
+    -fx-alignment: top_center;
+    -fx-background-color: #8B4513;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 15px;
+}
+
+.openChatButton
+{
+    -fx-alignment: bottom_center;
     -fx-background-color: #8B4513;
     -fx-text-fill: #FFFFFF;
     -fx-font-weight: bold;
