@@ -16,8 +16,8 @@ public class Common_C {
     Pane point;
 
     double imageRatio;
-    double layoutXRatio;
-    double layoutYRatio;
+    double pointlayoutXRatio;
+    double pointlayoutYRatio;
     double pointRatio;
     double fatherParts;
 
@@ -26,8 +26,8 @@ public class Common_C {
         fatherParts = parts;
         imageRatio = image.getPrefHeight()/anchor.getPrefHeight();
         pointRatio = point.getPrefHeight()/anchor.getPrefWidth();
-        layoutXRatio= point.getLayoutX()/anchor.getPrefWidth();
-        layoutYRatio= point.getLayoutY()/anchor.getPrefHeight();
+        pointlayoutXRatio = point.getLayoutX()/anchor.getPrefWidth();
+        pointlayoutYRatio = point.getLayoutY()/anchor.getPrefHeight();
 
         anchor.heightProperty().addListener(((observableValue, oldHeight, newHeight) ->
         {
@@ -62,8 +62,8 @@ public class Common_C {
     private void maintainProportion() {
         image.setPrefHeight(anchor.getHeight()*imageRatio);
         point.setPrefSize(anchor.getWidth()*pointRatio,anchor.getWidth()*pointRatio);
-        point.setLayoutX(anchor.getWidth()*layoutXRatio);
-        point.setLayoutY(anchor.getHeight()*layoutYRatio);
+        point.setLayoutX(anchor.getWidth()* pointlayoutXRatio);
+        point.setLayoutY(anchor.getHeight()* pointlayoutYRatio);
 
     }
 

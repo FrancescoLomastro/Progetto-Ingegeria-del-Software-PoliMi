@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
+import it.polimi.ingsw.Network.Messages.AlmostOverMessage;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Common_C;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Griglia_C;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Libreria_C;
@@ -59,6 +60,7 @@ public class Board_C implements Initializable {
     AnchorPane son;
 
     GridPane centralGrid;
+    Pane centralPointCard;
     Map<String,Libreria_C> libraries;
 
     @FXML
@@ -99,10 +101,11 @@ public class Board_C implements Initializable {
 
         initializeLibraries();
 
-
-
         setupGoals();
+
     }
+
+
 
     @FXML
     private void handleCommonGoalCardClick(String description, int num){
@@ -234,6 +237,7 @@ public class Board_C implements Initializable {
              center.setCenter(son);
              controller.setListeners(center);
              centralGrid=controller.getGrid();
+             centralPointCard= controller.getCentralPointCard();
          } catch (IOException e) {
              throw new RuntimeException(e);
          }
@@ -266,6 +270,7 @@ public class Board_C implements Initializable {
                 node.getStyleClass().remove("invisibleCells");
                 node.getStyleClass().add("texture_"+grid[rowIndex][columnIndex].getColor().getRelativeInt()+
                         "_"+grid[rowIndex][columnIndex].getType().getRelativeInt());
+
             }
         }
     }
@@ -460,5 +465,13 @@ public class Board_C implements Initializable {
 
     public void openChat() {
         ViewFactory.getInstance().showChat();
+    }
+    public void showCentralPoints(int centralPoints) {
+        centralPointCard.getStyleClass().add("centralPointCard_"+centralPoints);
+    }
+
+    public void almostOver(AlmostOverMessage arg) {
+        centralPointCard.getStyleClass().removeAll(centralPointCard.getStyleClass());
+        centralPointCard.getStyleClass().add("point_invisible");
     }
 }

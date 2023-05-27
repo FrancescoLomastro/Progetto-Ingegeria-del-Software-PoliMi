@@ -34,6 +34,8 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     public abstract void startGame();
 
 
+    public abstract void almostOver(AlmostOverMessage arg);
+
     public abstract void update(ClientModel o, Message arg);
 
 

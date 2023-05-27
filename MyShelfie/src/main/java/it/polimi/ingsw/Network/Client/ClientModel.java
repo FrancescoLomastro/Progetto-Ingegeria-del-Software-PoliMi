@@ -213,6 +213,7 @@ public class ClientModel extends Observable<Message> {
         notifyObservers(new SetupMessage(msg.getPersonalNumber(),
                 msg.getNumCom1(),
                 msg.getNumCom2(),
+                msg.getCentralPointCard(),
                 getObjectCards(grid),
                 msg.getPlayersName(),
                 msg.getPersonalGoalCard(),
@@ -242,6 +243,14 @@ public class ClientModel extends Observable<Message> {
 
     public int getNumCom2() {
         return numCom2;
+    }
+
+    public void onAlmostOver(AlmostOverMessage message) {
+        int score = message.getFillerPoints();
+        score = pointsMap.get(message.getFillerName()) + score;
+        pointsMap.replace(message.getFillerName(),score);
+        setChanged();
+        notifyObservers(message);
     }
 }
 

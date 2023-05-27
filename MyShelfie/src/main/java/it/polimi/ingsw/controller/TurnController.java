@@ -64,6 +64,7 @@ public class TurnController implements Runnable, Serializable {
                     game.getPlayers()[i].getNumPersonalGoal(),
                     game.getNumCommonGoal(0),
                     game.getNumCommonGoal(1),
+                    game.getCentralPointCard(),
                     game.getGrid(),
                     playerNames,
                     game.getPlayers()[i].getPersonalGoalCard().getGoalVector(),
@@ -117,7 +118,8 @@ public class TurnController implements Runnable, Serializable {
             /*Controllo se la sua libraria è terminata, allora attivo il countdown*/
             if (game.checkEndLibrary(message.getUsername()) && !flagCountdown) {
                 flagCountdown = true;
-                gameController.notifyAllMessage(new MessageGame(ALMOST_OVER));
+                int points= game.assignFillerPoints(message.getUsername());
+                gameController.notifyAllMessage(new AlmostOverMessage(message.getUsername(),points));
             }
 
 
@@ -140,7 +142,6 @@ public class TurnController implements Runnable, Serializable {
 
             currPlayerIndex++;
             if (currPlayerIndex == game.getNumPlayers()) {
-
                 currPlayerIndex = 0;
             }
             currentPlayer = game.getPlayers()[currPlayerIndex].getName();
@@ -181,7 +182,7 @@ public class TurnController implements Runnable, Serializable {
      * */
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findWinner();
-        ViewFactory.getInstance().showWinnerScene(list);
+      //  ViewFactory.getInstance().showWinnerScene(list);
         gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
         countActualPointAndShare();
         for (Couple<String, Integer> stringIntegerCouple : list) {
