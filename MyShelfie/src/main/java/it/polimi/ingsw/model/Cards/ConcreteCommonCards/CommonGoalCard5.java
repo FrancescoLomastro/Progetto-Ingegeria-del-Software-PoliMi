@@ -15,7 +15,7 @@ import java.util.HashSet;
  * */
 public class CommonGoalCard5 extends CommonGoalCard {
     public CommonGoalCard5(){
-        num=6;
+        num=5;
         setDescription("Two columns each formed by 6 " +
                 "different types of tiles.");
     }

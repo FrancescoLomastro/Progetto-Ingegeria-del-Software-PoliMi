@@ -15,7 +15,7 @@ import java.util.HashSet;
  * */
 public class CommonGoalCard3 extends CommonGoalCard {
     public CommonGoalCard3(){
-        num=4;
+        num=3;
         setDescription("Four lines each formed by 5 tiles of " +
                 "maximum three different types. One " +
                 "line can show the same or a different " +

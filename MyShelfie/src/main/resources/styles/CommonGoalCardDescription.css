@@ -35,7 +35,12 @@
 
 }
 
-
+.common0 {
+    -fx-background-image: url("../images/originals/commonGoalCards/0.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
+    -fx-translate-y: -2px;
+}
 .common1 {
     -fx-background-image: url("../images/originals/commonGoalCards/1.jpg");
     -fx-background-size: 100% 100%;
@@ -43,7 +48,7 @@
     -fx-translate-y: -2px;
 }
 .common2 {
-    -fx-background-image: url("../images/originals/commonGoalCards/2.jpg");
+    -fx-background-image: url("../images/originals/commonGoalCards/4.jpg");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
@@ -55,7 +60,7 @@
     -fx-translate-y: -2px;
 }
 .common4 {
-    -fx-background-image: url("../images/originals/commonGoalCards/4.jpg");
+    -fx-background-image: url("../images/originals/commonGoalCards/2.jpg");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
@@ -98,12 +103,6 @@
 }
 .common11 {
     -fx-background-image: url("../images/originals/commonGoalCards/11.jpg");
-    -fx-background-size: 100% 100%;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
-    -fx-translate-y: -2px;
-}
-.common12 {
-    -fx-background-image: url("../images/originals/commonGoalCards/12.jpg");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;

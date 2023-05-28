@@ -13,7 +13,7 @@ public class CommonGoalCard1 extends CommonGoalCard {
     private  int counter = 1;
 
     public CommonGoalCard1(){
-        num=2;
+        num=1;
         setDescription("Five tiles of the same type forming a " +
                 "diagonal. ");
     }

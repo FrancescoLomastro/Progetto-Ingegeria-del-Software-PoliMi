@@ -416,7 +416,20 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 AlmostOverMessage msg = (AlmostOverMessage) arg;
                 almostOver((AlmostOverMessage) arg);
             }
+            case COMMON_GOAL ->
+            {
+                updatePoints();
+            }
         }
+    }
+
+    private void updatePoints()
+    {
+        Platform.runLater(() ->
+        {
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.updatePoints();
+        });
     }
 
     private void showBoard(Message arg) {

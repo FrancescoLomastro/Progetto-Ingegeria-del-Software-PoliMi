@@ -2,10 +2,7 @@ package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.AlmostOverMessage;
-import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Common_C;
-import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Griglia_C;
-import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Libreria_C;
-import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.Personal_C;
+import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.*;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
 import it.polimi.ingsw.model.Utility.Position;
@@ -45,13 +42,17 @@ public class Board_C implements Initializable {
     @FXML
     HBox top;
     @FXML
-    VBox left;
+    HBox left;
     @FXML
     VBox right;
     @FXML
     BorderPane center;
     @FXML
     BorderPane internalBorderPane;
+    @FXML
+    VBox left_grid;
+    @FXML
+    VBox left_points;
     double bottomRatio;
     double topRatio;
     double leftRatio;
@@ -62,6 +63,9 @@ public class Board_C implements Initializable {
     GridPane centralGrid;
     Pane centralPointCard;
     Map<String,Libreria_C> libraries;
+    Map<String,Punto_C> points;
+     double left_pointsRatio;
+     double left_gridRatio;
 
     @FXML
     private void handleLibrariesClick(String username) {
@@ -85,6 +89,8 @@ public class Board_C implements Initializable {
         topRatio = top.getPrefHeight()/anchor.getPrefHeight();
         leftRatio = left.getPrefWidth()/anchor.getPrefWidth();
         rightRatio = right.getPrefWidth()/anchor.getPrefWidth();
+        left_gridRatio= left_grid.getPrefWidth()/left.getPrefWidth();
+        left_pointsRatio= left_points.getPrefWidth()/left.getPrefWidth();
 
         anchor.heightProperty().addListener(((observableValue, oldHeight, newHeight) ->
         {
@@ -109,7 +115,6 @@ public class Board_C implements Initializable {
 
     @FXML
     private void handleCommonGoalCardClick(String description, int num){
-
         ViewFactory.getInstance().onCommonGoalCardClick(description, num);
     }
 
@@ -132,7 +137,6 @@ public class Board_C implements Initializable {
             right.getChildren().add(son);
 
             son.setOnMouseClicked(mouseEvent -> {
-
                 handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getDescriptionFirstCommonGoal(), 1);
             });
 
@@ -152,7 +156,6 @@ public class Board_C implements Initializable {
             right.getChildren().add(son);
 
             son.setOnMouseClicked(mouseEvent -> {
-
                 handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getDescriptionSecondCommonGoal(), 2);
             });
 
@@ -180,22 +183,23 @@ public class Board_C implements Initializable {
     }
     private void initializeLibraries() {
         libraries= new HashMap<>();
+        points= new HashMap<>();
         String[] players= ViewFactory.getInstance().getClientModel().getPlayerNames();
+        Libreria_C controllerL=null;
+        Punto_C controllerP=null;
         for (int i=0;i<players.length;i++)
         {
             loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Libreria.fxml"));
-            Libreria_C controller=null;
             try
             {
                 son = loader.load();
-                controller= loader.getController();
-                controller.setListeners(left,players.length+0.5);
-                controller.setText(players[i]);
-                libraries.put(players[i],controller);
-                left.getChildren().add(son);
+                controllerL= loader.getController();
+                controllerL.setListeners(left_grid,players.length+0.5);
+                controllerL.setText(players[i]);
+                libraries.put(players[i],controllerL);
+                left_grid.getChildren().add(son);
 
                 Integer index = i;
-
                 son.setOnMouseClicked(mouseEvent -> {
 
                     handleLibrariesClick(players[index]);
@@ -204,7 +208,7 @@ public class Board_C implements Initializable {
                 throw new RuntimeException(e);
             }
 
-            GridPane libraryGrid = controller.getGrid();
+            GridPane libraryGrid = controllerL.getGrid();
             for (int r=0;r<libraryGrid.getRowCount();r++)
             {
                 for (int c=0;c<libraryGrid.getColumnCount();c++)
@@ -219,6 +223,18 @@ public class Board_C implements Initializable {
                     libraryGrid.getChildren().add(pane);
                 }
             }
+           loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Punto.fxml"));
+            try
+            {
+                son = loader.load();
+                controllerP= loader.getController();
+                controllerP.setListeners(left_points,controllerL.getAnchor());
+                points.put(players[i],controllerP);
+                controllerP.getPointsLabel().setText("0");
+                left_points.getChildren().add(son);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -228,6 +244,8 @@ public class Board_C implements Initializable {
         right.setPrefWidth(anchor.getWidth()*rightRatio);
         top.setPrefHeight(anchor.getHeight()*topRatio);
         bottom.setPrefHeight(anchor.getHeight()*bottomRatio);
+        left_grid.setPrefWidth(left.getPrefWidth()*left_gridRatio);
+        left_points.setPrefWidth(left.getPrefWidth()*left_pointsRatio);
     }
      private void initializeGrid() {
          loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Griglia.fxml"));
@@ -292,6 +310,7 @@ public class Board_C implements Initializable {
 
     public void onAskMove() {
         doneButton.setVisible(true);
+        doneButton.requestFocus();
         moveLabel.setVisible(true);
 
         PauseTransition pauseTransition = new PauseTransition(Duration.millis(500));
@@ -473,5 +492,18 @@ public class Board_C implements Initializable {
     public void almostOver(AlmostOverMessage arg) {
         centralPointCard.getStyleClass().removeAll(centralPointCard.getStyleClass());
         centralPointCard.getStyleClass().add("point_invisible");
+        BorderPane fillerPane = points.get(arg.getFillerName()).getPointsPane();
+        Label fillerLabel = points.get(arg.getFillerName()).getPointsLabel();
+        fillerPane.getStyleClass().removeAll(fillerPane.getStyleClass());
+        fillerPane.getStyleClass().add("points_filler");
+        fillerLabel.getStyleClass().remove("-fx-text-fill: white;");
+        fillerLabel.getStyleClass().add("-fx-text-fill: black;");
+    }
+
+    public void updatePoints() {
+        Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            points.get(entry.getKey()).getPointsLabel().setText(""+map.get(entry.getKey()));
+        }
     }
 }

@@ -30,7 +30,6 @@ public class CommonGoalCardDescriptionController implements Initializable {
         title_label.setText("Try to achieve this goal first!");
         setPicture();
         //picture_pane.getStyleClass().add("common1");
-        System.out.println("init OK");
     }
 
     private void setPicture(){
@@ -38,11 +37,9 @@ public class CommonGoalCardDescriptionController implements Initializable {
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
 
         if (num == 1) {
-
             picture_pane.getStyleClass().add("common"+clientModel.getNumCom1());
         }
         else if(num == 2){
-
             picture_pane.getStyleClass().add("common"+clientModel.getNumCom2());
         }
     }
