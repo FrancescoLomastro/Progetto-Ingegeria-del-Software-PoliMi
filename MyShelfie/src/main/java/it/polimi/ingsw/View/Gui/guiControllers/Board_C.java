@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.Network.Messages.AlmostOverMessage;
+import it.polimi.ingsw.Network.Messages.MessageCommonGoal;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.*;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
@@ -500,10 +501,9 @@ public class Board_C implements Initializable {
         fillerLabel.getStyleClass().add("-fx-text-fill: black;");
     }
 
-    public void updatePoints() {
+    public void updatePoints(MessageCommonGoal arg) {
         Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            points.get(entry.getKey()).getPointsLabel().setText(""+map.get(entry.getKey()));
-        }
+        points.get(arg.getPlayer()).getPointsLabel().setText(""+map.get(arg.getPlayer()));
+        //qui modifica le carte rosse in campo
     }
 }

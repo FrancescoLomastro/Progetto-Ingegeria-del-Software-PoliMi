@@ -418,17 +418,17 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             }
             case COMMON_GOAL ->
             {
-                updatePoints();
+                updatePoints((MessageCommonGoal) arg);
             }
         }
     }
 
-    private void updatePoints()
+    private void updatePoints(MessageCommonGoal arg)
     {
         Platform.runLater(() ->
         {
             Board_C boardSceneController = (Board_C) currentController;
-            boardSceneController.updatePoints();
+            boardSceneController.updatePoints(arg);
         });
     }
 
