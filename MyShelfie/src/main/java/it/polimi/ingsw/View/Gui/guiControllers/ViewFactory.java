@@ -32,6 +32,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     private static ViewFactory instance = null;
     private Initializable currentController;
     private Stage primaryStage;
+    private Stage chatStage;
     private Scene primaryScene;
     private Position[] positions;
     private final int MIN_HEIGHT = 600;
@@ -310,7 +311,22 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     @Override
     public void startChat() {
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Chat.fxml"));
+            Scene scene = loadScene_old(loader);
 
+            chatStage = new Stage();
+            chatStage.setScene(scene);
+
+            chatStage.setResizable(false);
+            chatStage.setMinHeight(700);
+            chatStage.setMinWidth(300);
+            chatStage.setMaxHeight(700);
+            chatStage.setMaxWidth(300);
+
+            chatStage.show();
+            chatStage.setIconified(true);
+        });
     }
 
     @Override
@@ -523,24 +539,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    public Stage getChatStage() {
+        return chatStage;
+    }
+
     public void showChat() {
-
-        Platform.runLater(() -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Chat.fxml"));
-            Scene scene = loadScene_old(loader);
-
-            Stage chatStage = new Stage();
-            chatStage.setScene(scene);
-
-            chatStage.setResizable(false);
-            chatStage.setMinHeight(600);
-            chatStage.setMinWidth(300);
-            chatStage.setMaxHeight(600);
-            chatStage.setMaxWidth(300);
-
-            chatStage.show();
-            //createStage_old(loader,200,320,true);
-        });
+        chatStage.setIconified(false);
     }
 
     public void showCentralPoints(int centralPoints) {
