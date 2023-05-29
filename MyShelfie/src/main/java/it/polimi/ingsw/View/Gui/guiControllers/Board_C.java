@@ -18,18 +18,22 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
 public class Board_C implements Initializable {
-
     @FXML
     public Label moveLabel;
     @FXML
@@ -60,11 +64,12 @@ public class Board_C implements Initializable {
     double rightRatio;
     FXMLLoader loader;
     AnchorPane son;
-
     GridPane centralGrid;
     Pane centralPointCard;
     Map<String,Libreria_C> libraries;
     Map<String,Punto_C> points;
+    private Pane cardPoint1;
+    private Pane cardPoint2;
      double left_pointsRatio;
      double left_gridRatio;
 
@@ -135,6 +140,7 @@ public class Board_C implements Initializable {
             controller.setListeners(right,3+0.5);
             controller.getImage().getStyleClass().add("common"+clientModel.getNumCom1());
             controller.getPoint().getStyleClass().add("point8");
+            this.cardPoint1=controller.getPoint();
             right.getChildren().add(son);
 
             son.setOnMouseClicked(mouseEvent -> {
@@ -154,6 +160,7 @@ public class Board_C implements Initializable {
             controller.setListeners(right,3+0.5);
             controller.getImage().getStyleClass().add("common"+clientModel.getNumCom2());
             controller.getPoint().getStyleClass().add("point8");
+            this.cardPoint2=controller.getPoint();
             right.getChildren().add(son);
 
             son.setOnMouseClicked(mouseEvent -> {
@@ -437,11 +444,15 @@ public class Board_C implements Initializable {
             lines[i] = new Line(point2D_Start_End[i][0].getX(),point2D_Start_End[i][0].getY(), point2D_Start_End[i][1].getX(), point2D_Start_End[i][1].getY() );
         }
         Rectangle[] panes = new Rectangle[oldInGrid.length];
+        double dim=((Pane)panesGrid[0]).getHeight();
+        String s;
         for(int i=0; i<oldInGrid.length; i++){
-            double dim=((Pane)panesGrid[i]).getHeight();
+            s=System.getProperty("user.dir")+"/src/main/resources/images/originals/objectCards/"+(panesGrid[i]).getStyleClass().get(0).substring(8, 11)+".png";
+            Image image = new javafx.scene.image.Image(s);
             panes[i] = new Rectangle(dim,dim,dim,dim);
             panes[i].getStyleClass().addAll((panesGrid[i]).getStyleClass());
             panes[i].toFront();
+            panes[i].setFill(new ImagePattern(image));
             anchor.getChildren().add(panes[i]);
         }
         ScaleTransition[] scaleTransitions=new ScaleTransition[oldInGrid.length];
@@ -504,6 +515,13 @@ public class Board_C implements Initializable {
     public void updatePoints(MessageCommonGoal arg) {
         Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();
         points.get(arg.getPlayer()).getPointsLabel().setText(""+map.get(arg.getPlayer()));
-        //qui modifica le carte rosse in campo
+        if(arg.getGainedPointsSecondCard()==0 || arg.getGainedPointsSecondCard()==3){
+            cardPoint1.getStyleClass().removeAll();
+            cardPoint1.getStyleClass().add("point"+arg.getPointAvailable1());
+        }
+        if(arg.getGainedPointsSecondCard()==2 || arg.getGainedPointsSecondCard()==3){
+            cardPoint1.getStyleClass().removeAll();
+            cardPoint1.getStyleClass().add("point"+arg.getPointAvailable2());
+        }
     }
 }

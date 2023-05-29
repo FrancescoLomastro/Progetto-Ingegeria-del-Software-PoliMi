@@ -120,7 +120,6 @@ public class ClientController implements Observer<View, OBS_Message> {
                 if(client instanceof RMI_Client c) {
                     c.changeServer(msg);
                 }
-                view.onServerChanged();
             }
             case START_GAME_MESSAGE -> {
                 view.startGame();
@@ -132,10 +131,12 @@ public class ClientController implements Observer<View, OBS_Message> {
                 String text = msg.getText();
 
                 String username = msg.getUsername();
+                /*
                 if(username.equals(client.getUsername()))
                 {
                     username="You";
                 }
+                 */
                 view.chatMessage(username,text);
             }
             case MY_MOVE_REQUEST -> {
@@ -144,7 +145,8 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case AFTER_MOVE_NEGATIVE -> {
                 MessageAfterMoveNegative msg = (MessageAfterMoveNegative) message;
-                view.printMessage(msg.getInvalidMessage());
+                if(view instanceof Cli)
+                    view.printMessage(msg.getInvalidMessage());
                 view.askMove();
             }
             case WINNER -> {
@@ -165,7 +167,8 @@ public class ClientController implements Observer<View, OBS_Message> {
                 clientModel.addPoint((MessageCommonGoal) message);
             }
             case AFTER_MOVE_POSITIVE -> {
-                view.printMessage("Move performed successfully\n" +
+                if(view instanceof Cli)
+                    view.printMessage("Move performed successfully\n" +
                         ">> \033[34mYou can use the chat while waiting for your turn, try type something!\033[0m");
                 if(((MessageAfterMovePositive) message).getGainedPointsFirstCard()>0){
                     view.printMessage("Points gained from first common goal: " + ((MessageAfterMovePositive) message).getGainedPointsFirstCard());

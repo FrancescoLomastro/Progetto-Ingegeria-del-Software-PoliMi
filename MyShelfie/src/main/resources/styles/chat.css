@@ -7,14 +7,17 @@
 
 .messageSection{
     -fx-background-image: url('../images/developed/base_pagina2.jpg');
-    -fx-background-radius: 30 30 30 30;
     -fx-background-position: center;
     -fx-background-repeat: repeat;
+    -fx-background-size: cover;
     -fx-alignment: center;
     -fx-label-padding: 15 5 5 5;
-    -fx-border-color: #FFDEAD;
     -fx-padding: 3 3 3 3;
-    -fx-border-insets: 5 5 5 5;
+    -fx-border-color: GOLDENROD;
+    -fx-border-width: 2;
+}
+.backScrollBar{
+    -fx-background-color: transparent;
 }
 
 .titleChat{

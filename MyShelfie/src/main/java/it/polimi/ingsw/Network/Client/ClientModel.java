@@ -87,7 +87,12 @@ public class ClientModel extends Observable<Message> {
     }
 
 
-
+    /**This method update/add points in the model and create a special message for the view. This message
+     * uses variable already in the scope to set (in order) player's point, number of common goal reached with
+     * attribute "card" and the name of the player. Last two parameters are available common goal card's point
+     * @author: Riccardo Figini
+     * @param msg Common goal card's message
+     * */
     public void addPoint(MessageCommonGoal msg){
         int score, card=0;
         if(0 != msg.getGainedPointsFirstCard()) {

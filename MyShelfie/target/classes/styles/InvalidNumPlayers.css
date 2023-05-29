@@ -42,6 +42,17 @@
     -fx-font-weight: bold;
 }
 
+.internal_vbox_container_label1_good {
+    -fx-text-fill: #8B4513;
+    -fx-font-weight: bold;
+    -fx-font-size: 17px;
+}
+
+.internal_vbox_container_label2_good {
+    -fx-text-fill: #800000;
+    -fx-font-weight: bold;
+}
+
 .internal_vbox_container Button {
     -fx-background-color: #8B4513;
     -fx-text-fill: #FFFFFF;

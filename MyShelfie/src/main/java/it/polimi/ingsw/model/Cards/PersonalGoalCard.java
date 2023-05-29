@@ -15,6 +15,7 @@ public class PersonalGoalCard extends Card {
         super();
         this.goalVector=goalVector;
         this.num=num;
+        System.out.println(num);
     }
     /**This method counts and returns point of personal goal card. It will be called at the end of the game.
      * @author: Riccardo Figini

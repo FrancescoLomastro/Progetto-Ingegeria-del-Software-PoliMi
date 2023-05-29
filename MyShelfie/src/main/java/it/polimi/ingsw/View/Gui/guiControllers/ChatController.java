@@ -38,7 +38,6 @@ public class ChatController implements Initializable {
     public ScrollPane scrollPaneChat;
     @FXML
     public AnchorPane anchorScrollBar;
-    public Button closeChatButton;
     String style = "-fx-background-color: #FFDEAD; -fx-background-radius: 20";
     Map<String, String> colorPlayer;
     int index;
@@ -51,19 +50,17 @@ public class ChatController implements Initializable {
         freeColor.add("STEELBLUE");
         freeColor.add("SADDLEBROWN");
         freeColor.add("PALEVIOLETRED");
+        freeColor.add("RED");
         index=0;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)  {
         textArea.setOnKeyPressed(this::manage);
-
-        closeChatButton.setOnAction(event -> closeChat());
     }
 
     private void manage(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             String text = textArea.getText().trim();
-
             if (text.length() > 0) {
                 textArea.clear();
                 printOwnMessage(text);
@@ -72,13 +69,10 @@ public class ChatController implements Initializable {
             }
         }
     }
-
     private void printOwnMessage(String text) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.TOP_RIGHT);
         hBox.setPadding(new Insets(5,5,5,10));
-
-
         Text text1 = new Text(text);
         TextFlow textFlow = new TextFlow(text1);
         textFlow.setStyle(style);
@@ -88,18 +82,20 @@ public class ChatController implements Initializable {
         vbox.getChildren().add(hBox);
         scrollPaneChat.setVvalue(1.0);
     }
-
     public void printMessage(String text, String user){
+        if(user.equals(ViewFactory.getInstance().getClientModel().getMyName()))
+            return;
         HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setAlignment(Pos.TOP_LEFT);
         hBox.setPadding(new Insets(5,5,5,10));
 
-        Text userText = new Text(text);
+        Text userText = new Text(user);
         Text messageText = new Text(text);
         Text enter = new Text("\n");
         userText.setStyle(selectUserStyle(user));
         messageText.setStyle(style);
         TextFlow textFlow = new TextFlow(userText, enter, messageText);
+        textFlow.setStyle(style);
         userText = new Text(text);
         userText.setStyle(style);
 
@@ -109,25 +105,19 @@ public class ChatController implements Initializable {
         vbox.getChildren().add(hBox);
         scrollPaneChat.setVvalue(1.0);
     }
-
     private String selectUserStyle(String user) {
-        if(colorPlayer.containsKey(user))
+        if (colorPlayer.containsKey(user))
             return colorPlayer.get(user);
-        else{
+        else {
             String color = getFreeColor();
             String tmp = "-fx-fill: " + color + ";-fx-font-size: 10px;-fx-font-weight: bold";
             colorPlayer.put(user, tmp);
             return tmp;
         }
     }
-
     private String getFreeColor() {
         String color = freeColor.get(index);
         index++;
         return color;
-    }
-
-    private void closeChat() {
-        ViewFactory.getInstance().getChatStage().setIconified(true);
     }
 }

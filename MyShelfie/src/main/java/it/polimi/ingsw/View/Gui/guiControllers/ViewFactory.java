@@ -15,7 +15,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 
@@ -33,6 +35,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     private Initializable currentController;
     private Stage primaryStage;
     private Stage chatStage;
+    private ChatController controllerChat;
     private Scene primaryScene;
     private Position[] positions;
     private final int MIN_HEIGHT = 600;
@@ -169,7 +172,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      */
     @Override
     public void startGame() {
-
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameHasBegun.fxml"));
+            createStage_old(loader,200,320,true);
+        });
     }
 
     @Override
@@ -180,13 +186,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.almostOver(arg);
         });
     }
-
-
-    @Override
-    public void onServerChanged() {
-    }
-
-
     /**
      * Shows the form that collect the new username that the user will use
      */
@@ -226,6 +225,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     @Override
     public void chatMessage(String username, String text) {
+        Platform.runLater(()->{
+            controllerChat.printMessage(text, username);
+        });
     }
 
 
@@ -272,21 +274,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     @Override
     public void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
-        /*if (typeOfGridMessage != MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE) {
-//            Platform.runLater(() ->
-//            {
-//                NuovaBoardController boardSceneController = (NuovaBoardController) currentController;
-//                boardSceneController.updateGrid(grid);
-//            });
-        }
-        else
-        {*/
-            Platform.runLater(() ->
-            {
-                Board_C boardSceneController = (Board_C) currentController;
-                boardSceneController.updateGrid(grid);
-            });
-        //}
+        Platform.runLater(() ->
+        {
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.updateGrid(grid);
+        });
     }
 
     @Override
@@ -297,16 +289,22 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                boardSceneController.runAMove(library, username, oldGrid, newLibrary);
             });
         }
-        Platform.runLater(() ->
-        {
-            Board_C boardSceneController = (Board_C) currentController;
-            boardSceneController.updateLibrary(library,username);
-        });
+        else {
+            Platform.runLater(() ->
+            {
+                Board_C boardSceneController = (Board_C) currentController;
+                boardSceneController.updateLibrary(library, username);
+            });
+        }
     }
 
+    /**This method is necessary in CLI version because it prints everything when it's your turn. In Gui version it prints in chat
+     * "is your turn"
+     * @author: Riccardo Figini
+     * */
     @Override
     public void printAll() {
-
+        chatMessage("Server", "It's your turn");
     }
 
     @Override
@@ -316,22 +314,32 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             Scene scene = loadScene_old(loader);
 
             chatStage = new Stage();
+            chatStage.setOnCloseRequest((event -> {
+                event.consume();
+                chatStage.setIconified(true);
+            }));
+            primaryStage.setOnCloseRequest((event)->{
+                chatStage.close();
+            });
             chatStage.setScene(scene);
-
+            controllerChat=loader.getController();
             chatStage.setResizable(false);
-            chatStage.setMinHeight(700);
-            chatStage.setMinWidth(300);
-            chatStage.setMaxHeight(700);
-            chatStage.setMaxWidth(300);
+            chatStage.setMinHeight(600);
+            chatStage.setMinWidth(370);
+            chatStage.setMaxHeight(600);
+            chatStage.setMaxWidth(370);
 
             chatStage.show();
             chatStage.setIconified(true);
         });
+
     }
 
+    /**This method is called to print points when game is over (in cli version), here prints in chat
+     * that the game is over*/
     @Override
     public void printPoints() {
-
+        chatMessage("Server", "Game is over");
     }
 
 
@@ -343,10 +351,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
 
 
-
+    /**This method print in chat message from server. Messages can be useful information about game's flow
+     * @author: Riccardo Figini
+     * @param string Message from server
+     * */
     @Override
     public void printMessage(String string) {
-
+        chatMessage("Server", string);
     }
 
     @Override
@@ -375,7 +386,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
             createStage_old(loader,200,320,true);
         });
-
     }
 
     public void showInvalidNumberOfCards() {
@@ -445,6 +455,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         {
             Board_C boardSceneController = (Board_C) currentController;
             boardSceneController.updatePoints(arg);
+            chatMessage("Server", arg.getPlayer()+" has reach common goal card");
         });
     }
 
@@ -481,64 +492,41 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     public void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking){
-
         Platform.runLater(() -> {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/WinnerScene.fxml"));
-
             loader.setControllerFactory(controllerClass -> {
-
                 WinnerSceneController winnerSceneController= new WinnerSceneController();
-
                 winnerSceneController.setWinner(finalRanking.get(0).getFirst());
-
                 winnerSceneController.setFinalRanking(finalRanking);
-
                 return winnerSceneController;
             });
-
             createStage_old(loader, 200, 320, true);
         });
     }
 
     public void onCommonGoalCardClick(String description, int num) {
-
         Platform.runLater(() -> {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CommonGoalCardDescription.fxml"));
-
             loader.setControllerFactory(controllerClass -> {
-
                 CommonGoalCardDescriptionController commonGoalCardDescriptionController= new CommonGoalCardDescriptionController();
-
                 commonGoalCardDescriptionController.setDescription(description);
-
                 commonGoalCardDescriptionController.setNum(num);
-
                 return commonGoalCardDescriptionController;
             });
-
             createStage_old(loader, 200, 320, true);
         });
     }
 
     public void onPersonalGoalCardClick() {
-
         Platform.runLater(() -> {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PersonalGoalCardPopUp.fxml"));
-
             loader.setControllerFactory(controllerClass -> {
-
                 PersonalGoalCardPopUpController personalGoalCardPopUpController= new PersonalGoalCardPopUpController();
-
                 return personalGoalCardPopUpController;
             });
-
             createStage_old(loader, 200, 320, true);
         });
     }
-
     public Stage getChatStage() {
         return chatStage;
     }
@@ -546,9 +534,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void showChat() {
         chatStage.setIconified(false);
     }
-
     public void showCentralPoints(int centralPoints) {
         Board_C boardSceneController = (Board_C) currentController;
         boardSceneController.showCentralPoints(centralPoints);
+    }
+    public Stage getPrimaryStage(){
+        return primaryStage;
     }
 }

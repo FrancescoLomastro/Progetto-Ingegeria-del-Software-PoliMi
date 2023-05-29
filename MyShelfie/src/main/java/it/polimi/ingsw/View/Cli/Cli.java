@@ -155,17 +155,6 @@ public class Cli extends View implements Runnable {
     public void acceptedLogin() {
         System.out.println("Connection accepted, waiting for other players");
     }
-
-
-    /**
-     * Message to be printed as the server changes for the game
-     */
-    @Override
-    public void onServerChanged() {
-        System.out.println("Server changed to a game");
-    }
-
-
     /**
      * Message to be printed as the game starts
      */
@@ -182,6 +171,8 @@ public class Cli extends View implements Runnable {
      */
     @Override
     public void chatMessage(String username, String text) {
+        if(username.equals(clientModel.getMyName()))
+            username="You";
         System.out.println("\n["+username+"]\n  "+text);
     }
 
