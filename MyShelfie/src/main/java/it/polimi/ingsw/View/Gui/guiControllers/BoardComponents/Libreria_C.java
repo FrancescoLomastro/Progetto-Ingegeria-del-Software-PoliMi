@@ -44,7 +44,6 @@ public class Libreria_C {
         layoutYRatio= grid.getLayoutY()/anchor.getPrefHeight();
         hGapRatio = grid.getHgap()/anchor.getPrefWidth();
 
-
         anchor.heightProperty().addListener(((observableValue, oldHeight, newHeight) ->
         {
             maintainProportion();
@@ -69,6 +68,7 @@ public class Libreria_C {
     }
 
     private void scaleDimension(double width,double height) {
+
         double min = Math.min(width,height/fatherParts);
         anchor.setPrefSize(min,min);
         anchor.setMaxSize(min,min);
@@ -92,5 +92,9 @@ public class Libreria_C {
     public void setText(String text)
     {
         nameLabel.setText(text);
+    }
+
+    public AnchorPane getAnchor() {
+        return anchor;
     }
 }

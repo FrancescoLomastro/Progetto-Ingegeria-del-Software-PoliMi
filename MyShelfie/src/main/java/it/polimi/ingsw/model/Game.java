@@ -187,4 +187,17 @@ public class Game implements Serializable {
         else
             return livingRoom.getCommonGoalCards()[index].getNum();
     }
+
+    /** DA RIFARE IL COMMENTO: assegna la carta centale del livingroom all'username passato come parametro*/
+    public int assignFillerPoints(String username)
+    {
+        Player fillerPlayer = searchByUsername(username);
+        int points=livingRoom.consumeCentralPoints();
+        fillerPlayer.addPoints(points);
+        return points;
+    }
+    public int getCentralPointCard()
+    {
+        return livingRoom.getCentralScorePoints();
+    }
 }

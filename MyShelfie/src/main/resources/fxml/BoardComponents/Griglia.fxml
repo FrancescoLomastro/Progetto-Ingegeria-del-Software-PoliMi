@@ -35,5 +35,6 @@
 
          </children>
       </GridPane>
+      <Pane fx:id="centralPointCard" layoutX="318.0" layoutY="275.0" prefHeight="50.0" prefWidth="50.0" rotate="8.7" />
    </children>
 </AnchorPane>

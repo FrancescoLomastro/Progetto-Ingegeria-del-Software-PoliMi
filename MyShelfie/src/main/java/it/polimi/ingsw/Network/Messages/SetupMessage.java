@@ -18,7 +18,12 @@ public class SetupMessage extends Message {
 
 
 
-    public SetupMessage(int personalNumber, int numCom1, int numCom2, ObjectCard[][] grid, String[] playersName, ArrayList<Couple> personalGoalCards, String[] commonGoalCards , ObjectCard[][]... playersLibraries) {
+    private final int centralPointCard;
+
+
+
+    public SetupMessage(int personalNumber, int numCom1, int numCom2, int centralPointCard, ObjectCard[][] grid, String[] playersName,
+                        ArrayList<Couple> personalGoalCards, String[] commonGoalCards , ObjectCard[][]... playersLibraries) {
         super("server", MessageType.SETUP_MESSAGE);
         this.grid=grid;
         this.playersLibraries=playersLibraries;
@@ -29,8 +34,12 @@ public class SetupMessage extends Message {
         this.personalNumber=personalNumber;
         this.numCom1=numCom1;
         this.numCom2=numCom2;
+        this.centralPointCard=centralPointCard;
     }
 
+    public int getCentralPointCard() {
+        return centralPointCard;
+    }
     public String getDescription1() {
         return description1;
     }

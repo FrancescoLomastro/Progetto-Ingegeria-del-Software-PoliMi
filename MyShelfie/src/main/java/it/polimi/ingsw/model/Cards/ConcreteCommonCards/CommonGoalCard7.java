@@ -14,7 +14,7 @@ import java.util.HashSet;
  * */
 public class CommonGoalCard7 extends CommonGoalCard {
     public CommonGoalCard7(){
-        num=8;
+        num=7;
         setDescription("Two lines each formed by 5 different " +
                 "types of tiles. One line can show the " +
                 "same or a different combination of the " +

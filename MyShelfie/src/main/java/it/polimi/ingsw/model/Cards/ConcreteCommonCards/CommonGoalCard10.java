@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class CommonGoalCard10 extends CommonGoalCard {
 
     public CommonGoalCard10(){
-        num=11;
+        num=10;
         setDescription("Eight tiles of the same type. There’s no " +
                 "restriction about the position of these " +
                 "tiles");

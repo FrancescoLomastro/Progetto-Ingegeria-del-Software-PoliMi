@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class LivingRoom implements Serializable {
     private static final long serialVersionUID = 1L;
     private Grid grid;
-    private ScorePointCard scoreCard;
+    private int centralScorePoints=1;
     private CommonGoalCard[] commonGoalCards;
     private int numCommonGoalCards;
     private CardGenerator cardGenerator;
@@ -17,7 +17,6 @@ public class LivingRoom implements Serializable {
     public LivingRoom(int numPlayers, int numCommonGoalCards, CardGenerator cardGenerator) throws IOException {
         this.cardGenerator= cardGenerator;
         this.grid = new Grid(numPlayers,this.cardGenerator);
-        this.scoreCard= new ScorePointCard(numPlayers);
         this.numCommonGoalCards=numCommonGoalCards;
         this.commonGoalCards = new CommonGoalCard[numCommonGoalCards];
         generateCommonGoalCards();
@@ -35,8 +34,14 @@ public class LivingRoom implements Serializable {
         return grid;
     }
 
-    public ScorePointCard getScoreCard() {
-        return scoreCard;
+    public int consumeCentralPoints() {
+        int points= centralScorePoints;
+        centralScorePoints=0;
+        return points;
+    }
+
+    public int getCentralScorePoints() {
+        return centralScorePoints;
     }
 
     public CommonGoalCard[] getCommonGoalCards() {

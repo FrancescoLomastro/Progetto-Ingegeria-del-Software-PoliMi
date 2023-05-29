@@ -1,10 +1,7 @@
 package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.Network.Client.ClientModel;
-import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.Messages.MessageGrid;
-import it.polimi.ingsw.Network.Messages.MessageLibrary;
-import it.polimi.ingsw.Network.Messages.SetupMessage;
+import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.Gui.GuiApplication;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
@@ -35,7 +32,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     private static ViewFactory instance = null;
     private Initializable currentController;
     private Stage primaryStage;
-    private Stage chatStage;
     private Scene primaryScene;
     private Position[] positions;
     private final int MIN_HEIGHT = 600;
@@ -57,9 +53,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         clientModel.addObserver(this);
     }
 
-    public Stage getChatStage() {
-        return chatStage;
-    }
 
     /**
      * Starts the main FX thread
@@ -178,6 +171,14 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     }
 
+    @Override
+    public void almostOver(AlmostOverMessage arg) {
+        Platform.runLater(() ->
+        {
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.almostOver(arg);
+        });
+    }
 
 
     @Override
@@ -310,23 +311,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     @Override
     public void startChat() {
 
-        Platform.runLater(()->{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Chat.fxml"));
-            Scene scene = loadScene_old(loader);
-
-            chatStage = new Stage();
-            chatStage.setScene(scene);
-
-            chatStage.setResizable(false);
-            chatStage.setMinHeight(700);
-            chatStage.setMinWidth(300);
-            chatStage.setMaxHeight(700);
-            chatStage.setMaxWidth(300);
-            //chatStage.setVisible(false);
-            chatStage.show();
-            chatStage.setIconified(true);
-        });
-
     }
 
     @Override
@@ -428,7 +412,24 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
                 showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
             }
+            case ALMOST_OVER -> {
+                AlmostOverMessage msg = (AlmostOverMessage) arg;
+                almostOver((AlmostOverMessage) arg);
+            }
+            case COMMON_GOAL ->
+            {
+                updatePoints((MessageCommonGoal) arg);
+            }
         }
+    }
+
+    private void updatePoints(MessageCommonGoal arg)
+    {
+        Platform.runLater(() ->
+        {
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.updatePoints(arg);
+        });
     }
 
     private void showBoard(Message arg) {
@@ -440,6 +441,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             {
                 showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
             }
+            showCentralPoints(msg.getCentralPointCard());
         });
     }
 
@@ -522,6 +524,27 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     public void showChat() {
-        chatStage.setIconified(false);
+
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Chat.fxml"));
+            Scene scene = loadScene_old(loader);
+
+            Stage chatStage = new Stage();
+            chatStage.setScene(scene);
+
+            chatStage.setResizable(false);
+            chatStage.setMinHeight(600);
+            chatStage.setMinWidth(300);
+            chatStage.setMaxHeight(600);
+            chatStage.setMaxWidth(300);
+
+            chatStage.show();
+            //createStage_old(loader,200,320,true);
+        });
+    }
+
+    public void showCentralPoints(int centralPoints) {
+        Board_C boardSceneController = (Board_C) currentController;
+        boardSceneController.showCentralPoints(centralPoints);
     }
 }

@@ -15,7 +15,7 @@ import java.util.HashSet;
  * */
 public class CommonGoalCard6 extends CommonGoalCard {
     public CommonGoalCard6(){
-        num=7;
+        num=6;
         setDescription("Two groups each containing 4 tiles of " +
                 "the same type in a 2x2 square. The tiles " +
                 "of one square can be different from " +

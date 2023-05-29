@@ -12,7 +12,7 @@ import it.polimi.ingsw.model.Player.Library;
  * */
 public class CommonGoalCard9 extends CommonGoalCard {
     public CommonGoalCard9(){
-        num=10;
+        num=9;
         setDescription("Five tiles of the same type forming an X");
     }
     /**

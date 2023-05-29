@@ -12,7 +12,7 @@ import it.polimi.ingsw.model.Player.Library;
  * */
 public class CommonGoalCard4 extends CommonGoalCard {
     public CommonGoalCard4(){
-        num=5;
+        num=4;
         setDescription("Four tiles of the same type in the four " +
                 "corners of the bookshelf.");
     }

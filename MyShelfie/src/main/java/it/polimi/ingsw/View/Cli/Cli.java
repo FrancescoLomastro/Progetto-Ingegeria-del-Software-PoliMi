@@ -578,6 +578,16 @@ public class Cli extends View implements Runnable {
     }
 
 
+    @Override
+    public void almostOver(AlmostOverMessage arg) {
+        System.out.println(">> "+arg.getFillerName()+"is the first player to complete his library, "+arg.getFillerPoints()+" will be assigned to him");
+    }
+
+    private void showCentralPoints(int centralPointCard) {
+        System.out.println("First player to complete his library gets "+centralPointCard+"points");
+    }
+
+
     /**
      * Thread that ask input in loop, and it notifies the observers whit the collected inputs
      */
@@ -622,11 +632,13 @@ public class Cli extends View implements Runnable {
         {
             case SETUP_MESSAGE -> {
                 SetupMessage msg = (SetupMessage) arg;
+
                 showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
                 for (int i=0; i<msg.getPlayersName().length;i++)
                 {
                     showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
                 }
+                showCentralPoints(msg.getCentralPointCard());
             }
             case UPDATE_GRID_MESSAGE -> {
                 ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
@@ -637,6 +649,11 @@ public class Cli extends View implements Runnable {
                 showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
             }
             case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
+            case ALMOST_OVER -> almostOver((AlmostOverMessage) arg);
         }
     }
+
+
+
+
 }
