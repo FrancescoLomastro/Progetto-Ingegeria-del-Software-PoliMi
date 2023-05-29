@@ -2,6 +2,7 @@ package it.polimi.ingsw.View.Gui.guiControllers;
 
 import it.polimi.ingsw.View.OBSMessages.OBS_ChatMessage;
 import it.polimi.ingsw.model.Enums.Color;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,6 +57,13 @@ public class ChatController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)  {
         textArea.setOnKeyPressed(this::manage);
+        vbox.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                scrollPaneChat.setVvalue((Double) t1);
+            }
+        });
+
     }
 
     private void manage(KeyEvent keyEvent) {
