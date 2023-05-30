@@ -23,7 +23,8 @@
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>
-                     </children></HBox>
+                     </children>
+                  </HBox>
                </top>
                <bottom>
                   <HBox fx:id="bottom" alignment="CENTER" prefHeight="70.0" prefWidth="200.0" styleClass="button_container" BorderPane.alignment="CENTER">

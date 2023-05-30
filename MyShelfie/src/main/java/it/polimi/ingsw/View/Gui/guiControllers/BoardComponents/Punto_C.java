@@ -26,7 +26,6 @@ public class Punto_C {
         this.relatedLibrary=relatedLibrary;
         fontRatio=label.getFont().getSize()/anchor.getPrefWidth();
 
-
         father.heightProperty().addListener(((observableValue, oldHeight, newHeight) ->
         {
             scaleDimension(father.getWidth());

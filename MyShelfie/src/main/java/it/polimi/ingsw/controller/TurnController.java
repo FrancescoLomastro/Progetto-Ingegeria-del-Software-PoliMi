@@ -61,6 +61,8 @@ public class TurnController implements Runnable, Serializable {
         for(int i=0; i<game.getNumPlayers(); i++)
         {
             SetupMessage message= new SetupMessage(
+                    game.getCommonGoalCard()[0].getPoints(),
+                    game.getCommonGoalCard()[1].getPoints(),
                     game.getPlayers()[i].getNumPersonalGoal(),
                     game.getNumCommonGoal(0),
                     game.getNumCommonGoal(1),
@@ -105,13 +107,13 @@ public class TurnController implements Runnable, Serializable {
         moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
         if (moveResult.getType() == AFTER_MOVE_POSITIVE) {
 
-            MessageGrid messageGrid = new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE);
-            gameController.notifyAllMessage(messageGrid);
-
             ObjectCard[][] oldLibrary = game.getLibrary(message.getUsername());
             MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername(),
                     message.getMove(), findFilledPositionInLibrary(message.getColumn(), message.getMove(), oldLibrary) );
             gameController.notifyAllMessage(messageLibrary);
+
+            MessageGrid messageGrid = new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE);
+            gameController.notifyAllMessage(messageGrid);
 
             gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa è adnata a buon fine
 

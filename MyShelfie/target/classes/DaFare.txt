@@ -4,6 +4,7 @@
 - Prima o poi fare una partita per ogni common goal card. Sotto le svolte
         --> Croce o X funziona  (figio)
         --> 4 righe con massimo 3 carte diverse per riga fatto e funziona (figio)
+        --> diagonale di 5 tessere (figio)
 
 - Gestione eccezioni lato client (?)
 

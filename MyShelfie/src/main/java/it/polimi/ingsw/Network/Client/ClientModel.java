@@ -121,8 +121,9 @@ public class ClientModel extends Observable<Message> {
         //return copy(grid);
     }
 
-
-
+    public int[] getPointsCommonGoalCards() {
+        return pointsCommonGoalCards;
+    }
 
     public ObjectCard[][] getLibrary(String name)
     {
@@ -202,6 +203,8 @@ public class ClientModel extends Observable<Message> {
 
     public void setup(SetupMessage msg)
     {
+        pointsCommonGoalCards[0]=msg.getPointCardCommon1();
+        pointsCommonGoalCards[1]=msg.getPointCardCommon2();
         numCom1=msg.getNumCom1();
         numCom2=msg.getNumCom2();
         personalGoalCardNum=msg.getPersonalNumber();
@@ -215,7 +218,10 @@ public class ClientModel extends Observable<Message> {
         }
         this.grid=msg.getGrid();
         setChanged();
-        notifyObservers(new SetupMessage(msg.getPersonalNumber(),
+        notifyObservers(new SetupMessage(
+                msg.getPointCardCommon1(),
+                msg.getPointCardCommon2(),
+                msg.getPersonalNumber(),
                 msg.getNumCom1(),
                 msg.getNumCom2(),
                 msg.getCentralPointCard(),

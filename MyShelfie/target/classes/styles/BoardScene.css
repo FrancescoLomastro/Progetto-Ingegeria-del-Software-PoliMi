@@ -194,7 +194,7 @@ Pane
     -fx-translate-y: -2px;
 }
 .common2 {
-    -fx-background-image: url("../images/originals/commonGoalCards/4.jpg");
+    -fx-background-image: url("../images/originals/commonGoalCards/2.jpg");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
@@ -206,7 +206,7 @@ Pane
     -fx-translate-y: -2px;
 }
 .common4 {
-    -fx-background-image: url("../images/originals/commonGoalCards/2.jpg");
+    -fx-background-image: url("../images/originals/commonGoalCards/4.jpg");
     -fx-background-size: 100% 100%;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
@@ -335,15 +335,15 @@ Pane
     -fx-background-size: 100% 100%;
 }
 .point6{
-    -fx-background-image: url("../images/originals/pointCards/scoring_8.jpg");
+    -fx-background-image: url("../images/originals/pointCards/scoring_6.jpg");
     -fx-background-size: 100% 100%;
 }
 .point4{
-    -fx-background-image: url("../images/originals/pointCards/scoring_8.jpg");
+    -fx-background-image: url("../images/originals/pointCards/scoring_4.jpg");
     -fx-background-size: 100% 100%;
 }
 .point2{
-    -fx-background-image: url("../images/originals/pointCards/scoring_8.jpg");
+    -fx-background-image: url("../images/originals/pointCards/scoring_2.jpg");
     -fx-background-size: 100% 100%;
 }
 .point_invisible{

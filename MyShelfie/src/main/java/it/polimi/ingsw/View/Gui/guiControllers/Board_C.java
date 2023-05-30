@@ -19,17 +19,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -139,7 +134,7 @@ public class Board_C implements Initializable {
             controller.setListeners(right,3.5);
             controller.setListeners(right,3+0.5);
             controller.getImage().getStyleClass().add("common"+clientModel.getNumCom1());
-            controller.getPoint().getStyleClass().add("point8");
+            controller.getPoint().getStyleClass().add("point"+clientModel.getPointsCommonGoalCards()[0]);
             this.cardPoint1=controller.getPoint();
             right.getChildren().add(son);
 
@@ -159,7 +154,7 @@ public class Board_C implements Initializable {
             controller.setListeners(right,3.5);
             controller.setListeners(right,3+0.5);
             controller.getImage().getStyleClass().add("common"+clientModel.getNumCom2());
-            controller.getPoint().getStyleClass().add("point8");
+            controller.getPoint().getStyleClass().add("point"+clientModel.getPointsCommonGoalCards()[0]);
             this.cardPoint2=controller.getPoint();
             right.getChildren().add(son);
 
@@ -207,7 +202,7 @@ public class Board_C implements Initializable {
                 libraries.put(players[i],controllerL);
                 left_grid.getChildren().add(son);
 
-                Integer index = i;
+                int index = i;
                 son.setOnMouseClicked(mouseEvent -> {
 
                     handleLibrariesClick(players[index]);
@@ -226,8 +221,8 @@ public class Board_C implements Initializable {
                     pane.prefHeightProperty().bind(libraryGrid.getRowConstraints().get(r).prefHeightProperty());//è giusto così, height non funziona
                     pane.getStyleClass().add("invisible");
 
-                    libraryGrid.setRowIndex(pane, r);
-                    libraryGrid.setColumnIndex(pane, c);
+                    GridPane.setRowIndex(pane, r);
+                    GridPane.setColumnIndex(pane, c);
                     libraryGrid.getChildren().add(pane);
                 }
             }
@@ -293,10 +288,9 @@ public class Board_C implements Initializable {
             Integer columnIndex = GridPane.getColumnIndex(node);
 
             if (grid[rowIndex][columnIndex] != null && grid[rowIndex][columnIndex].getColor()!= Color.EMPTY) {
-                node.getStyleClass().remove("invisibleCells");
+                while(node.getStyleClass().remove("invisibleCells"));
                 node.getStyleClass().add("texture_"+grid[rowIndex][columnIndex].getColor().getRelativeInt()+
                         "_"+grid[rowIndex][columnIndex].getType().getRelativeInt());
-
             }
         }
     }
@@ -308,7 +302,7 @@ public class Board_C implements Initializable {
             Integer columnIndex = GridPane.getColumnIndex(node);
 
             if (library[rowIndex][columnIndex] != null && library[rowIndex][columnIndex].getColor()!= Color.EMPTY) {
-                node.getStyleClass().remove("invisibleCells");
+                while(node.getStyleClass().remove("invisibleCells"));
                 node.getStyleClass().add("texture_"+library[rowIndex][columnIndex].getColor().getRelativeInt()+
                         "_"+library[rowIndex][columnIndex].getType().getRelativeInt());
             }
@@ -344,6 +338,7 @@ public class Board_C implements Initializable {
                 positions.add(position);
             }
         }
+
         for (Node node : centralGrid.getChildren()) {
 
             node.setOnMouseClicked(event -> {
@@ -358,8 +353,8 @@ public class Board_C implements Initializable {
 
                     int positionToEliminate = 0;
                     for (int index = 0; index < positions.size(); index++) {
-                        if (positions.get(index).getRow()==rowIndex &&
-                                positions.get(index).getColumn()==columnIndex) {
+                        if (positions.get(index).getRow() == rowIndex &&
+                                positions.get(index).getColumn() == columnIndex) {
 
                             positionToEliminate = index;
 
@@ -368,13 +363,13 @@ public class Board_C implements Initializable {
                     positions.remove(positionToEliminate);
 
                 } else {
+                    if(!node.getStyleClass().get(0).equals("invisibleCells")) {
+                        node.setStyle("-fx-border-color: RED;" +
+                                "-fx-border-width: 1.5;");
 
-                    node.setStyle("-fx-border-color: RED;" +
-                            "-fx-border-width: 1.5;");
-
-                    Position position = new Position(rowIndex,columnIndex);
-                    positions.add(position);
-
+                        Position position = new Position(rowIndex, columnIndex);
+                        positions.add(position);
+                    }
                 }
             });
 
@@ -512,16 +507,24 @@ public class Board_C implements Initializable {
         fillerLabel.getStyleClass().add("-fx-text-fill: black;");
     }
 
+    public void initCommonGoalPoints(int card1, int card2){
+        cardPoint1.getStyleClass().removeAll();
+        cardPoint2.getStyleClass().removeAll();
+        cardPoint1.getStyleClass().add("point"+card1);
+        cardPoint2.getStyleClass().add("point"+card2);
+    }
+
     public void updatePoints(MessageCommonGoal arg) {
         Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();
         points.get(arg.getPlayer()).getPointsLabel().setText(""+map.get(arg.getPlayer()));
+
         if(arg.getGainedPointsSecondCard()==0 || arg.getGainedPointsSecondCard()==3){
-            cardPoint1.getStyleClass().removeAll();
+            cardPoint1.getStyleClass().remove(0);
             cardPoint1.getStyleClass().add("point"+arg.getPointAvailable1());
         }
         if(arg.getGainedPointsSecondCard()==2 || arg.getGainedPointsSecondCard()==3){
-            cardPoint1.getStyleClass().removeAll();
-            cardPoint1.getStyleClass().add("point"+arg.getPointAvailable2());
+            cardPoint2.getStyleClass().remove(0);
+            cardPoint2.getStyleClass().add("point"+arg.getPointAvailable2());
         }
     }
 }

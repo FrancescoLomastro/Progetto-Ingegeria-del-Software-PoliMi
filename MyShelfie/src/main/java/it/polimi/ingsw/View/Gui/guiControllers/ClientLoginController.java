@@ -167,7 +167,7 @@ public class ClientLoginController implements Initializable {
     }
 
     public void onLogin(ActionEvent event) {
-        OBS_InitialInfoMessage initialInfoMessage = new OBS_InitialInfoMessage(chosenUsername,chosenTechnology,chosenIPAddress,chosenPort);
-        ViewFactory.getInstance().notifyAllOBS(initialInfoMessage);
+            OBS_InitialInfoMessage initialInfoMessage = new OBS_InitialInfoMessage(chosenUsername, chosenTechnology, chosenIPAddress, chosenPort);
+            ViewFactory.getInstance().notifyAllOBS(initialInfoMessage);
     }
 }

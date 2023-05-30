@@ -1,10 +1,7 @@
 package it.polimi.ingsw;
-
-import it.polimi.ingsw.View.Gui.GuiApplication;
 import it.polimi.ingsw.controller.ClientController;
-import javafx.application.Application;
 
-public class ClientApp {
+ public class ClientApp {
     public static void main(String[] args)
     {
         ClientController clientController;

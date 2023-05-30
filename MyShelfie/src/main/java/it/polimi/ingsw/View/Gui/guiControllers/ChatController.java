@@ -91,10 +91,15 @@ public class ChatController implements Initializable {
         scrollPaneChat.setVvalue(1.0);
     }
     public void printMessage(String text, String user){
+        Pos pos;
         if(user.equals(ViewFactory.getInstance().getClientModel().getMyName()))
             return;
+        else if(user.equals("Server"))
+             pos = Pos.TOP_CENTER;
+        else
+            pos = Pos.TOP_LEFT;
         HBox hBox = new HBox();
-        hBox.setAlignment(Pos.TOP_LEFT);
+        hBox.setAlignment(pos);
         hBox.setPadding(new Insets(5,5,5,10));
 
         Text userText = new Text(user);
@@ -109,7 +114,7 @@ public class ChatController implements Initializable {
 
         textFlow.setPadding(new Insets(5, 10, 5, 10));
         hBox.getChildren().add(textFlow);
-        vbox.setAlignment(Pos.TOP_LEFT);
+        vbox.setAlignment(pos);
         vbox.getChildren().add(hBox);
         scrollPaneChat.setVvalue(1.0);
     }

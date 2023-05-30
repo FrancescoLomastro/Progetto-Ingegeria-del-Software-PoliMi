@@ -9,9 +9,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="MyShelfie" />
         <module name="PSP7" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="PSP7" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>

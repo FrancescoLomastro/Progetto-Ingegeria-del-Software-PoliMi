@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -20,9 +21,11 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * ViewFactory class contains methods related to the creation of stages during our program lifecycle.
@@ -40,7 +43,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     private Position[] positions;
     private final int MIN_HEIGHT = 600;
     private final int MIN_WIDTH = 900 ;
-
     /**
      * Returns or creates the only instance of the ViewFactory
      * @return
@@ -95,6 +97,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         } else {
             newStage.show();
         }
+        newStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
     public void setPrimaryStage(Stage primaryStage)
     {
@@ -136,6 +142,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
           createMainStage(loader);
           primaryStage.getScene().setOnKeyPressed(keyEvent -> notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START)));
           primaryStage.show();
+        });
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
         });
     }
 
@@ -194,7 +204,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidUsername.fxml"));
             switchScene_old(loader);
-            primaryStage.setFullScreen(true);
+            primaryStage.setResizable(false);
+            primaryStage.setFullScreen(false);
         });
     }
 
@@ -248,6 +259,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 ColumnInsertionQuestionController controller1 = new ColumnInsertionQuestionController();
                 controller1.setStageAndSetupListeners(newStage, this, clientModel.getLibrary(clientModel.getMyName()));
                 return controller1;
+            });
+            newStage.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
             });
             Scene scene;
             try {
@@ -320,6 +335,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             }));
             primaryStage.setOnCloseRequest((event)->{
                 chatStage.close();
+                Platform.exit();
+                System.exit(0);
             });
             chatStage.setScene(scene);
             controllerChat=loader.getController();
@@ -461,16 +478,23 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     private void showBoard(Message arg) {
         createBoard();
-        Platform.runLater(() -> {
-            SetupMessage msg = (SetupMessage) arg;
-            showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
-            for (int i=0; i<msg.getPlayersName().length;i++)
-            {
-                showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
-            }
-            showCentralPoints(msg.getCentralPointCard());
+        primaryStage.setResizable(true);
+        SetupMessage msg = (SetupMessage) arg;
+        showGrid(msg.getGrid(), MessageGrid.TypeOfGridMessage.INIT);
+        for (int i = 0; i < msg.getPlayersName().length; i++) {
+            showLibrary(msg.getPlayersLibraries()[i], msg.getPlayersName()[i], null, null);
+        }
+        showCentralPoints(msg.getCentralPointCard());
+        showCommonPoints(msg.getPointCardCommon1(), msg.getPointCardCommon2());
+    }
+
+    private void showCommonPoints(int pointCardCommon1, int pointCardCommon2) {
+        Platform.runLater(()->{
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.initCommonGoalPoints(pointCardCommon1, pointCardCommon2);
         });
     }
+
 
     private void createBoard() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
@@ -535,8 +559,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         chatStage.setIconified(false);
     }
     public void showCentralPoints(int centralPoints) {
-        Board_C boardSceneController = (Board_C) currentController;
-        boardSceneController.showCentralPoints(centralPoints);
+        Platform.runLater(()->{
+            Board_C boardSceneController = (Board_C) currentController;
+            boardSceneController.showCentralPoints(centralPoints);
+        });
     }
     public Stage getPrimaryStage(){
         return primaryStage;
