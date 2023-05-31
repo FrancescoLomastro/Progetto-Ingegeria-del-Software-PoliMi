@@ -71,18 +71,20 @@ public class TurnController implements Runnable, Serializable {
                     playerNames,
                     game.getPlayers()[i].getPersonalGoalCard().getGoalVector(),
                     commonGoals,
-                    playerLibraries);
+                    countActualPointAndShare(),
+                    playerLibraries
+            );
             gameController.sendMessageToASpecificUser(message,playerNames[i]);
         }
         countActualPointAndShare();
     }
 
-    private void countActualPointAndShare() {
+    private ArrayList<Couple<String, Integer>> countActualPointAndShare() {
         ArrayList<Couple<String, Integer>> list = new ArrayList<>();
         for(int i=0; i<game.getNumPlayers(); i++){
             list.add(new Couple<>(game.getPlayers()[i].getName(), game.getPlayers()[i].getPoints()));
         }
-        gameController.notifyAllMessage(new MessagePoints(list));
+        return list;
     }
 
     /**
@@ -186,7 +188,7 @@ public class TurnController implements Runnable, Serializable {
         ArrayList<Couple<String, Integer>> list = game.findWinner();
       //  ViewFactory.getInstance().showWinnerScene(list);
         gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
-        countActualPointAndShare();
+        gameController.notifyAllMessage(new MessagePoints(countActualPointAndShare()));
         for (Couple<String, Integer> stringIntegerCouple : list) {
             gameController.sendMessageToASpecificUser(new MessageWinner(
                             list.get(0).getFirst(),

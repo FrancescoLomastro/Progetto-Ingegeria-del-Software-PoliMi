@@ -229,6 +229,7 @@ public class ClientModel extends Observable<Message> {
                 msg.getPlayersName(),
                 msg.getPersonalGoalCard(),
                 new String[]{msg.getDescription1(),msg.getDescription2()},
+                msg.getPlayersPoints(),
                 getObjectCards(msg.getPlayersLibraries())));
     }
     public String[] getPlayerNames()

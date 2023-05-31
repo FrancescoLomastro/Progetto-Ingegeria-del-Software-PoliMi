@@ -237,7 +237,15 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     @Override
     public void chatMessage(String username, String text) {
         Platform.runLater(()->{
-            controllerChat.printMessage(text, username);
+            if(controllerChat!=null) {
+                controllerChat.printMessage(text, username);
+                if (chatStage.isIconified()) {
+                    Platform.runLater(() -> {
+                        Board_C boardC = (Board_C) currentController;
+                        boardC.notifyMessage();
+                    });
+                }
+            }
         });
     }
 
@@ -277,7 +285,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             newStage.showAndWait();
         });
     }
-
+    /*
+    * Setup board to ask move
+    * */
     @Override
     public void askMove() {
         Platform.runLater(() ->
@@ -286,7 +296,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.onAskMove();
         });
     }
-
+    /*
+    * Update grid in board
+    * */
     @Override
     public void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
         Platform.runLater(() ->
@@ -295,7 +307,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.updateGrid(grid);
         });
     }
-
+    /**Update library in board. If update is after a move, it calls an animation
+    * @author: Riccardo Figini*/
     @Override
     public void showLibrary(ObjectCard[][] library, String username, Position[] oldGrid, Position[] newLibrary) {
         if(oldGrid!=null && newLibrary!=null) {
@@ -321,13 +334,15 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void printAll() {
         chatMessage("Server", "It's your turn");
     }
-
+    /**
+    * Create stage for chat
+     * @author: Riccardo figini
+    * */
     @Override
     public void startChat() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Chat.fxml"));
             Scene scene = loadScene_old(loader);
-
             chatStage = new Stage();
             chatStage.setOnCloseRequest((event -> {
                 event.consume();
@@ -486,6 +501,14 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         }
         showCentralPoints(msg.getCentralPointCard());
         showCommonPoints(msg.getPointCardCommon1(), msg.getPointCardCommon2());
+        showPointsPlayers(msg.getPlayersPoints());
+    }
+
+    private void showPointsPlayers(ArrayList<Couple<String, Integer>> playersPoints) {
+        Platform.runLater(()->{
+            Board_C boardC = (Board_C) currentController;
+            boardC.setPlayersPoints(playersPoints);
+        });
     }
 
     private void showCommonPoints(int pointCardCommon1, int pointCardCommon2) {

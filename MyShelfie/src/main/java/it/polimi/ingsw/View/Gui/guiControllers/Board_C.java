@@ -6,6 +6,7 @@ import it.polimi.ingsw.Network.Messages.MessageCommonGoal;
 import it.polimi.ingsw.View.Gui.guiControllers.BoardComponents.*;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
 import javafx.animation.*;
 import javafx.fxml.FXML;
@@ -67,6 +68,7 @@ public class Board_C implements Initializable {
     private Pane cardPoint2;
      double left_pointsRatio;
      double left_gridRatio;
+     private Timeline animationChatButton;
 
     @FXML
     private void handleLibrariesClick(String username) {
@@ -82,6 +84,7 @@ public class Board_C implements Initializable {
 
         doneButton.setVisible(false);
         openChatButton.setOnAction(actionEvent -> openChat());
+
 
         moveLabel.setVisible(false);
 
@@ -490,6 +493,8 @@ public class Board_C implements Initializable {
     }
 
     public void openChat() {
+        animationChatButton.stop();
+        openChatButton.setStyle("-fx-border-color: transparent;");
         ViewFactory.getInstance().showChat();
     }
     public void showCentralPoints(int centralPoints) {
@@ -518,7 +523,7 @@ public class Board_C implements Initializable {
         Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();
         points.get(arg.getPlayer()).getPointsLabel().setText(""+map.get(arg.getPlayer()));
 
-        if(arg.getGainedPointsSecondCard()==0 || arg.getGainedPointsSecondCard()==3){
+        if(arg.getGainedPointsSecondCard()==1 || arg.getGainedPointsSecondCard()==3){
             cardPoint1.getStyleClass().remove(0);
             cardPoint1.getStyleClass().add("point"+arg.getPointAvailable1());
         }
@@ -526,5 +531,28 @@ public class Board_C implements Initializable {
             cardPoint2.getStyleClass().remove(0);
             cardPoint2.getStyleClass().add("point"+arg.getPointAvailable2());
         }
+    }
+
+    public void setPlayersPoints(ArrayList<Couple<String, Integer>> playersPoints) {
+        for (Couple<String, Integer> playersPoint : playersPoints) {
+            points.get(playersPoint.getFirst()).getPointsLabel().setText("" + playersPoint.getSecond());
+        }
+    }
+
+    public void setupAnimationChatButton(){
+        openChatButton.setStyle("-fx-border-color: transparent;-fx-border-width: 10;");
+        Duration duration = Duration.seconds(2);
+        animationChatButton = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(openChatButton.styleProperty(), "-fx-border-color: CRIMSON;")),
+                new KeyFrame(duration.divide(2), new KeyValue(openChatButton.styleProperty(), "-fx-border-color: TRANSPARENT;")),
+                new KeyFrame(duration, new KeyValue(openChatButton.styleProperty(), "-fx-border-color: CRIMSON;"))
+        );
+        animationChatButton.setCycleCount(Animation.INDEFINITE);
+    }
+
+    public void notifyMessage() {
+        if(animationChatButton==null)
+            setupAnimationChatButton();
+        animationChatButton.play();
     }
 }

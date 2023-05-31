@@ -346,6 +346,10 @@ Pane
     -fx-background-image: url("../images/originals/pointCards/scoring_2.jpg");
     -fx-background-size: 100% 100%;
 }
+.point0{
+    -fx-managed: false;
+    -fx-visible: false;
+}
 .point_invisible{
     -fx-background-color: transparent;
     -fx-background-size: 100% 100%;

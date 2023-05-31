@@ -18,8 +18,9 @@ public class SetupMessage extends Message {
     private final int pointCardCommon1;
     private final int pointCardCommon2;
     private final int centralPointCard;
+    private final ArrayList<Couple<String, Integer>> playersPoints;
     public SetupMessage(int pointCardCommon1, int pointCardCommon2, int personalNumber, int numCom1, int numCom2, int centralPointCard, ObjectCard[][] grid, String[] playersName,
-                        ArrayList<Couple> personalGoalCards, String[] commonGoalCards , ObjectCard[][]... playersLibraries) {
+                        ArrayList<Couple> personalGoalCards, String[] commonGoalCards , ArrayList<Couple<String, Integer>> playersPoints ,ObjectCard[][]... playersLibraries) {
         super("server", MessageType.SETUP_MESSAGE);
         this.grid=grid;
         this.playersLibraries=playersLibraries;
@@ -33,6 +34,7 @@ public class SetupMessage extends Message {
         this.centralPointCard=centralPointCard;
         this.pointCardCommon1=pointCardCommon1;
         this.pointCardCommon2=pointCardCommon2;
+        this.playersPoints=playersPoints;
     }
 
     public int getCentralPointCard() {
@@ -73,6 +75,10 @@ public class SetupMessage extends Message {
 
     public int getPointCardCommon1() {
         return pointCardCommon1;
+    }
+
+    public ArrayList<Couple<String, Integer>> getPlayersPoints() {
+        return playersPoints;
     }
 
     public int getPointCardCommon2() {
