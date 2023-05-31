@@ -148,7 +148,9 @@ public class Controller implements ServerReceiver
                 }
                 else {
                     if(searchGameController(username)!=null)
+                    {
                         searchGameController(username).renewTimer(username);
+                    }
                 }
             }
         }

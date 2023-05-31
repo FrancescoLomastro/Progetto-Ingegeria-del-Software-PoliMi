@@ -580,6 +580,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     public void showChat() {
         chatStage.setIconified(false);
+        chatStage.toFront();
     }
     public void showCentralPoints(int centralPoints) {
         Platform.runLater(()->{

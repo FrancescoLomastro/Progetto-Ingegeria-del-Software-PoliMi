@@ -83,7 +83,7 @@ public class Board_C implements Initializable {
         vbox_buttons.setSpacing(15);
 
         doneButton.setVisible(false);
-        openChatButton.setOnAction(actionEvent -> openChat());
+        openChatButton.setOnMouseClicked(actionEvent -> openChat());
 
 
         moveLabel.setVisible(false);
@@ -445,8 +445,7 @@ public class Board_C implements Initializable {
         double dim=((Pane)panesGrid[0]).getHeight();
         String s;
         for(int i=0; i<oldInGrid.length; i++){
-            s=System.getProperty("user.dir")+"/src/main/resources/images/originals/objectCards/"+(panesGrid[i]).getStyleClass().get(0).substring(8, 11)+".png";
-            Image image = new javafx.scene.image.Image(s);
+            Image image = new javafx.scene.image.Image(getClass().getResourceAsStream("/images/originals/objectCards/"+(panesGrid[i]).getStyleClass().get(0).substring(8, 11)+".png"));
             panes[i] = new Rectangle(dim,dim,dim,dim);
             panes[i].getStyleClass().addAll((panesGrid[i]).getStyleClass());
             panes[i].toFront();
@@ -493,7 +492,8 @@ public class Board_C implements Initializable {
     }
 
     public void openChat() {
-        animationChatButton.stop();
+        if(animationChatButton!=null)
+            animationChatButton.stop();
         openChatButton.setStyle("-fx-border-color: transparent;");
         ViewFactory.getInstance().showChat();
     }

@@ -169,7 +169,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                 case CHAT_MESSAGE -> notifyAllMessage(message);
                 case PING_MESSAGE -> {
                     String username = message.getUsername();
-                    renewTimer(username);
+                   renewTimer(username);
                 }
             }
         }
