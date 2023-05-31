@@ -44,6 +44,7 @@ public abstract class Client extends UnicastRemoteObject {
         synchronized (pingMessage)
         {
             msg= pingMessage.orElse(null);
+            pingMessage = Optional.empty();
         }
         return msg;
     }

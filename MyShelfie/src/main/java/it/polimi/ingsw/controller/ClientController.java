@@ -90,10 +90,8 @@ public class ClientController implements Observer<View, OBS_Message> {
      */
     public void onMessage(Message message)  {
 
-        if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
+        System.out.println(ANSI_YELLOW + "Message has arrived: " + message.getType() + ANSI_RESET);
 
-            System.out.println(ANSI_YELLOW + "Message has arrived: " + message.getType() + ANSI_RESET);
-        }
 
         switch (message.getType())
         {

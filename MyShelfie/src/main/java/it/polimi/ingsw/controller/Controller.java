@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import static it.polimi.ingsw.controller.GameController.ANSI_RESET;
-import static it.polimi.ingsw.controller.GameController.PING_TIMEOUT;
+import static it.polimi.ingsw.controller.GameController.PING_GAP;
 
 public class Controller implements ServerReceiver
 {
@@ -57,7 +57,6 @@ public class Controller implements ServerReceiver
             try {
                 destroyAllFile();
             } catch (IOException ignored) {
-
             }
         }
     }
@@ -104,14 +103,14 @@ public class Controller implements ServerReceiver
 
         if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
             System.out.println(ANSI_PURPLE + "Message has arrived in controller: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
-        }
+       }
 
         MessageType type = message.getType();
         switch (type)
         {
             case LOGIN_REQUEST ->
             {
-                currentGame.startTimer(message.getUsername(), ((LoginMessage)message).getClientConnection());
+                currentGame.startTimer(((LoginMessage)message).getClientConnection());
                 playerBeforeJoiningLobby.put(message.getUsername(), ((LoginMessage)message).getClientConnection());
                 LoginMessage msg = (LoginMessage) message;
                 msg.getClientConnection().setPlayerName(message.getUsername());
@@ -139,12 +138,7 @@ public class Controller implements ServerReceiver
                 String username = message.getUsername();
                 if(playerBeforeJoiningLobby.containsKey(username)) {
                     Connection connection = playerBeforeJoiningLobby.get(username);
-                    connection.resetTimer(PING_TIMEOUT, this);
-                    try {
-                        connection.sendMessage(new ServerPingMessage(username));
-                    } catch (IOException e) {
-                        tryToDisconnect(connection, username);
-                    }
+                    connection.resetTimer( this);
                 }
                 else {
                     if(searchGameController(username)!=null)

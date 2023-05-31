@@ -39,7 +39,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     private transient Controller controller;
     private StatusGame statusGame;
     private transient RMIShared gameShared;
-    public static int PING_TIMEOUT = 1000000;
+    public static int PING_GAP = 3000;
+    public static int PING_TIMEOUT = 10000;
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
@@ -51,28 +52,17 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         this.controller = controller;
         statusGame = StatusGame.BEFORE_GAME;
     }
-    public void startTimer(String username,Connection connection)
+    public void startTimer(Connection connection)
     {
-        connection.startTimer(PING_TIMEOUT,controller);
-        try {
-            connection.sendMessage(new ServerPingMessage(username));
-        } catch (IOException e) {
-            tryToDisconnect(connection, username);
-        }
+        connection.startTimer(controller);
     }
     public void renewTimer(String username){
         Connection connection= clients.get(username);
         if(statusGame==StatusGame.IN_GAME)
-            connection.resetTimer(PING_TIMEOUT,this);
+            connection.resetTimer(this);
         else if(statusGame==StatusGame.BEFORE_GAME)
-            connection.resetTimer(PING_TIMEOUT, controller);
+            connection.resetTimer(controller);
         else {
-            tryToDisconnect(clients.get(username), username);
-            return;
-        }
-        try {
-            connection.sendMessage(new ServerPingMessage(username));
-        } catch (IOException e) {
             tryToDisconnect(clients.get(username), username);
         }
     }
