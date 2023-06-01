@@ -82,14 +82,18 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Scene scene = loadScene_old(loader);
         primaryStage.setScene(scene);
     }
-    private void createStage_old(FXMLLoader loader, int minHeight, int minWidth, boolean lockStage) {
+    private void createStage_old(FXMLLoader loader, int minHeight, int minWidth, boolean lockStage, boolean closeApplicationOnClose) {
         Stage newStage = new Stage();
         Scene scene = loadScene_old(loader);
         newStage.setScene(scene);
         newStage.setResizable(false);
         newStage.setMinHeight(minHeight);
         newStage.setMinWidth(minWidth);
-
+        if(closeApplicationOnClose){
+            newStage.setOnCloseRequest((event)->{
+                System.exit(0);
+            });
+        }
         if (lockStage) {
             newStage.initOwner(primaryStage);
             newStage.initModality(Modality.APPLICATION_MODAL);
@@ -97,10 +101,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         } else {
             newStage.show();
         }
-        newStage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
-        });
     }
     public void setPrimaryStage(Stage primaryStage)
     {
@@ -144,6 +144,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
           primaryStage.show();
         });
         primaryStage.setOnCloseRequest(e -> {
+            primaryStage.close();
             Platform.exit();
             System.exit(0);
         });
@@ -184,7 +185,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void startGame() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameHasBegun.fxml"));
-            createStage_old(loader,200,320,true);
+            createStage_old(loader,200,320,true,false);
         });
     }
 
@@ -267,10 +268,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 ColumnInsertionQuestionController controller1 = new ColumnInsertionQuestionController();
                 controller1.setStageAndSetupListeners(newStage, this, clientModel.getLibrary(clientModel.getMyName()));
                 return controller1;
-            });
-            newStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
             });
             Scene scene;
             try {
@@ -409,21 +406,21 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         Platform.runLater(()->
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
-            createStage_old(loader,200,320,true);
+            createStage_old(loader,200,320,true,false);
         });
     }
 
     public void showInvalidNumPlayers() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
-            createStage_old(loader,200,320,true);
+            createStage_old(loader,200,320,true,false);
         });
     }
 
     public void showInvalidNumberOfCards() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumObjCards.fxml"));
-            createStage_old(loader,200,320,true);
+            createStage_old(loader,200,320,true,false);
         });
     }
 
@@ -450,7 +447,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 return libraryPopUpController;
             });
 
-            createStage_old(loader, 200, 320, true);
+            createStage_old(loader, 200, 320, true, false);
         });
     }
 
@@ -547,7 +544,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 winnerSceneController.setFinalRanking(finalRanking);
                 return winnerSceneController;
             });
-            createStage_old(loader, 200, 320, true);
+            createStage_old(loader, 200, 320, true, false);
         });
     }
 
@@ -560,7 +557,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 commonGoalCardDescriptionController.setNum(num);
                 return commonGoalCardDescriptionController;
             });
-            createStage_old(loader, 200, 320, true);
+            createStage_old(loader, 200, 320, true, false);
         });
     }
 
@@ -571,7 +568,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 PersonalGoalCardPopUpController personalGoalCardPopUpController= new PersonalGoalCardPopUpController();
                 return personalGoalCardPopUpController;
             });
-            createStage_old(loader, 200, 320, true);
+            createStage_old(loader, 200, 320, true, false);
         });
     }
     public Stage getChatStage() {
@@ -588,7 +585,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.showCentralPoints(centralPoints);
         });
     }
-    public Stage getPrimaryStage(){
-        return primaryStage;
+    public void closeGame(String string) {
+        Platform.runLater(()->{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ErrorGame.fxml"));
+            createStage_old(loader, 200, 320, true, true);
+        });
     }
 }

@@ -39,4 +39,5 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     public int getDefaultSocketPort() {
         return defaultSocketPort;
     }
+    public abstract void closeGame(String string);
 }

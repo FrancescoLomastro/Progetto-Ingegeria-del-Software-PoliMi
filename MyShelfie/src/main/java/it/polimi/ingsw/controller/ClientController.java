@@ -127,14 +127,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             case CHAT_MESSAGE -> {
                 ChatMessage msg = (ChatMessage) message;
                 String text = msg.getText();
-
                 String username = msg.getUsername();
-                /*
-                if(username.equals(client.getUsername()))
-                {
-                    username="You";
-                }
-                 */
                 view.chatMessage(username,text);
             }
             case MY_MOVE_REQUEST -> {
@@ -154,12 +147,11 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case ALMOST_OVER -> {
                 clientModel.onAlmostOver((AlmostOverMessage) message);
-                //view.onAlmostOver("A player has completed his library, last turn concluding");
             }
             case ERROR -> {
                 ErrorMessage msg = (ErrorMessage) message;
-                view.printMessage(msg.getString());
-                System.exit(0);
+                pingHandler.shutDown();
+                view.closeGame(msg.getString());
             }
             case COMMON_GOAL -> {
                 clientModel.addPoint((MessageCommonGoal) message);

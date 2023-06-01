@@ -56,15 +56,21 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     {
         connection.startTimer(controller);
     }
+    /**Reset ping
+     * @author: Riccardo Figini
+     * @param username Player */
     public void renewTimer(String username){
+        ServerReceiver serverReceiver = controller;
         Connection connection= clients.get(username);
         if(statusGame==StatusGame.IN_GAME)
-            connection.resetTimer(this);
+            serverReceiver = this;
         else if(statusGame==StatusGame.BEFORE_GAME)
-            connection.resetTimer(controller);
+            serverReceiver = controller;
         else {
-            tryToDisconnect(clients.get(username), username);
+            controller.tryToDisconnect(connection, username);
+            return;
         }
+        connection.resetTimer(serverReceiver);
     }
     public void destroyEveryPing(){
         for(Map.Entry<String, Connection> entry: clients.entrySet()){
@@ -82,8 +88,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * this method adds a player in this game
-     * @param username : the player's username
-     * @param connection : the player's connection
+     * @param username : Player's username
+     * @param connection : Player's connection
      * */
     public void addPlayer(String username, Connection connection) {
         clients.put(username,connection);
@@ -185,10 +191,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             }
             case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER, AFTER_SEND_ACCEPT_MESSAGE -> {
                 controller.tryToDisconnect(connection, playerName);
-                /*TODO: non ho idea perché servi questo, non dovrebbero proprio arrivare qua questi messaggi perché il
-                *  server receiver è ancora il controllor, non so se ci sia qualcosa di sbagliato nella mia costruzione
-                *  o nel ping
-                * */
             }
             default -> {
                 System.out.println(Controller.ANSI_BLU + "Somethings goes wrong. Game will be closed" + ANSI_RESET);

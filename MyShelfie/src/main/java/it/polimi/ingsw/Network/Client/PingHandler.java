@@ -44,7 +44,7 @@ public class PingHandler implements Runnable {
                 }
                 timerScheduled=true;
                 pingTimer=new Timer();
-                pingTimer.schedule(new PingTaskClient(),PING_TIMEOUT);
+                pingTimer.schedule(new PingTaskClient(clientController),PING_TIMEOUT);
                 try
                 {
                     client.sendMessage(new ServerPingMessage(client.getUsername()));
@@ -61,5 +61,12 @@ public class PingHandler implements Runnable {
                 }
             }
         }
+    }
+    /**It is called when server send an error and ping needs to be stopped
+     * @author: Riccardo Figini
+     * */
+    public void shutDown() {
+        pingTimer.cancel();
+        timerScheduled=true;
     }
 }

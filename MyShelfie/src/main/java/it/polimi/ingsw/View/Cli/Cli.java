@@ -643,8 +643,17 @@ public class Cli extends View implements Runnable {
             case ALMOST_OVER -> almostOver((AlmostOverMessage) arg);
         }
     }
-
-
-
-
+    /**It is used when occurs an error an game will be closed
+     * @author: Riccardo Figini
+     * @author: Message with error
+     * */
+    @Override
+    public void closeGame(String string) {
+        System.out.println("Error! Game will be close");
+        System.out.println(string);
+        System.out.println("Press entry to close the window");
+        Scanner in = new Scanner(System.in);
+        in.nextLine();
+        System.exit(0);
+    }
 }
