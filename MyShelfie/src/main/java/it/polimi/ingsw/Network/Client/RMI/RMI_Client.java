@@ -9,6 +9,7 @@ import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Messages.NewGameServerMessage;
 import it.polimi.ingsw.Network.Messages.RMILoginMessage;
 import it.polimi.ingsw.Network.Servers.RMI.RMISharedInterface;
+import it.polimi.ingsw.Network.UtilsForRMI;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.View.View;
 
@@ -19,7 +20,7 @@ import java.rmi.registry.Registry;
 import java.util.Optional;
 
 public class RMI_Client extends Client implements RMIClientConnection {
-    private RMISharedInterface server;
+    private  RMISharedInterface server;
     /**
      * Constructor
      * @author: Riccardo Figini

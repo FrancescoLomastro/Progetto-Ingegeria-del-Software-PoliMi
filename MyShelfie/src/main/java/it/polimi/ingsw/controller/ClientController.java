@@ -6,6 +6,7 @@ import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.Network.Messages.*;
 import it.polimi.ingsw.Network.Messages.ChatMessage;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
+import it.polimi.ingsw.Network.UtilsForRMI;
 import it.polimi.ingsw.View.*;
 import it.polimi.ingsw.Network.Client.ClientModel;
 import it.polimi.ingsw.View.Cli.Cli;
@@ -63,6 +64,10 @@ public class ClientController implements Observer<View, OBS_Message> {
         try {
             switch (chosenTechnology) {
                 case 0 -> {
+                    String address = UtilsForRMI.getLocalIp();
+                    if(address==null)
+                        address="127.0.0.1";
+                    System.setProperty("java.rmi.server.hostname", address);
                     client = new RMI_Client(chosenUsername, chosenAddress, chosenPort);
                 }
                 case 1 -> {
@@ -77,6 +82,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             new Thread(pingHandler).start();
         }
         catch (Exception e){
+            System.out.println(e);
             view.errorCreatingClient(chosenAddress,chosenPort);
         }
     }
