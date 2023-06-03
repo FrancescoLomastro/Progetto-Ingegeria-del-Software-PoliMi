@@ -280,6 +280,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             newStage.initOwner(primaryStage);
             newStage.initModality(Modality.APPLICATION_MODAL);
             newStage.showAndWait();
+            newStage.setOnCloseRequest(windowEvent -> {
+                windowEvent.consume();
+            });
         });
     }
     /*

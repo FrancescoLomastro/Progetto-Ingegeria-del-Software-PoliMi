@@ -7,6 +7,9 @@
         --> 8 tessere dello stesso colore nella library (albi)
         --> 4 tessere dello stesso colore negli angoli della library (albi)
         --> 3 colonne ciascuna formata da 6 tessere di al massimo 3 colori diversi (albi)
+        --> 2 colonne ciascuna formata da 6 tessere di tipo diverso (albi)
+        --> 4 gruppi di 4 tessere dello stesso tipo, i gruppi possono essere di tipo diverso (albi)
+        --> 2 righe ciascuna formata da 5 diversi tipi di tessere (albi)
 
 - Problema figio con la grafica. Il mio computer ha un impostazione in cui setta il 150% della risoluzione. Con questa impostazione
 mi sballa tutte le dimensioni. Lo schermo è nel sistema operativo un 1920 ma java lo vede 1280x800. SceneBuilder lo vede piccolo e non riesco a veder le immagini
