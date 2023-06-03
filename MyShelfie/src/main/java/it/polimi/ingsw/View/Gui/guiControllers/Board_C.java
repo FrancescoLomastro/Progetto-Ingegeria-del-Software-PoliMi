@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
@@ -131,6 +132,7 @@ public class Board_C implements Initializable {
     private void setupGoals() {
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
         loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/CommonGoal.fxml"));
+
         try {
             son = loader.load();
             Common_C controller = loader.getController();

@@ -19,7 +19,9 @@
                <top>
                   <HBox fx:id="top" alignment="CENTER" prefHeight="70.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="moveLabel" alignment="CENTER" prefHeight="72.0" prefWidth="275.0" text="It's your turn! &#13;Select a minimum of 1 and a maximum of 3 cards" textAlignment="CENTER" textFill="#8B4513" wrapText="true" BorderPane.alignment="CENTER">
+                        <Label fx:id="moveLabel" alignment="CENTER" prefHeight="72.0" prefWidth="300.0"
+                               text="It's your turn!&#13;Select a minimum of 1 &#13;and a maximum of 3 cards"
+                               textAlignment="CENTER" textFill="#8B4513" wrapText="true" BorderPane.alignment="CENTER" styleClass="moveLabel">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Label>

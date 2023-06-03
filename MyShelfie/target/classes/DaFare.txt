@@ -4,6 +4,9 @@
         --> 4 righe con massimo 3 carte diverse per riga fatto e funziona (figio)
         --> diagonale di 5 tessere (figio)
         --> due tessere vicine dello stesso colore x6 (figio)
+        --> 8 tessere dello stesso colore nella library (albi)
+        --> 4 tessere dello stesso colore negli angoli della library (albi)
+        --> 3 colonne ciascuna formata da 6 tessere di al massimo 3 colori diversi (albi)
 
 - Problema figio con la grafica. Il mio computer ha un impostazione in cui setta il 150% della risoluzione. Con questa impostazione
 mi sballa tutte le dimensioni. Lo schermo è nel sistema operativo un 1920 ma java lo vede 1280x800. SceneBuilder lo vede piccolo e non riesco a veder le immagini

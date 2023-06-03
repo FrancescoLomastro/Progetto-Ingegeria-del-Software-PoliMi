@@ -169,6 +169,14 @@ Pane
     -fx-border-radius: 15px;
 }
 
+.moveLabel {
+    -fx-text-alignment: center;
+    -fx-min-height: 72;
+    -fx-min-width: 300;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
 .openChatButton
 {
     -fx-alignment: bottom_center;
@@ -187,6 +195,7 @@ Pane
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 2, 0, 0);
     -fx-translate-y: -2px;
 }
+
 .common1 {
     -fx-background-image: url("../images/originals/commonGoalCards/1.jpg");
     -fx-background-size: 100% 100%;
