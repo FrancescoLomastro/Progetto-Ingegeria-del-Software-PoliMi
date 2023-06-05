@@ -10,6 +10,9 @@
         --> 2 colonne ciascuna formata da 6 tessere di tipo diverso (albi)
         --> 4 gruppi di 4 tessere dello stesso tipo, i gruppi possono essere di tipo diverso (albi)
         --> 2 righe ciascuna formata da 5 diversi tipi di tessere (albi)
+        --> 5 colonne in ordine crescente e decrescente, tipo che formano una scala (albi) [manca solo una versione da testare la crescente 0,1,2,3,4]
+        --> 2 gruppi di 4 tessere dello stesso tipo che formano un quadrato 2x2 (albi)
+
 
 - Problema figio con la grafica. Il mio computer ha un impostazione in cui setta il 150% della risoluzione. Con questa impostazione
 mi sballa tutte le dimensioni. Lo schermo è nel sistema operativo un 1920 ma java lo vede 1280x800. SceneBuilder lo vede piccolo e non riesco a veder le immagini

@@ -38,7 +38,7 @@ public class WinnerSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        winner_label.setText(winner + " won!");
+        winner_label.setText(winner + " won! (" + finalRanking.get(0).getSecond() + " pts)");
 
         button_show_library.setOnMouseClicked(mouseEvent -> {
 
