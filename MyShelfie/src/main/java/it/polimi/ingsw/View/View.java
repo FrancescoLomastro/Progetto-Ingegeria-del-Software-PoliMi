@@ -6,7 +6,10 @@ import it.polimi.ingsw.Network.ObserverImplementation.Observable;
 import it.polimi.ingsw.Network.ObserverImplementation.Observer;
 import it.polimi.ingsw.View.OBSMessages.OBS_Message;
 import it.polimi.ingsw.model.Cards.ObjectCard;
+import it.polimi.ingsw.model.Utility.Couple;
 import it.polimi.ingsw.model.Utility.Position;
+
+import java.util.ArrayList;
 
 public abstract class View extends Observable<OBS_Message> implements Runnable, Observer<ClientModel,Message> {
     protected ClientModel clientModel;
@@ -40,4 +43,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
         return defaultSocketPort;
     }
     public abstract void closeGame(String string);
+    public void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking) {
+    }
+
 }

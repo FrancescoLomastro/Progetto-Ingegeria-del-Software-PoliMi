@@ -45,17 +45,17 @@ public class WinnerSceneController implements Initializable {
             handleButtonAction(winner);
         });
 
-        if(finalRanking.get(1) != null) {
+        if(finalRanking.size() > 1) {
 
             second_label.setText("2nd: " + finalRanking.get(1).getFirst() + " (" + finalRanking.get(1).getSecond() + " pts)");
         }
 
-        if(finalRanking.get(2) != null) {
+        if(finalRanking.size() > 2) {
 
             third_label.setText("3rd: " + finalRanking.get(2).getFirst() + " (" + finalRanking.get(2).getSecond() + " pts)");
         }
 
-        if(finalRanking.get(3) != null) {
+        if(finalRanking.size() > 3) {
 
             fourth_label.setText("4th: " + finalRanking.get(3).getFirst() + " (" + finalRanking.get(3).getSecond() + " pts)");
         }

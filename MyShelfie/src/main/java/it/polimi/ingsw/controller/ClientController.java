@@ -149,7 +149,10 @@ public class ClientController implements Observer<View, OBS_Message> {
             case WINNER -> {
                 MessageWinner msg = (MessageWinner) message;
                 view.printPoints();
-                view.printMessage("The game is ended\nYour points: "+msg.getMyPoints()+"\nWinner: "+msg.getWinner());
+                view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getWinner());
+                if (!(view instanceof Cli)) {
+                    view.showWinnerScene(msg.getFinalRanking());
+                }
             }
             case ALMOST_OVER -> {
                 clientModel.onAlmostOver((AlmostOverMessage) message);

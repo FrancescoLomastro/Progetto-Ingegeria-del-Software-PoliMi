@@ -186,13 +186,12 @@ public class TurnController implements Runnable, Serializable {
      * */
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findWinner();
-      //  ViewFactory.getInstance().showWinnerScene(list);
         gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
         gameController.notifyAllMessage(new MessagePoints(countActualPointAndShare()));
         for (Couple<String, Integer> stringIntegerCouple : list) {
             gameController.sendMessageToASpecificUser(new MessageWinner(
                             list.get(0).getFirst(),
-                            stringIntegerCouple.getSecond()),
+                            stringIntegerCouple.getSecond(), list),
                     stringIntegerCouple.getFirst());
         }
         gameController.closeGame();
