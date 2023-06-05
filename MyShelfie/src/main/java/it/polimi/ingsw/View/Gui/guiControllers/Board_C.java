@@ -504,14 +504,15 @@ public class Board_C implements Initializable {
     }
 
     public void almostOver(AlmostOverMessage arg) {
+        int updatedPoints= ViewFactory.getInstance().getClientModel().getPointsMap().get(arg.getFillerName());
         centralPointCard.getStyleClass().removeAll(centralPointCard.getStyleClass());
         centralPointCard.getStyleClass().add("point_invisible");
         BorderPane fillerPane = points.get(arg.getFillerName()).getPointsPane();
         Label fillerLabel = points.get(arg.getFillerName()).getPointsLabel();
+        fillerLabel.setText(""+updatedPoints);
         fillerPane.getStyleClass().removeAll(fillerPane.getStyleClass());
         fillerPane.getStyleClass().add("points_filler");
-        fillerLabel.getStyleClass().remove("-fx-text-fill: white;");
-        fillerLabel.getStyleClass().add("-fx-text-fill: black;");
+        fillerLabel.setStyle("-fx-text-fill: black;");
     }
 
     public void initCommonGoalPoints(int card1, int card2){
