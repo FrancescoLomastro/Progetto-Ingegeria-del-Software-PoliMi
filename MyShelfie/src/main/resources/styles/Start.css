@@ -1,8 +1,0 @@
-#initialLabel {
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, black, 1, 1, 0, 0);
-}
-#background {
-    -fx-background-image: url('../images/developed/InitialBackground.jpg');
-    -fx-background-size: 100% 100%;
-}
