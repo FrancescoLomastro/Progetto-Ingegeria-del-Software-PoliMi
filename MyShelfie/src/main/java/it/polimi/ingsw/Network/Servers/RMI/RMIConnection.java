@@ -16,7 +16,6 @@ public class RMIConnection extends Connection {
     }
     @Override
     public void sendMessage(Message message) throws RemoteException {
-
         clientConnection.onMessage(message);
     }
     @Override

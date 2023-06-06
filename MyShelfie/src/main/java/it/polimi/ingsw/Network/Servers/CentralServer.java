@@ -63,14 +63,4 @@ public class CentralServer {
         CentralServer centralServer = new CentralServer();
         centralServer.start();
     }
-
-    /**
-     * This method takes care of activating the controller for preparing server-side responses to client requests during the pre-game phase.
-     *
-     * @param message: it is the specific message to which the controller must respond.
-     * @author Alberto Aniballi
-     */
-    public void onMessage(Message message) {
-        controller.onMessage(message);
-    }
 }

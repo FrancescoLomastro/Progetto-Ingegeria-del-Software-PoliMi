@@ -165,7 +165,6 @@ public class Game implements Serializable {
         return list;
     }
     public void setNextPlayer(String name){
-
         this.players[index] = new Player(name, cardGenerator);
         index ++;
     }

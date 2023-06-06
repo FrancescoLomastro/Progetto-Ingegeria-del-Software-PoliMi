@@ -312,7 +312,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     /**
      * @return the size of the hashmap that contains the players
      * */
-    public int getSizeArrayConnection()
+    public int getSizeOfLobby()
     {
         return clients.size();
     }

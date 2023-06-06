@@ -104,10 +104,13 @@ public class TurnController implements Runnable, Serializable {
     /**
      * implementation of Runnable interface's method run
      * */
-    public void run() {
+    public void run()
+    {
         Message moveResult;
         moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
         if (moveResult.getType() == AFTER_MOVE_POSITIVE) {
+
+            gameController.sendMessageToASpecificUser(moveResult, message.getUsername());
 
             ObjectCard[][] oldLibrary = game.getLibrary(message.getUsername());
             MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername(),
@@ -117,7 +120,6 @@ public class TurnController implements Runnable, Serializable {
             MessageGrid messageGrid = new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE);
             gameController.notifyAllMessage(messageGrid);
 
-            gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa è adnata a buon fine
 
             /*Controllo se la sua libraria è terminata, allora attivo il countdown*/
             if (game.checkEndLibrary(message.getUsername()) && !flagCountdown) {

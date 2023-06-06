@@ -58,8 +58,8 @@ public class SocketConnection extends Connection implements Runnable {
      */
     @Override
     public void run() {
-        boolean continueCicle=true;
-        while (continueCicle)
+        boolean continueCycle=true;
+        while (continueCycle)
         {
             try
             {
@@ -77,7 +77,7 @@ public class SocketConnection extends Connection implements Runnable {
                     System.out.println(Controller.ANSI_BLU + "Failed closing socket\n[Details]\n" + ex + GameController.ANSI_RESET);
                 }
                 serverReceiver.tryToDisconnect(this, playerName);
-                continueCicle=false;
+                continueCycle=false;
             }
         }
     }

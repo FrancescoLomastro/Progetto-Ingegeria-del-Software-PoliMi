@@ -15,13 +15,12 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import static it.polimi.ingsw.controller.GameController.ANSI_RESET;
-import static it.polimi.ingsw.controller.GameController.PING_GAP;
 
 public class Controller implements ServerReceiver
 {
     public final static String ANSI_BLU ="\u001B[34m ";
     public static final String ANSI_PURPLE = "\u001B[35m ";
-    private Map<String, String> oldPlayer;
+    private Map<String, String> oldPlayersMap;
     private final ArrayList<GameController> games;
     private GameController currentGame;
     private Map<String, Connection> currentPlayerConnectionReferences;
@@ -34,11 +33,12 @@ public class Controller implements ServerReceiver
     String pathFileWithNumberOfGame="src/main/resources/gameFile/gameNumbers.json";
     public Controller() {
         games = new ArrayList<>();
-        currentGame= new GameController(choseNewNumberForGame(), this);
+        currentGame= new GameController(getAvailableID(), this);
         currentPlayerConnectionReferences = new HashMap<>();
         playerBeforeJoiningLobby = new HashMap<>();
         waitedRequest=null;
         isAsking=false;
+        games.add(currentGame);
         System.out.println("Do you want restor memory?");
         System.out.println(" - Yes(1)");
         System.out.println(" - No(0), in this case memory will be destroyed (all games)");
@@ -67,7 +67,7 @@ public class Controller implements ServerReceiver
                 changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
                 currentGame.destroyEveryPing();
                 destroyGame(playerName, "First player left, game will be closed", currentGame);
-                currentGame = new GameController(choseNewNumberForGame(), this);
+                currentGame = new GameController(getAvailableID(), this);
                 waitedRequest = null;
                 isAsking =false;
             }
@@ -77,7 +77,7 @@ public class Controller implements ServerReceiver
             }
             case AFTER_REQUEST_NUMBER_PLAYER ->{
                 System.out.println(ANSI_BLU + "Couldn't ask number to the client " + playerName + ", dropping the request..." + ANSI_RESET);
-                currentGame = new GameController(choseNewNumberForGame(), this);
+                currentGame = new GameController(getAvailableID(), this);
                 waitedRequest = null;
                 isAsking =false;
                 playerBeforeJoiningLobby.get(playerName).destroyPing();
@@ -110,9 +110,9 @@ public class Controller implements ServerReceiver
         {
             case LOGIN_REQUEST ->
             {
-                currentGame.startTimer(((LoginMessage)message).getClientConnection());
-                playerBeforeJoiningLobby.put(message.getUsername(), ((LoginMessage)message).getClientConnection());
                 LoginMessage msg = (LoginMessage) message;
+                currentGame.startTimer(msg.getClientConnection());
+                playerBeforeJoiningLobby.put(message.getUsername(), msg.getClientConnection());
                 msg.getClientConnection().setPlayerName(message.getUsername());
                 login(msg.getUsername(),msg.getClientConnection());
             }
@@ -184,8 +184,8 @@ public class Controller implements ServerReceiver
             String path = "src/main/resources/gameFile/ServerGame"+number+".bin";
             getPlayerFromFile(path, number);
         }
-        System.out.println("File has been read, players: " + oldPlayer.size());
-        for(Map.Entry<String, String> entry : oldPlayer.entrySet()){
+        System.out.println("File has been read, players: " + oldPlayersMap.size());
+        for(Map.Entry<String, String> entry : oldPlayersMap.entrySet()){
             System.out.println("- " + entry.getKey() + ", " + entry.getValue());
         }
     }
@@ -196,14 +196,14 @@ public class Controller implements ServerReceiver
      * */
     private JsonObject getArrayJsonWithNumberGame() {
         Gson gson = new Gson();
-        oldPlayer = new LinkedHashMap<>();
+        oldPlayersMap = new LinkedHashMap<>();
         Reader reader;
         try {
             reader = new FileReader(pathFileWithNumberOfGame);
         } catch (FileNotFoundException e) {
             System.out.println(ANSI_BLU + "No file with old games, impossible to restore unfinished game" + ANSI_RESET);
             System.out.println(ANSI_BLU + "Server will continue without restoring games..."+ ANSI_RESET);
-            oldPlayer=null;
+            oldPlayersMap =null;
             return null;
         }
         return gson.fromJson(reader, JsonObject.class);
@@ -233,7 +233,7 @@ public class Controller implements ServerReceiver
         }
         ArrayList<String> list = gameController.getNamesOfPlayer();
         for (String s : list) {
-            oldPlayer.put(s, gameId);
+            oldPlayersMap.put(s, gameId);
         }
     }
 
@@ -241,17 +241,18 @@ public class Controller implements ServerReceiver
         connection.setStatusNetwork(StatusNetwork.ARRIVED_LOGIN_MESSAGE);
         int id = isOldPlayer(username);
         if(id == -1) {
-            if (availableUsername(username)) {
-                connection.setPlayerName(username);
-                if (currentGame.getSizeArrayConnection() == 0) {
-                    if (isAsking) {
+            if (isAvailableUsername(username)) {
+                if (currentGame.getSizeOfLobby() == 0) {
+                    if (isAsking)
+                    {
                         connection.setStatusNetwork(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED);
                         try {
                             connection.sendMessage(new ErrorMessage("A lobby is being created from another user, please retry soon"));
                         } catch (IOException e) {
                             tryToDisconnect(connection, username);
                         }
-                    } else {
+                    }
+                    else {
                         waitedRequest = new Request(username, connection);
                         isAsking = true;
                         connection.setStatusNetwork(StatusNetwork.AFTER_REQUEST_NUMBER_PLAYER);
@@ -285,7 +286,7 @@ public class Controller implements ServerReceiver
     }
 
     private int isOldPlayer(String username) {
-        for(Map.Entry<String, String> entry : oldPlayer.entrySet()){
+        for(Map.Entry<String, String> entry : oldPlayersMap.entrySet()){
             if(entry.getKey().equals(username)){
                 System.out.println("Old player has joined: " + username);
                 return Integer.parseInt(entry.getValue());
@@ -295,16 +296,16 @@ public class Controller implements ServerReceiver
     }
 
     private void addPlayer(String username, Connection connection) {
-        games.add(currentGame);
+
         currentGame.addPlayer(username,connection);
         currentPlayerConnectionReferences.put(username, connection);
         playerBeforeJoiningLobby.remove(username);
-        if(currentGame.getSizeArrayConnection()==currentGame.getLimitOfPlayers())
+        if(currentGame.getSizeOfLobby()==currentGame.getLimitOfPlayers())
         {
             writeNewGameInExecution(currentGame.getGameId());
             changeStatusToEveryone(StatusNetwork.NEW_GAME_IS_STARTING, currentGame, currentPlayerConnectionReferences);
             new Thread(currentGame).start();
-            int num = choseNewNumberForGame();
+            int num = getAvailableID();
             currentGame=new GameController(num, this);
             currentPlayerConnectionReferences = new HashMap<>();
         }
@@ -322,7 +323,7 @@ public class Controller implements ServerReceiver
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
             changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
-            currentGame = new GameController(choseNewNumberForGame(), this);
+            currentGame = new GameController(getAvailableID(), this);
             return;
         }
 
@@ -332,7 +333,7 @@ public class Controller implements ServerReceiver
             System.out.println(ANSI_BLU + "Impossible to open jsonArray" + ANSI_RESET);
             changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
-            currentGame = new GameController(choseNewNumberForGame(), this);
+            currentGame = new GameController(getAvailableID(), this);
             return;
         }
 
@@ -347,15 +348,15 @@ public class Controller implements ServerReceiver
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
             changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
-            currentGame = new GameController(choseNewNumberForGame(), this);
+            currentGame = new GameController(getAvailableID(), this);
         }
     }
 
-    /**It chose available number for game. It controls a file with every game
+    /**It chose available ID for a game. It controls a file with every existing game
      * @author: Riccardo Figini
      * @return {@code int} Available number
      * */
-    private int choseNewNumberForGame() {
+    private int getAvailableID() {
         JsonObject jsonObject = getArrayJsonWithNumberGame();
         if(jsonObject == null)
             throw new NullPointerException("Problem with file");
@@ -372,7 +373,7 @@ public class Controller implements ServerReceiver
         return max;
     }
 
-    private boolean availableUsername(String username) {
+    private boolean isAvailableUsername(String username) {
         for (GameController gc : games) {
             if (gc.getNamesOfPlayer().contains(username))
                 return false;
@@ -424,7 +425,7 @@ public class Controller implements ServerReceiver
             tryToDisconnect(connection, username);
         }
 
-        if(gameController.getSizeArrayConnection() == gameController.getLimitOfPlayers()) {
+        if(gameController.getSizeOfLobby() == gameController.getLimitOfPlayers()) {
             gameController.restartGameAfterReload();
             removePlayerFromOldList(gameController);
         }
@@ -436,7 +437,7 @@ public class Controller implements ServerReceiver
 
     private void removePlayerFromOldList(GameController gameController) {
         for(int i = 0; i< gameController.getNamesOfPlayer().size(); i++){
-            oldPlayer.remove(gameController.getNamesOfPlayer().get(i));
+            oldPlayersMap.remove(gameController.getNamesOfPlayer().get(i));
         }
     }
 
