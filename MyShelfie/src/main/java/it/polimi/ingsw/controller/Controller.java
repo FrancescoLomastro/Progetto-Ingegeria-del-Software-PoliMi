@@ -307,6 +307,7 @@ public class Controller implements ServerReceiver
             new Thread(currentGame).start();
             int num = getAvailableID();
             currentGame=new GameController(num, this);
+            games.add(currentGame);
             currentPlayerConnectionReferences = new HashMap<>();
         }
     }
