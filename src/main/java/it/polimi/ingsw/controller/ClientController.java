@@ -142,8 +142,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case AFTER_MOVE_NEGATIVE -> {
                 MessageAfterMoveNegative msg = (MessageAfterMoveNegative) message;
-                if(view instanceof Cli)
-                    view.printMessage(msg.getInvalidMessage());
+                view.printMessage(msg.getInvalidMessage(), msg);
                 view.askMove();
             }
             case WINNER -> {

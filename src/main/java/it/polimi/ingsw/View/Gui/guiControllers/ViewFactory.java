@@ -391,6 +391,22 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void printMessage(String string) {
         chatMessage("Server", string);
     }
+    @Override
+    public void printMessage(String s, Message msg){
+        if(msg.getType()==MessageType.AFTER_MOVE_NEGATIVE){
+            Platform.runLater(()->{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidMove.fxml"));
+                loader.setControllerFactory((con)->{
+                    InvalidMoveController invalidMoveController = new InvalidMoveController();
+                    invalidMoveController.setText(s);
+                    return invalidMoveController;
+                });
+                createStage_old(loader,200,320,true,false);
+            });
+        }
+        else
+            printMessage(s);
+    }
 
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
@@ -487,7 +503,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         {
             Board_C boardSceneController = (Board_C) currentController;
             boardSceneController.updatePoints(arg);
-            chatMessage("Server", arg.getPlayer()+" has reach common goal card");
+            chatMessage("Server", arg.getPlayer()+" has reach common goal");
         });
     }
 
@@ -540,6 +556,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     public void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking){
         Platform.runLater(() -> {
+            showPointsPlayers(finalRanking);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/WinnerScene.fxml"));
             loader.setControllerFactory(controllerClass -> {
                 WinnerSceneController winnerSceneController= new WinnerSceneController();

@@ -1,0 +1,50 @@
+#anchor_pane{
+
+    -fx-background-color: #a6ff4d;
+    -fx-border-color: #ac7339;
+    -fx-border-width: 10px;
+}
+
+#winner_label_pane{
+
+    -fx-background-color: #73e600;
+    -fx-background-color: linear-gradient(to bottom, #a6ff4d, #73e600);
+}
+
+#biggest_pane{
+
+    -fx-background-color: #a6ff4d;
+    -fx-background-color: linear-gradient(to top, #a6ff4d, #73e600);
+}
+
+#winner_label{
+
+
+}
+
+#winner_image_pane{
+
+    -fx-background-image: url("../images/final_cup.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-size: 100% 100%;
+}
+
+#button_show_library{
+
+    -fx-background-color: #cc9838;
+    -fx-background-color: linear-gradient(to top, #73e600, #a6ff4d);
+}
+
+#mini_library{
+
+    -fx-background-image: url("../images/originals/boards/bookshelf.png");
+    -fx-background-size: 100% 100%;
+}
+
+#first_label{
+
+}
+
+#others_label{
+
+}

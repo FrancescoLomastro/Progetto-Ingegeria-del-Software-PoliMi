@@ -253,6 +253,11 @@ public class Cli extends View implements Runnable {
     {
         System.out.println("\n>> "+s);
     }
+    @Override
+    public void printMessage(String s, Message msg)
+    {
+        this.printMessage(s);
+    }
 
 
     /**

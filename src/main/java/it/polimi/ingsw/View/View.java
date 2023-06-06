@@ -23,6 +23,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     public abstract void lobbyUpdate(String string);
     public abstract void acceptedLogin();
     public abstract void printMessage(String string);
+    public abstract void printMessage(String string, Message msg);
     public abstract void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage);
     public abstract void showLibrary(ObjectCard[][] library, String username, Position[] old, Position[] inTable);
     public abstract void printAll();
