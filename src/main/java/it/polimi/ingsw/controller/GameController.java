@@ -162,7 +162,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         if(statusGame!=StatusGame.ABORT) {
             switch (message.getType()) {
                 case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
-                case CHAT_MESSAGE -> notifyAllMessage(message);
+                case CHAT_MESSAGE -> manageChatMessage(message);
                 case PING_MESSAGE -> {
                     String username = message.getUsername();
                    renewTimer(username);
@@ -170,6 +170,36 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             }
         }
     }
+
+    private void manageChatMessage(Message message) {
+        ChatMessage msg = (ChatMessage) message;
+        String chatText = msg.getText();
+        if(chatText.length()!=0)
+        {
+            if(chatText.charAt(0) == '@')
+            {
+                int firstSpaceIndex= chatText.indexOf(" ",0);
+                if(firstSpaceIndex != -1 && firstSpaceIndex!=chatText.length()-1)
+                {
+                    String receiverUsername = chatText.substring(1, firstSpaceIndex);
+                    String chatPayload = chatText.substring(firstSpaceIndex+1);
+                    if (clients.containsKey(receiverUsername))
+                    {
+                        sendMessageToASpecificUser(new ChatMessage("Private from "+msg.getUsername(),chatPayload), receiverUsername);
+                        sendMessageToASpecificUser(new ChatMessage("Private to "+msg.getUsername(),chatPayload), msg.getUsername());
+                    }
+                    else {
+                        sendMessageToASpecificUser(new ChatMessage("Server","Player named "+receiverUsername+" not found"),msg.getUsername());
+                    }
+                }
+            }
+            else
+            {
+                notifyAllMessage(message);
+            }
+        }
+    }
+
     /**
      * It manages error that can came from network
      * @author: Riccardo Figini

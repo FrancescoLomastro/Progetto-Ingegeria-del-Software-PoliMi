@@ -1,0 +1,25 @@
+- Prima o poi fare una partita per ogni common goal card. Sotto le svolte (e sembrano funzionare)
+        --> Croce o X funziona  (figio)
+        --> 4 righe con massimo 3 carte diverse per riga fatto e funziona (figio)
+        --> diagonale di 5 tessere (figio)
+        --> due tessere vicine dello stesso colore x6 (figio)
+        --> 8 tessere dello stesso colore nella library (albi)
+        --> 4 tessere dello stesso colore negli angoli della library (albi)
+        --> 3 colonne ciascuna formata da 6 tessere di al massimo 3 colori diversi (albi)
+        --> 2 colonne ciascuna formata da 6 tessere di tipo diverso (albi)
+        --> 4 gruppi di 4 tessere dello stesso tipo, i gruppi possono essere di tipo diverso (albi)
+        --> 2 righe ciascuna formata da 5 diversi tipi di tessere (albi)
+        --> 5 colonne in ordine crescente e decrescente, tipo che formano una scala (albi) [manca solo una versione da testare la crescente 0,1,2,3,4]
+        --> 2 gruppi di 4 tessere dello stesso tipo che formano un quadrato 2x2 (albi)
+
+
+- Problema figio con la grafica. Il mio computer ha un impostazione in cui setta il 150% della risoluzione. Con questa impostazione
+mi sballa tutte le dimensioni. Lo schermo è nel sistema operativo un 1920 ma java lo vede 1280x800. SceneBuilder lo vede piccolo e non riesco a veder le immagini
+come dovrebbero
+come dovrebbero
+
+
+- Se giocano in 2 e un obiettivo è completato 2 volte, uno dal gioc1 e l'altro dal gioc2, la carta si riduce da 8 a 4 ma da 4 resta a 4, dovrebbe sparire
+- Prima del popup di vittoria aggiornare i punti
+- popup di mossa non valida
+- glitch chat: se clicco nel sullo sfondo della chat i messaggi finiscono al centro

@@ -71,7 +71,6 @@ public class ChatController implements Initializable {
             String text = textArea.getText().trim();
             if (text.length() > 0) {
                 textArea.clear();
-                printOwnMessage(text);
                 ViewFactory viewFactory = ViewFactory.getInstance();
                 viewFactory.notifyAllOBS(new OBS_ChatMessage(text));
             }
@@ -92,8 +91,12 @@ public class ChatController implements Initializable {
     }
     public void printMessage(String text, String user){
         Pos pos;
-        if(user.equals(ViewFactory.getInstance().getClientModel().getMyName()))
+        String myName = ViewFactory.getInstance().getClientModel().getMyName();
+        if(user.equals(myName) || user.equals("Private to "+myName))
+        {
+            printOwnMessage(text);
             return;
+        }
         else if(user.equals("Server"))
              pos = Pos.TOP_CENTER;
         else
