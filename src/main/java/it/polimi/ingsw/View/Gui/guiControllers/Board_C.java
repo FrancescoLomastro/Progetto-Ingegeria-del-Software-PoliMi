@@ -527,11 +527,11 @@ public class Board_C implements Initializable {
         points.get(arg.getPlayer()).getPointsLabel().setText(""+map.get(arg.getPlayer()));
 
         if(arg.getGainedPointsSecondCard()==1 || arg.getGainedPointsSecondCard()==3){
-            cardPoint1.getStyleClass().removeAll();
+            cardPoint1.getStyleClass().removeAll("point8", "point6", "point4","point2", "point0");
             cardPoint1.getStyleClass().add("point"+arg.getPointAvailable1());
         }
         if(arg.getGainedPointsSecondCard()==2 || arg.getGainedPointsSecondCard()==3){
-            cardPoint2.getStyleClass().removeAll();
+            cardPoint2.getStyleClass().removeAll("point8", "point6", "point4","point2", "point0");
             cardPoint2.getStyleClass().add("point"+arg.getPointAvailable2());
         }
     }
