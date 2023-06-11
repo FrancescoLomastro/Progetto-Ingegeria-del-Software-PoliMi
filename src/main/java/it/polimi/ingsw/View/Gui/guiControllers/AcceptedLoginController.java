@@ -12,6 +12,14 @@ import javafx.stage.WindowEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class governs the GUI of the transition phase between a login request and its acceptance by the controller.
+ * It is used as an intermediary between the fixed parts of the GUI of the 'AcceptedLogin.fxml' file and
+ * the dynamic information that the controller sends to the graphic components of the associated fxml file.
+ * In addition, the class governs the interaction between the user and the various graphic components of the scene.
+ *
+ * @author Alberto Aniballi
+ */
 public class AcceptedLoginController implements Initializable {
     public Label current_numPlayers_label;
     public Label member_players;
