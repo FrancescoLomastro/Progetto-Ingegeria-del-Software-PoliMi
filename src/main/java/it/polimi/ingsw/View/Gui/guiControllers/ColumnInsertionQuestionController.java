@@ -27,7 +27,8 @@ import java.util.ResourceBundle;
 /**
  * This class governs the GUI of the insertion phase of the library column chosen by the player to insert the cards just chosen from the grid.
  * It is used as an intermediary between the fixed parts of the GUI of the 'ColumnInsertionQuestion.fxml' file and
- * it manages the interaction between the user and the various graphic components of the scene.
+ * the dynamic information that the controller sends to the graphic components of the associated fxml file.
+ * In addition, the class manages the interaction between the user and the various graphic components of the scene.
  *
  * @author Alberto Aniballi
  */

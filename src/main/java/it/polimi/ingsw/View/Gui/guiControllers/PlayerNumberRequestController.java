@@ -15,6 +15,15 @@ import javafx.stage.Screen;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class governs the GUI dedicated to managing the choice of the number of players who will participate in the game,
+ * the choice is made by the first player to connect to the server.
+ * It is used as an intermediary between the fixed parts of the GUI of the 'PlayerNumberRequest.fxml' file and
+ * the dynamic information that the controller sends to the graphic components of the associated fxml file.
+ * In addition, the class manages the interaction between the user and the various graphic components of the scene.
+ *
+ * @author Alberto Aniballi
+ */
 public class PlayerNumberRequestController implements Initializable {
     public TextField input_number_players;
     public VBox internal_vbox_container;

@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * This class governs the GUI of the phase in which the user enters the login information that will then be used to connect the player to the game or the pre-game lobby.
  * It is used as an intermediary between the fixed parts of the GUI of the 'ClientLogin.fxml' file and
  * the dynamic information that the controller sends to the graphic components of the associated fxml file.
- * In addition, the class governs the interaction between the user and the various graphic components of the scene.
+ * In addition, the class manages the interaction between the user and the various graphic components of the scene.
  *
  * @author Alberto Aniballi
  */

@@ -12,6 +12,15 @@ import javafx.stage.Screen;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class governs the GUI dedicated to the error phase of creating a player within the game, after the user has entered and submitted the initial data
+ * required to be able to participate in the game.
+ * It is used as an intermediary between the fixed parts of the GUI of the 'ErrorClientCreation.fxml' file and
+ * the dynamic information that the controller sends to the graphic components of the associated fxml file.
+ * In addition, the class manages the interaction between the user and the various graphic components of the scene.
+ *
+ * @author Alberto Aniballi
+ */
 public class ErrorClientCreationController implements Initializable {
     public Label errorConnection_label;
     public Button retry_btn;
