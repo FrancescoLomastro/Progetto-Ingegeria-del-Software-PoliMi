@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.Player.Library;
 import it.polimi.ingsw.network.Messages.Message;
 import it.polimi.ingsw.network.Messages.MessageAfterMoveNegative;
 import it.polimi.ingsw.network.Messages.MessageAfterMovePositive;
@@ -26,10 +27,13 @@ public class Game implements Serializable {
     private static final long serialVersionUID = 1L;
     private final int numPlayers;
     private final Player[] players;
-    private final Grid grid;
     private final LivingRoom livingRoom;
     private final CardGenerator cardGenerator;
     private int index;
+
+
+
+
     /**
      * constructor of the class Game
      * @param numPlayers: the number of the players in that game
@@ -39,37 +43,59 @@ public class Game implements Serializable {
         this.numPlayers=numPlayers;
         this.players = new Player[numPlayers];
         this.livingRoom = new LivingRoom(numPlayers,  2,cardGenerator);
-        this.grid = livingRoom.getGrid();
         this.index = 0;
     }
 
+
+
+
+    /**
+     * @return the number of players of the game
+     */
     public int getNumPlayers() {
         return numPlayers;
     }
 
+
+
+
+    /**
+     * @return a matrix representation of the central grid
+     */
     public ObjectCard[][] getGrid() {
-        return grid.getMatrix();
+        return livingRoom.getGrid().getMatrix();
     }
 
-    public ObjectCard[][] getLibrary(String username) {
 
+
+
+    /**
+     * Returns a matrix representation of the passed user library
+     * @param username the username of the player who owns the library
+     * @return a matrix representation of user's library
+     */
+    public ObjectCard[][] getLibrary(String username) {
         return searchByUsername(username).getLibrary().getMatrix();
     }
 
+
+
+
     public Player[] getPlayers() {
         Player[] answer = new Player[numPlayers];
-
         System.arraycopy(players, 0, answer, 0, numPlayers);
-
         return answer;
     }
 
+
+
+
     /**
-     * this method searches a player in a game, starting from his username
-     * @param username : the turn player
+     * This method searches a player in a game, starting from his username
+     * @param username : the player username
      * @return Player : the Player whose username matches with the parameter
      */
-    public Player searchByUsername(String username){
+    private Player searchByUsername(String username){
 
         for(Player player : players){
 
@@ -81,18 +107,23 @@ public class Game implements Serializable {
         return null;
     }
 
+
+
+
     /**
-     * It manages turn. The first step is check is move is valid. Then it inserts card in player's library. Finally,  it controls common goal
+     * This method manages a turn.
+     * Checks if a move is valid, then inserts card in player's library and then controls common goals.
      * @param username: the turn player
      * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
     public Message manageTurn(String username, Position[] move, int column){
         Player player = searchByUsername(username);
-        ObjectCard[] obs;
+        ObjectCard[] objectCards;
+        Grid grid = livingRoom.getGrid();
         try{
-            obs = checkMove(player, move, column);
-            player.getLibrary().insertCardsInLibrary(column, obs);
+            objectCards = checkMove(player, move, column);
+            player.getLibrary().insertCardsInLibrary(column, objectCards);
             if(grid.needRefill())
                 grid.refill();
             return checkCommonGoal(player, livingRoom.getCommonGoalCards());
@@ -102,26 +133,31 @@ public class Game implements Serializable {
         }
     }
 
+
+
+
     /**
-     * @param player: the turn player
-     * @param commonGoalCards: the two common goal cards that are in the living room
+     * Creates a message that contains the points of the passed common goal cards, earned by the player's library
+     * @param player: player whose library will be checked
+     * @param commonGoalCards: the two common goal cards to check
      */
     private Message checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards){
         int points1=0, points2=0;
-        boolean goalCards[] = player.getLibrary().getSatisfiedGoal();
-        if(goalCards[0]==false)
+        Library userlibrary = player.getLibrary();
+        boolean satisfiedGoal[] = userlibrary.getSatisfiedGoal();
+        if(satisfiedGoal[0]==false)
         {
-            if (commonGoalCards[0].isSatisfied(player.getLibrary())) {
-                player.getLibrary().satisfyCommonGoal(0);
+            if (commonGoalCards[0].isSatisfied(userlibrary)) {
+                userlibrary.satisfyCommonGoal(0);
                 points1 = commonGoalCards[0].getScoreWithDecrease();
                 player.addPoints(points1);
             }
         }
-        if(goalCards[1]==false)
+        if(satisfiedGoal[1]==false)
         {
-            if (commonGoalCards[1].isSatisfied(player.getLibrary()))
+            if (commonGoalCards[1].isSatisfied(userlibrary))
             {
-                player.getLibrary().satisfyCommonGoal(1);
+                userlibrary.satisfyCommonGoal(1);
                 points2 = commonGoalCards[1].getScoreWithDecrease();
                 player.addPoints(points2);
             }
@@ -129,29 +165,37 @@ public class Game implements Serializable {
         return new MessageAfterMovePositive(points1, points2);
     }
 
+
+
+
     /**
-     * @param player: the turn player
-     * @param move: an array of positions to identify the cells of the grid where the player takes his object cards
+     * This method checks the validity of a user move and then runs the move itself.
+     * @param player: player whose move needs to be checked and performed
+     * @param move: an array of positions that identifies the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
      */
     private ObjectCard[] checkMove(Player player, Position[] move, int column) throws InvalidMoveException{
+        Grid grid = livingRoom.getGrid();
         grid.isDrawAvailable(move);
-        ObjectCard[] obs;
-        obs = grid.tryDraw(move);
-        player.getLibrary().isMoveAvailable(column,obs);
-        grid.draw(move);
+        player.getLibrary().isMoveAvailable(column,move.length);
+        ObjectCard[] obs = grid.draw(move);
         return obs;
     }
 
+
+
+
     /**
-     * @return ArrayList<Couple<String, Integer>>: list
+     * @return the game ranking in a form of an arraylist. Each node of the list is a pair of Name and Points ordered
+     * from higher to lower scoring.
      */
-    public ArrayList<Couple<String, Integer>> findWinner(){
+    public ArrayList<Couple<String, Integer>> findRanking(){
         ArrayList<Couple<String, Integer>> list = new ArrayList<>();
         for(int i=0; i<numPlayers; i++){
             list.add(new Couple<>(players[i].getName(), players[i].countFinalPoints()));
         }
 
+        //sorting the list
         for(int i=0; i<numPlayers; i++){
             for(int j=i+1; j<numPlayers; j++){
                 if(list.get(j).getSecond()>list.get(i).getSecond()){
@@ -164,6 +208,8 @@ public class Game implements Serializable {
 
         return list;
     }
+
+
     public void setNextPlayer(String name){
         this.players[index] = new Player(name, cardGenerator);
         index ++;

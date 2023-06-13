@@ -66,7 +66,7 @@ public class Grid implements Serializable {
     }
 
     /**
-     * This method check if the grid needs to be refilled
+     * This method checks if the grid needs to be refilled
      * @return {@code true} if the player that will draw in this turn is forced to draw a single card.
      * This case realizes when the grid is completely empty or each of the remaining card are surrounded by empty spaces.
      */
@@ -97,7 +97,7 @@ public class Grid implements Serializable {
         int[] rows;
         int[] vector;
 
-        //Mossa non nulla
+        // drawn needs to be not null and with the right length
         if((drawn==null)||(drawn.length<=0)||(drawn.length>3))
         {
             throw new InvalidMoveException("Invalid number of card drawn");
@@ -105,7 +105,7 @@ public class Grid implements Serializable {
 
         columns= new int[drawn.length];
         rows= new int[drawn.length];
-        //Mossa senza buchi e interna
+        //Drawn without blank positions and internal to the grid
         for(int i=0; i< drawn.length;i++)
         {
             if(drawn[i]==null)
@@ -119,7 +119,7 @@ public class Grid implements Serializable {
             columns[i]=drawn[i].getRow();
             rows[i]=drawn[i].getColumn();
         }
-        //Mossa allineata e contigua (tutte le mosse distanti 1)
+        //Drawn needs to be inline and contiguous positions
         if(drawn.length>1)
         {
             if (hasSameInt(columns))
@@ -131,19 +131,19 @@ public class Grid implements Serializable {
                 vector = columns;
             }
             else
-                throw new InvalidMoveException("Position don't extract contiguous cards");
+                throw new InvalidMoveException("Drawn do not extract contiguous cards");
 
             Arrays.sort(vector);
             for (int i = 1; i < vector.length; i++) {
                 if (vector[i] != vector[i - 1] + 1)
-                    throw new InvalidMoveException("Position don't extract contiguous cards");
+                    throw new InvalidMoveException("Drawn do not extract contiguous cards");
             }
         }
-        //Non fa parte delle zone che non sono disponibili
+        //Drawn must contain unavailable positions and should not try to draw null positions in the matrix
         for (Position position : drawn)
             if (!isAvailable(position) || matrix[position.getRow()][position.getColumn()]==null)
-                throw new InvalidMoveException("Positions are not available (position extra-gird)");
-        //almeno un lato libero
+                throw new InvalidMoveException("Positions are not available");
+        //Each card in the drawn need to have at least a free side
         for(int i=0; i<drawn.length;i++)
         {
             if((drawn[i].getRow()!=0)&&(drawn[i].getRow()!=numRows-1)&&
@@ -153,7 +153,7 @@ public class Grid implements Serializable {
                         (matrix[drawn[i].getRow()-1][drawn[i].getColumn()]!=null)&&
                         (matrix[drawn[i].getRow()][drawn[i].getColumn()+1]!=null)&&
                         (matrix[drawn[i].getRow()][drawn[i].getColumn()-1]!=null))
-                    throw new InvalidMoveException("Card have not free side");
+                    throw new InvalidMoveException("Not all cards have a free side");
             }
         }
     }
@@ -174,10 +174,11 @@ public class Grid implements Serializable {
         return answer;
     }
 
-    /**This method remove cards from matrix and return an ObjectCard's array with them
-     * @author: Riccardo Figini
+    /**This method remove cards from matrix and return an ObjectCard's array with the extracted cards
      * @param move {@code Position[]} Vector with position to remove
-     * @return {@code ObjectCard[]} return removed cards*/
+     * @return {@code ObjectCard[]} return removed cards
+     * @author: Riccardo Figini
+     */
     public ObjectCard[] draw(Position[] move) {
         if (move == null)
             return null;
@@ -190,12 +191,11 @@ public class Grid implements Serializable {
     }
 
     /**
-     * The method opens a Json.
+     * The method opens a Json file identified by the class attribute {@code filePath}.
      * Inside the file are stored some vectors containing some positions.
      * {@code Default_Invalid_Positions} contains all the position that are not utilizable by default.
-     * {@code i_Player_New_Positions} contains all the position utilizable when the {@code i} players are playing.
-     * @return a set of position containing {@code Default_Invalid_Positions} and {@code i_Player_New_Positions}, when
-     * {@code i} goes from numPlayers+1 to 4. If the file is missing this set is empty.
+     * {@code i_Player_New_Positions} contains all the new positions utilizable when {@code i} players are playing.
+     * @return a set of positions representing all the unavailable positions for the current number of players in the class.
      */
     private Set<Position> retrieveUnavailablePositionsSet()
     {
@@ -205,9 +205,7 @@ public class Grid implements Serializable {
         try {
             reader = new FileReader(filePath);
         } catch (FileNotFoundException e) {
-            System.out.println("Non ho trovato alcun file per la configurazione della griglia");
-            System.out.println("Dunque si giocherà su una griglia dritta di dimensione"+this.numColumns+"x"+numPlayers);
-            return setOfPositions;
+            throw new RuntimeException(e);
         }
         JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
 
@@ -286,24 +284,5 @@ public class Grid implements Serializable {
                 return false;
         }
         return true;
-    }
-
-    /**
-     * This method is used to obtain the object card that will be drawn by the move of the player without removing any
-     * card from the grid. Useful when you need an array of cards to check if they fits in the user library column.
-     * @param move the drawn
-     * @return the array of picked cards
-     * @throws InvalidMoveException thrown if the move is invalid
-     * @autor Riccardo Figini
-     */
-    public ObjectCard[] tryDraw(Position[] move) throws InvalidMoveException {
-        isDrawAvailable(move);
-        if (move == null)
-            return null;
-        ObjectCard[] objectCards = new ObjectCard[move.length];
-        for (int i = 0; i < move.length; i++) {
-            objectCards[i] = matrix[move[i].getRow()][move[i].getColumn()];
-        }
-        return objectCards;
     }
 }

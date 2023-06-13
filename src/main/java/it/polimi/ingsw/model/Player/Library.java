@@ -158,7 +158,7 @@ public class Library implements Serializable {
      */
     public void insertCardsInLibrary(int chosenColumn, ObjectCard... cards) throws InvalidMoveException {
         int row;
-        isMoveAvailable(chosenColumn, cards);
+        isMoveAvailable(chosenColumn, cards.length);
 
         row=findNumberOfFreeCells(chosenColumn)-1;
         for (int i=0; i < cards.length; row--,i++)
@@ -171,13 +171,12 @@ public class Library implements Serializable {
     /** Checks if an array of cards can be inserted into a specific column.
      *
      * @param chosenColumn the column to be checked
-     * @param cards the array of cards to be controlled
      * @return true if the array of cards fits into the column selected
      * @author: Alberto Aniballi
      */
-    public void isMoveAvailable(int chosenColumn, ObjectCard... cards)throws InvalidMoveException {
+    public void isMoveAvailable(int chosenColumn, int numOfCards)throws InvalidMoveException {
         int numberOfFreeCells = findNumberOfFreeCells(chosenColumn);
-        if(chosenColumn < 0 || chosenColumn > numberOfColumns || numberOfFreeCells < cards.length){
+        if(chosenColumn < 0 || chosenColumn > numberOfColumns || numberOfFreeCells < numOfCards){
             throw new InvalidMoveException("Insufficient space in selected column");
         }
     }

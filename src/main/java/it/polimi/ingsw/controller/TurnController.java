@@ -185,7 +185,7 @@ public class TurnController implements Runnable, Serializable {
      * @author: Riccardo Figini
      * */
     private void handleEndGame() {
-        ArrayList<Couple<String, Integer>> list = game.findWinner();
+        ArrayList<Couple<String, Integer>> list = game.findRanking();
         gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
         gameController.notifyAllMessage(new MessagePoints(countActualPointAndShare()));
         for (Couple<String, Integer> stringIntegerCouple : list) {

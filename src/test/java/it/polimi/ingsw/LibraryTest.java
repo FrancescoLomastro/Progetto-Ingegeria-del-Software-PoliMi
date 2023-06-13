@@ -99,15 +99,15 @@ public class LibraryTest {
             fillVector(testVector1);
             fillVector(testVector2);
 
-            library.isMoveAvailable(0,testVector1);
-            library.isMoveAvailable(library.getNumberOfColumns()-1,testVector2);
+            library.isMoveAvailable(0,testVector1.length);
+            library.isMoveAvailable(library.getNumberOfColumns()-1,testVector2.length);
 
             for(int i=0; i<library.getNumberOfRows()-1;i++)
             {
                 library.insertCardsInLibrary(0,testVector2);
             }
 
-            library.isMoveAvailable(0,testVector2);
+            library.isMoveAvailable(0,testVector2.length);
         });
     }
     @Test
@@ -115,20 +115,14 @@ public class LibraryTest {
     {
         assertThrows(InvalidMoveException.class, () -> {
 
-            ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()+1];
-            fillVector(testVector1);
-
-
-            library.isMoveAvailable(0,testVector1);
+            int testNumber = library.getNumberOfRows()+1;
+            library.isMoveAvailable(0,testNumber);
         });
 
         assertThrows(InvalidMoveException.class, () -> {
 
-            ObjectCard[] testVector2 = new ObjectCard[1];
-
-            fillVector(testVector2);
-
-            library.isMoveAvailable(library.getNumberOfColumns(),testVector2);
+            int testNumber = 1;
+            library.isMoveAvailable(library.getNumberOfColumns(),testNumber);
         });
 
 
@@ -141,7 +135,7 @@ public class LibraryTest {
             {
                 library.insertCardsInLibrary(0,testVector2);
             }
-            library.isMoveAvailable(0,testVector2);
+            library.isMoveAvailable(0,testVector2.length);
         });
     }
     @Test
