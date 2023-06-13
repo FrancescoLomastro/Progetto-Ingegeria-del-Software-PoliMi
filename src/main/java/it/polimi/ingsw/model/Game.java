@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.Messages.MessageAfterMoveNegative;
-import it.polimi.ingsw.Network.Messages.MessageAfterMovePositive;
+import it.polimi.ingsw.network.Messages.Message;
+import it.polimi.ingsw.network.Messages.MessageAfterMoveNegative;
+import it.polimi.ingsw.network.Messages.MessageAfterMovePositive;
 import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
@@ -9,8 +9,8 @@ import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.LivingRoom.Grid;
 import it.polimi.ingsw.model.LivingRoom.LivingRoom;
 import it.polimi.ingsw.model.Player.Player;
-import it.polimi.ingsw.model.Utility.Couple;
-import it.polimi.ingsw.model.Utility.Position;
+import it.polimi.ingsw.utility.Couple;
+import it.polimi.ingsw.utility.Position;
 
 import java.io.IOException;
 import java.io.Serial;
@@ -137,7 +137,7 @@ public class Game implements Serializable {
     private ObjectCard[] checkMove(Player player, Position[] move, int column) throws InvalidMoveException{
         grid.isDrawAvailable(move);
         ObjectCard[] obs;
-        obs = grid.drawNoRepercussions(move);
+        obs = grid.tryDraw(move);
         player.getLibrary().isMoveAvailable(column,obs);
         grid.draw(move);
         return obs;

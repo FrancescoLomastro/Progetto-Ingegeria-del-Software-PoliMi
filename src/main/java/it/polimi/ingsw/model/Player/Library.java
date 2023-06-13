@@ -2,8 +2,8 @@ package it.polimi.ingsw.model.Player;
 
 import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.model.Enums.Direction;
-import it.polimi.ingsw.model.Utility.Position;
+import it.polimi.ingsw.enums.Direction;
+import it.polimi.ingsw.utility.Position;
 
 import java.io.Serializable;
 import java.util.Arrays;

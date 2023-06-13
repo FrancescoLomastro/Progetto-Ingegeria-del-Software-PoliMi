@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import it.polimi.ingsw.Network.Messages.*;
-import it.polimi.ingsw.Network.Servers.Connection;
-import it.polimi.ingsw.Network.StatusNetwork;
-import it.polimi.ingsw.model.Utility.Request;
+import it.polimi.ingsw.network.Messages.*;
+import it.polimi.ingsw.network.Servers.Connection;
+import it.polimi.ingsw.network.StatusNetwork;
+import it.polimi.ingsw.utility.Request;
 
 import java.io.*;
 import java.nio.file.Files;

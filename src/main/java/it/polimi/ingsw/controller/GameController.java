@@ -1,10 +1,10 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.Network.Messages.*;
-import it.polimi.ingsw.Network.Servers.CentralServer;
-import it.polimi.ingsw.Network.Servers.Connection;
-import it.polimi.ingsw.Network.Servers.RMI.RMIShared;
-import it.polimi.ingsw.Network.StatusNetwork;
+import it.polimi.ingsw.network.Messages.*;
+import it.polimi.ingsw.network.Servers.CentralServer;
+import it.polimi.ingsw.network.Servers.Connection;
+import it.polimi.ingsw.network.Servers.RMI.RMIShared;
+import it.polimi.ingsw.network.StatusNetwork;
 import it.polimi.ingsw.model.Game;
 
 import java.io.*;

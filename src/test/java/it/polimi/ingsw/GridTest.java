@@ -4,12 +4,10 @@ import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.LivingRoom.Grid;
-import it.polimi.ingsw.model.Utility.Position;
+import it.polimi.ingsw.utility.Position;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.junit.jupiter.api.Assertions;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

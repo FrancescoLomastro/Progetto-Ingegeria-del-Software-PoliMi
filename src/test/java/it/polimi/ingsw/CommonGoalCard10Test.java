@@ -1,12 +1,12 @@
 package it.polimi.ingsw;
 
 
+import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
 import it.polimi.ingsw.model.Cards.ConcreteCommonCards.*;
 import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
 import it.polimi.ingsw.model.Player.*;
-import it.polimi.ingsw.model.Enums.Type;
+import it.polimi.ingsw.enums.Type;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +45,7 @@ public class CommonGoalCard10Test {
     @Test
     public void isSatisfied_oneCorrectInputOtherCellsEmpty_trueInOutput(){
         assertDoesNotThrow(()-> {
-        library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
+        library.insertCardsInLibrary(0,new ObjectCard("", Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
 

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="exsterAnchor" maxHeight="600.0" maxWidth="370.0" prefHeight="600.0" prefWidth="370.0" styleClass="chatContainer" stylesheets="@../styles/chat.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.ChatController">
+<AnchorPane fx:id="exsterAnchor" maxHeight="600.0" maxWidth="370.0" prefHeight="600.0" prefWidth="370.0" styleClass="chatContainer" stylesheets="@../styles/chat.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.guiControllers.ChatController">
     <children>
         <AnchorPane id="anchorPaneIntern" fx:id="internAnchor" layoutX="13.0" layoutY="9.0" prefHeight="239.0" prefWidth="230.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
             <children>

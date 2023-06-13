@@ -12,7 +12,7 @@
             stylesheets="@../styles/InvalidNumPlayers.css"
             xmlns="http://javafx.com/javafx/19"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.View.Gui.guiControllers.InvalidMoveController">
+            fx:controller="it.polimi.ingsw.view.Gui.guiControllers.InvalidMoveController">
     <VBox prefHeight="190" prefWidth="310" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0"
           AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <ImageView fitHeight="70.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true">

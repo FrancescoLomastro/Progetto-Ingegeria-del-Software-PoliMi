@@ -1,8 +1,4 @@
-package it.polimi.ingsw.Network.Messages;
-
-import it.polimi.ingsw.Network.Servers.Connection;
-import it.polimi.ingsw.controller.ServerReceiver;
-import it.polimi.ingsw.model.Cards.ObjectCard;
+package it.polimi.ingsw.network.Messages;
 
 public class ServerPingMessage extends Message{
 

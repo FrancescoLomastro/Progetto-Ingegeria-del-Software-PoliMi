@@ -4,16 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import it.polimi.ingsw.utility.Couple;
+import it.polimi.ingsw.utility.Position;
+import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
-import it.polimi.ingsw.model.Utility.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
+
 /**
  * This class is a PersonalCard deck manager.
  * All the PersonalCard models are taken from a JSON file.
@@ -26,6 +27,9 @@ public class PersonalCardManager implements Serializable {
     private boolean[] usedCards;
     private final String filePath= "src/main/resources/json/PersonalCards.json";
     private transient JsonArray jsonArrayOfCards;
+
+
+
 
     /**
      * Constructor: Get all the models stored in the class JSON file and creates a PersonalCardManager with 0 already generated cards.
@@ -42,37 +46,43 @@ public class PersonalCardManager implements Serializable {
         }
     }
 
+
+
+
     /**
-     * This method reads the file in the path {@code filePath} and prepares to manage the number of card it read.
+     * This method reads the file in the class attribute {@code filePath} and prepares to manage the number of card it read.
      * NOTE: In case the file is unreachable it will throw a RuntimeException
-     * @author: Francesco Lo Mastro
      * @return a JsonArray representing all the personal cards that will be managed
-     * @throws FileNotFoundException if the file is missing from the file path
+     * @throws RuntimeException if the file is missing from the file path
+     * @author: Francesco Lo Mastro
      */
     private JsonArray readCardsInFile() throws RuntimeException{
         Gson gson = new Gson();
-        Random rndNumberGenerator = new Random();
         FileReader fileReader;
 
         try {
             fileReader = new FileReader(filePath);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Errro in opening "+filePath);
+            throw new RuntimeException("Error in opening "+filePath);
         }
 
         JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
         JsonArray cardsArray = jsonObject.getAsJsonArray("generalArray");
         if(cardsArray==null)
-            throw new RuntimeException("Non è stato trovato alcun elenco di carte in "+filePath);
+            throw new RuntimeException("No any list of card found in file "+filePath);
 
         try {
             fileReader.close();
         } catch (IOException e) {
-            throw new RuntimeException("Errore chiusura del file "+filePath);
+            throw new RuntimeException("Error while closing file "+filePath);
         }
 
         return cardsArray;
     }
+
+
+
+
     /**
      * Check if the manager can't generate any other card.
      * @return true if the manager is empty.
@@ -88,13 +98,18 @@ public class PersonalCardManager implements Serializable {
         return true;
     }
 
+
+
+
     /**
-     * @return the initial number of available cards
+     * @return the initial number of available cards got from file
      * @author: Francesco Lo Mastro
      */
     public int getNumCards() {
         return numCards;
     }
+
+
 
 
     /**
@@ -118,7 +133,7 @@ public class PersonalCardManager implements Serializable {
             json_columnCoordinate =  json_Card.getAsJsonArray("column");
 
             if(json_colorArray==null || json_rowCoordinate == null || json_columnCoordinate == null)
-                throw new RuntimeException("Non sono stati trovati i parametri corretti per colore/matrice della carta "+personalGoalCardId+" in "+filePath);
+                throw new RuntimeException("The correct parameters of color/matrix for personal card "+personalGoalCardId+" were not found in "+filePath);
 
             couples = new ArrayList<>();
             for(int i=0; i<json_colorArray.size(); i++){
@@ -132,6 +147,10 @@ public class PersonalCardManager implements Serializable {
         }
         return null;
     }
+
+
+
+
     /**
      * This method checks if a PersonalCard with {@code ID = personalGoalCardId} can be generated
      * @param personalGoalCardId is the implicit ID of a personal card. {@code ID = 0} refers to the first card stored in the file

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.Cards.ConcreteCommonCards;
 
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
-import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.model.Player.Library;
 
 /**

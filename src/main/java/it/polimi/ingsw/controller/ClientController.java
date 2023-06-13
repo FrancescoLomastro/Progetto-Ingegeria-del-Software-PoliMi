@@ -1,23 +1,22 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.Network.Client.*;
-import it.polimi.ingsw.Network.Client.RMI.RMI_Client;
-import it.polimi.ingsw.Network.Client.Socket.Socket_Client;
-import it.polimi.ingsw.Network.Messages.*;
-import it.polimi.ingsw.Network.Messages.ChatMessage;
-import it.polimi.ingsw.Network.ObserverImplementation.Observer;
-import it.polimi.ingsw.Network.UtilsForRMI;
-import it.polimi.ingsw.View.*;
-import it.polimi.ingsw.Network.Client.ClientModel;
-import it.polimi.ingsw.View.Cli.Cli;
+import it.polimi.ingsw.network.Client.*;
+import it.polimi.ingsw.network.Client.RMI.RMI_Client;
+import it.polimi.ingsw.network.Client.Socket.Socket_Client;
+import it.polimi.ingsw.network.Messages.*;
+import it.polimi.ingsw.network.Messages.ChatMessage;
+import it.polimi.ingsw.network.ObserverImplementation.Observer;
+import it.polimi.ingsw.network.UtilsForRMI;
+import it.polimi.ingsw.view.*;
+import it.polimi.ingsw.network.Client.ClientModel;
+import it.polimi.ingsw.view.Cli.Cli;
 //import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
-import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
-import it.polimi.ingsw.View.OBSMessages.*;
-import it.polimi.ingsw.model.Utility.Couple;
+import it.polimi.ingsw.view.Gui.guiControllers.ViewFactory;
+import it.polimi.ingsw.view.OBSMessages.*;
+import it.polimi.ingsw.utility.Couple;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ClientController implements Observer<View, OBS_Message> {

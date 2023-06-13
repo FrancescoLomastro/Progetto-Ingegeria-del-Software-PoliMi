@@ -54,6 +54,6 @@ public class Player implements Serializable {
     }
 
     public int getNumPersonalGoal(){
-        return personalGoalCard.getNum();
+        return personalGoalCard.getCardId();
     }
 }

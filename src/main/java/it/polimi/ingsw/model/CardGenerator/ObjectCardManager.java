@@ -1,13 +1,14 @@
 package it.polimi.ingsw.model.CardGenerator;
 
+import it.polimi.ingsw.enums.Color;
+import it.polimi.ingsw.enums.Type;
 import it.polimi.ingsw.model.Cards.*;
-import it.polimi.ingsw.model.Enums.*;
 
 import java.io.Serializable;
 
 
 /**
- * This class is a ObjectCard deck manager. It keeps tracks of the card to be generated and the already generated cards
+ * This class is an ObjectCard deck manager. It keeps tracks of the card to be generated and the already generated cards
  * @author: Francesco Lo Mastro
  */
 public class ObjectCardManager implements Serializable {
@@ -16,16 +17,23 @@ public class ObjectCardManager implements Serializable {
     private final int numColors=6;
     private final int[][] deck;
 
+
+
+
     /**
-     * @return the number of colors that cards can have in the manager
+     * @return the number of types that cards can have in the manager
      * @author: Francesco Lo Mastro
      */
     public int getNumTypes()
     {
         return numCardsForTypes.length;
     }
+
+
+
+
     /**
-     * @return the number of types that cards can have in the manager
+     * @return the number of colors that cards can have in the manager
      * @author: Francesco Lo Mastro
      */
     public int getNumColors()
@@ -33,8 +41,11 @@ public class ObjectCardManager implements Serializable {
         return numColors;
     }
 
+
+
+
     /**
-     * Constructor: creates an ObjectCardManager with 0 already generated cards.
+     * Constructor: creates an ObjectCardManager and build a deck of ObjectCards
      * @author: Francesco Lo Mastro
      */
     public ObjectCardManager()
@@ -43,8 +54,11 @@ public class ObjectCardManager implements Serializable {
         fillDeck();
     }
 
+
+
+
     /**
-     * This method set to 0 the already generated cards, that means that the manager is resetted to the construction state.
+     * This method set the deck of ObjectCard to the construction state.
      * @author: Francesco Lo Mastro
      */
     private void fillDeck()
@@ -58,8 +72,12 @@ public class ObjectCardManager implements Serializable {
         }
     }
 
+
+
+
+
     /**
-     * This method checks if a  ObjectCard with {@code color} and {@code type} can be generated
+     * This method checks if a ObjectCard with {@code color} and {@code type} can be generated
      * @param color the color that the card will have
      * @param type the type that the card will have
      * @return true if the card can be generated, means that the requested type of card is not out of stock yet.
@@ -69,6 +87,9 @@ public class ObjectCardManager implements Serializable {
     {
         return deck[color.getRelativeInt()][type.getRelativeInt()] > 0;
     }
+
+
+
 
     /**
      * This method generates an ObjectCard from the remaining card to be generated and reduce the number of same cards which can be generated
@@ -86,6 +107,9 @@ public class ObjectCardManager implements Serializable {
         }
         return null;
     }
+
+
+
 
     /**
      * Check if the manager can't generate any other card.

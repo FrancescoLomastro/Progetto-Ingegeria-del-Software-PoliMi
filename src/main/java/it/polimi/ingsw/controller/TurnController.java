@@ -1,18 +1,16 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.Network.Messages.*;
-import it.polimi.ingsw.View.Gui.guiControllers.ViewFactory;
+import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.model.Cards.PersonalGoalCard;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Utility.Couple;
-import it.polimi.ingsw.model.Utility.Position;
+import it.polimi.ingsw.utility.Couple;
+import it.polimi.ingsw.utility.Position;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import static it.polimi.ingsw.Network.Messages.MessageType.*;
+import static it.polimi.ingsw.network.Messages.MessageType.*;
 
 /*
 class TurnController

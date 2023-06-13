@@ -1,21 +1,20 @@
 package it.polimi.ingsw.model.Cards;
 
-import it.polimi.ingsw.model.Enums.Color;
+import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.model.Player.Library;
-import it.polimi.ingsw.model.Utility.Couple;
-import it.polimi.ingsw.model.Utility.Position;
+import it.polimi.ingsw.utility.Couple;
+import it.polimi.ingsw.utility.Position;
 
 import java.util.ArrayList;
 
 
 public class PersonalGoalCard extends Card {
-    private final int num;
+    private final int cardId;
     private final ArrayList<Couple> goalVector;
-    public PersonalGoalCard(ArrayList<Couple> goalVector, int num){
+    public PersonalGoalCard(ArrayList<Couple> goalVector, int cardId){
         super();
         this.goalVector=goalVector;
-        this.num=num;
-        System.out.println(num);
+        this.cardId = cardId;
     }
     /**This method counts and returns point of personal goal card. It will be called at the end of the game.
      * @author: Riccardo Figini
@@ -48,7 +47,7 @@ public class PersonalGoalCard extends Card {
         }
         return count;
     }
-    /**Return goalvector
+    /**Return an arraylist representing the goalVector of the card.
      * @author: Riccardo Figini
      * @return {@code ArrayList<Couple>} it returns arraylist containing information about cells (position and color)
      * */
@@ -57,12 +56,12 @@ public class PersonalGoalCard extends Card {
         return goalVector;
     }
 
-    public int getNum() {
-        return num;
+    public int getCardId() {
+        return cardId;
     }
 
     @Override
     public String getDescription() {
-        return "Carta obiettivo personale";
+        return "Persona Goal Card";
     }
 }

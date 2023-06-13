@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="container_anchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/ClientLogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.ErrorClientCreationController">
+<AnchorPane fx:id="container_anchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/ClientLogin.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.guiControllers.ErrorClientCreationController">
     <children>
         <StackPane layoutX="200.0" layoutY="125.0" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/InvalidUsername.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>

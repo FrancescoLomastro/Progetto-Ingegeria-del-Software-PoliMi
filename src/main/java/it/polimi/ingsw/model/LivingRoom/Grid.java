@@ -7,14 +7,13 @@ import com.google.gson.JsonObject;
 import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.model.Utility.Position;
+import it.polimi.ingsw.utility.Position;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-//import java.util.Random;
 
 /**
  * This class represents the grid of the living room.
@@ -35,13 +34,14 @@ public class Grid implements Serializable {
      * The constructor of the grid. After the call of this constructor, the matrix will contain the right number of
      * object cards in the right position and the set notAvailablePosition will contain all the unavailable positions.
      * @param numPlayers the grid need the number of players that will play with it, in order to prepare the game field.
-     * @throws IOException propagates to the caller the exception thrown by retrieveUnavailablePositionsSet.
+     * @param cardGenerator the generator that the game uses to generate cards
+     * @throws RuntimeException propagates to the caller the exception thrown by retrieveUnavailablePositionsSet.
      */
     public Grid(int numPlayers, CardGenerator cardGenerator) throws RuntimeException{
         this.cardGenerator=cardGenerator;
         this.numPlayers=numPlayers;
         this.matrix = new ObjectCard[numRows][numColumns];
-        this.notAvailablePositions= retrieveUnavailablePositionsSet(); //lancia una eccezione IOException se non trova il file Grid.json
+        this.notAvailablePositions= retrieveUnavailablePositionsSet();
         refill();
     }
 
@@ -158,6 +158,10 @@ public class Grid implements Serializable {
         }
     }
 
+    /**
+     * Returns a representation of the grid in the form of a matrix
+     * @return a matrix of ObjectCard representing the grid and its cards
+     */
     public ObjectCard[][] getMatrix(){
         ObjectCard[][] answer= new ObjectCard[numRows][numColumns];
         for(int row=0; row<numRows;row++)
@@ -239,14 +243,6 @@ public class Grid implements Serializable {
         return setOfPositions;
     }
 
-    /**
-     * @param position is the position to be checked
-     * @return {@code true} if the position is inside the numRows x numColumns matrix
-     */
-    private boolean isInside(Position position) {
-        return position.getRow()>=0 && position.getRow()< numColumns &&
-                position.getColumn()>=0 && position.getColumn()< numRows ;
-    }
 
     /**
      * @param position is the position that will be checked
@@ -270,13 +266,6 @@ public class Grid implements Serializable {
         int row = position.getRow();
         int column = position.getColumn();
 
-        /*
-        if(!isInside(position))
-        {
-            return false;
-        }
-        */
-
         return (
                     row > 0 && matrix[row - 1][column] != null)
                 || (row < numColumns - 1 && matrix[row + 1][column] != null)
@@ -299,7 +288,15 @@ public class Grid implements Serializable {
         return true;
     }
 
-    public ObjectCard[] drawNoRepercussions(Position[] move) throws InvalidMoveException {
+    /**
+     * This method is used to obtain the object card that will be drawn by the move of the player without removing any
+     * card from the grid. Useful when you need an array of cards to check if they fits in the user library column.
+     * @param move the drawn
+     * @return the array of picked cards
+     * @throws InvalidMoveException thrown if the move is invalid
+     * @autor Riccardo Figini
+     */
+    public ObjectCard[] tryDraw(Position[] move) throws InvalidMoveException {
         isDrawAvailable(move);
         if (move == null)
             return null;

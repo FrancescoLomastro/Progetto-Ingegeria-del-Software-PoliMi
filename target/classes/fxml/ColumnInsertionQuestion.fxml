@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="external_player_container" minHeight="350" minWidth="344.0" prefHeight="450" prefWidth="344.0" styleClass="external_player_number_request_container" stylesheets="@../styles/PlayerNumberRequest.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.Gui.guiControllers.ColumnInsertionQuestionController">
+<AnchorPane fx:id="external_player_container" minHeight="350" minWidth="344.0" prefHeight="450" prefWidth="344.0" styleClass="external_player_number_request_container" stylesheets="@../styles/PlayerNumberRequest.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.guiControllers.ColumnInsertionQuestionController">
     <children>
         <VBox fx:id="internal_vbox_container" layoutX="106.0" prefHeight="430.0" prefWidth="273.0" spacing="10.0" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>

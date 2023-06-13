@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class ScorePointCard implements Serializable {
     private static final long serialVersionUID = 1L;
     private int score;
-
     private final int numberOfPlayer;
 
     /**Constructor
@@ -15,11 +14,11 @@ public class ScorePointCard implements Serializable {
         this.numberOfPlayer=numberOfPlayer;
         this.score=8;
     }
+
     /**Methods that decreases/change scorecard, called when players reach common goal
      * @author Riccardo Figini
      * */
     private void changeScore(){
-        //TODO cambio dell'immagine
         switch (score){
             case 8:
                 switch (numberOfPlayer) {

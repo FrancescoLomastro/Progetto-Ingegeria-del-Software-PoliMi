@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.Cards;
 
-import it.polimi.ingsw.model.Enums.Color;
-import it.polimi.ingsw.model.Enums.Type;
+import it.polimi.ingsw.enums.Color;
+import it.polimi.ingsw.enums.Type;
 
 import java.io.Serializable;
 
