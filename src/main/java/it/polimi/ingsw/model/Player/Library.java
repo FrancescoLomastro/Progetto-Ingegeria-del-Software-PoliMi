@@ -94,7 +94,7 @@ public class Library implements Serializable {
     /**
      * It checks if a specific cell of the library is free
      *
-     * @param row    the specific row to be checked
+     * @param row the specific row to be checked
      * @param col the specific column to be checked
      * @return: boolean that is true if the cell is empty, otherwise false
      * @author Alberto Aniballi

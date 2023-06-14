@@ -41,32 +41,64 @@ public class ClientLoginController implements Initializable {
     private String chosenIPAddress;
     private int chosenPort;
 
+    /**
+     * This method is used to set the name that a new player chooses when during the pre-game lobby.
+     * In this way the name of the new player is stored, later it will be sent to the controller.
+     *
+     * @param chosenUsername the name of the player.
+     * @author Alberto Aniballi
+     */
     public void setChosenUsername(String chosenUsername) {
         this.chosenUsername = chosenUsername;
     }
 
+    /**
+     * This method is used to set the technology that a new player chooses during to the pre-game lobby.
+     * The technology can be of type socket or rmi, it will be used to connect the player to the server throughout
+     * the entire game without the possibility to change it afterward.
+     *
+     * @param chosenTechnology the chosen technology.
+     * @author Alberto Aniballi
+     */
     public void setChosenTechnology(int chosenTechnology) {
         this.chosenTechnology = chosenTechnology;
     }
 
+    /**
+     * This method is used to set the ip address that a new player chooses during to the pre-game lobby.
+     * The chosen ip address will be used to connect the player to the server throughout the entire game
+     * without the possibility to change it afterward.
+     *
+     * @param chosenIPAddress the chosen ip address;
+     * @author Alberto Aniballi
+     */
     public void setChosenIPAddress(String chosenIPAddress) {
         this.chosenIPAddress = chosenIPAddress;
     }
 
+    /**
+     * This method is used to set the port number that a new player chooses during to the pre-game lobby.
+     * The chosen port number will be used to connect the player to the server throughout the entire game
+     * without the possibility to change it afterward.
+     *
+     * @param chosenPort the chosen port number.
+     * @author Alberto Aniballi
+     */
     public void setChosenPort(int chosenPort) {
         this.chosenPort = chosenPort;
     }
 
+    /**
+     * This method is used to initialize the fxml controller of the client login GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Alberto Aniballi
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-
-        /*backgound_image.setFitWidth(bounds.getWidth());
-        backgound_image.setFitHeight(bounds.getHeight());
-        backgound_image.setScaleX(1.25);
-        backgound_image.setScaleY(1.1);*/
 
         socket_button.setDisable(true);
         rmi_button.setDisable(true);
@@ -82,6 +114,14 @@ public class ClientLoginController implements Initializable {
         play_button.setOnAction(event -> onLogin(event));
     }
 
+    /**
+     * This method is used to retrieve, from the dedicated text field, the name that a new player writes. It processes the name
+     * only after the player presses enter on the keyboard. Furthermore, this method update the title label using the name
+     * that the player has just written on the text field.
+     *
+     * @param keyEvent the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     public void getUsernameFromInput(KeyEvent keyEvent) {
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -98,6 +138,14 @@ public class ClientLoginController implements Initializable {
 
     }
 
+    /**
+     * This method is used to retrieve the technology that a new player clicks on the "technology type" radio button.
+     * Furthermore, this method update the default ip address and port number on the server text field and port number
+     * text field.
+     *
+     * @param radioButton the radio button used to show available technology types.
+     * @author Alberto Aniballi
+     */
     public void getServerTechnologyFromInput(RadioButton radioButton) {
 
         if (radioButton.getText().equals("RMI")) {
@@ -112,6 +160,13 @@ public class ClientLoginController implements Initializable {
         server_textfield.requestFocus();
     }
 
+    /**
+     * This method is used to retrieve, from the dedicated text field, the server that a new player writes. It processes
+     * the server only after the player presses enter on the keyboard.
+     *
+     * @param keyEvent the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     public void getServerFromInput(KeyEvent keyEvent) {
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -134,6 +189,13 @@ public class ClientLoginController implements Initializable {
 
     }
 
+    /**
+     * This method is used to retrieve, from the dedicated text field, the port number that a new player writes.
+     * It processes the port number only after the player presses enter on the keyboard.
+     *
+     * @param keyEvent the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     public void getPortFromInput(KeyEvent keyEvent) {
 
         String server_port;
@@ -174,6 +236,13 @@ public class ClientLoginController implements Initializable {
         }
     }
 
+    /**
+     * This method is used to send all the information, collected from the player, to the controller.
+     * It notifies the controller by creating a new "OBS_InitialInfoMessage" message.
+     *
+     * @param event the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     public void onLogin(ActionEvent event) {
             OBS_InitialInfoMessage initialInfoMessage = new OBS_InitialInfoMessage(chosenUsername, chosenTechnology, chosenIPAddress, chosenPort);
             ViewFactory.getInstance().notifyAllOBS(initialInfoMessage);
