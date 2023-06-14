@@ -23,6 +23,13 @@ public class CommonGoalCardDescriptionController implements Initializable {
     private String description;
     private  int num = 0;
 
+    /**
+     * This method is used to initialize the controller of the "CommonGoalCardDescription.fxml" GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Andrea Ferrini
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

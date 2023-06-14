@@ -76,6 +76,14 @@ public class Board_C implements Initializable {
         ViewFactory.getInstance().onLibraryClick(username);
     }
 
+    /**
+     * This method is used to initialize the controller of the "Board.fxml" GUI. In particular, it sets the graphic
+     * components in the correct locations and starts the grid, libraries and personal goal cards initialization.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Francesco Gregorio Lo Mastro
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {

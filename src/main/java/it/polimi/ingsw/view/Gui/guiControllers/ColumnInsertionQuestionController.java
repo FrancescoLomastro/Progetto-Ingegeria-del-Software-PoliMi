@@ -40,6 +40,13 @@ public class ColumnInsertionQuestionController implements Initializable {
     private ViewFactory viewFactory;
     private Libreria_C controller;
 
+    /**
+     * This method is used to initialize the controller of the "ColumnInsertionQuestion.fxml" GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Riccardo Figini
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         input_column_question.setOnKeyPressed(this::getColumnFromPlayer);

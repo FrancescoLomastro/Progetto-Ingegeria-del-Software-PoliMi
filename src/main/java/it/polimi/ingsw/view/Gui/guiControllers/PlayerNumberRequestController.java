@@ -23,6 +23,14 @@ public class PlayerNumberRequestController implements Initializable {
     public TextField input_number_players;
     public VBox internal_vbox_container;
 
+    /**
+     * This method is used to initialize the controller of the "PlayerNumberRequest.fxml" GUI. In particular,
+     * it sets an event listener to "number of players" text field.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Alberto Aniballi
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         input_number_players.setOnKeyPressed(event -> getNumPlayersFromInput(event));

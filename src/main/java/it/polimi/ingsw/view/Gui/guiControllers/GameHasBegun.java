@@ -11,6 +11,14 @@ import java.util.ResourceBundle;
 
 public class GameHasBegun implements Initializable {
     public Button thank;
+
+    /**
+     * This method is used to initialize the controller of the "GameHasBegun.fxml" GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Riccardo Figini
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         thank.setOnAction(this::onClose);

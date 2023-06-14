@@ -19,8 +19,10 @@ import java.util.ResourceBundle;
 public class InvalidUsernameController implements Initializable {
     public TextField username_textfield;
 
+
     /**
-     * This method is used to initialize the fxml controller of the "invalid name" GUI.
+     * This method is used to initialize the controller of the "InvalidUsername.fxml" GUI. In particular,
+     * it sets an event listener to username text field .
      *
      * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.

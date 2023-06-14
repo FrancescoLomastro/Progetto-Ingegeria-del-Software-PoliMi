@@ -52,6 +52,14 @@ public class ChatController implements Initializable {
         freeColor.add("RED");
         index=0;
     }
+
+    /**
+     * This method is used to initialize the controller of the "Chat.fxml" GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Riccardo Figini & Alberto Aniballi
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)  {
         textArea.setOnKeyPressed(this::manage);

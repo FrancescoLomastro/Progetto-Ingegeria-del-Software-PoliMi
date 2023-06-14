@@ -22,6 +22,13 @@ public class StartController implements Initializable {
         this.scene = scene;
     }
 
+    /**
+     * This method is used to initialize the controller of the "Start.fxml" GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Francesco Gregorio Lo Mastro
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), initialLabel);

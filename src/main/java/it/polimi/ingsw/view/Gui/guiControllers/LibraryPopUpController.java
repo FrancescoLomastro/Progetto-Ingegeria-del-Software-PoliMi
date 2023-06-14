@@ -22,6 +22,13 @@ public class LibraryPopUpController implements Initializable {
     private String username;
     private Player player;
 
+    /**
+     * This method is used to initialize the controller of the "libraryPopUp.fxml" GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Andrea Ferrini
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

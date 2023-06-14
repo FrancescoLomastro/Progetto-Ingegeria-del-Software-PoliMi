@@ -17,6 +17,14 @@ public class InvalidMoveController implements Initializable {
     @FXML
     public Label text_label;
     private String text;
+
+    /**
+     * This method is used to initialize the controller of the "InvalidMove.fxml" GUI.
+     *
+     * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     * @author Riccardo Figini
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         retry_btn.setOnAction(this::onRetry);
