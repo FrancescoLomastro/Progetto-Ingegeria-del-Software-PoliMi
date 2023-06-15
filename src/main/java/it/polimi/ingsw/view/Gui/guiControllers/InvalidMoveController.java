@@ -11,6 +11,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class governs the GUI used to signal players the choice of an invalid move.
+ * This class used as an intermediary between the fixed parts of the GUI of the 'InvalidMove.fxml' file and
+ * the dynamic information that the controller sends to the graphic components of the associated fxml file.
+ *
+ * @author Riccardo Figini
+ */
 public class InvalidMoveController implements Initializable {
     @FXML
     public Button retry_btn;
@@ -30,11 +37,25 @@ public class InvalidMoveController implements Initializable {
         retry_btn.setOnAction(this::onRetry);
         text_label.setText(text);
     }
+
+    /**
+     * This method is used to close the "InvalidMove" stage and reactivate the previous stage.
+     *
+     * @param event the event that triggers the activation of the method;
+     * @author Riccardo Figini
+     */
     private void onRetry(ActionEvent event) {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();
         currentStage.close();
     }
+
+    /**
+     * This method is used to set the text in the text label of the stage.
+     *
+     * @param s the string to be displayed.
+     * @author Riccardo Figini
+     */
     public void setText(String s){
         this.text=s;
     }

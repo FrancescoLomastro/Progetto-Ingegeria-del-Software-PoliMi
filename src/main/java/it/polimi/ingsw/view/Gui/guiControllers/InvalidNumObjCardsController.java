@@ -9,6 +9,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class governs the GUI used to signal players the choice of an invalid number of object cards currently in the grid.
+ * This class used as an intermediary between the fixed parts of the GUI of the 'InvalidNumObjCards.fxml' file and
+ * the dynamic information that the controller sends to the graphic components of the associated fxml file.
+ *
+ * @author Alberto Aniballi
+ */
 public class InvalidNumObjCardsController implements Initializable {
 
     public Button retry_btn;
@@ -26,6 +33,12 @@ public class InvalidNumObjCardsController implements Initializable {
         retry_btn.setOnAction(event -> onRetry(event));
     }
 
+    /**
+     * This method is used to close the "InvalidNumObjCardsController" stage and reactivate the main game stage.
+     *
+     * @param event the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     private void onRetry(ActionEvent event) {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();

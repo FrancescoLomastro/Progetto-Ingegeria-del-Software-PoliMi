@@ -35,6 +35,12 @@ public class InvalidNumPlayersController implements Initializable {
         retry_btn.setOnAction(event -> onRetry(event));
     }
 
+    /**
+     * This method is used to close the "InvalidNumPlayers" stage and reactivate the previous stage.
+     *
+     * @param event the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     private void onRetry(ActionEvent event) {
         Node node = (Node) event.getSource();
         Stage currentStage = (Stage) node.getScene().getWindow();

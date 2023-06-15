@@ -42,7 +42,7 @@ public class ClientLoginController implements Initializable {
     private int chosenPort;
 
     /**
-     * This method is used to set the name that a new player chooses when during the pre-game lobby.
+     * This method is used to set the name that a new player chooses during the pre-game lobby.
      * In this way the name of the new player is stored, later it will be sent to the controller.
      *
      * @param chosenUsername the name of the player.
@@ -53,7 +53,7 @@ public class ClientLoginController implements Initializable {
     }
 
     /**
-     * This method is used to set the technology that a new player chooses during to the pre-game lobby.
+     * This method is used to set the technology that a new player chooses during the pre-game lobby.
      * The technology can be of type socket or rmi, it will be used to connect the player to the server throughout
      * the entire game without the possibility to change it afterward.
      *
@@ -65,7 +65,7 @@ public class ClientLoginController implements Initializable {
     }
 
     /**
-     * This method is used to set the ip address that a new player chooses during to the pre-game lobby.
+     * This method is used to set the ip address that a new player chooses during the pre-game lobby.
      * The chosen ip address will be used to connect the player to the server throughout the entire game
      * without the possibility to change it afterward.
      *
@@ -77,7 +77,7 @@ public class ClientLoginController implements Initializable {
     }
 
     /**
-     * This method is used to set the port number that a new player chooses during to the pre-game lobby.
+     * This method is used to set the port number that a new player chooses during the pre-game lobby.
      * The chosen port number will be used to connect the player to the server throughout the entire game
      * without the possibility to change it afterward.
      *

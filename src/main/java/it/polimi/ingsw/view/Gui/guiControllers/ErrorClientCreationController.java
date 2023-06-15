@@ -28,10 +28,24 @@ public class ErrorClientCreationController implements Initializable {
     private int chosenPort;
     private String chosenAddress;
 
+    /**
+     * This method is used to set the ip address that a new player chose during the pre-game lobby.
+     * The chosen ip address will be displayed inside the warning message of the stage.
+     *
+     * @param chosenAddress the chosen ip address;
+     * @author Alberto Aniballi
+     */
     public void setChosenAddress(String chosenAddress) {
         this.chosenAddress = chosenAddress;
     }
 
+    /**
+     * This method is used to set the port that a new player chose during the pre-game lobby.
+     * The chosen port number will be displayed inside the warning message of the stage.
+     *
+     * @param chosenPort the chosen ip address;
+     * @author Alberto Aniballi
+     */
     public void setChosenPort(int chosenPort) {
         this.chosenPort = chosenPort;
     }
@@ -54,6 +68,12 @@ public class ErrorClientCreationController implements Initializable {
         retry_btn.setOnAction(event -> onRetry(event));
     }
 
+    /**
+     * This method is used to close the "ErrorClientCreation" stage and reactivate the previous stage.
+     *
+     * @param event the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     private void onRetry(ActionEvent event) {
         ViewFactory.getInstance().askInitialInfo();
     }

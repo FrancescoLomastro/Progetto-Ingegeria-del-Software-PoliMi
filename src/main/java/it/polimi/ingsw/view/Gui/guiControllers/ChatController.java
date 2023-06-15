@@ -20,6 +20,14 @@ import javafx.scene.text.TextFlow;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * The class is dedicated to managing the chat and the messages that players write and send within it.
+ * It is used as an intermediary between the fixed parts of the GUI of the 'Chat.fxml' file and
+ * the dynamic information that the controller sends to the graphic components of the associated fxml file.
+ * In addition, the class manages the interaction between the user and the various graphic components of the scene.
+ *
+ * @author Riccardo Figini
+ */
 public class ChatController implements Initializable {
     @FXML
     public AnchorPane exsterAnchor;
@@ -41,6 +49,13 @@ public class ChatController implements Initializable {
     Map<String, String> colorPlayer;
     int index;
     ArrayList<String> freeColor;
+
+    /**
+     * This method is the constructor of the chat controller.
+     * In particular, data structures are initialised to manage the colour assignment of the different players within the chat.
+     *
+     * @author Riccardo Figini
+     */
     public ChatController(){
         super();
         colorPlayer = new HashMap<>();
@@ -72,6 +87,13 @@ public class ChatController implements Initializable {
 
     }
 
+    /**
+     * This method is used to notify the chat observer in order to send the message
+     * to other players once the enter key is pressed.
+     *
+     * @param keyEvent the event that triggers the activation of the method;
+     * @author Riccardo Figini
+     */
     private void manage(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             String text = textArea.getText().trim();
@@ -82,6 +104,14 @@ public class ChatController implements Initializable {
             }
         }
     }
+
+    /**
+     * This method is used to insert the text of the message within the chat of the player
+     * who wrote and subsequently sent the message.
+     *
+     * @param text text message to add in the chat;
+     * @author Riccardo Figini
+     */
     private void printOwnMessage(String text) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.TOP_RIGHT);
@@ -95,6 +125,15 @@ public class ChatController implements Initializable {
         vbox.getChildren().add(hBox);
         scrollPaneChat.setVvalue(1.0);
     }
+
+    /**
+     * This method is used to insert the message text into the chats of players who receive the message sent by another player.
+     * The name of the player who wrote the message will appear along with the message.
+     *
+     * @param text text message to add in the chat;
+     * @param user user who sent the message;
+     * @author Riccardo Figini
+     */
     public void printMessage(String text, String user){
         Pos pos;
         String myName = ViewFactory.getInstance().getClientModel().getMyName();
@@ -127,6 +166,13 @@ public class ChatController implements Initializable {
         vbox.getChildren().add(hBox);
         scrollPaneChat.setVvalue(1.0);
     }
+
+    /**
+     * This method is used to select the specific style dedicated to each player in the game.
+     *
+     * @param user the specific user for whom to search the style;
+     * @author Riccardo Figini
+     */
     private String selectUserStyle(String user) {
         if (colorPlayer.containsKey(user))
             return colorPlayer.get(user);
@@ -137,6 +183,12 @@ public class ChatController implements Initializable {
             return tmp;
         }
     }
+
+    /**
+     * This method is used to select available colors to be used in user style.
+     *
+     * @author Riccardo Figini
+     */
     private String getFreeColor() {
         String color = freeColor.get(index);
         index++;
