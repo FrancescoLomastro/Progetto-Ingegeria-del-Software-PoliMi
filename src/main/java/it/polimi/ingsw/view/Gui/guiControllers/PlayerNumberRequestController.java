@@ -36,6 +36,14 @@ public class PlayerNumberRequestController implements Initializable {
         input_number_players.setOnKeyPressed(event -> getNumPlayersFromInput(event));
     }
 
+    /**
+     * This method is used to retrieve, from the dedicated text field, the number of players that the first new player chooses
+     * for the game when it connects to the server. It processes the number only after the player presses enter on the keyboard.
+     * Furthermore, this method checks if a valid number has been chosen.
+     *
+     * @param keyEvent the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     private void getNumPlayersFromInput(KeyEvent keyEvent) {
 
         String numPlayers_Input;

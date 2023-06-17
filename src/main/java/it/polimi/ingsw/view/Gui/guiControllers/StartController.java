@@ -10,6 +10,12 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class governs the GUI dedicated to the initial start scene:
+ * it manages the interaction between the user and the graphic components of the scene.
+ *
+ * @author Alberto Aniballi
+ */
 public class StartController implements Initializable {
     @FXML
     public Label initialLabel;
@@ -18,6 +24,12 @@ public class StartController implements Initializable {
 
     private Scene scene;
 
+    /**
+     * This method is used to set the scene on the stage.
+     *
+     * @param scene the scene to be set.
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void setScene(Scene scene) {
         this.scene = scene;
     }

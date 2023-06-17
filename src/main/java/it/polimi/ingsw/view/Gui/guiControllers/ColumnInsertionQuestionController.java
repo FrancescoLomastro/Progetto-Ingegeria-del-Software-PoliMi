@@ -54,6 +54,11 @@ public class ColumnInsertionQuestionController implements Initializable {
         updateLibrary(viewFactory.getClientModel().getLibrary(ViewFactory.getInstance().getClientModel().getMyName()));
     }
 
+    /**
+     *
+     *
+     * @author Riccardo Figini
+     */
     public void ini(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Libreria.fxml"));
         Libreria_C controller;
@@ -83,6 +88,14 @@ public class ColumnInsertionQuestionController implements Initializable {
             }
         }
     }
+
+    /**
+     * This method is used to update the player's personal library once he has chosen the grid cards and
+     * chosen the column in his library where to place the object cards.
+     *
+     * @param library the player's library to be updated.
+     * @author Riccardo Figini
+     */
     public void updateLibrary(ObjectCard[][] library) {
         GridPane libraryPane= controller.getGrid();
         for (Node node : libraryPane.getChildren()) {
@@ -95,6 +108,15 @@ public class ColumnInsertionQuestionController implements Initializable {
             }
         }
     }
+
+    /**
+     * This method is used to retrieve, from the dedicated text field, the column that a new player chooses to insert object cards.
+     * It processes the column number only after the player presses enter on the keyboard. Furthermore, this method checks if
+     * a valid number has been chosen.
+     *
+     * @param event the event that triggers the activation of the method;
+     * @author Alberto Aniballi
+     */
     public void getColumnFromPlayer(KeyEvent event) {
 
         String numPlayers_Input;
