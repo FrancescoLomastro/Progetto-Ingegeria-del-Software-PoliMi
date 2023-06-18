@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.Gui.guiControllers;
 
 import it.polimi.ingsw.network.Client.ClientModel;
 import it.polimi.ingsw.network.Messages.*;
-import it.polimi.ingsw.network.ObserverImplementation.Observer;
+import it.polimi.ingsw.network.ObserverImplementation.*;
 import it.polimi.ingsw.view.Gui.GuiApplication;
 import it.polimi.ingsw.view.OBSMessages.OBS_Message;
 import it.polimi.ingsw.view.OBSMessages.OBS_MessageType;
