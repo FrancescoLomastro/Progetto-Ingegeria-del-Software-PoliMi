@@ -18,10 +18,11 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
-/*
-class Game
-*@author Andrea Ferrini
-*/
+/**
+ * This class is used as a model representation of the game.
+ * All game components as grid, cards and players library are reachable by using this class.
+ * Also this class offers the method to perfor, a player move
+ */
 public class Game implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -29,7 +30,7 @@ public class Game implements Serializable {
     private final Player[] players;
     private final LivingRoom livingRoom;
     private final CardGenerator cardGenerator;
-    private int index;
+    private int playerIndex;
 
 
 
@@ -43,7 +44,7 @@ public class Game implements Serializable {
         this.numPlayers=numPlayers;
         this.players = new Player[numPlayers];
         this.livingRoom = new LivingRoom(numPlayers,  2,cardGenerator);
-        this.index = 0;
+        this.playerIndex = 0;
     }
 
 
@@ -81,6 +82,9 @@ public class Game implements Serializable {
 
 
 
+    /**
+     * @return an array containing all the player in the game
+     */
     public Player[] getPlayers() {
         Player[] answer = new Player[numPlayers];
         System.arraycopy(players, 0, answer, 0, numPlayers);
@@ -210,38 +214,80 @@ public class Game implements Serializable {
     }
 
 
+
+
+    /**
+     * This method inserts in game a new player with a name
+     * @param name the name of the player
+     */
     public void setNextPlayer(String name){
-        this.players[index] = new Player(name, cardGenerator);
-        index ++;
+        this.players[playerIndex] = new Player(name, cardGenerator);
+        playerIndex++;
     }
 
+
+
+
+    /**
+     * This method is used to check if the user identified by the parameter has filled his library
+     * @param username is the username of the player
+     * @return true if the player has a full library
+     */
     public boolean checkEndLibrary(String username){
         Player player = searchByUsername(username);
         return player.getLibrary().isFull();
     }
-    /**Return array with common goal card
+
+
+
+
+
+    /**
      * @author: Riccardo Figini
-     * @return CommonGaolCard[]*/
+     * @return an array with common goal card of the living room
+     */
     public CommonGoalCard[] getCommonGoalCard(){
         return livingRoom.getCommonGoalCards();
     }
 
-    public int getNumCommonGoal(int index) {
-        if(index!=0 && index!=1)
+
+
+
+    /**
+     * @param index the index of the requested card
+     * @return the card Id of the goal card in the index position
+     */
+    public int getCommonGoalCardId(int index) {
+        if(index<0 || index > livingRoom.getCommonGoalCards().length-1)
             throw new RuntimeException("Invalid number common goal card");
         else
-            return livingRoom.getCommonGoalCards()[index].getNum();
+            return livingRoom.getCommonGoalCards()[index].getCardId();
     }
 
-    /** DA RIFARE IL COMMENTO: assegna la carta centale del livingroom all'username passato come parametro*/
-    public int assignFillerPoints(String username)
+
+
+
+    /**
+     * This method is used to assign the point at the center of the living room to a specific user.
+     * After this method is called, the points at the center are actually consumed.
+     * @param username the username of the player that will gain the points
+     * @return the amount of points earned by the player
+     */
+    public int firstLibraryCompletion(String username)
     {
-        Player fillerPlayer = searchByUsername(username);
+        Player playerWhoFills = searchByUsername(username);
         int points=livingRoom.consumeCentralPoints();
-        fillerPlayer.addPoints(points);
+        playerWhoFills.addPoints(points);
         return points;
     }
-    public int getCentralPointCard()
+
+
+
+
+    /**
+     * @return The amount of points available at the center of the living room.
+     */
+    public int getCentralScore()
     {
         return livingRoom.getCentralScorePoints();
     }

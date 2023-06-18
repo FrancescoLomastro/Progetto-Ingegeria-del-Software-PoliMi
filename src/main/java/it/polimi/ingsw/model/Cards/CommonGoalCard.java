@@ -38,7 +38,7 @@ public abstract class CommonGoalCard extends Card implements Serializable {
 
         return scorePointCard.getScoreWithDecrease();
     }
-    public int getNum() {
+    public int getCardId() {
         return num;
     }
 }

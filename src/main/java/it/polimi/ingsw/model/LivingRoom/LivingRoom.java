@@ -52,6 +52,8 @@ public class LivingRoom implements Serializable {
     }
 
 
+
+
     /**
      * Its used when the first library of the game is filled with object cards.
      * This method consumes the central score card and returns the amount of points.
@@ -64,12 +66,31 @@ public class LivingRoom implements Serializable {
     }
 
 
+
+
+    /**
+     * @return The grid object in the living room
+     */
     public Grid getGrid() {
         return grid;
     }
+
+
+
+
+    /**
+     * @return the amount of point available at the center of the living room
+     */
     public int getCentralScorePoints() {
         return centralScorePoints;
     }
+
+
+
+
+    /**
+     * @return the array of common goal cards in the library
+     */
     public CommonGoalCard[] getCommonGoalCards() {
         return commonGoalCards;
     }

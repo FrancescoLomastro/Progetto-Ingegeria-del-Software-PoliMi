@@ -61,10 +61,10 @@ public class TurnController implements Runnable, Serializable {
             SetupMessage message= new SetupMessage(
                     game.getCommonGoalCard()[0].getPoints(),
                     game.getCommonGoalCard()[1].getPoints(),
-                    game.getPlayers()[i].getNumPersonalGoal(),
-                    game.getNumCommonGoal(0),
-                    game.getNumCommonGoal(1),
-                    game.getCentralPointCard(),
+                    game.getPlayers()[i].getPersonalCardId(),
+                    game.getCommonGoalCardId(0),
+                    game.getCommonGoalCardId(1),
+                    game.getCentralScore(),
                     game.getGrid(),
                     playerNames,
                     game.getPlayers()[i].getPersonalGoalCard().getGoalVector(),
@@ -122,7 +122,7 @@ public class TurnController implements Runnable, Serializable {
             /*Controllo se la sua libraria è terminata, allora attivo il countdown*/
             if (game.checkEndLibrary(message.getUsername()) && !flagCountdown) {
                 flagCountdown = true;
-                int points= game.assignFillerPoints(message.getUsername());
+                int points= game.firstLibraryCompletion(message.getUsername());
                 gameController.notifyAllMessage(new AlmostOverMessage(message.getUsername(),points));
             }
 
