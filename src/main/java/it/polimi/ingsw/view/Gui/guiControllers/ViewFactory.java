@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * ViewFactory class contains methods related to the creation of stages during our program lifecycle.
- * The main responsibilities is to interact with specific "guiControllers" to direct interactions among users and stages.d
+ * This class manages the creation of stages, the succession of scenes and their changes that characterise the game.
+ * The main responsibilities is to interact with specific "guiControllers" to direct interactions among users, stages and scenes.
  *
  * @author Alberto Aniballi
  */
@@ -38,9 +38,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     private Position[] positions;
     private final int MIN_HEIGHT = 600;
     private final int MIN_WIDTH = 900 ;
+
     /**
-     * Returns or creates the only instance of the ViewFactory
-     * @return
+     * Returns or creates the only instance of the ViewFactory.
+     *
+     * @return: static instance of View Factory
+     * @author: Alberto Aniballi
      */
     public static ViewFactory getInstance() {
         if (instance==null) {
@@ -49,20 +52,34 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         return instance;
     }
 
+    /**
+     * It is the constructor of the class, it has the main responsibility of adding an observer to the super class "clientModel" attribute.
+     *
+     * @return: static instance of View Factory
+     * @author: Francesco Gregorio Lo Mastro
+     */
     public ViewFactory() {
         clientModel=new ClientModel();
         clientModel.addObserver(this);
     }
 
-
     /**
-     * Starts the main FX thread
+     * It starts the mana java-FX thread.
+     *
+     * @author: Alberto Aniballi
      */
     @Override
     public void startView() {
         Application.launch(GuiApplication.class);
     }
 
+    /**
+     * This method is used to load a new scene.
+     *
+     * @param loader: the FXMLLoader instance with the proper URL location
+     * @return: the loaded Scene
+     * @author: Alberto Aniballi
+     */
     private Scene loadScene_old(FXMLLoader loader) {
         Scene scene = null;
         try
@@ -73,10 +90,29 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         }
         return scene;
     }
+
+    /**
+     * This method is used to switch the scene in the primary stage.
+     *
+     * @param loader: the FXMLLoader instance with the proper URL location
+     * @author: Alberto Aniballi
+     */
     private void switchScene_old(FXMLLoader loader) {
         Scene scene = loadScene_old(loader);
         primaryStage.setScene(scene);
     }
+
+    /**
+     * This method is used to initialize a new stage by inserting minimum height and width.
+     * Furthermore, the method controls the situation in which the new stage must lock user interactions with previous stage.
+     *
+     * @param loader: the FXMLLoader instance with the proper URL location;
+     * @param minHeight: the minimum stage height;
+     * @param minWidth: the minimum stage width;
+     * @param lockStage: the boolean condition upon which the previous stage is locked;
+     * @param closeApplicationOnClose: the boolean condition upon which the appiclation is closed.
+     * @author: Alberto Aniballi
+     */
     private void createStage_old(FXMLLoader loader, int minHeight, int minWidth, boolean lockStage, boolean closeApplicationOnClose) {
         Stage newStage = new Stage();
         Scene scene = loadScene_old(loader);
@@ -97,14 +133,34 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             newStage.show();
         }
     }
+
+    /**
+     * This method is used to set the primary stage.
+     *
+     * @param primaryStage: the new primary stage.
+     * @author: Francesco Gregorio Lo Mastro
+     */
     public void setPrimaryStage(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
     }
+
+    /**
+     * This method is used to close a stage.
+     *
+     * @param stage: the stage to be closed.
+     * @author: Francesco Gregorio Lo Mastro
+     */
     public void closeStage(Stage stage) {
         stage.close();
     }
 
+    /**
+     * This method is used to create the main stage of the game and to set the correct scene.
+     *
+     * @param loader: the FXMLLoader instance with the proper URL location
+     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
+     */
     private void createMainStage(FXMLLoader loader)
     {
         primaryStage.setMinHeight(MIN_HEIGHT);
@@ -118,6 +174,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         }
         primaryStage.setScene(primaryScene);
     }
+
+    /**
+     * This method is used to change root to the primary stage scene.
+     *
+     * @param loader: the FXMLLoader instance with the proper URL location
+     * @author: Francesco Gregorio Lo Mastro
+     */
     private void changeRoot(FXMLLoader loader)
     {
         try {
@@ -129,7 +192,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
 
     /**
-     * Shows the start scene
+     * This method is used to instantiate the main stage and to load the first scene on it, the scene is the "start" scene.
+     * After the scene is correctly loaded, the stage is shown.
+     *
+     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
      */
     public void showStart() {
         Platform.runLater(()->{
@@ -147,7 +213,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
 
     /**
-     * Shows the form that collects the initial info of the user
+     * This method is used to instantiate the "ClientLogin" scene on the primary stage once
+     * a new client log into the pre-game phase.
+     *
+     * @author: Alberto Aniballi
      */
     @Override
     public void askInitialInfo() {
@@ -158,11 +227,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
-
     /**
-     * Shows the form that collects the number of player to build the lobby
-     * @param min
-     * @param max
+     * This method is used to instantiate the "PlayerNumberRequest" scene on a new root.
+     *
+     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
      */
     @Override
     public void askNumberOfPlayers(int min, int max) {
@@ -174,7 +242,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
 
     /**
-     * Scene/Message to show when the game starts
+     * This method is used to instantiate a new stage that notifies user of the start of the game.
+     *
+     * @author: Riccardo Figini
      */
     @Override
     public void startGame() {
@@ -194,6 +264,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
     /**
      * Shows the form that collect the new username that the user will use
+     */
+
+    /**
+     * This method is used to instantiate the "InvalidUsername" scene on a new stage during the pre-game phase.
+     * It shows the form that collect the new username that the user will use.
+     *
+     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
      */
     @Override
     public void onInvalidUsername() {
