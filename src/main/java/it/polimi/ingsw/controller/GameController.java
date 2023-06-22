@@ -55,20 +55,16 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     public void startTimer(Connection connection) {
         connection.startTimer(controller);
     }
-    /**Reset ping
+    /**Reset ping according to game's status
      * @author: Riccardo Figini
      * @param username Player */
     public void renewTimer(String username){
-        ServerReceiver serverReceiver = controller;
+        ServerReceiver serverReceiver;
         Connection connection= clients.get(username);
         if(statusGame==StatusGame.IN_GAME)
             serverReceiver = this;
-        else if(statusGame==StatusGame.BEFORE_GAME)
+        else
             serverReceiver = controller;
-        else {
-            controller.tryToDisconnect(connection, username);
-            return;
-        }
         connection.resetTimer(serverReceiver);
     }
     /**Destroy every player's ping in the game
@@ -131,7 +127,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         initGame();
         initGameFile();
         System.out.println("Inizializzata partita e mandato il messaggio");
-        controller.changeStatusToEveryone(StatusNetwork.IN_GAME, this, clients);
+        controller.changeStatusToEveryone(StatusNetwork.IN_GAME, this);
         statusGame=StatusGame.IN_GAME;
     }
     /**Create and store game's file in memory. It uses gameId for the name of file
@@ -247,7 +243,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param message Message with motivation of error
      * */
     private void gameNeedToBeClosed(String message){
-        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this, clients);
+        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
         destroyEveryPing();
         statusGame=StatusGame.ABORT;
         controller.destroyGame(message, this);
@@ -259,7 +255,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param player Player that left the game, it will not receive the error message
      * */
     private void gameNeedToBeClosed(String message, String player){
-        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this, clients);
+        controller.changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, this);
         destroyEveryPing();
         statusGame=StatusGame.ABORT;
         controller.destroyGame(player, message, this);
@@ -401,7 +397,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         } catch (IOException e) {
             System.out.println(Controller.ANSI_BLU + "File game can't be deleted, name cannot be used again" + ANSI_RESET);
         }
-        controller.changeStatusToEveryone(StatusNetwork.END_OF_THE_GAME, this, clients);
+        controller.changeStatusToEveryone(StatusNetwork.END_OF_THE_GAME, this);
         try {
             UnicastRemoteObject.unexportObject(gameShared, true);
         } catch (NoSuchObjectException e) {
@@ -410,7 +406,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         controller.removeGame(this);
     }
     /**
-     * Remove player from lobby
+     * Remove player from lobby. This method can be called only before the beginning of game
      * @author: Riccardo Figini
      * @param name Name of player to be removed
      * */
@@ -432,5 +428,11 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * */
     public void setStatusGame(StatusGame statusGame) {
         this.statusGame = statusGame;
+    }
+    /**It returns map with player-connection in game/lobby
+     * @return {@code Map<String, Connection>}
+     * */
+    public Map<String, Connection> getClients() {
+        return clients;
     }
 }

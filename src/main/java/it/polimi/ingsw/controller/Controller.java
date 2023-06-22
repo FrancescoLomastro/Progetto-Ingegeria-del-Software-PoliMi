@@ -23,7 +23,6 @@ public class Controller implements ServerReceiver
     private Map<String, String> oldPlayersMap;
     private final ArrayList<GameController> games;
     private GameController currentGame;
-    private Map<String, Connection> currentPlayerConnectionReferences;
     private final Map<String, Connection> playerBeforeJoiningLobby;
     private Request waitedRequest;
     private boolean isAsking;
@@ -33,7 +32,6 @@ public class Controller implements ServerReceiver
     public Controller() {
         games = new ArrayList<>();
         currentGame= new GameController(getAvailableID(), this);
-        currentPlayerConnectionReferences = new HashMap<>();
         playerBeforeJoiningLobby = new HashMap<>();
         waitedRequest=null;
         isAsking=false;
@@ -67,7 +65,7 @@ public class Controller implements ServerReceiver
     public void tryToDisconnect(Connection connection, String playerName) {
         switch (connection.getStatusNetwork()){
             case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER -> {
-                changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
+                changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
                 currentGame.destroyEveryPing();
                 destroyGame(playerName, "First player left, game will be closed", currentGame);
                 currentGame = new GameController(getAvailableID(), this);
@@ -83,8 +81,10 @@ public class Controller implements ServerReceiver
                 currentGame = new GameController(getAvailableID(), this);
                 waitedRequest = null;
                 isAsking =false;
-                playerBeforeJoiningLobby.get(playerName).destroyPing();
-                playerBeforeJoiningLobby.remove(playerName);
+                if(playerBeforeJoiningLobby.get(playerName)!=null) {
+                    playerBeforeJoiningLobby.get(playerName).destroyPing();
+                    playerBeforeJoiningLobby.remove(playerName);
+                }
             }
             case AFTER_SEND_INVALID_NAME_MESSAGE -> {
                 System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping the request..." + ANSI_RESET);
@@ -325,17 +325,15 @@ public class Controller implements ServerReceiver
      * */
     private void addPlayer(String username, Connection connection) {
         currentGame.addPlayer(username,connection);
-        currentPlayerConnectionReferences.put(username, connection);
         playerBeforeJoiningLobby.remove(username);
         if(currentGame.getSizeOfLobby()==currentGame.getLimitOfPlayers())
         {
             writeNewGameInExecution(currentGame.getGameId());
-            changeStatusToEveryone(StatusNetwork.NEW_GAME_IS_STARTING, currentGame, currentPlayerConnectionReferences);
+            changeStatusToEveryone(StatusNetwork.NEW_GAME_IS_STARTING, currentGame);
             new Thread(currentGame).start();
             int num = getAvailableID();
             currentGame=new GameController(num, this);
             games.add(currentGame);
-            currentPlayerConnectionReferences = new HashMap<>();
         }
     }
 
@@ -349,7 +347,7 @@ public class Controller implements ServerReceiver
 
         if(jsonObject==null) {
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
-            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
+            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
             currentGame = new GameController(getAvailableID(), this);
             return;
@@ -359,7 +357,7 @@ public class Controller implements ServerReceiver
 
         if(jsonArray==null) {
             System.out.println(ANSI_BLU + "Impossible to open jsonArray" + ANSI_RESET);
-            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
+            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
             currentGame = new GameController(getAvailableID(), this);
             return;
@@ -374,7 +372,7 @@ public class Controller implements ServerReceiver
             writer.close();
         }catch (IOException e) {
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
-            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame, currentPlayerConnectionReferences);
+            changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
             currentGame = new GameController(getAvailableID(), this);
         }
@@ -586,7 +584,7 @@ public class Controller implements ServerReceiver
         }
         games.remove(gameController);
     }
-    /**It removes player from specific not in execution game
+    /**It removes player from specific not in execution game.
      * @author: Riccardo Figini
      * @param playerName Name of player to remove
      * */
@@ -606,22 +604,22 @@ public class Controller implements ServerReceiver
             }
         }
     }
-    /**It chages status to every player in currentGame
+    /**It chages status to every player in game
      * @author: Riccardo Figini
      * @param statusNetwork network's status
+     * @param gameController Game with connection that need to be changed
      * */
-    public void changeStatusToEveryone(StatusNetwork statusNetwork, GameController gameController, Map<String, Connection> clients){
+    public void changeStatusToEveryone(StatusNetwork statusNetwork, GameController gameController){
         for(int i=0; i<gameController.getNamesOfPlayer().size(); i++){
-            changeStatusOfConnection(gameController.getNamesOfPlayer().get(i), statusNetwork, clients);
+            changeStatusOfConnection(statusNetwork, gameController.getClients().get(gameController.getNamesOfPlayer().get(i)));
         }
     }
     /**It changes status of specific player in game
      * @author: Riccardo Figini
-     * @param player Player's name
+     * @param connection Connection that need to be changed
      * @param statusNetwork Network's status
      * */
-    public void changeStatusOfConnection(String player, StatusNetwork statusNetwork, Map<String, Connection> clients){
-        Connection connection = clients.get(player);
+    public void changeStatusOfConnection(StatusNetwork statusNetwork, Connection connection){
         if(connection!=null)
             connection.setStatusNetwork(statusNetwork);
     }
