@@ -24,8 +24,7 @@ public class Controller implements ServerReceiver
     private final ArrayList<GameController> games;
     private GameController currentGame;
     private Map<String, Connection> currentPlayerConnectionReferences;
-    private Map<String, Connection> playerBeforeJoiningLobby;
-
+    private final Map<String, Connection> playerBeforeJoiningLobby;
     private Request waitedRequest;
     private boolean isAsking;
     private static final int minimumPlayers = 2;
@@ -60,6 +59,10 @@ public class Controller implements ServerReceiver
             }
         }
     }
+    /**It handles connection-error
+     * @param connection Player's connection
+     * @param playerName Player's name
+     * */
     @Override
     public void tryToDisconnect(Connection connection, String playerName) {
         switch (connection.getStatusNetwork()){
@@ -93,11 +96,13 @@ public class Controller implements ServerReceiver
                 playerBeforeJoiningLobby.get(playerName).destroyPing();
                 playerBeforeJoiningLobby.remove(playerName);
             }
-            default ->{
+            default ->
                 searchGameController(playerName).tryToDisconnect(connection, playerName);
-            }
         }
     }
+    /**It handles message before game
+     * @param message message
+     * */
     @Override
     synchronized public void onMessage(Message message) {
 
@@ -149,94 +154,11 @@ public class Controller implements ServerReceiver
             }
         }
     }
-    private void destroyAllFile() throws IOException {
-        JsonObject j =  getArrayJsonWithNumberGame();
-
-        if(j==null){
-            System.out.println(ANSI_BLU + "File with number ID of game is not reachable. Game is not deleted" + ANSI_RESET);
-            return;
-        }
-        JsonArray jsonArray = j.getAsJsonArray("numOfGame");
-
-        for(int i=0; i< jsonArray.size(); i++){
-            deleteGameFile("src/main/resources/gameFile/ServerGame"+jsonArray.get(i).getAsString()+".bin");
-            jsonArray.remove(i);
-        }
-
-        Gson gson = new Gson();
-        Writer writer;
-        try {
-            writer = new FileWriter(pathFileWithNumberOfGame);
-            String jsonWrite = gson.toJson(j);
-            writer.write(jsonWrite);
-            writer.close();
-        }catch (IOException ignored) {
-        }
-    }
-
-    private void manageOldPlayer(){
-        JsonArray arrayOfJsonCells = Objects.requireNonNull(getArrayJsonWithNumberGame()).getAsJsonArray("numOfGame");
-        if (arrayOfJsonCells == null || arrayOfJsonCells.size() == 0)
-            return;
-        String number;
-        for (JsonElement jsonCellElement : arrayOfJsonCells) {
-            number = jsonCellElement.getAsString();
-            String path = "src/main/resources/gameFile/ServerGame"+number+".bin";
-            getPlayerFromFile(path, number);
-        }
-        System.out.println("File has been read, players: " + oldPlayersMap.size());
-        for(Map.Entry<String, String> entry : oldPlayersMap.entrySet()){
-            System.out.println("- " + entry.getKey() + ", " + entry.getValue());
-        }
-    }
-
-    /**It returns jsonArray with number of ongoing game
+    /**It handles message during login
      * @author: Riccardo Figini
-     * @return {@code JsonArray} Array with number
+     * @param connection Player's connection
+     * @param username Player's username
      * */
-    private JsonObject getArrayJsonWithNumberGame() {
-        Gson gson = new Gson();
-        oldPlayersMap = new LinkedHashMap<>();
-        Reader reader;
-        try {
-            reader = new FileReader(pathFileWithNumberOfGame);
-        } catch (FileNotFoundException e) {
-            System.out.println(ANSI_BLU + "No file with old games, impossible to restore unfinished game" + ANSI_RESET);
-            System.out.println(ANSI_BLU + "Server will continue without restoring games..."+ ANSI_RESET);
-            oldPlayersMap =null;
-            return null;
-        }
-        return gson.fromJson(reader, JsonObject.class);
-    }
-
-    /**It adds name of player from ongoing game. It reads object "gameController" from a file indicated with path
-     * @param path Game's path
-     * */
-    private void getPlayerFromFile(String path, String gameId) {
-        GameController gameController ;
-        try {
-            FileInputStream finput = new FileInputStream(path);
-            ObjectInputStream ois = new ObjectInputStream(finput);
-            gameController= (GameController) ois.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println(ANSI_BLU + "Error in opening file, path: "+path+", " + e + ANSI_RESET);
-            System.out.println(ANSI_BLU + "Some player are not restored"+ ANSI_RESET);
-            return;
-        } catch (IOException e) {
-            System.out.println(ANSI_BLU + "Error in opening stream to read object, , path: "+path+" " + e + ANSI_RESET);
-            System.out.println(ANSI_BLU + "Some player are not restored"+ ANSI_RESET);
-            return;
-        } catch (ClassNotFoundException e) {
-            System.out.println(ANSI_BLU + "Error in reading class from file, path" + path + " " + e + ANSI_RESET);
-            System.out.println(ANSI_BLU + "Some player are not restored"+ ANSI_RESET);
-            return;
-        }
-        ArrayList<String> list = gameController.getNamesOfPlayer();
-        for (String s : list) {
-            oldPlayersMap.put(s, gameId);
-        }
-    }
-
     public void login(String username, Connection connection) {
         connection.setStatusNetwork(StatusNetwork.ARRIVED_LOGIN_MESSAGE);
         int id = isOldPlayer(username);
@@ -273,6 +195,8 @@ public class Controller implements ServerReceiver
                     }
                 }
             } else {
+                connection.destroyPing();
+                playerBeforeJoiningLobby.remove(username);
                 connection.setStatusNetwork(StatusNetwork.AFTER_SEND_INVALID_NAME_MESSAGE);
                 try {
                     connection.sendMessage(new InvalidUsernameMessage());
@@ -284,7 +208,99 @@ public class Controller implements ServerReceiver
         else
             manageOldGame(username, connection, id);
     }
+    /**It destroys all file game
+     * */
+    private void destroyAllFile() throws IOException {
+        JsonObject j =  getArrayJsonWithNumberGame();
 
+        if(j==null){
+            System.out.println(ANSI_BLU + "File with number ID of game is not reachable. Game is not deleted" + ANSI_RESET);
+            return;
+        }
+        JsonArray jsonArray = j.getAsJsonArray("numOfGame");
+
+        for(int i=0; i< jsonArray.size(); i++){
+            deleteGameFile("src/main/resources/gameFile/ServerGame"+jsonArray.get(i).getAsString()+".bin");
+            jsonArray.remove(i);
+        }
+
+        Gson gson = new Gson();
+        Writer writer;
+        try {
+            writer = new FileWriter(pathFileWithNumberOfGame);
+            String jsonWrite = gson.toJson(j);
+            writer.write(jsonWrite);
+            writer.close();
+        }catch (IOException ignored) {
+        }
+    }
+    /**It loads old player name
+     * */
+    private void manageOldPlayer(){
+        JsonArray arrayOfJsonCells = Objects.requireNonNull(getArrayJsonWithNumberGame()).getAsJsonArray("numOfGame");
+        if (arrayOfJsonCells == null || arrayOfJsonCells.size() == 0)
+            return;
+        String number;
+        for (JsonElement jsonCellElement : arrayOfJsonCells) {
+            number = jsonCellElement.getAsString();
+            String path = "src/main/resources/gameFile/ServerGame"+number+".bin";
+            getPlayerFromFile(path, number);
+        }
+        System.out.println("File has been read, players: " + oldPlayersMap.size());
+        for(Map.Entry<String, String> entry : oldPlayersMap.entrySet()){
+            System.out.println("- " + entry.getKey() + ", " + entry.getValue());
+        }
+    }
+    /**It returns jsonArray with number of ongoing game
+     * @author: Riccardo Figini
+     * @return {@code JsonArray} Array with number
+     * */
+    private JsonObject getArrayJsonWithNumberGame() {
+        Gson gson = new Gson();
+        oldPlayersMap = new LinkedHashMap<>();
+        Reader reader;
+        try {
+            reader = new FileReader(pathFileWithNumberOfGame);
+        } catch (FileNotFoundException e) {
+            System.out.println(ANSI_BLU + "No file with old games, impossible to restore unfinished game" + ANSI_RESET);
+            System.out.println(ANSI_BLU + "Server will continue without restoring games..."+ ANSI_RESET);
+            oldPlayersMap =null;
+            return null;
+        }
+        return gson.fromJson(reader, JsonObject.class);
+    }
+    /**It adds name of player from ongoing game. It reads object "gameController" from a file indicated with path
+     * @param path Game's path
+     * */
+    private void getPlayerFromFile(String path, String gameId) {
+        GameController gameController ;
+        try {
+            FileInputStream finput = new FileInputStream(path);
+            ObjectInputStream ois = new ObjectInputStream(finput);
+            gameController= (GameController) ois.readObject();
+        } catch (FileNotFoundException e) {
+            System.out.println(ANSI_BLU + "Error in opening file, path: "+path+", " + e + ANSI_RESET);
+            System.out.println(ANSI_BLU + "Some player are not restored"+ ANSI_RESET);
+            return;
+        } catch (IOException e) {
+            System.out.println(ANSI_BLU + "Error in opening stream to read object, , path: "+path+" " + e + ANSI_RESET);
+            System.out.println(ANSI_BLU + "Some player are not restored"+ ANSI_RESET);
+            return;
+        } catch (ClassNotFoundException e) {
+            System.out.println(ANSI_BLU + "Error in reading class from file, path" + path + " " + e + ANSI_RESET);
+            System.out.println(ANSI_BLU + "Some player are not restored"+ ANSI_RESET);
+            return;
+        }
+        ArrayList<String> list = gameController.getNamesOfPlayer();
+        for (String s : list) {
+            oldPlayersMap.put(s, gameId);
+        }
+    }
+    /**It returns game's id where player is contained. If he is not "old player" return -1
+     * @author: Riccardo Figini
+     * @param username Player's username
+     * @return {@code int} game's id or -1
+     * */
     private int isOldPlayer(String username) {
         for(Map.Entry<String, String> entry : oldPlayersMap.entrySet()){
             if(entry.getKey().equals(username)){
@@ -294,9 +310,12 @@ public class Controller implements ServerReceiver
         }
         return -1;
     }
-
+    /**It adds player in currentGame and will start the game if lobby is full
+     * @author: Riccardo Figini
+     * @param username player's name
+     * @param connection player's connection
+     * */
     private void addPlayer(String username, Connection connection) {
-
         currentGame.addPlayer(username,connection);
         currentPlayerConnectionReferences.put(username, connection);
         playerBeforeJoiningLobby.remove(username);
@@ -353,7 +372,7 @@ public class Controller implements ServerReceiver
         }
     }
 
-    /**It chose available ID for a game. It controls a file with every existing game
+    /**It chose available ID for new game. It controls a file with every game
      * @author: Riccardo Figini
      * @return {@code int} Available number
      * */
@@ -373,7 +392,10 @@ public class Controller implements ServerReceiver
         max++;
         return max;
     }
-
+    /**It controls if in games exists a player with the same name in input
+     * @param username player's name to verify
+     * @return {@code boolean} true if name is available
+     * */
     private boolean isAvailableUsername(String username) {
         for (GameController gc : games) {
             if (gc.getNamesOfPlayer().contains(username))
@@ -431,17 +453,24 @@ public class Controller implements ServerReceiver
             removePlayerFromOldList(gameController);
         }
     }
-
+    /**It deletes game file
+     * @author: Riccardo Figini
+     * @param s File's name to remove */
     private void deleteGameFile(String s) throws IOException {
         Files.delete(Paths.get(s));
     }
-
+    /**When old player finally restart it remove player
+     * @author: Riccardo Figini*/
     private void removePlayerFromOldList(GameController gameController) {
         for(int i = 0; i< gameController.getNamesOfPlayer().size(); i++){
             oldPlayersMap.remove(gameController.getNamesOfPlayer().get(i));
         }
     }
-
+    /**It reloads game from file and create new map for plaeyey
+     * @author: RIccardo Figini
+     * @param gameId Game's ID
+     * @return {@code GameController} It returns gameController
+     * */
     private GameController reloadGame(int gameId) throws IOException, ClassNotFoundException {
         FileInputStream file = new FileInputStream("src/main/resources/gameFile/ServerGame"+gameId+".bin");
         ObjectInputStream inputStream = new ObjectInputStream(file);
@@ -452,7 +481,11 @@ public class Controller implements ServerReceiver
         gameController.reloadPlayerCreatingNewMap(this);
         return gameController;
     }
-
+    /**It finds specific gameController from player's name
+     * @author: Riccardo Figini
+     * @param playerName player's game
+     * @return {@code GameController} It returns gameController where player is contained
+     * */
     public GameController searchGameController(String playerName){
         for (GameController gameController: games){
             if(gameController.getNamesOfPlayer().contains(playerName)) {
@@ -581,7 +614,9 @@ public class Controller implements ServerReceiver
         if(connection!=null)
             connection.setStatusNetwork(statusNetwork);
     }
-
+    /**It removes gameController from list
+     * @param gameController gameController
+     * */
     public void removeGame(GameController gameController) {
         games.remove(gameController);
     }

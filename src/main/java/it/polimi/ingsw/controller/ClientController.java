@@ -94,10 +94,7 @@ public class ClientController implements Observer<View, OBS_Message> {
      * @param message the message coming from the network
      */
     public void onMessage(Message message)  {
-
         System.out.println(ANSI_YELLOW + "Message has arrived: " + message.getType() + ANSI_RESET);
-
-
         switch (message.getType())
         {
             case ACCEPTED_LOGIN_MESSAGE -> {
@@ -109,8 +106,8 @@ public class ClientController implements Observer<View, OBS_Message> {
                 PlayerNumberRequest msg = (PlayerNumberRequest)message;
                 view.askNumberOfPlayers(msg.getMinimumPlayers(), msg.getMaximumPlayers());
             }
-            case INVALID_USERNAME_MESSAGE ->
-            {
+            case INVALID_USERNAME_MESSAGE -> {
+                pingHandler.shutDown();
                 view.onInvalidUsername();
             }
             case LOBBY_UPDATE_MESSAGE -> {
@@ -126,7 +123,6 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case START_GAME_MESSAGE -> {
                 view.startGame();
-                //da adeguare alla GUi
                 view.startChat();
             }
             case CHAT_MESSAGE -> {

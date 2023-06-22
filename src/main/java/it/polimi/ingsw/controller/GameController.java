@@ -52,8 +52,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         this.controller = controller;
         statusGame = StatusGame.BEFORE_GAME;
     }
-    public void startTimer(Connection connection)
-    {
+    public void startTimer(Connection connection) {
         connection.startTimer(controller);
     }
     /**Reset ping
@@ -72,16 +71,25 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
         connection.resetTimer(serverReceiver);
     }
+    /**Destroy every player's ping in the game
+     * @author: Riccardo Figini
+     * */
     public void destroyEveryPing(){
         for(Map.Entry<String, Connection> entry: clients.entrySet()){
             entry.getValue().destroyPing();
         }
     }
-    public void destroyPing(String name){
-        Connection connection = clients.get(name);
+    /**It destroys a specific player's pign
+     * @author: Riccardo Figini
+     * @param username Player's name*/
+    public void destroyPing(String username){
+        Connection connection = clients.get(username);
         connection.destroyPing();
     }
-
+    /**It creates a new map to store player when game is loaded from memory
+     * @author: Riccardo Figini
+     * @param controller General controller
+     * */
     public void reloadPlayerCreatingNewMap(Controller controller){
         this.controller = controller;
         clients = new LinkedHashMap<>();
@@ -126,7 +134,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         controller.changeStatusToEveryone(StatusNetwork.IN_GAME, this, clients);
         statusGame=StatusGame.IN_GAME;
     }
-
+    /**Create and store game's file in memory. It uses gameId for the name of file
+     * @author: Riccardo Figini*/
     private void initGameFile() {
         gameFilePath = "src/main/resources/gameFile/"+serverNameRMI+".bin";
         try {
@@ -139,7 +148,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             gameNeedToBeClosed("Game's file cannot be created, game will be closed");
         }
     }
-
     /**
      * sends a message to all the players
      * */
@@ -153,7 +161,10 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             }
         }
     }
-
+    /**It handles message from player
+     * @author: Andrea Ferrini
+     * @param message Message from player
+     * */
     @Override
     synchronized public void onMessage(Message message) {
         if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
@@ -165,12 +176,15 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                 case CHAT_MESSAGE -> manageChatMessage(message);
                 case PING_MESSAGE -> {
                     String username = message.getUsername();
-                   renewTimer(username);
+                    renewTimer(username);
                 }
             }
         }
     }
-
+    /**It handles chat message
+     * @author: Francesco Gregorio Lo Mastro
+     * @param message Chat message
+     * */
     private void manageChatMessage(Message message) {
         ChatMessage msg = (ChatMessage) message;
         String chatText = msg.getText();
@@ -199,7 +213,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             }
         }
     }
-
     /**
      * It manages error that can came from network
      * @author: Riccardo Figini
@@ -413,6 +426,10 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             notifyAllMessage(new LobbyUpdateMessage(clients.keySet().stream().toList(),limitOfPlayers, "Players left"));
         destroyPing(name);
     }
+    /**It set status of the game
+     * @author: Riccardo Figini
+     * @param statusGame Game's status
+     * */
     public void setStatusGame(StatusGame statusGame) {
         this.statusGame = statusGame;
     }

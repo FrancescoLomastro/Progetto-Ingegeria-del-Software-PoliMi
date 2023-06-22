@@ -42,7 +42,9 @@ public class TurnController implements Runnable, Serializable {
         gameController.sendMessageToASpecificUser(
                 new MessageMove(), game.getPlayers()[0].getName());
     }
-
+    /**It shares initial information with player at the beginning of the game
+     * @author: Francesco Gregorio Lo Mastro
+     * */
     public void initClientObjectInPlayer()
     {
         String[] playerNames= new String[game.getNumPlayers()];
@@ -76,7 +78,10 @@ public class TurnController implements Runnable, Serializable {
         }
         countActualPointAndShare();
     }
-
+    /**It counts player's point and return it in array
+     * @author: Riccardo Figini
+     * @return {@code ArrayList<Couple<String, Integer>>} Array with points
+     * */
     private ArrayList<Couple<String, Integer>> countActualPointAndShare() {
         ArrayList<Couple<String, Integer>> list = new ArrayList<>();
         for(int i=0; i<game.getNumPlayers(); i++){
@@ -118,19 +123,14 @@ public class TurnController implements Runnable, Serializable {
             MessageGrid messageGrid = new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE);
             gameController.notifyAllMessage(messageGrid);
 
-
-            /*Controllo se la sua libraria è terminata, allora attivo il countdown*/
             if (game.checkEndLibrary(message.getUsername()) && !flagCountdown) {
                 flagCountdown = true;
                 int points= game.firstLibraryCompletion(message.getUsername());
                 gameController.notifyAllMessage(new AlmostOverMessage(message.getUsername(),points));
             }
 
-
-            //se il player ha completato almeno un obiettivo comune, informo tutti i giocatori
             if (((MessageAfterMovePositive) moveResult).getGainedPointsFirstCard() > 0 || ((MessageAfterMovePositive) moveResult).getGainedPointsSecondCard() > 0) {
 
-                // copio nel messaggio del common goal i punti guadagnati, di cui ho tenuto traccia nel messageAfterMovePositive
                 MessageCommonGoal messageCommonGoal = new MessageCommonGoal(
                         ((MessageAfterMovePositive) moveResult).getGainedPointsFirstCard(),
                         ((MessageAfterMovePositive) moveResult).getGainedPointsSecondCard(),
@@ -139,7 +139,6 @@ public class TurnController implements Runnable, Serializable {
                         game.getCommonGoalCard()[1].getPoints()
                 );
 
-                // e notifico a tutti i giocatori
                 gameController.notifyAllMessage(messageCommonGoal);
             }
 
@@ -196,7 +195,10 @@ public class TurnController implements Runnable, Serializable {
         }
         gameController.closeGame();
     }
-
+    /**It returns first player after after reload
+     * @author: Riccardo FIgini
+     * @return {@code String} Player's name
+     * */
     public String getPlayerAfterReload() {
         return currentPlayer;
     }

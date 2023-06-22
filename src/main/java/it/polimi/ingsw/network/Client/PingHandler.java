@@ -12,7 +12,6 @@ import java.util.Timer;
 public class PingHandler implements Runnable {
     private final Client client;
     private ClientController clientController;
-
     protected final int PING_TIMEOUT = 10000;
     private Timer pingTimer;
     private boolean timerScheduled;

@@ -18,6 +18,9 @@ public abstract class Connection {
     public abstract void setStatusNetwork(StatusNetwork statusNetwork);
     public abstract String getPlayerName();
     public abstract void setPlayerName(String playerName);
+    /**It resets timer
+     * @param server Server receiver
+     * */
     public void resetTimer(ServerReceiver server) {
         pingerTimer.cancel();
         terminatorTimer.cancel();
@@ -26,14 +29,17 @@ public abstract class Connection {
         pingerTimer.schedule(new PingerTask(server,this),GameController.PING_GAP);
         terminatorTimer.schedule(new TerminatorTask(server,this), GameController.PING_TIMEOUT);
     }
-
+    /**It starts ping timer at the first time
+     * @param server Server (controller or gameController) that implement "ServerReceiver". It handles connection error
+     * */
     public void startTimer(ServerReceiver server) {
         pingerTimer = new Timer();
         terminatorTimer = new Timer();
         pingerTimer.schedule(new PingerTask(server,this),0);
         terminatorTimer.schedule(new TerminatorTask(server,this), GameController.PING_TIMEOUT);
     }
-
+    /**It destroys player/connection's ping. Ping message will stop
+     * @author: Francesco Gregorio Lo Mastro*/
     public void destroyPing(){
         pingerTimer.cancel();
     }
