@@ -90,9 +90,11 @@ public class Controller implements ServerReceiver
                 System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping the request..." + ANSI_RESET);
             }
             case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD ->{
-                System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", droping the message..." + ANSI_RESET);
-                playerBeforeJoiningLobby.get(playerName).destroyPing();
-                playerBeforeJoiningLobby.remove(playerName);
+                System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", dropping the message..." + ANSI_RESET);
+                if(playerBeforeJoiningLobby.get(playerName)!=null) {
+                    playerBeforeJoiningLobby.get(playerName).destroyPing();
+                    playerBeforeJoiningLobby.remove(playerName);
+                }
             }
             default ->
                 searchGameController(playerName).tryToDisconnect(connection, playerName);
