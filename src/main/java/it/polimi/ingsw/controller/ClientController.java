@@ -81,7 +81,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             new Thread(pingHandler).start();
         }
         catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             view.errorCreatingClient(chosenAddress,chosenPort);
         }
     }

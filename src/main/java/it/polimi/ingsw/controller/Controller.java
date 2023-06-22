@@ -88,8 +88,6 @@ public class Controller implements ServerReceiver
             }
             case AFTER_SEND_INVALID_NAME_MESSAGE -> {
                 System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping the request..." + ANSI_RESET);
-                playerBeforeJoiningLobby.get(playerName).destroyPing();
-                playerBeforeJoiningLobby.remove(playerName);
             }
             case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD ->{
                 System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", droping the message..." + ANSI_RESET);
@@ -116,10 +114,16 @@ public class Controller implements ServerReceiver
             case LOGIN_REQUEST ->
             {
                 LoginMessage msg = (LoginMessage) message;
-                currentGame.startTimer(msg.getClientConnection());
-                playerBeforeJoiningLobby.put(message.getUsername(), msg.getClientConnection());
                 msg.getClientConnection().setPlayerName(message.getUsername());
-                login(msg.getUsername(),msg.getClientConnection());
+                boolean accepted = login(msg.getUsername(),msg.getClientConnection());
+                if(accepted) {
+                    if (waitedRequest!= null && waitedRequest.getUsername().equals(msg.getUsername()))
+                        currentGame.startTimer(msg.getClientConnection());
+                    else {
+                        GameController gameController = searchGameController(msg.getUsername());
+                        gameController.startTimer(msg.getClientConnection());
+                    }
+                }
             }
             case PLAYER_NUMBER_ANSWER ->
             {
@@ -154,12 +158,13 @@ public class Controller implements ServerReceiver
             }
         }
     }
-    /**It handles message during login
+    /**It handles message during login. Only
      * @author: Riccardo Figini
      * @param connection Player's connection
      * @param username Player's username
+     * @return {@code boolean} true if name is accepted
      * */
-    public void login(String username, Connection connection) {
+    public boolean login(String username, Connection connection) {
         connection.setStatusNetwork(StatusNetwork.ARRIVED_LOGIN_MESSAGE);
         int id = isOldPlayer(username);
         if(id == -1) {
@@ -195,18 +200,19 @@ public class Controller implements ServerReceiver
                     }
                 }
             } else {
-                connection.destroyPing();
-                playerBeforeJoiningLobby.remove(username);
                 connection.setStatusNetwork(StatusNetwork.AFTER_SEND_INVALID_NAME_MESSAGE);
                 try {
                     connection.sendMessage(new InvalidUsernameMessage());
                 } catch (IOException e) {
                     tryToDisconnect(connection, username);
                 }
+                return false;
             }
         }
         else
             manageOldGame(username, connection, id);
+        playerBeforeJoiningLobby.put(username, connection);
+        return true;
     }
     /**It destroys all file game
      * */
@@ -449,8 +455,11 @@ public class Controller implements ServerReceiver
         }
 
         if(gameController.getSizeOfLobby() == gameController.getLimitOfPlayers()) {
+            ArrayList<String> players = gameController.getNamesOfPlayer();
             gameController.restartGameAfterReload();
             removePlayerFromOldList(gameController);
+            for(int i=0; i<gameController.getSizeOfLobby(); i++)
+                playerBeforeJoiningLobby.remove(players.get(i));
         }
     }
     /**It deletes game file

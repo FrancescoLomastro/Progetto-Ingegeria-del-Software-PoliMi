@@ -664,7 +664,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     private void showBoard(Message arg) {
         createBoard();
-        primaryStage.setResizable(true);
+        Platform.runLater(()->{
+            primaryStage.setResizable(true);
+        });
         SetupMessage msg = (SetupMessage) arg;
         showGrid(msg.getGrid(), MessageGrid.TypeOfGridMessage.INIT);
         for (int i = 0; i < msg.getPlayersName().length; i++) {
