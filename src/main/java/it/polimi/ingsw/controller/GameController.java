@@ -415,6 +415,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * @param name Name of player to be removed
      * */
     public void removePlayer(String name){
+        destroyPing(name);
         for(int i=0; i<testArray.size(); i++) {
             if (testArray.get(i).equals(name)) {
                 testArray.remove(i);
@@ -424,7 +425,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         clients.remove(name);
         if(statusGame==StatusGame.BEFORE_GAME)
             notifyAllMessage(new LobbyUpdateMessage(clients.keySet().stream().toList(),limitOfPlayers, "Players left"));
-        destroyPing(name);
     }
     /**It set status of the game
      * @author: Riccardo Figini

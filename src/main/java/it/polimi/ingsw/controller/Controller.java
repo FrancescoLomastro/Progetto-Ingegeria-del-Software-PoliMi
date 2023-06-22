@@ -75,7 +75,7 @@ public class Controller implements ServerReceiver
                 isAsking =false;
             }
             case AFTER_SEND_ACCEPT_MESSAGE, AFTER_JOIN_LOBBY_OLD_PLAYER -> {
-                System.out.println(ANSI_BLU + "Couldn't contanct client " + playerName + ANSI_RESET);
+                System.out.println(ANSI_BLU + "Couldn't contact client " + playerName + ANSI_RESET);
                 disconnectPlayerFromGame(playerName);
             }
             case AFTER_REQUEST_NUMBER_PLAYER ->{
