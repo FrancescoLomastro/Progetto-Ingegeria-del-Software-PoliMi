@@ -230,7 +230,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to instantiate the "PlayerNumberRequest" scene on a new root.
      *
-     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
+     * @param min: minimum number of players;
+     * @param max: maximum number of players;
+     * @author: Alberto Aniballi.
      */
     @Override
     public void askNumberOfPlayers(int min, int max) {
@@ -262,9 +264,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.almostOver(arg);
         });
     }
-    /**
-     * Shows the form that collect the new username that the user will use
-     */
+
 
     /**
      * This method is used to instantiate the "InvalidUsername" scene on a new stage during the pre-game phase.
@@ -282,6 +282,14 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to update the lobby information including the name of the new player and the new number of
+     * players actually connected to the game lobby. In particular, it changes the scene root with the "Accepted Login"
+     * scene.
+     *
+     * @param string: the string displaying current lobby's information
+     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
+     */
     @Override
     public void lobbyUpdate(String string) {
         Platform.runLater(()->{
@@ -306,7 +314,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         //da aggiornare il Accept
     }
 
-
+    /**
+     * This method is used to print a message in the players chat.
+     *
+     * @param username: the player username who sent the message;
+     * @param text: the message text;
+     * @author: Riccardo Figini
+     */
     @Override
     public void chatMessage(String username, String text) {
         Platform.runLater(()->{
@@ -322,15 +336,31 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
-
+    /**
+     * This method is used to store the object card positions chosen by the player during his turn.
+     *
+     * @param positions: the array containing positions
+     * @author: Alberto Aniballi
+     */
     public void setPositions(Position[] positions) {
         this.positions = positions;
     }
 
+    /**
+     * This method is used to get the object card positions chosen by the player during his turn.
+     *
+     * @author: Alberto Aniballi
+     */
     public Position[] getPositions() {
         return positions;
     }
 
+    /**
+     * This method is used to create "the column question" stage to the player that has just chosen object cards from grid.
+     * In particular, it gives players the possibility to select the library column in which they want to insert object cards.
+     *
+     * @author: Riccard Figini & Alberto Aniballi
+     */
     public void showColumnQuestion() {
         Platform.runLater(()->
         {
@@ -357,9 +387,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             });
         });
     }
-    /*
-    * Setup board to ask move
-    * */
+
+    /**
+     * This method is to initiate a move request to a player.
+     *
+     * @author: Alberto Aniballi
+     */
     @Override
     public void askMove() {
         Platform.runLater(() ->
@@ -368,9 +401,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.onAskMove();
         });
     }
-    /*
-    * Update grid in board
-    * */
+
+    /**
+     * This method is to show and update the grid.
+     *
+     * @author: Francesco Gregorio Lo Mastro
+     */
     @Override
     public void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
         Platform.runLater(() ->
@@ -379,8 +415,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.updateGrid(grid);
         });
     }
-    /**Update library in board. If update is after a move, it calls an animation
-    * @author: Riccardo Figini*/
+
+    /**
+     * Update library in board. If update is after a move, it calls an animation.
+     *
+    * @author: Riccardo Figini
+     * */
     @Override
     public void showLibrary(ObjectCard[][] library, String username, Position[] oldGrid, Position[] newLibrary) {
         if(oldGrid!=null && newLibrary!=null) {
@@ -398,16 +438,20 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         }
     }
 
-    /**This method is necessary in CLI version because it prints everything when it's your turn. In Gui version it prints in chat
+    /**
+     * This method is necessary in CLI version because it prints everything when it's your turn. In Gui version it prints in chat
      * "is your turn"
+     *
      * @author: Riccardo Figini
      * */
     @Override
     public void printAll() {
         chatMessage("Server", "It's your turn");
     }
+
     /**
     * Create stage for chat
+     *
      * @author: Riccardo figini
     * */
     @Override
@@ -455,14 +499,25 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
 
 
-    /**This method print in chat message from server. Messages can be useful information about game's flow
-     * @author: Riccardo Figini
+    /**
+     * This method print in chat message from server. Messages can be useful information about game's flow
+     *
      * @param string Message from server
+     * @author: Riccardo Figini
      * */
     @Override
     public void printMessage(String string) {
         chatMessage("Server", string);
     }
+
+    /**
+     * This method create a new stage "Invalid Move" after a player has chosen an invalid combination of object cards
+     * from the grid or it simply calls the "printMessage" function to display a message from the serve in the chat.
+     *
+     * @param s: the string to print
+     * @param msg: the message type
+     * @author: Riccardo Figini
+     * */
     @Override
     public void printMessage(String s, Message msg){
         if(msg.getType()==MessageType.AFTER_MOVE_NEGATIVE){
@@ -480,6 +535,14 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             printMessage(s);
     }
 
+    /**
+     * This method is used to instantiate the "ErrorClientCreation" scene during the pre-game phase. This scene warn the
+     * user that there was a problem during the creation of its player to participate in the game.
+     *
+     * @param chosenAddress : the server address chosen by the player
+     * @param chosenPort : the port chosen by the player
+     * @author: Alberto Aniballi
+     */
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
         Platform.runLater(() -> {
@@ -493,6 +556,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             changeRoot(loader);
         });
     }
+
+    /**
+     * This method is used to instantiate the "InvalidPort" stage in the case a player chosen an invalid port.
+     * This stage locks the interaction with previous stage.
+     *
+     * @author: Alberto Aniballi
+     */
     public void showInvalidPort() {
         Platform.runLater(()->
         {
@@ -501,6 +571,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to instantiate the "InvalidNumPlayers" stage in the case a player chosen an invalid number of players.
+     * This stage locks the interaction with previous stage.
+     *
+     * @author: Alberto Aniballi
+     */
     public void showInvalidNumPlayers() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
@@ -508,6 +584,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to instantiate the "InvalidNumObjCards" stage in the case a player chosen an invalid number
+     * of object cards from the grid. This stage locks the interaction with previous stage.
+     *
+     * @author: Alberto Aniballi
+     */
     public void showInvalidNumberOfCards() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumObjCards.fxml"));
@@ -579,6 +661,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+
     private void showBoard(Message arg) {
         createBoard();
         primaryStage.setResizable(true);
@@ -592,6 +675,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         showPointsPlayers(msg.getPlayersPoints());
     }
 
+    /**
+     * This method is used to show player points.
+     *
+     * @param playersPoints: the array containing points associated to each player.
+     * @author: Riccardo Figini
+     */
     private void showPointsPlayers(ArrayList<Couple<String, Integer>> playersPoints) {
         Platform.runLater(()->{
             Board_C boardC = (Board_C) currentController;
@@ -599,6 +688,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to show players the available common goal card points.
+     *
+     * @param pointCardCommon1: points available in common goal card 1;
+     * @param pointCardCommon1: points available in common goal card 2;
+     * @author: Riccardo Figini
+     */
     private void showCommonPoints(int pointCardCommon1, int pointCardCommon2) {
         Platform.runLater(()->{
             Board_C boardSceneController = (Board_C) currentController;
@@ -619,6 +715,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to reset the grid.
+     *
+     * @author: Riccardo Figini
+     */
     public void resetGrid() {
         Platform.runLater(() -> {
             Board_C boardSceneController = (Board_C) currentController;
@@ -667,10 +768,22 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         return chatStage;
     }
 
+    /**
+     * This method is used to make the chat visible to players.
+     *
+     * @author: Alberto Aniballi
+     */
     public void showChat() {
         chatStage.setIconified(false);
         chatStage.toFront();
     }
+
+    /**
+     * This method is used to show central points to players.
+     *
+     * @param centralPoints: the current central points;
+     * @author: Riccardo Figini & Francesco Gregorio Lo Mastro
+     */
     public void showCentralPoints(int centralPoints) {
         Platform.runLater(()->{
             Board_C boardSceneController = (Board_C) currentController;
