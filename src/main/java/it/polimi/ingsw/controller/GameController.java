@@ -81,6 +81,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     public void destroyPing(String username){
         Connection connection = clients.get(username);
         connection.destroyPing();
+        connection.destroyPing();
     }
     /**It creates a new map to store player when game is loaded from memory
      * @author: Riccardo Figini

@@ -68,7 +68,9 @@ public class Controller implements ServerReceiver
                 changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
                 currentGame.destroyEveryPing();
                 destroyGame(playerName, "First player left, game will be closed", currentGame);
+                games.remove(currentGame);
                 currentGame = new GameController(getAvailableID(), this);
+                games.add(currentGame);
                 waitedRequest = null;
                 isAsking =false;
             }
@@ -78,27 +80,29 @@ public class Controller implements ServerReceiver
             }
             case AFTER_REQUEST_NUMBER_PLAYER ->{
                 System.out.println(ANSI_BLU + "Couldn't ask number to the client " + playerName + ", dropping the request..." + ANSI_RESET);
+                games.remove(currentGame);
                 currentGame = new GameController(getAvailableID(), this);
+                games.add(currentGame);
                 waitedRequest = null;
                 isAsking =false;
-                if(playerBeforeJoiningLobby.get(playerName)!=null) {
+                //if(playerBeforeJoiningLobby.get(playerName)!=null) {
                     playerBeforeJoiningLobby.get(playerName).destroyPing();
                     playerBeforeJoiningLobby.remove(playerName);
-                }
+                //}
             }
             case AFTER_SEND_INVALID_NAME_MESSAGE -> {
                 System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping connection..." + ANSI_RESET);
-                if(playerBeforeJoiningLobby.get(playerName)!=null) {
+                //if(playerBeforeJoiningLobby.get(playerName)!=null) {
                     playerBeforeJoiningLobby.get(playerName).destroyPing();
                     playerBeforeJoiningLobby.remove(playerName);
-                }
+                //}
             }
             case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD ->{
                 System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", dropping the message..." + ANSI_RESET);
-                if(playerBeforeJoiningLobby.get(playerName)!=null) {
+                //if(playerBeforeJoiningLobby.get(playerName)!=null) {
                     playerBeforeJoiningLobby.get(playerName).destroyPing();
                     playerBeforeJoiningLobby.remove(playerName);
-                }
+                //}
             }
             default ->
                 searchGameController(playerName).tryToDisconnect(connection, playerName);
@@ -159,6 +163,9 @@ public class Controller implements ServerReceiver
                     if(searchGameController(username)!=null)
                     {
                         searchGameController(username).renewTimer(username);
+                    }
+                    else{
+                        System.out.println("Il giocatore non è da nessuna parte");
                     }
                 }
             }
@@ -353,7 +360,9 @@ public class Controller implements ServerReceiver
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
             changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
+            games.remove(currentGame);
             currentGame = new GameController(getAvailableID(), this);
+            games.add(currentGame);
             return;
         }
 
@@ -363,7 +372,9 @@ public class Controller implements ServerReceiver
             System.out.println(ANSI_BLU + "Impossible to open jsonArray" + ANSI_RESET);
             changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
+            games.remove(currentGame);
             currentGame = new GameController(getAvailableID(), this);
+            games.add(currentGame);
             return;
         }
 
@@ -378,7 +389,9 @@ public class Controller implements ServerReceiver
             System.out.println(ANSI_BLU + "Impossible to open jsonObject" + ANSI_RESET);
             changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
             destroyGame("Server has some problems, file not found. Game will be closed", currentGame);
+            games.remove(currentGame);
             currentGame = new GameController(getAvailableID(), this);
+            games.add(currentGame);
         }
     }
 
