@@ -19,8 +19,5 @@ come dovrebbero
 come dovrebbero
 
 
-- IMPORTANTE gestire il pareggio lato client e server !!!!
 - Se giocano in 2 e un obiettivo è completato 2 volte, uno dal gioc1 e l'altro dal gioc2, la carta si riduce da 8 a 4 ma da 4 resta a 4, dovrebbe sparire
-- Prima del popup di vittoria aggiornare i punti
-- popup di mossa non valida
 - glitch chat: se clicco nel sullo sfondo della chat i messaggi finiscono al centro

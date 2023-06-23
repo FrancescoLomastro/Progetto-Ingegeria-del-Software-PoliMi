@@ -25,6 +25,3 @@ come dovrebbero
 -- Quando la partita termina, la schermata di login mostra una libreria vuota, (secondo me la possiamo togliere da li,
                                                                                 tanto è un popup e l'utente può spostarlo e guardare la schemata di gioco)
 -- Mi è capitato di finire una partita ma è uscito un messaggio Errore come popup
-
-
--- Rivedere i casi di test, devono essere esaustivi, un minimo

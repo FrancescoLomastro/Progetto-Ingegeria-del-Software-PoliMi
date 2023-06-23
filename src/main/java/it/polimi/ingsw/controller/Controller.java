@@ -92,23 +92,23 @@ public class Controller implements ServerReceiver
             }
             case AFTER_SEND_INVALID_NAME_MESSAGE -> {
                 System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping connection..." + ANSI_RESET);
-                //if(playerBeforeJoiningLobby.get(playerName)!=null) {
+                if(playerBeforeJoiningLobby.get(playerName)!=null) {
                     playerBeforeJoiningLobby.get(playerName).destroyPing();
                     playerBeforeJoiningLobby.remove(playerName);
-                //}
+                }
             }
             case SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, SEND_MESSSGE_GAME_IS_NOT_AVAILABLE_FOR_RELOAD ->{
                 System.out.println(ANSI_BLU + "Problem in contacting " + playerName + ", dropping the message..." + ANSI_RESET);
-                //if(playerBeforeJoiningLobby.get(playerName)!=null) {
+                if(playerBeforeJoiningLobby.get(playerName)!=null) {
                     playerBeforeJoiningLobby.get(playerName).destroyPing();
                     playerBeforeJoiningLobby.remove(playerName);
-                //}
+                }
             }
             default ->
                 searchGameController(playerName).tryToDisconnect(connection, playerName);
         }
     }
-    /**It handles message before game
+    /**It handles messages before game
      * @param message message
      * */
     @Override
@@ -164,14 +164,11 @@ public class Controller implements ServerReceiver
                     {
                         searchGameController(username).renewTimer(username);
                     }
-                    else{
-                        System.out.println("Il giocatore non è da nessuna parte");
-                    }
                 }
             }
         }
     }
-    /**It handles message during login. Only
+    /**It handles messages during login. Only
      * @author: Riccardo Figini
      * @param connection Player's connection
      * @param username Player's username
@@ -179,8 +176,8 @@ public class Controller implements ServerReceiver
      * */
     public boolean login(String username, Connection connection) {
         connection.setStatusNetwork(StatusNetwork.ARRIVED_LOGIN_MESSAGE);
-        int id = isOldPlayer(username);
-        if(id == -1) {
+        int gameNumber = isOldPlayer(username);
+        if(gameNumber == -1) {
             if (isAvailableUsername(username)) {
                 if (currentGame.getSizeOfLobby() == 0) {
                     if (isAsking)
@@ -191,6 +188,7 @@ public class Controller implements ServerReceiver
                         } catch (IOException e) {
                             tryToDisconnect(connection, username);
                         }
+                        return false;
                     }
                     else {
                         waitedRequest = new Request(username, connection);
@@ -211,6 +209,7 @@ public class Controller implements ServerReceiver
                     } catch (IOException e) {
                         tryToDisconnect(connection, username);
                     }
+                    return true;
                 }
             } else {
                 connection.setStatusNetwork(StatusNetwork.AFTER_SEND_INVALID_NAME_MESSAGE);
@@ -223,7 +222,7 @@ public class Controller implements ServerReceiver
             }
         }
         else
-            manageOldGame(username, connection, id);
+            manageOldGame(username, connection, gameNumber);
         playerBeforeJoiningLobby.put(username, connection);
         return true;
     }
@@ -288,7 +287,7 @@ public class Controller implements ServerReceiver
         }
         return gson.fromJson(reader, JsonObject.class);
     }
-    /**It adds name of player from ongoing game. It reads object "gameController" from a file indicated with path
+    /**It adds the name of player from ongoing game. It reads object "gameController" from a file indicated with path
      * @param path Game's path
      * */
     private void getPlayerFromFile(String path, String gameId) {
@@ -348,7 +347,7 @@ public class Controller implements ServerReceiver
         }
     }
 
-    /**Write a new number of game into file
+    /**Write a new number of games into file
      * @author: Riccardo Figini
      * @param gameId Number to be written
      * */
@@ -557,7 +556,7 @@ public class Controller implements ServerReceiver
      * @param nameOfPlayerDown Player that throw a problem
      * @param message  Message with an error description
      * */
-    public void destroyGame(String message, String nameOfPlayerDown, GameController gameController) {
+    public void destroyGame(String nameOfPlayerDown, String message, GameController gameController) {
         if(gameController.getNamesOfPlayer()== null)
             return;
         int limit=gameController.getNamesOfPlayer().size();
