@@ -21,6 +21,7 @@ public class PingerTask extends TimerTask {
             try {
                 connection.sendMessage(new ServerPingMessage(connection.getPlayerName()));
             } catch (IOException e) {
+                connection.destroyPing();
                 server.tryToDisconnect(connection, connection.getPlayerName());
             }
     }

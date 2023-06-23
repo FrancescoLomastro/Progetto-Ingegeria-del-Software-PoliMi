@@ -42,5 +42,6 @@ public abstract class Connection {
      * @author: Francesco Gregorio Lo Mastro*/
     public void destroyPing(){
         pingerTimer.cancel();
+        terminatorTimer.cancel();
     }
 }
