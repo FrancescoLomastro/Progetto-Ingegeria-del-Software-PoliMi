@@ -5,10 +5,13 @@ import it.polimi.ingsw.controller.ClientController;
 
 import java.util.ArrayList;
 
-/**This class manages queue containing messages. It has a thread that every n-millisecond controls if something is arrived from server*/
+/**This class manages queue containing messages.
+ * It has a thread that every n-millisecond controls if something is arrived from server.
+ * This class only implements method to access messages, but it has not the queue It
+ * can reach the queue thanks to "client" reference*/
 public class CommunicationQueueHandler implements Runnable {
     private final Client client;
-    private ClientController clientController;
+    private final ClientController clientController;
 
     /**
      * Constructor
@@ -22,13 +25,13 @@ public class CommunicationQueueHandler implements Runnable {
      * @author: Riccardo Figini*/
     @Override
     public void run() {
-        ArrayList<Message> list = null;
+        ArrayList<Message> list;
         while (true)
         {
             list=client.getCommunicationMessageQueue();
             if(list!=null && list.size()!=0)
             {
-                list.forEach(x-> clientController.onMessage(x));
+                list.forEach(clientController::onMessage);
             }
             else
             {

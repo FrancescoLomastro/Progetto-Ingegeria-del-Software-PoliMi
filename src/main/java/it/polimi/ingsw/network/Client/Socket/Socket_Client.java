@@ -1,11 +1,9 @@
 package it.polimi.ingsw.network.Client.Socket;
 
-
 import it.polimi.ingsw.network.Client.Client;
 import it.polimi.ingsw.network.Messages.Message;
 import it.polimi.ingsw.network.Messages.MessageType;
 import it.polimi.ingsw.network.Messages.SocketLoginMessage;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,7 +15,6 @@ public class Socket_Client extends Client implements Runnable{
     private transient Socket socket;
     private transient ObjectInputStream in;
     private transient ObjectOutputStream out;
-
     private final Object outLock = new Object();
     /**
      * Constructor
@@ -58,7 +55,7 @@ public class Socket_Client extends Client implements Runnable{
         }
     }
     /**
-     * Send generic message to server
+     * Send a generic message to server
      * @author: Riccardo Figini
      * @param message message*/
     @Override
@@ -74,7 +71,7 @@ public class Socket_Client extends Client implements Runnable{
     }
     /**
      * This thread is called when client calls method connection. It continues to read
-     * stream with message from server
+     * stream with a message from server
      * @author: Riccardo Figini*/
     @Override
     public void run()
@@ -96,9 +93,7 @@ public class Socket_Client extends Client implements Runnable{
                         communicationMessageQueue.add(message);
                     }
                 }
-            } catch (IOException e) {
-                throw new RuntimeException("Failed communication with server " + e);
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException("Failed communication with server " + e);
             }
         }

@@ -148,8 +148,8 @@ public class Game implements Serializable {
     private Message checkCommonGoal(Player player, CommonGoalCard[] commonGoalCards){
         int points1=0, points2=0;
         Library userlibrary = player.getLibrary();
-        boolean satisfiedGoal[] = userlibrary.getSatisfiedGoal();
-        if(satisfiedGoal[0]==false)
+        boolean[] satisfiedGoal = userlibrary.getSatisfiedGoal();
+        if(!satisfiedGoal[0])
         {
             if (commonGoalCards[0].isSatisfied(userlibrary)) {
                 userlibrary.satisfyCommonGoal(0);
@@ -157,7 +157,7 @@ public class Game implements Serializable {
                 player.addPoints(points1);
             }
         }
-        if(satisfiedGoal[1]==false)
+        if(!satisfiedGoal[1])
         {
             if (commonGoalCards[1].isSatisfied(userlibrary))
             {
@@ -177,19 +177,21 @@ public class Game implements Serializable {
      * @param player: player whose move needs to be checked and performed
      * @param move: an array of positions that identifies the cells of the grid where the player takes his object cards
      * @param column: the column of the player's library in which he's going to insert the object cards he took in his move
+     * @return {@code ObjectCard[]} It returns an array with draw card (not position, but card)
      */
     private ObjectCard[] checkMove(Player player, Position[] move, int column) throws InvalidMoveException{
         Grid grid = livingRoom.getGrid();
         grid.isDrawAvailable(move);
         player.getLibrary().isMoveAvailable(column,move.length);
-        ObjectCard[] obs = grid.draw(move);
-        return obs;
+        return grid.draw(move);
     }
 
 
 
 
     /**
+     * It finds ranking of player
+     * @author: Andrea Ferrini
      * @return the game ranking in a form of an arraylist. Each node of the list is a pair of Name and Points ordered
      * from higher to lower scoring.
      */
@@ -198,8 +200,6 @@ public class Game implements Serializable {
         for(int i=0; i<numPlayers; i++){
             list.add(new Couple<>(players[i].getName(), players[i].countFinalPoints()));
         }
-
-        //sorting the list
         for(int i=0; i<numPlayers; i++){
             for(int j=i+1; j<numPlayers; j++){
                 if(list.get(j).getSecond()>list.get(i).getSecond()){

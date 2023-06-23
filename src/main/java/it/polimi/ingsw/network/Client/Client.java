@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
- * This class is a generic Client. It can be implemented type RMI or Socket. Exist some generic method */
+ * This class is a generic Client. It can be implemented type RMI or Socket. Exists some generic method */
 public abstract class Client extends UnicastRemoteObject {
     private String username;
     private final String serverAddress;

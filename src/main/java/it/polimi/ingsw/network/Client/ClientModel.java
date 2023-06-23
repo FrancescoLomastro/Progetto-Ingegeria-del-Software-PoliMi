@@ -43,8 +43,7 @@ public class ClientModel extends Observable<Message> {
 
 
     public void setGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
-        ObjectCard[][] obs = getObjectCards(grid);
-        this.grid = obs;
+        this.grid = getObjectCards(grid);
         setChanged();
         notifyObservers(new MessageGrid(this.grid, typeOfGridMessage) );
         //notifyObservers(new MessageGrid(copy(grid))); //da chiedere ai prof

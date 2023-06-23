@@ -33,6 +33,11 @@ public class ObjectCard extends Card implements Serializable {
         return type;
     }
 
+    /**It verifies if this object card is equals to obj as parameter
+     * @author: Francesco Gregorio Lo Mastro
+     * @param obj Object card
+     * @return True if cards are equal
+     * */
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -45,6 +50,8 @@ public class ObjectCard extends Card implements Serializable {
         return this.color == other.color && this.type == other.type;
     }
 
+    /**It returns the card's color as string
+     * @author: Francesco Gregorio Lo Mastro*/
     @Override
     public String toString() {
             return ""+color;

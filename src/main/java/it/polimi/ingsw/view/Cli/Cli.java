@@ -195,7 +195,7 @@ public class Cli extends View implements Runnable {
     }
 
 
-    /** Asks the user to perform his move
+    /** Asks user to perform his move
      * @author: Riccardo Figini*
      */
     @Override
@@ -236,7 +236,7 @@ public class Cli extends View implements Runnable {
     }
 
     /**
-     * This method allow turns on chat messages input
+     * This method allows turns on chat messages input
      */
     @Override
     public void startChat() {
@@ -585,7 +585,7 @@ public class Cli extends View implements Runnable {
 
 
     /**
-     * Thread that ask input in loop, and it notifies the observers whit the collected inputs
+     * Thread that ask input in loop, and it notifies the observers with the collected inputs
      */
     @Override
     public void run()

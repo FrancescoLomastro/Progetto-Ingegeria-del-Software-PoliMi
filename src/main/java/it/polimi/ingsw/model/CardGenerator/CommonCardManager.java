@@ -44,7 +44,7 @@ public class CommonCardManager implements Serializable {
     /**
      * This method generates a CommonGoalCard from the remaining card to be generated, set as unavailable the already generated cards
      * @param commonGoalCardId is the implicit ID of a common card. For example {@code ID = 0} refers to the class CommonGoalCard0
-     * @return if the requested card can be generated, will return it, otherwise it returns null.
+     * @return if the requested card can be generated, will return it; otherwise it returns null.
      * @author: Francesco Lo Mastro
      */
     public CommonGoalCard draw(int commonGoalCardId)
@@ -52,9 +52,9 @@ public class CommonCardManager implements Serializable {
         if(isCardDrawable(commonGoalCardId))
         {
             usedCards[commonGoalCardId]=true;
-            CommonGoalCard c = factoryMethodArray[commonGoalCardId].apply();
-            c.setScorePointCard(new ScorePointCard(numOfPlayer));
-            return c;
+            CommonGoalCard generatedCard = factoryMethodArray[commonGoalCardId].apply();
+            generatedCard.setScorePointCard(new ScorePointCard(numOfPlayer));
+            return generatedCard;
         }
         return null;
     }
