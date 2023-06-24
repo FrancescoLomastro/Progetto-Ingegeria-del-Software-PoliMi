@@ -63,10 +63,10 @@ public class ClientController implements Observer<View, OBS_Message> {
         try {
             switch (chosenTechnology) {
                 case 0 -> {
-                    String address = UtilsForRMI.getLocalIp();
+                    /*String address = UtilsForRMI.getLocalIp();
                     if(address==null)
                         address="127.0.0.1";
-                    System.setProperty("java.rmi.server.hostname", address);
+                    System.setProperty("java.rmi.server.hostname", address);*/
                     client = new RMI_Client(chosenUsername, chosenAddress, chosenPort);
                 }
                 case 1 -> {
