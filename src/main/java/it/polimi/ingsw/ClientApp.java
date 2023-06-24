@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 import it.polimi.ingsw.controller.ClientController;
 
- public class ClientApp {
+ public class  ClientApp {
     public static void main(String[] args)
     {
         ClientController clientController;

@@ -141,6 +141,7 @@ public class ClientController implements Observer<View, OBS_Message> {
                 view.askMove();
             }
             case WINNER -> {
+                pingHandler.shutDown();
                 MessageWinner msg = (MessageWinner) message;
                 view.printPoints();
                 view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getWinner());

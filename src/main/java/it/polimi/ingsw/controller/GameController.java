@@ -405,6 +405,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             System.out.println(Controller.ANSI_BLU + "Impossible to close server game "+ gameId + ANSI_RESET);
         }
         controller.removeGame(this);
+        destroyEveryPing();
     }
     /**
      * Remove player from lobby. This method can be called only before the beginning of game

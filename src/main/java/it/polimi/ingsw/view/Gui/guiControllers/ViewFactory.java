@@ -739,7 +739,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 winnerSceneController.setFinalRanking(finalRanking);
                 return winnerSceneController;
             });
-            createStage_old(loader, 200, 320, true, false);
+            createStage_old(loader, 200, 320, true, true);
         });
     }
 
