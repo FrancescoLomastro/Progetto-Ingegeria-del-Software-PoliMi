@@ -21,3 +21,17 @@ come dovrebbero
 
 - Se giocano in 2 e un obiettivo è completato 2 volte, uno dal gioc1 e l'altro dal gioc2, la carta si riduce da 8 a 4 ma da 4 resta a 4, dovrebbe sparire
 - glitch chat: se clicco nel sullo sfondo della chat i messaggi finiscono al centro
+
+
+
+- Problema figio con la grafica. Il mio computer ha un impostazione in cui setta il 150% della risoluzione. Con questa impostazione
+mi sballa tutte le dimensioni. Lo schermo è nel sistema operativo un 1920 ma java lo vede 1280x800. SceneBuilder lo vede piccolo e non riesco a veder le immagini
+come dovrebbero
+
+
+--Sistemare codice
+-- Allargare il campo descrizione del popup delle carte comuni, la carta 2.jpg ha la descrizione tagliata
+-- MAI PREMERE TROPPO VELOCEMENTE GLI INVIO QUANDO SI LOGGANO GLI UTENTI
+-- Quando la partita termina, la schermata di login mostra una libreria vuota, (secondo me la possiamo togliere da li,
+                                                                                tanto è un popup e l'utente può spostarlo e guardare la schemata di gioco)
+-- Mi è capitato di finire una partita ma è uscito un messaggio Errore come popup

@@ -134,7 +134,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     /**Create and store game's file in memory. It uses gameId for the name of file
      * @author: Riccardo Figini*/
     private void initGameFile() {
-        gameFilePath = "src/main/resources/gameFile/"+serverNameRMI+".bin";
+        gameFilePath = Controller.NumOfGameFolder+"/"+serverNameRMI+".bin";
         try {
             FileOutputStream file = new FileOutputStream(gameFilePath);
             ObjectOutputStream out = new ObjectOutputStream(file);

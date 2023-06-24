@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.ObjectCard;
@@ -13,6 +14,8 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import static it.polimi.ingsw.controller.GameController.ANSI_RESET;
 
 
 /**
@@ -28,7 +31,7 @@ public class Grid implements Serializable {
     private ObjectCard[][] matrix;
     private Set<Position> notAvailablePositions;
     private CardGenerator cardGenerator;
-    private final String filePath= "src/main/resources/json/Grid.json";
+    private final String filePath= "/json/Grid.json";
 
     /**
      * The constructor of the grid. After the call of this constructor, the matrix will contain the right number of
@@ -200,13 +203,15 @@ public class Grid implements Serializable {
     private Set<Position> retrieveUnavailablePositionsSet()
     {
         Set<Position> setOfPositions = new HashSet<>();
-        Gson gson = new Gson();
-        Reader reader = null;
-        try {
-            reader = new FileReader(filePath);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+
+        InputStream is = Grid.class.getResourceAsStream(filePath);
+        if (is == null) {
+            throw new RuntimeException("Problem reading file "+filePath);
         }
+
+        Reader reader = new BufferedReader(new InputStreamReader(is));
+        Gson gson = new Gson();
+
         JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
 
         JsonArray arrayOfJsonCells = jsonObject.getAsJsonArray("Default_Invalid_Positions");

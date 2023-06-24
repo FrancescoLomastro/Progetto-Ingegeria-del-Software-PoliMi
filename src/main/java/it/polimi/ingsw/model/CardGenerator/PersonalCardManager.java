@@ -4,15 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.utility.Couple;
 import it.polimi.ingsw.utility.Position;
 import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.model.Cards.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +23,7 @@ public class PersonalCardManager implements Serializable {
     private static final long serialVersionUID = 1L;
     private int numCards;
     private boolean[] usedCards;
-    private final String filePath= "src/main/resources/json/PersonalCards.json";
+    private final String filePath= "/json/PersonalCards.json";
     private transient JsonArray jsonArrayOfCards;
 
 
@@ -57,22 +55,25 @@ public class PersonalCardManager implements Serializable {
      * @author: Francesco Lo Mastro
      */
     private JsonArray readCardsInFile() throws RuntimeException{
-        Gson gson = new Gson();
-        FileReader fileReader;
 
-        try {
-            fileReader = new FileReader(filePath);
-        } catch (FileNotFoundException e) {
+
+
+        InputStream is = PersonalCardManager.class.getResourceAsStream(filePath);
+        if (is == null) {
             throw new RuntimeException("Error in opening "+filePath);
         }
 
-        JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
+        Reader reader = new BufferedReader(new InputStreamReader(is));
+        Gson gson = new Gson();
+
+
+        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
         JsonArray cardsArray = jsonObject.getAsJsonArray("generalArray");
         if(cardsArray==null)
             throw new RuntimeException("No any list of card found in file "+filePath);
 
         try {
-            fileReader.close();
+            reader.close();
         } catch (IOException e) {
             throw new RuntimeException("Error while closing file "+filePath);
         }

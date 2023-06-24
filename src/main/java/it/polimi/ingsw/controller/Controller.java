@@ -1,15 +1,14 @@
 package it.polimi.ingsw.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.network.Servers.Connection;
 import it.polimi.ingsw.network.StatusNetwork;
 import it.polimi.ingsw.utility.Request;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -28,8 +27,13 @@ public class Controller implements ServerReceiver
     private boolean isAsking;
     private static final int minimumPlayers = 2;
     private static final int maximumPlayers = 4;
-    String pathFileWithNumberOfGame="src/main/resources/gameFile/gameNumbers.json";
+    public static String NumOfGameFolder="gameFile";
+    public static String NumOfGamesFile ="gameNumbers.json";
+    private String NumOfGamesPath = NumOfGameFolder+"/"+NumOfGamesFile;
+
+
     public Controller() {
+
         games = new ArrayList<>();
         currentGame= new GameController(getAvailableID(), this);
         playerBeforeJoiningLobby = new HashMap<>();
@@ -238,14 +242,14 @@ public class Controller implements ServerReceiver
         JsonArray jsonArray = j.getAsJsonArray("numOfGame");
 
         for(int i=0; i< jsonArray.size(); i++){
-            deleteGameFile("src/main/resources/gameFile/ServerGame"+jsonArray.get(i).getAsString()+".bin");
+            deleteGameFile(NumOfGameFolder+"/ServerGame"+jsonArray.get(i).getAsString()+".bin");
             jsonArray.remove(i);
         }
 
         Gson gson = new Gson();
         Writer writer;
         try {
-            writer = new FileWriter(pathFileWithNumberOfGame);
+            writer = new FileWriter(NumOfGamesPath);
             String jsonWrite = gson.toJson(j);
             writer.write(jsonWrite);
             writer.close();
@@ -261,7 +265,7 @@ public class Controller implements ServerReceiver
         String number;
         for (JsonElement jsonCellElement : arrayOfJsonCells) {
             number = jsonCellElement.getAsString();
-            String path = "src/main/resources/gameFile/ServerGame"+number+".bin";
+            String path = NumOfGameFolder+"/ServerGame"+number+".bin";
             getPlayerFromFile(path, number);
         }
         System.out.println("File has been read, players: " + oldPlayersMap.size());
@@ -274,19 +278,52 @@ public class Controller implements ServerReceiver
      * @return {@code JsonArray} Array with number
      * */
     private JsonObject getArrayJsonWithNumberGame() {
-        Gson gson = new Gson();
+
         oldPlayersMap = new LinkedHashMap<>();
+
+        if(!tryCreateFile())
+        {
+            return null;
+        }
+
         Reader reader;
         try {
-            reader = new FileReader(pathFileWithNumberOfGame);
+            reader = new FileReader(NumOfGamesPath);
         } catch (FileNotFoundException e) {
             System.out.println(ANSI_BLU + "No file with old games, impossible to restore unfinished game" + ANSI_RESET);
             System.out.println(ANSI_BLU + "Server will continue without restoring games..."+ ANSI_RESET);
             oldPlayersMap =null;
             return null;
         }
+
+        Gson gson = new Gson();
         return gson.fromJson(reader, JsonObject.class);
     }
+
+    private boolean tryCreateFile() {
+        File folder = new File(NumOfGameFolder);
+        if (!folder.exists()) {
+            if (!folder.mkdirs()) {
+                System.out.println(ANSI_BLU + "Failed to create folder: " + folder.getAbsolutePath() + ANSI_RESET);
+                return false;
+            }
+        }
+
+        File file = new File(folder, NumOfGamesFile);
+        if (!file.exists()) {
+            try {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("{\"numOfGame\":[]}");
+                fileWriter.close();
+                System.out.println(ANSI_BLU + "Created new file: " + file.getAbsolutePath() + ANSI_RESET);
+            } catch (IOException e) {
+                System.out.println(ANSI_BLU + "Failed to create new file: " + file.getAbsolutePath() + ANSI_RESET);
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**It adds the name of player from ongoing game. It reads object "gameController" from a file indicated with path
      * @param path Game's path
      * */
@@ -379,7 +416,7 @@ public class Controller implements ServerReceiver
 
         Writer writer;
         try {
-            writer = new FileWriter(pathFileWithNumberOfGame);
+            writer = new FileWriter(NumOfGameFolder+"/"+NumOfGamesFile);
             jsonArray.add(gameId);
             String jsonWrite = gson.toJson(jsonObject);
             writer.write(jsonWrite);
@@ -455,7 +492,7 @@ public class Controller implements ServerReceiver
                 }
                 deleteGameFromArrayContainer(gameId);
                 try {
-                    deleteGameFile("src/main/resources/gameFile/ServerGame"+gameId+".bin");
+                    deleteGameFile(NumOfGameFolder+"/ServerGame"+gameId+".bin");
                 }catch (IOException ignored){}
                 return;
             }
@@ -497,7 +534,8 @@ public class Controller implements ServerReceiver
      * @return {@code GameController} It returns gameController
      * */
     private GameController reloadGame(int gameId) throws IOException, ClassNotFoundException {
-        FileInputStream file = new FileInputStream("src/main/resources/gameFile/ServerGame"+gameId+".bin");
+
+        FileInputStream file = new FileInputStream(NumOfGameFolder+"/ServerGame"+gameId+".bin");
         ObjectInputStream inputStream = new ObjectInputStream(file);
         GameController gameController = (GameController) inputStream.readObject();
         if(gameController == null)
@@ -542,7 +580,7 @@ public class Controller implements ServerReceiver
         Gson gson = new Gson();
         Writer writer;
         try {
-            writer = new FileWriter(pathFileWithNumberOfGame);
+            writer = new FileWriter(NumOfGamesPath);
             String jsonWrite = gson.toJson(j);
             writer.write(jsonWrite);
             writer.close();
@@ -571,7 +609,7 @@ public class Controller implements ServerReceiver
         }
         deleteGameFromArrayContainer(gameController.getGameId());
         try {
-            deleteGameFile("src/main/resources/gameFile/ServerGame"+gameController.getGameId()+".bin");
+            deleteGameFile(NumOfGameFolder+"/ServerGame"+gameController.getGameId()+".bin");
         } catch (IOException e) {
             System.out.println(ANSI_BLU + "File deletion failed" + ANSI_RESET);
         }
@@ -594,7 +632,7 @@ public class Controller implements ServerReceiver
         }
         deleteGameFromArrayContainer(gameController.getGameId());
         try {
-            deleteGameFile("src/main/resources/gameFile/ServerGame"+gameController.getGameId()+".bin");
+            deleteGameFile(NumOfGameFolder+"/ServerGame"+gameController.getGameId()+".bin");
         } catch (IOException e) {
             System.out.println(ANSI_BLU + "Impossible delete file" + ANSI_RESET);
         }
