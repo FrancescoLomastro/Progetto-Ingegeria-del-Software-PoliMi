@@ -60,7 +60,7 @@ public class PingHandler implements Runnable {
             }
         }
     }
-    /**It is called when server send an error and ping needs to be stopped
+    /**It is called when server sends an error and ping needs to be stopped
      * @author: Riccardo Figini
      * */
     public void shutDown() {

@@ -145,7 +145,7 @@ public class Board_C implements Initializable {
             Common_C controller = loader.getController();
             controller.setListeners(right,3.5);
             controller.setListeners(right,3+0.5);
-            controller.getImage().getStyleClass().add("common"+clientModel.getNumCom1());
+            controller.getImage().getStyleClass().add("common"+clientModel.getNumberCommonGoal1());
             controller.getPoint().getStyleClass().add("point"+clientModel.getPointsCommonGoalCards()[0]);
             this.cardPoint1=controller.getPoint();
             right.getChildren().add(son);
@@ -165,7 +165,7 @@ public class Board_C implements Initializable {
             Common_C controller = loader.getController();
             controller.setListeners(right,3.5);
             controller.setListeners(right,3+0.5);
-            controller.getImage().getStyleClass().add("common"+clientModel.getNumCom2());
+            controller.getImage().getStyleClass().add("common"+clientModel.getNumberCommonGoal2());
             controller.getPoint().getStyleClass().add("point"+clientModel.getPointsCommonGoalCards()[0]);
             this.cardPoint2=controller.getPoint();
             right.getChildren().add(son);
@@ -183,7 +183,7 @@ public class Board_C implements Initializable {
             son = loader.load();
             Personal_C controller = loader.getController();
             controller.setListeners(right,3.5);
-            controller.getImage().getStyleClass().add("personal"+clientModel.getPersonalGoalCardNum());
+            controller.getImage().getStyleClass().add("personal"+clientModel.getPersonalGoalCardNumber());
             controller.setListeners(right,3+0.5);
             right.getChildren().add(son);
 

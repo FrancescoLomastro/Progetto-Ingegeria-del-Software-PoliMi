@@ -18,45 +18,54 @@ public class ClientModel extends Observable<Message> {
     private ObjectCard[][] grid;
     private final HashMap<String, ObjectCard[][]> librariesMap;
     private ArrayList<Couple> goalList;
-    private Map<String, Integer> pointsMap;
+    private final Map<String, Integer> pointsMap;
     private String descriptionFirstCommonGoal;
-    private int numCom1;
-    private int numCom2;
-    private int personalGoalCardNum;
+    private int numberCommonGoal1;
+    private int numberCommonGoal2;
+    private int personalGoalCardNumber;
     private String descriptionSecondCommonGoal;
-    private int pointsCommonGoalCards[];
-    private  ObjectCard[][] defaultLibrary;
+    private final int[] pointsCommonGoalCards;
+    private final ObjectCard[][] defaultLibrary;
     private String myName;
     public ClientModel(){
         librariesMap = new HashMap<>();
         pointsMap = new HashMap<>();
         pointsCommonGoalCards = new int[] {8,8};
         defaultLibrary = new ObjectCard[6][5];
-        //this.viewFactory = new ViewFactory();
         for(int i=0; i<6; i++){
             for(int j=0; j<5; j++){
                 defaultLibrary[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
             }
         }
     }
-
-
-
+    /**It sets a new grid. This method is used to update central grid
+     * @author: Francesco Gregorio Lo Mastro
+     * @param grid new grid
+     * @param typeOfGridMessage Type of update. It can be "initialized" or "after_move"
+     * */
     public void setGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
         this.grid = getObjectCards(grid);
         setChanged();
         notifyObservers(new MessageGrid(this.grid, typeOfGridMessage) );
-        //notifyObservers(new MessageGrid(copy(grid))); //da chiedere ai prof
     }
-
+    /**It updates a player's library. If the last two parameters are null, this update is an initialization, otherwise
+     * it is a movement after move. The Last two parameters are useful for the view
+     * @author: Francesco Gregorio Lo Mastro
+     * @param name Name of player
+     * @param library new library
+     * @param newInLibrary new element in a library. It identifies new positions in the library's grid
+     * @param oldInGrid It identifies removed position in old grid
+     * */
     public void setLibrary(String name, ObjectCard[][] library, Position[] oldInGrid, Position[] newInLibrary) {
         ObjectCard[][] obs = getObjectCards(library);
         librariesMap.replace(name, obs);
         setChanged();
         notifyObservers(new MessageLibrary(obs, name, oldInGrid, newInLibrary));
-        //notifyObservers(new MessageLibrary(copy(library), name)); //da chiedere ai prof
     }
-
+    /**It returns a new grid of ObjectCard with card "empty" instead of null
+     * @author: Francesco Gregorio Lo Mastro
+     * @param objectCards grid
+     * */
     private static ObjectCard[][] getObjectCards(ObjectCard[][] objectCards) {
         ObjectCard[][] obs = new ObjectCard[objectCards.length][objectCards[0].length];
         for(int i = 0; i< objectCards.length; i++){
@@ -69,6 +78,9 @@ public class ClientModel extends Observable<Message> {
         }
         return obs;
     }
+    /**It returns a copy of input grid
+     * @author: Riccardo Figini
+     * */
     private static ObjectCard[][][] getObjectCards(ObjectCard[][][] objectCards) {
         ObjectCard[][][] toReturn= new ObjectCard[objectCards.length][][];
         for(int k=0;k<objectCards.length;k++)
@@ -77,17 +89,14 @@ public class ClientModel extends Observable<Message> {
         }
         return toReturn;
     }
-
-
     public void setPersonalGoalCard(ArrayList<Couple> goalList)
     {
         this.goalList=goalList;
     }
 
-
-    /**This method update/add points in the model and create a special message for the view. This message
+    /**This method updates/adds points in the model and create a special message for the view. This message
      * uses variable already in the scope to set (in order) player's point, number of common goal reached with
-     * attribute "card" and the name of the player. Last two parameters are available common goal card's point
+     * attribute "card" and the name of the player. The last two parameters are available common goal card's point
      * @author: Riccardo Figini
      * @param msg Common goal card's message
      * */
@@ -111,12 +120,9 @@ public class ClientModel extends Observable<Message> {
         notifyObservers(new MessageCommonGoal(score, card, msg.getPlayer(), pointsCommonGoalCards[0], pointsCommonGoalCards[1]));
     }
 
-
-
     public ObjectCard[][] getGrid()
     {
         return grid;
-        //return copy(grid);
     }
 
     public int[] getPointsCommonGoalCards() {
@@ -126,86 +132,58 @@ public class ClientModel extends Observable<Message> {
     public ObjectCard[][] getLibrary(String name)
     {
         return librariesMap.get(name);
-       // return copy(librariesMap.get(name));
     }
-
-   /* public ViewFactory getViewFactory() {
-        return this.viewFactory;
-    }*/
-
-
-/*
-    private ObjectCard[][] copy(ObjectCard[][] e){
-        ObjectCard[][] t = new ObjectCard[e.length][e[0].length];
-        for(int i=0; i<e.length;i++){
-            for(int j=0; j<e[i].length; j++)
-            {
-                if(e[i][j]!=null)
-                    t[i][j]=new ObjectCard(e[i][j].getDescription(), e[i][j].getColor(), e[i][j].getType());
-            }
-        }
-        return t;
-    }
-    */
-
-
-
+    /**It adds a player in game. It will be added to all lists with player
+     * @author: Francesco Gregorio Lo Mastro
+     * @param name name of player
+     * */
     public void addPlayer(String name){
         librariesMap.put(name, defaultLibrary);
         pointsMap.put(name, 0);
     }
-
-
-
     public void setDescriptionFirstCommonGoal(String descriptionFirstCommonGoal) {
         this.descriptionFirstCommonGoal = descriptionFirstCommonGoal;
     }
-
-
-
     public void setDescriptionSecondCommonGoal(String descriptionSecondCommonGoal) {
         this.descriptionSecondCommonGoal = descriptionSecondCommonGoal;
     }
-
-
-
+    /**it returns a map with couple name-library
+     * @author: Franscesco Gregorio Lo Mastro
+     * @return {@code Map<String, ObjectCard[][]>} return a map*/
     public Map<String, ObjectCard[][]> getAllLibrary() {
         return librariesMap;
     }
-
-
-
     public ArrayList<Couple> getGoalList() {
         return new ArrayList<>(goalList);
     }
-
-
-
     public String getDescriptionFirstCommonGoal() {
         return descriptionFirstCommonGoal;
     }
-
-
-
     public String getDescriptionSecondCommonGoal() {
         return descriptionSecondCommonGoal;
     }
-
     public void setPointToPlayer(String first, Integer second) {
         pointsMap.replace(first, second);
     }
-
+    /**It returns a map with couple name-points, name of player in the game
+     * @author: Francesco Gregorio Lo Mastro
+     * @return {@code Map<String, Integer>}
+     * */
     public Map<String, Integer> getPointsMap() {
         return pointsMap;
     }
-
+    /**This method sets up all information when the game begins. It sets all data in clientModel and then
+     * calls an observed that will print all information on view
+     * @author: Francesco Gregorio Lo Mastro
+     * @param msg message with all initial informazione
+     * */
     public void setup(SetupMessage msg)
     {
         pointsCommonGoalCards[0]=msg.getPointCardCommon1();
         pointsCommonGoalCards[1]=msg.getPointCardCommon2();
-        numCom1=msg.getNumCom1();
-        numCom2=msg.getNumCom2();
-        personalGoalCardNum=msg.getPersonalNumber();
+        numberCommonGoal1 =msg.getNumCom1();
+        numberCommonGoal2 =msg.getNumCom2();
+        personalGoalCardNumber =msg.getPersonalNumber();
         setDescriptionFirstCommonGoal(msg.getDescription1());
         setDescriptionSecondCommonGoal(msg.getDescription2());
         setPersonalGoalCard(msg.getPersonalGoalCard());
@@ -230,31 +208,27 @@ public class ClientModel extends Observable<Message> {
                 msg.getPlayersPoints(),
                 getObjectCards(msg.getPlayersLibraries())));
     }
-    public String[] getPlayerNames()
-    {
+    public String[] getPlayerNames() {
         return librariesMap.keySet().toArray(new String[0]);
     }
-
     public String getMyName() {
         return myName;
     }
-
     public void setMyName(String myName) {
         this.myName = myName;
     }
-
-    public int getNumCom1() {
-        return numCom1;
+    public int getNumberCommonGoal1() {
+        return numberCommonGoal1;
     }
-
-    public int getPersonalGoalCardNum() {
-        return personalGoalCardNum;
+    public int getPersonalGoalCardNumber() {
+        return personalGoalCardNumber;
     }
-
-    public int getNumCom2() {
-        return numCom2;
+    public int getNumberCommonGoal2() {
+        return numberCommonGoal2;
     }
-
+    /**This method is called when someone fill is a library
+     * @param message message with player's name
+     * */
     public void onAlmostOver(AlmostOverMessage message) {
         int score = message.getFillerPoints();
         score = pointsMap.get(message.getFillerName()) + score;

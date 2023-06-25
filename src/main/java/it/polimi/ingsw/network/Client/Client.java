@@ -1,5 +1,4 @@
 package it.polimi.ingsw.network.Client;
-
 import it.polimi.ingsw.network.Messages.Message;
 
 import java.io.IOException;
@@ -7,7 +6,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Optional;
-
 /**
  * This class is a generic Client. It can be implemented type RMI or Socket. Exists some generic method */
 public abstract class Client extends UnicastRemoteObject {
@@ -47,13 +45,16 @@ public abstract class Client extends UnicastRemoteObject {
         }
         return msg;
     }
-
+    /**This method is called to send server new name for user connection
+     * @author: Francesco Gregorio Lo Mastro
+     * @param username Player's new username */
     public void changeUsername(String username)
     {
         this.username=username;
         newUsernameProposal();
     }
-
+    /**Abstract method that creates a new connection with server with a new name
+     * */
     public abstract void newUsernameProposal();
 
     public String getUsername() {
