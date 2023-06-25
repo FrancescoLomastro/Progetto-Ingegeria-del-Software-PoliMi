@@ -21,7 +21,7 @@ public class SetupMessage extends Message {
     private final ArrayList<Couple<String, Integer>> playersPoints;
     public SetupMessage(int pointCardCommon1, int pointCardCommon2, int personalNumber, int numCom1, int numCom2, int centralPointCard, ObjectCard[][] grid, String[] playersName,
                         ArrayList<Couple> personalGoalCards, String[] commonGoalCards , ArrayList<Couple<String, Integer>> playersPoints ,ObjectCard[][]... playersLibraries) {
-        super("server", MessageType.SETUP_MESSAGE);
+        super("server", MessageType.INITIAL_SETUP_MESSAGE);
         this.grid=grid;
         this.playersLibraries=playersLibraries;
         this.playersName=playersName;

@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.Gui.guiControllers;
 
 import it.polimi.ingsw.network.Client.ClientModel;
 import it.polimi.ingsw.network.Messages.AlmostOverMessage;
-import it.polimi.ingsw.network.Messages.MessageCommonGoal;
+import it.polimi.ingsw.network.Messages.CommonGoalMessage;
 import it.polimi.ingsw.view.Gui.guiControllers.BoardComponents.*;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.enums.Color;
@@ -529,17 +529,17 @@ public class Board_C implements Initializable {
         cardPoint2.getStyleClass().add("point"+card2);
     }
 
-    public void updatePoints(MessageCommonGoal arg) {
+    public void updatePoints(CommonGoalMessage arg) {
         Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();
-        points.get(arg.getPlayer()).getPointsLabel().setText(""+map.get(arg.getPlayer()));
+        points.get(arg.getPlayerWhoScored()).getPointsLabel().setText(""+map.get(arg.getPlayerWhoScored()));
 
         if(arg.getGainedPointsSecondCard()==1 || arg.getGainedPointsSecondCard()==3){
             cardPoint1.getStyleClass().removeAll("point8", "point6", "point4","point2", "point0");
-            cardPoint1.getStyleClass().add("point"+arg.getPointAvailable1());
+            cardPoint1.getStyleClass().add("point"+arg.getRemainingPointsFirstCard());
         }
         if(arg.getGainedPointsSecondCard()==2 || arg.getGainedPointsSecondCard()==3){
             cardPoint2.getStyleClass().removeAll("point8", "point6", "point4","point2", "point0");
-            cardPoint2.getStyleClass().add("point"+arg.getPointAvailable2());
+            cardPoint2.getStyleClass().add("point"+arg.getRemainingPointsSecondCard());
         }
     }
 

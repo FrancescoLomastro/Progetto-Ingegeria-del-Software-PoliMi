@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.Player.Library;
 import it.polimi.ingsw.network.Messages.Message;
-import it.polimi.ingsw.network.Messages.MessageAfterMoveNegative;
-import it.polimi.ingsw.network.Messages.MessageAfterMovePositive;
+import it.polimi.ingsw.network.Messages.BadMoveMessage;
+import it.polimi.ingsw.network.Messages.GoodMoveMessage;
 import it.polimi.ingsw.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.CommonGoalCard;
@@ -133,7 +133,7 @@ public class Game implements Serializable {
             return checkCommonGoal(player, livingRoom.getCommonGoalCards());
         }
         catch (InvalidMoveException e){
-            return new MessageAfterMoveNegative(e.getMessage());
+            return new BadMoveMessage(e.getMessage());
         }
     }
 
@@ -166,7 +166,7 @@ public class Game implements Serializable {
                 player.addPoints(points2);
             }
         }
-        return new MessageAfterMovePositive(points1, points2);
+        return new GoodMoveMessage(points1, points2);
     }
 
 

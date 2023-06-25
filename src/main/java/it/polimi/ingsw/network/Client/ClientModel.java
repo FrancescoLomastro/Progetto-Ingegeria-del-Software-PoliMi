@@ -100,24 +100,24 @@ public class ClientModel extends Observable<Message> {
      * @author: Riccardo Figini
      * @param msg Common goal card's message
      * */
-    public void addPoint(MessageCommonGoal msg){
+    public void addPoint(CommonGoalMessage msg){
         int score, card=0;
         if(0 != msg.getGainedPointsFirstCard()) {
             card=1;
-            pointsCommonGoalCards[0] = msg.getPointAvailable1();
+            pointsCommonGoalCards[0] = msg.getRemainingPointsFirstCard();
         }
         if(0 != msg.getGainedPointsSecondCard()) {
             if(card==0)
                 card=2;
             else
                 card=3;
-            pointsCommonGoalCards[1] = msg.getPointAvailable2();
+            pointsCommonGoalCards[1] = msg.getRemainingPointsSecondCard();
         }
         score = msg.getGainedPointsSecondCard() + msg.getGainedPointsFirstCard();
-        score = pointsMap.get(msg.getPlayer()) + score;
-        pointsMap.replace(msg.getPlayer(), score);
+        score = pointsMap.get(msg.getPlayerWhoScored()) + score;
+        pointsMap.replace(msg.getPlayerWhoScored(), score);
         setChanged();
-        notifyObservers(new MessageCommonGoal(score, card, msg.getPlayer(), pointsCommonGoalCards[0], pointsCommonGoalCards[1]));
+        notifyObservers(new CommonGoalMessage(score, card, msg.getPlayerWhoScored(), pointsCommonGoalCards[0], pointsCommonGoalCards[1]));
     }
 
     public ObjectCard[][] getGrid()

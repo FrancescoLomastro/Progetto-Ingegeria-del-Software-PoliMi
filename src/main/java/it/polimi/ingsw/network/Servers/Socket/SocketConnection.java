@@ -93,7 +93,7 @@ public class SocketConnection extends Connection implements Runnable {
         if(message.getType()== MessageType.SOCKET_LOGIN_REQUEST)
         {
             SocketLoginMessage msg = (SocketLoginMessage) message;
-            LoginMessage newMessage = new LoginMessage(msg.getUsername(),this);
+            LoginMessage newMessage = new LoginMessage(msg.getSenderName(),this);
             serverReceiver.onMessage(newMessage);
         }
         else

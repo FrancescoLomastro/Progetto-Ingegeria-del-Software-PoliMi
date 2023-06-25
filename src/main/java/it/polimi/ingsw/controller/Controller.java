@@ -7,8 +7,6 @@ import it.polimi.ingsw.network.StatusNetwork;
 import it.polimi.ingsw.utility.Request;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -119,7 +117,7 @@ public class Controller implements ServerReceiver
     synchronized public void onMessage(Message message) {
 
         if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
-            System.out.println(ANSI_PURPLE + "Message has arrived in controller: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
+            System.out.println(ANSI_PURPLE + "Message has arrived in controller: " + message.getType() + ", " + message.getSenderName() + ANSI_RESET);
        }
 
         MessageType type = message.getType();
@@ -128,25 +126,25 @@ public class Controller implements ServerReceiver
             case LOGIN_REQUEST ->
             {
                 LoginMessage msg = (LoginMessage) message;
-                msg.getClientConnection().setPlayerName(message.getUsername());
-                boolean accepted = login(msg.getUsername(),msg.getClientConnection());
+                msg.getClientConnection().setPlayerName(message.getSenderName());
+                boolean accepted = login(msg.getSenderName(),msg.getClientConnection());
                 if(accepted) {
-                    if (waitedRequest!= null && waitedRequest.getUsername().equals(msg.getUsername()))
+                    if (waitedRequest!= null && waitedRequest.getUsername().equals(msg.getSenderName()))
                         currentGame.startTimer(msg.getClientConnection());
                     else {
-                        GameController gameController = searchGameController(msg.getUsername());
+                        GameController gameController = searchGameController(msg.getSenderName());
                         gameController.startTimer(msg.getClientConnection());
                     }
                 }
             }
             case PLAYER_NUMBER_ANSWER ->
             {
-                if (waitedRequest.getUsername().equals(message.getUsername())) {
+                if (waitedRequest.getUsername().equals(message.getSenderName())) {
                     waitedRequest.getConnection().setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER);
                     try {
                         PlayerNumberAnswer msg = (PlayerNumberAnswer) message;
                         currentGame.setLimitOfPlayers(msg.getPlayerNumber());
-                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage(msg.getUsername()));
+                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage(msg.getSenderName()));
                         isAsking=false;
                         addPlayer(waitedRequest.getUsername(), waitedRequest.getConnection());
                     } catch (IOException e) {
@@ -158,7 +156,7 @@ public class Controller implements ServerReceiver
                 }
             }
             case PING_MESSAGE -> {
-                String username = message.getUsername();
+                String username = message.getSenderName();
                 if(playerBeforeJoiningLobby.containsKey(username)) {
                     Connection connection = playerBeforeJoiningLobby.get(username);
                     connection.resetTimer( this);

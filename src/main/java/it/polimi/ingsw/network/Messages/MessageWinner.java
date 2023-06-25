@@ -10,7 +10,7 @@ public class MessageWinner extends Message{
 
     private ArrayList<Couple<String, Integer>> finalRanking;
     public MessageWinner(String first, Integer second, ArrayList<Couple<String, Integer>> finalRanking) {
-        super(MessageType.WINNER);
+        super(MessageType.WINNER_MESSAGE);
         this.winner=first;
         this.myPoints = second;
         this.finalRanking = finalRanking;

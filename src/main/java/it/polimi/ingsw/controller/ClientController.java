@@ -6,7 +6,6 @@ import it.polimi.ingsw.network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.network.Messages.ChatMessage;
 import it.polimi.ingsw.network.ObserverImplementation.Observer;
-import it.polimi.ingsw.network.UtilsForRMI;
 import it.polimi.ingsw.view.*;
 import it.polimi.ingsw.network.Client.ClientModel;
 import it.polimi.ingsw.view.Cli.Cli;
@@ -97,23 +96,23 @@ public class ClientController implements Observer<View, OBS_Message> {
         System.out.println(ANSI_YELLOW + "Message has arrived: " + message.getType() + ANSI_RESET);
         switch (message.getType())
         {
-            case ACCEPTED_LOGIN_MESSAGE -> {
+            case ACCEPTED_LOGIN_ANSWER -> {
                 AcceptedLoginMessage msg = (AcceptedLoginMessage)message;
                 view.acceptedLogin();
-                clientModel.setMyName(msg.getName());
+                clientModel.setMyName(msg.getAcceptedName());
             }
             case PLAYER_NUMBER_REQUEST -> {
                 PlayerNumberRequest msg = (PlayerNumberRequest)message;
                 view.askNumberOfPlayers(msg.getMinimumPlayers(), msg.getMaximumPlayers());
             }
-            case INVALID_USERNAME_MESSAGE -> {
+            case INVALID_USERNAME_ANSWER -> {
                 pingHandler.shutDown();
                 view.onInvalidUsername();
             }
             case LOBBY_UPDATE_MESSAGE -> {
                 LobbyUpdateMessage msg = (LobbyUpdateMessage) message;
-                view.lobbyUpdate("Currently in lobby: " + msg.getUsernames().size() + "/" + msg.getLimitOfPlayers() + " players. "
-                        +"Members: " + msg.getUsernames());
+                view.lobbyUpdate("Currently in lobby: " + msg.getLobbyUsernames().size() + "/" + msg.getLobbySize() + " players. "
+                        +"Members: " + msg.getLobbyUsernames());
             }
             case NEW_GAME_SERVER_MESSAGE -> {
                 NewGameServerMessage msg = (NewGameServerMessage) message;
@@ -128,19 +127,19 @@ public class ClientController implements Observer<View, OBS_Message> {
             case CHAT_MESSAGE -> {
                 ChatMessage msg = (ChatMessage) message;
                 String text = msg.getText();
-                String username = msg.getUsername();
+                String username = msg.getSenderName();
                 view.chatMessage(username,text);
             }
-            case MY_MOVE_REQUEST -> {
+            case PLAYER_MOVE_REQUEST -> {
                 view.printAll();
                 view.askMove();
             }
-            case AFTER_MOVE_NEGATIVE -> {
-                MessageAfterMoveNegative msg = (MessageAfterMoveNegative) message;
-                view.printMessage(msg.getInvalidMessage(), msg);
+            case BAD_MOVE_ANSWER -> {
+                BadMoveMessage msg = (BadMoveMessage) message;
+                view.printMessage(msg.getMoveError(), msg);
                 view.askMove();
             }
-            case WINNER -> {
+            case WINNER_MESSAGE -> {
                 pingHandler.shutDown();
                 MessageWinner msg = (MessageWinner) message;
                 view.printPoints();
@@ -149,30 +148,30 @@ public class ClientController implements Observer<View, OBS_Message> {
                     view.showWinnerScene(msg.getFinalRanking());
                 }
             }
-            case ALMOST_OVER -> {
+            case ALMOST_OVER_MESSAGE -> {
                 clientModel.onAlmostOver((AlmostOverMessage) message);
             }
-            case ERROR -> {
+            case ERROR_MESSAGE -> {
                 ErrorMessage msg = (ErrorMessage) message;
                 pingHandler.shutDown();
-                view.closeGame(msg.getString());
+                view.closeGame(msg.getErrorText());
             }
-            case COMMON_GOAL -> {
-                clientModel.addPoint((MessageCommonGoal) message);
+            case COMMON_GOAL_REACHED_MESSAGE -> {
+                clientModel.addPoint((CommonGoalMessage) message);
             }
-            case AFTER_MOVE_POSITIVE -> {
+            case GOOD_MOVE_ANSWER -> {
                 if(view instanceof Cli)
                     view.printMessage("Move performed successfully\n" +
                         ">> \033[34mYou can use the chat while waiting for your turn, try type something!\033[0m");
-                if(((MessageAfterMovePositive) message).getGainedPointsFirstCard()>0){
-                    view.printMessage("Points gained from first common goal: " + ((MessageAfterMovePositive) message).getGainedPointsFirstCard());
+                if(((GoodMoveMessage) message).getGainedPointsFirstCard()>0){
+                    view.printMessage("Points gained from first common goal: " + ((GoodMoveMessage) message).getGainedPointsFirstCard());
                 }
-                if(((MessageAfterMovePositive) message).getGainedPointsSecondCard()>0){
-                    view.printMessage("Points gained from second common goal: " + ((MessageAfterMovePositive) message).getGainedPointsSecondCard());
+                if(((GoodMoveMessage) message).getGainedPointsSecondCard()>0){
+                    view.printMessage("Points gained from second common goal: " + ((GoodMoveMessage) message).getGainedPointsSecondCard());
                 }
 
             }
-            case SETUP_MESSAGE -> {
+            case INITIAL_SETUP_MESSAGE -> {
                 SetupMessage msg = (SetupMessage) message;
                 clientModel.setup(msg);
             }
@@ -192,7 +191,7 @@ public class ClientController implements Observer<View, OBS_Message> {
                     clientModel.setPointToPlayer(stringIntegerCouple.getFirst(), stringIntegerCouple.getSecond());
                 }
             }
-            case GAME_IS_OVER -> {
+            case GAME_OVER_MESSAGE -> {
                 view.printMessage("Game is over");
             }
         }

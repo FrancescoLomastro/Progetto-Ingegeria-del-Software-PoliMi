@@ -76,7 +76,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
      * @param message message*/
     @Override
     public void sendMessage(Message message) throws RemoteException {
-        message.setUserName(getUsername());
+        message.setSenderName(getUsername());
         if (server == null) {
             throw new RemoteException();
         }

@@ -104,7 +104,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         clients.values().forEach(x->
         {
             try {
-                x.sendMessage(new LobbyUpdateMessage(usernames,limitOfPlayers, "New player join"));
+                x.sendMessage(new LobbyUpdateMessage(usernames,limitOfPlayers));
             } catch (IOException e) {
                 tryToDisconnect(connection, username);
             }
@@ -165,14 +165,14 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     @Override
     synchronized public void onMessage(Message message) {
         if(!(message.getType().equals(MessageType.PING_MESSAGE))) {
-            System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getUsername() + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "Message has arrived: " + message.getType() + ", " + message.getSenderName() + ANSI_RESET);
         }
         if(statusGame!=StatusGame.ABORT) {
             switch (message.getType()) {
-                case MY_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
+                case PLAYER_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
                 case CHAT_MESSAGE -> manageChatMessage(message);
                 case PING_MESSAGE -> {
-                    String username = message.getUsername();
+                    String username = message.getSenderName();
                     renewTimer(username);
                 }
             }
@@ -196,11 +196,11 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                     String chatPayload = chatText.substring(firstSpaceIndex+1);
                     if (clients.containsKey(receiverUsername))
                     {
-                        sendMessageToASpecificUser(new ChatMessage("Private from "+msg.getUsername(),chatPayload), receiverUsername);
-                        sendMessageToASpecificUser(new ChatMessage("Private to "+msg.getUsername(),chatPayload), msg.getUsername());
+                        sendMessageToASpecificUser(new ChatMessage("Private from "+msg.getSenderName(),chatPayload), receiverUsername);
+                        sendMessageToASpecificUser(new ChatMessage("Private to "+msg.getSenderName(),chatPayload), msg.getSenderName());
                     }
                     else {
-                        sendMessageToASpecificUser(new ChatMessage("Server","Player named "+receiverUsername+" not found"),msg.getUsername());
+                        sendMessageToASpecificUser(new ChatMessage("Server","Player named "+receiverUsername+" not found"),msg.getSenderName());
                     }
                 }
             }
@@ -422,7 +422,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
         clients.remove(name);
         if(statusGame==StatusGame.BEFORE_GAME)
-            notifyAllMessage(new LobbyUpdateMessage(clients.keySet().stream().toList(),limitOfPlayers, "Players left"));
+            notifyAllMessage(new LobbyUpdateMessage(clients.keySet().stream().toList(),limitOfPlayers));
     }
     /**It set status of the game
      * @author: Riccardo Figini

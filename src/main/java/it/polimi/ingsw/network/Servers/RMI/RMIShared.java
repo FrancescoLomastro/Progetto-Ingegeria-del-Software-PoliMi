@@ -43,7 +43,7 @@ public class RMIShared extends UnicastRemoteObject implements RMISharedInterface
         if(message.getType()== MessageType.RMI_LOGIN_REQUEST)
         {
             RMILoginMessage msg = (RMILoginMessage) message;
-            Message newMessage= new LoginMessage(msg.getUsername(),new RMIConnection(msg.getConnection()));
+            Message newMessage= new LoginMessage(msg.getSenderName(),new RMIConnection(msg.getConnection()));
             serverReceiver.onMessage(newMessage);
         }
         else

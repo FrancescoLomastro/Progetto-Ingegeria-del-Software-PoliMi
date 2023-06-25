@@ -520,7 +520,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * */
     @Override
     public void printMessage(String s, Message msg){
-        if(msg.getType()==MessageType.AFTER_MOVE_NEGATIVE){
+        if(msg.getType()==MessageType.BAD_MOVE_ANSWER){
             Platform.runLater(()->{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidMove.fxml"));
                 loader.setControllerFactory((con)->{
@@ -629,7 +629,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void update(ClientModel o, Message arg) {
         switch (arg.getType())
         {
-            case SETUP_MESSAGE -> {
+            case INITIAL_SETUP_MESSAGE -> {
                 showBoard(arg);
             }
             case UPDATE_GRID_MESSAGE -> {
@@ -640,24 +640,24 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
                 showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
             }
-            case ALMOST_OVER -> {
+            case ALMOST_OVER_MESSAGE -> {
                 AlmostOverMessage msg = (AlmostOverMessage) arg;
                 almostOver((AlmostOverMessage) arg);
             }
-            case COMMON_GOAL ->
+            case COMMON_GOAL_REACHED_MESSAGE ->
             {
-                updatePoints((MessageCommonGoal) arg);
+                updatePoints((CommonGoalMessage) arg);
             }
         }
     }
 
-    private void updatePoints(MessageCommonGoal arg)
+    private void updatePoints(CommonGoalMessage arg)
     {
         Platform.runLater(() ->
         {
             Board_C boardSceneController = (Board_C) currentController;
             boardSceneController.updatePoints(arg);
-            chatMessage("Server", arg.getPlayer()+" has reach common goal");
+            chatMessage("Server", arg.getPlayerWhoScored()+" has reach common goal");
         });
     }
 

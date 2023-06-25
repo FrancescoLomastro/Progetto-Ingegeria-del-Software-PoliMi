@@ -1,13 +1,24 @@
 package it.polimi.ingsw.network.Messages;
 
+/**
+ * This message is an error message sent by a server to a client
+ */
 public class ErrorMessage extends Message {
-    private String string;
-    public ErrorMessage(String s) {
-        super("Server",MessageType.ERROR);
-        this.string=s;
+    private String errorText;
+
+    /**
+     * Constructor: Creates the message with the error text
+     * @param errorText the text of the error
+     */
+    public ErrorMessage(String errorText) {
+        super("Server",MessageType.ERROR_MESSAGE);
+        this.errorText =errorText;
     }
 
-    public String getString() {
-        return string;
+    /**
+     * @return the error text in the message
+     */
+    public String getErrorText() {
+        return errorText;
     }
 }

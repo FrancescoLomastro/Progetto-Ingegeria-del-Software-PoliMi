@@ -60,7 +60,7 @@ public class Socket_Client extends Client implements Runnable{
      * @param message message*/
     @Override
     public void sendMessage(Message message) throws IOException {
-        message.setUserName(getUsername());
+        message.setSenderName(getUsername());
         synchronized (outLock) {
             if (out != null) {
                 out.writeObject(message);

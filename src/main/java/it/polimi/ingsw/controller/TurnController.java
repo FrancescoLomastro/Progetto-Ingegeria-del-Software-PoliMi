@@ -95,7 +95,7 @@ public class TurnController implements Runnable, Serializable {
      * @param message : the message to save
      * */
     public void startTheTurn(MessageMove message){
-        if(message!= null && message.getUsername().equals(currentPlayer)){
+        if(message!= null && message.getSenderName().equals(currentPlayer)){
             this.message = message;
             new Thread(this).start();
         }
@@ -110,36 +110,36 @@ public class TurnController implements Runnable, Serializable {
     public void run()
     {
         Message moveResult;
-        moveResult = game.manageTurn(message.getUsername(), message.getMove(), message.getColumn());
-        if (moveResult.getType() == AFTER_MOVE_POSITIVE) {
+        moveResult = game.manageTurn(message.getSenderName(), message.getMove(), message.getColumn());
+        if (moveResult.getType() == GOOD_MOVE_ANSWER) {
 
-            gameController.sendMessageToASpecificUser(moveResult, message.getUsername());
+            gameController.sendMessageToASpecificUser(moveResult, message.getSenderName());
 
-            ObjectCard[][] oldLibrary = game.getLibrary(message.getUsername());
-            MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getUsername()), message.getUsername(),
+            ObjectCard[][] oldLibrary = game.getLibrary(message.getSenderName());
+            MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getSenderName()), message.getSenderName(),
                     message.getMove(), findFilledPositionInLibrary(message.getColumn(), message.getMove(), oldLibrary) );
             gameController.notifyAllMessage(messageLibrary);
 
             MessageGrid messageGrid = new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE);
             gameController.notifyAllMessage(messageGrid);
 
-            if (game.checkEndLibrary(message.getUsername()) && !flagCountdown) {
+            if (game.checkEndLibrary(message.getSenderName()) && !flagCountdown) {
                 flagCountdown = true;
-                int points= game.firstLibraryCompletion(message.getUsername());
-                gameController.notifyAllMessage(new AlmostOverMessage(message.getUsername(),points));
+                int points= game.firstLibraryCompletion(message.getSenderName());
+                gameController.notifyAllMessage(new AlmostOverMessage(message.getSenderName(),points));
             }
 
-            if (((MessageAfterMovePositive) moveResult).getGainedPointsFirstCard() > 0 || ((MessageAfterMovePositive) moveResult).getGainedPointsSecondCard() > 0) {
+            if (((GoodMoveMessage) moveResult).getGainedPointsFirstCard() > 0 || ((GoodMoveMessage) moveResult).getGainedPointsSecondCard() > 0) {
 
-                MessageCommonGoal messageCommonGoal = new MessageCommonGoal(
-                        ((MessageAfterMovePositive) moveResult).getGainedPointsFirstCard(),
-                        ((MessageAfterMovePositive) moveResult).getGainedPointsSecondCard(),
-                        message.getUsername(),
+                CommonGoalMessage commonGoalMessage = new CommonGoalMessage(
+                        ((GoodMoveMessage) moveResult).getGainedPointsFirstCard(),
+                        ((GoodMoveMessage) moveResult).getGainedPointsSecondCard(),
+                        message.getSenderName(),
                         game.getCommonGoalCard()[0].getPoints(),
                         game.getCommonGoalCard()[1].getPoints()
                 );
 
-                gameController.notifyAllMessage(messageCommonGoal);
+                gameController.notifyAllMessage(commonGoalMessage);
             }
 
 
@@ -155,8 +155,8 @@ public class TurnController implements Runnable, Serializable {
             }
             gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer); // richiedo la mossa al giocatore successivo
             gameController.updateFile();
-        } else if (moveResult.getType() == AFTER_MOVE_NEGATIVE) {
-            gameController.sendMessageToASpecificUser(moveResult, message.getUsername()); // avviso il giocatore che la mossa non è andata a buon fine
+        } else if (moveResult.getType() == BAD_MOVE_ANSWER) {
+            gameController.sendMessageToASpecificUser(moveResult, message.getSenderName()); // avviso il giocatore che la mossa non è andata a buon fine
         }
     }
     /**it returns cells are be filled with the move in library
@@ -185,7 +185,7 @@ public class TurnController implements Runnable, Serializable {
      * */
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findRanking();
-        gameController.notifyAllMessage(new MessageGame(MessageType.GAME_IS_OVER));
+        gameController.notifyAllMessage(new MessageGame(MessageType.GAME_OVER_MESSAGE));
         gameController.notifyAllMessage(new MessagePoints(countActualPointAndShare()));
         for (Couple<String, Integer> stringIntegerCouple : list) {
             gameController.sendMessageToASpecificUser(new MessageWinner(

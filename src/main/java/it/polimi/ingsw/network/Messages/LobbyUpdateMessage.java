@@ -2,26 +2,30 @@ package it.polimi.ingsw.network.Messages;
 
 import java.util.List;
 
+
+/**
+ * This message returns an update reporting a lobby description and the size of the lobby
+ */
 public class LobbyUpdateMessage extends Message {
-    private final List<String> usernames;
-    private final int limitOfPlayers;
-    private final String textFromServer;
-    public LobbyUpdateMessage(List<String> usernames, int limitOfPlayers, String textFromServer) {
+    private final List<String> lobbyUsernames;
+    private final int lobbySize;
+
+    /**
+     * Constructor: Creates a lobby update massage with the list of players in the lobby
+     * @param lobbyUsernames is the list of usernames in the lobby
+     * @param lobbySize is the max size of the lobby
+     */
+    public LobbyUpdateMessage(List<String> lobbyUsernames, int lobbySize) {
         super("Server",MessageType.LOBBY_UPDATE_MESSAGE);
-        this.usernames=usernames;
-        this.textFromServer=textFromServer;
-        this.limitOfPlayers=limitOfPlayers;
+        this.lobbyUsernames = lobbyUsernames;
+        this.lobbySize = lobbySize;
     }
 
-    public String getTextFromServer() {
-        return textFromServer;
+    public List<String> getLobbyUsernames() {
+        return lobbyUsernames;
     }
 
-    public List<String> getUsernames() {
-        return usernames;
-    }
-
-    public int getLimitOfPlayers() {
-        return limitOfPlayers;
+    public int getLobbySize() {
+        return lobbySize;
     }
 }

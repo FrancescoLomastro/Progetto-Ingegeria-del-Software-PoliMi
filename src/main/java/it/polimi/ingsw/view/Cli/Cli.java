@@ -361,8 +361,8 @@ public class Cli extends View implements Runnable {
      * @param arg Message with all information about points achieved from common goal card. It re-used an existing class to
      * pass paramter. Player contained in arg is who has achieved common goal. Points gained are conteined in "getGainedPointsFirstCard".
      * New points available are contained in PointAvailable1 and PointAvailable2*/
-    private void showPoint(MessageCommonGoal arg) {
-        System.out.println("In " + arg.getPlayer() + "'s move: ");
+    private void showPoint(CommonGoalMessage arg) {
+        System.out.println("In " + arg.getPlayerWhoScored() + "'s move: ");
         if(arg.getGainedPointsSecondCard()==1)
             System.out.println("First common goal card has been reached");
         else if(arg.getGainedPointsSecondCard()==2)
@@ -370,8 +370,8 @@ public class Cli extends View implements Runnable {
         else if(arg.getGainedPointsSecondCard() == 3)
             System.out.println("Both commons goal card has been reached");
         System.out.println("He has " + arg.getGainedPointsFirstCard() + " points now");
-        System.out.println("Point for common goal card 1: " + arg.getPointAvailable1());
-        System.out.println("Point for common goal card 2: " + arg.getPointAvailable2());
+        System.out.println("Point for common goal card 1: " + arg.getRemainingPointsFirstCard());
+        System.out.println("Point for common goal card 2: " + arg.getRemainingPointsSecondCard());
     }
 
     /**
@@ -626,7 +626,7 @@ public class Cli extends View implements Runnable {
     public void update(ClientModel o, Message arg) {
         switch (arg.getType())
         {
-            case SETUP_MESSAGE -> {
+            case INITIAL_SETUP_MESSAGE -> {
                 SetupMessage msg = (SetupMessage) arg;
 
                 showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
@@ -644,8 +644,8 @@ public class Cli extends View implements Runnable {
                 ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
                 showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
             }
-            case COMMON_GOAL -> showPoint( (MessageCommonGoal) arg);
-            case ALMOST_OVER -> almostOver((AlmostOverMessage) arg);
+            case COMMON_GOAL_REACHED_MESSAGE -> showPoint( (CommonGoalMessage) arg);
+            case ALMOST_OVER_MESSAGE -> almostOver((AlmostOverMessage) arg);
         }
     }
     /**It is used when occurs an error an game will be closed
