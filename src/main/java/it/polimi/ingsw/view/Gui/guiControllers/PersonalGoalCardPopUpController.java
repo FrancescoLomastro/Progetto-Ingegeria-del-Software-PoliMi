@@ -25,7 +25,7 @@ public class PersonalGoalCardPopUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        picture_pane.getStyleClass().add("personal" + ViewFactory.getInstance().getClientModel().getPersonalGoalCardNumber());
+        picture_pane.getStyleClass().add("personal" + ViewFactory.getInstance().getClientModel().getPersonalGoalId());
         title_label.setText("Here's you're personal goal, don't tell anyone!");
     }
 }

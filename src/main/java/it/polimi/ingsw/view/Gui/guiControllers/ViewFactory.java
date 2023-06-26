@@ -670,11 +670,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
         SetupMessage msg = (SetupMessage) arg;
         showGrid(msg.getGrid(), GridMessage.TypeOfGridMessage.INIT);
-        for (int i = 0; i < msg.getPlayersName().length; i++) {
-            showLibrary(msg.getPlayersLibraries()[i], msg.getPlayersName()[i], null, null);
+        for (int i = 0; i < msg.getPlayerNames().length; i++) {
+            showLibrary(msg.getPlayersLibraries()[i], msg.getPlayerNames()[i], null, null);
         }
         showCentralPoints(msg.getCentralPointCard());
-        showCommonPoints(msg.getPointCardCommon1(), msg.getPointCardCommon2());
+        showCommonPoints(msg.getFirstCommonGoalCardPoints(), msg.getSecondCommonGoalCardPoints());
         showPointsPlayers(msg.getPlayersPoints());
     }
 

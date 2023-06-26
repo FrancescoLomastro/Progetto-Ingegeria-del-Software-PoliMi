@@ -17,20 +17,20 @@ import java.util.Map;
 public class ClientModel extends Observable<Message> {
     private ObjectCard[][] grid;
     private final HashMap<String, ObjectCard[][]> librariesMap;
-    private ArrayList<Couple> goalList;
+    private ArrayList<Couple> personalGoalCardMatrix;
     private final Map<String, Integer> pointsMap;
-    private String descriptionFirstCommonGoal;
-    private int numberCommonGoal1;
-    private int numberCommonGoal2;
-    private int personalGoalCardNumber;
-    private String descriptionSecondCommonGoal;
-    private final int[] pointsCommonGoalCards;
+    private String firstCommonGoalDescription;
+    private int firstCommonGoalId;
+    private int secondCommonGoalId;
+    private int personalGoalId;
+    private String secondCommonGoalDescription;
+    private final int[] commonGoalPointsVector;
     private final ObjectCard[][] defaultLibrary;
     private String myName;
     public ClientModel(){
         librariesMap = new HashMap<>();
         pointsMap = new HashMap<>();
-        pointsCommonGoalCards = new int[] {8,8};
+        commonGoalPointsVector = new int[] {8,8};
         defaultLibrary = new ObjectCard[6][5];
         for(int i=0; i<6; i++){
             for(int j=0; j<5; j++){
@@ -91,7 +91,7 @@ public class ClientModel extends Observable<Message> {
     }
     public void setPersonalGoalCard(ArrayList<Couple> goalList)
     {
-        this.goalList=goalList;
+        this.personalGoalCardMatrix =goalList;
     }
 
     /**This method updates/adds points in the model and create a special message for the view. This message
@@ -104,20 +104,20 @@ public class ClientModel extends Observable<Message> {
         int score, card=0;
         if(0 != msg.getGainedPointsFirstCard()) {
             card=1;
-            pointsCommonGoalCards[0] = msg.getRemainingPointsFirstCard();
+            commonGoalPointsVector[0] = msg.getRemainingPointsFirstCard();
         }
         if(0 != msg.getGainedPointsSecondCard()) {
             if(card==0)
                 card=2;
             else
                 card=3;
-            pointsCommonGoalCards[1] = msg.getRemainingPointsSecondCard();
+            commonGoalPointsVector[1] = msg.getRemainingPointsSecondCard();
         }
         score = msg.getGainedPointsSecondCard() + msg.getGainedPointsFirstCard();
         score = pointsMap.get(msg.getPlayerWhoScored()) + score;
         pointsMap.replace(msg.getPlayerWhoScored(), score);
         setChanged();
-        notifyObservers(new CommonGoalMessage(score, card, msg.getPlayerWhoScored(), pointsCommonGoalCards[0], pointsCommonGoalCards[1]));
+        notifyObservers(new CommonGoalMessage(score, card, msg.getPlayerWhoScored(), commonGoalPointsVector[0], commonGoalPointsVector[1]));
     }
 
     public ObjectCard[][] getGrid()
@@ -125,8 +125,8 @@ public class ClientModel extends Observable<Message> {
         return grid;
     }
 
-    public int[] getPointsCommonGoalCards() {
-        return pointsCommonGoalCards;
+    public int[] getCommonGoalPointsVector() {
+        return commonGoalPointsVector;
     }
 
     public ObjectCard[][] getLibrary(String name)
@@ -141,11 +141,11 @@ public class ClientModel extends Observable<Message> {
         librariesMap.put(name, defaultLibrary);
         pointsMap.put(name, 0);
     }
-    public void setDescriptionFirstCommonGoal(String descriptionFirstCommonGoal) {
-        this.descriptionFirstCommonGoal = descriptionFirstCommonGoal;
+    public void setFirstCommonGoalDescription(String firstCommonGoalDescription) {
+        this.firstCommonGoalDescription = firstCommonGoalDescription;
     }
-    public void setDescriptionSecondCommonGoal(String descriptionSecondCommonGoal) {
-        this.descriptionSecondCommonGoal = descriptionSecondCommonGoal;
+    public void setSecondCommonGoalDescription(String secondCommonGoalDescription) {
+        this.secondCommonGoalDescription = secondCommonGoalDescription;
     }
     /**it returns a map with couple name-library
      * @author: Franscesco Gregorio Lo Mastro
@@ -153,14 +153,14 @@ public class ClientModel extends Observable<Message> {
     public Map<String, ObjectCard[][]> getAllLibrary() {
         return librariesMap;
     }
-    public ArrayList<Couple> getGoalList() {
-        return new ArrayList<>(goalList);
+    public ArrayList<Couple> getPersonalGoalCardMatrix() {
+        return new ArrayList<>(personalGoalCardMatrix);
     }
-    public String getDescriptionFirstCommonGoal() {
-        return descriptionFirstCommonGoal;
+    public String getFirstCommonGoalDescription() {
+        return firstCommonGoalDescription;
     }
-    public String getDescriptionSecondCommonGoal() {
-        return descriptionSecondCommonGoal;
+    public String getSecondCommonGoalDescription() {
+        return secondCommonGoalDescription;
     }
     public void setPointToPlayer(String first, Integer second) {
         pointsMap.replace(first, second);
@@ -179,32 +179,32 @@ public class ClientModel extends Observable<Message> {
      * */
     public void setup(SetupMessage msg)
     {
-        pointsCommonGoalCards[0]=msg.getPointCardCommon1();
-        pointsCommonGoalCards[1]=msg.getPointCardCommon2();
-        numberCommonGoal1 =msg.getNumCom1();
-        numberCommonGoal2 =msg.getNumCom2();
-        personalGoalCardNumber =msg.getPersonalNumber();
-        setDescriptionFirstCommonGoal(msg.getDescription1());
-        setDescriptionSecondCommonGoal(msg.getDescription2());
+        commonGoalPointsVector[0]=msg.getFirstCommonGoalCardPoints();
+        commonGoalPointsVector[1]=msg.getSecondCommonGoalCardPoints();
+        firstCommonGoalId =msg.getFirstCommonGoalCardId();
+        secondCommonGoalId =msg.getSecondCommonGoalCardId();
+        personalGoalId =msg.getPersonalGoalId();
+        setFirstCommonGoalDescription(msg.getFirstCommonGoalDescription());
+        setSecondCommonGoalDescription(msg.getSecondCommonGoalDescription());
         setPersonalGoalCard(msg.getPersonalGoalCard());
-        for(int i=0; i<msg.getPlayersName().length;i++)
+        for(int i = 0; i<msg.getPlayerNames().length; i++)
         {
-            addPlayer(msg.getPlayersName()[i]);
-            librariesMap.replace(msg.getPlayersName()[i],getObjectCards(msg.getPlayersLibraries()[i]));
+            addPlayer(msg.getPlayerNames()[i]);
+            librariesMap.replace(msg.getPlayerNames()[i],getObjectCards(msg.getPlayersLibraries()[i]));
         }
         this.grid=msg.getGrid();
         setChanged();
         notifyObservers(new SetupMessage(
-                msg.getPointCardCommon1(),
-                msg.getPointCardCommon2(),
-                msg.getPersonalNumber(),
-                msg.getNumCom1(),
-                msg.getNumCom2(),
+                msg.getFirstCommonGoalCardPoints(),
+                msg.getSecondCommonGoalCardPoints(),
+                msg.getPersonalGoalId(),
+                msg.getFirstCommonGoalCardId(),
+                msg.getSecondCommonGoalCardId(),
                 msg.getCentralPointCard(),
                 getObjectCards(grid),
-                msg.getPlayersName(),
+                msg.getPlayerNames(),
                 msg.getPersonalGoalCard(),
-                new String[]{msg.getDescription1(),msg.getDescription2()},
+                new String[]{msg.getFirstCommonGoalDescription(),msg.getSecondCommonGoalDescription()},
                 msg.getPlayersPoints(),
                 getObjectCards(msg.getPlayersLibraries())));
     }
@@ -217,14 +217,14 @@ public class ClientModel extends Observable<Message> {
     public void setMyName(String myName) {
         this.myName = myName;
     }
-    public int getNumberCommonGoal1() {
-        return numberCommonGoal1;
+    public int getFirstCommonGoalId() {
+        return firstCommonGoalId;
     }
-    public int getPersonalGoalCardNumber() {
-        return personalGoalCardNumber;
+    public int getPersonalGoalId() {
+        return personalGoalId;
     }
-    public int getNumberCommonGoal2() {
-        return numberCommonGoal2;
+    public int getSecondCommonGoalId() {
+        return secondCommonGoalId;
     }
     /**This method is called when someone fill is a library
      * @param message message with player's name

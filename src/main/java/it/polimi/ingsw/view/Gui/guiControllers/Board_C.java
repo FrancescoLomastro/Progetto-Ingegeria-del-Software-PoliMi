@@ -175,13 +175,13 @@ public class Board_C implements Initializable {
             Common_C controller = loader.getController();
             controller.setListeners(right,3.5);
             controller.setListeners(right,3+0.5);
-            controller.getImage().getStyleClass().add("common"+clientModel.getNumberCommonGoal1());
-            controller.getPoint().getStyleClass().add("point"+clientModel.getPointsCommonGoalCards()[0]);
+            controller.getImage().getStyleClass().add("common"+clientModel.getFirstCommonGoalId());
+            controller.getPoint().getStyleClass().add("point"+clientModel.getCommonGoalPointsVector()[0]);
             this.cardPoint1=controller.getPoint();
             right.getChildren().add(son);
 
             son.setOnMouseClicked(mouseEvent -> {
-                handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getDescriptionFirstCommonGoal(), 1);
+                handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getFirstCommonGoalDescription(), 1);
             });
 
         } catch (IOException e) {
@@ -195,13 +195,13 @@ public class Board_C implements Initializable {
             Common_C controller = loader.getController();
             controller.setListeners(right,3.5);
             controller.setListeners(right,3+0.5);
-            controller.getImage().getStyleClass().add("common"+clientModel.getNumberCommonGoal2());
-            controller.getPoint().getStyleClass().add("point"+clientModel.getPointsCommonGoalCards()[0]);
+            controller.getImage().getStyleClass().add("common"+clientModel.getSecondCommonGoalId());
+            controller.getPoint().getStyleClass().add("point"+clientModel.getCommonGoalPointsVector()[0]);
             this.cardPoint2=controller.getPoint();
             right.getChildren().add(son);
 
             son.setOnMouseClicked(mouseEvent -> {
-                handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getDescriptionSecondCommonGoal(), 2);
+                handleCommonGoalCardClick(ViewFactory.getInstance().getClientModel().getSecondCommonGoalDescription(), 2);
             });
 
         } catch (IOException e) {
@@ -213,7 +213,7 @@ public class Board_C implements Initializable {
             son = loader.load();
             Personal_C controller = loader.getController();
             controller.setListeners(right,3.5);
-            controller.getImage().getStyleClass().add("personal"+clientModel.getPersonalGoalCardNumber());
+            controller.getImage().getStyleClass().add("personal"+clientModel.getPersonalGoalId());
             controller.setListeners(right,3+0.5);
             right.getChildren().add(son);
 

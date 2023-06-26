@@ -44,10 +44,10 @@ public class CommonGoalCardDescriptionController implements Initializable {
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
 
         if (num == 1) {
-            picture_pane.getStyleClass().add("common"+clientModel.getNumberCommonGoal1());
+            picture_pane.getStyleClass().add("common"+clientModel.getFirstCommonGoalId());
         }
         else if(num == 2){
-            picture_pane.getStyleClass().add("common"+clientModel.getNumberCommonGoal2());
+            picture_pane.getStyleClass().add("common"+clientModel.getSecondCommonGoalId());
         }
     }
 
