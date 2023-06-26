@@ -3,6 +3,8 @@ import it.polimi.ingsw.network.Messages.Message;
 import it.polimi.ingsw.network.StatusNetwork;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.ServerReceiver;
+import it.polimi.ingsw.tasks.PingerTask;
+import it.polimi.ingsw.tasks.TerminatorTask;
 
 import java.io.IOException;
 import java.util.Timer;

@@ -52,13 +52,13 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         this.controller = controller;
         statusGame = StatusGame.BEFORE_GAME;
     }
-    public void startTimer(Connection connection) {
+    public void startPingTimer(Connection connection) {
         connection.startTimer(controller);
     }
     /**Reset ping according to game's status
      * @author: Riccardo Figini
      * @param username Player */
-    public void renewTimer(String username){
+    public void renewPingTimer(String username){
         ServerReceiver serverReceiver;
         Connection connection= clients.get(username);
         if(statusGame==StatusGame.IN_GAME)
@@ -173,7 +173,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
                 case CHAT_MESSAGE -> manageChatMessage(message);
                 case PING_MESSAGE -> {
                     String username = message.getSenderName();
-                    renewTimer(username);
+                    renewPingTimer(username);
                 }
             }
         }

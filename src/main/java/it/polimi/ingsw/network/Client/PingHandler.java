@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.Client;
 
 import it.polimi.ingsw.network.Messages.Message;
 import it.polimi.ingsw.network.Messages.ServerPingMessage;
-import it.polimi.ingsw.network.Servers.PingTaskClient;
+import it.polimi.ingsw.tasks.PingTaskClient;
 import it.polimi.ingsw.controller.ClientController;
 
 import java.io.IOException;

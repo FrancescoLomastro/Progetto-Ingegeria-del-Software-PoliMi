@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.Client.Socket.Socket_Client;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.network.Messages.ChatMessage;
 import it.polimi.ingsw.network.ObserverImplementation.Observer;
+import it.polimi.ingsw.tasks.NumberRequestTask;
 import it.polimi.ingsw.view.*;
 import it.polimi.ingsw.network.Client.ClientModel;
 import it.polimi.ingsw.view.Cli.Cli;
@@ -16,6 +17,7 @@ import it.polimi.ingsw.utility.Couple;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
 
 /**
  * The logical controller of a client
@@ -28,6 +30,7 @@ public class ClientController implements Observer<View, OBS_Message> {
     private CommunicationQueueHandler communicationQueueHandler;
     private PingHandler pingHandler;
     private Client client;
+
 
     public ClientController(String viewMode)
     {
@@ -64,10 +67,6 @@ public class ClientController implements Observer<View, OBS_Message> {
         try {
             switch (chosenTechnology) {
                 case 0 -> {
-                    /*String address = UtilsForRMI.getLocalIp();
-                    if(address==null)
-                        address="127.0.0.1";
-                    System.setProperty("java.rmi.server.hostname", address);*/
                     client = new RMI_Client(chosenUsername, chosenAddress, chosenPort);
                 }
                 case 1 -> {
@@ -196,6 +195,7 @@ public class ClientController implements Observer<View, OBS_Message> {
         }
 
     }
+
 
 
 

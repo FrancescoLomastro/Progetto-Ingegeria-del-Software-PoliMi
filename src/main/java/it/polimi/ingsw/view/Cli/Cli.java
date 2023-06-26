@@ -670,7 +670,7 @@ public class Cli extends View implements Runnable {
      * */
     @Override
     public void closeGame(String string) {
-        System.out.println("Error! Game will be close");
+        System.out.println("Error! Game will be closed");
         System.out.println(string);
         System.out.println("Press entry to close the window");
         Scanner in = new Scanner(System.in);

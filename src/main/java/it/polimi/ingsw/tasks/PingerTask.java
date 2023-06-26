@@ -1,7 +1,8 @@
-package it.polimi.ingsw.network.Servers;
+package it.polimi.ingsw.tasks;
 
 import it.polimi.ingsw.network.Messages.ServerPingMessage;
 import it.polimi.ingsw.controller.ServerReceiver;
+import it.polimi.ingsw.network.Servers.Connection;
 
 import java.io.IOException;
 import java.util.TimerTask;

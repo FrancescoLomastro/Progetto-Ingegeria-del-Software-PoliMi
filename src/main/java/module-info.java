@@ -32,4 +32,5 @@ module MyShelfie {
     exports it.polimi.ingsw.network;
     exports it.polimi.ingsw.view.Gui.guiControllers.BoardComponents;
     opens it.polimi.ingsw.view.Gui.guiControllers.BoardComponents to javafx.fxml;
+    exports it.polimi.ingsw.tasks;
 }

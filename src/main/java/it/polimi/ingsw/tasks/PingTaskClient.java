@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.Servers;
+package it.polimi.ingsw.tasks;
 
 import it.polimi.ingsw.network.Messages.ErrorMessage;
 import it.polimi.ingsw.controller.ClientController;

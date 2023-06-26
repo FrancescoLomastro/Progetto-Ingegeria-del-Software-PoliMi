@@ -1,6 +1,7 @@
-package it.polimi.ingsw.network.Servers;
+package it.polimi.ingsw.tasks;
 
 import it.polimi.ingsw.controller.ServerReceiver;
+import it.polimi.ingsw.network.Servers.Connection;
 
 import java.util.TimerTask;
 
@@ -19,7 +20,7 @@ public class TerminatorTask extends TimerTask {
     @Override
     public void run()
     {
-        System.out.println("Time out connection, player: "+connection.getPlayerName());
+        System.out.println(" Time out connection, player: "+connection.getPlayerName());
         server.tryToDisconnect(connection,connection.getPlayerName());
     }
 }

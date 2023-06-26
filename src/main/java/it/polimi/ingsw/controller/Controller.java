@@ -4,6 +4,7 @@ import com.google.gson.*;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.network.Servers.Connection;
 import it.polimi.ingsw.network.StatusNetwork;
+import it.polimi.ingsw.tasks.NumberRequestTask;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -24,6 +25,8 @@ public class Controller implements ServerReceiver
     private GameController currentGame;
     private final Map<String, Connection> playerBeforeJoiningLobby;
     private Connection waitedRequest;
+    private Timer numberRequestTimer;
+    private final int NUMBER_REQUEST_TIME = 20000;
     private boolean isAsking;
     private static final int minimumPlayers = 2;
     private static final int maximumPlayers = 4;
@@ -66,7 +69,7 @@ public class Controller implements ServerReceiver
      * @param playerName Player's name
      * */
     @Override
-    public void tryToDisconnect(Connection connection, String playerName) {
+    public synchronized void tryToDisconnect(Connection connection, String playerName) {
         switch (connection.getStatusNetwork()){
             case AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER -> {
                 changeStatusToEveryone(StatusNetwork.SEND_ERROR_MESSAGE_CLIENT_NEED_TO_BE_CLOSED, currentGame);
@@ -82,17 +85,15 @@ public class Controller implements ServerReceiver
                 System.out.println(ANSI_BLU + "Couldn't contact client " + playerName + ANSI_RESET);
                 disconnectPlayerFromGame(playerName);
             }
-            case AFTER_REQUEST_NUMBER_PLAYER ->{
+            case AFTER_REQUEST_NUMBER_PLAYER -> {
                 System.out.println(ANSI_BLU + "Couldn't ask number to the client " + playerName + ", dropping the request..." + ANSI_RESET);
                 games.remove(currentGame);
                 currentGame = new GameController(getAvailableID(), this);
                 games.add(currentGame);
+                playerBeforeJoiningLobby.get(playerName).destroyPing();
+                playerBeforeJoiningLobby.remove(playerName);
                 waitedRequest = null;
-                isAsking =false;
-                //if(playerBeforeJoiningLobby.get(playerName)!=null) {
-                    playerBeforeJoiningLobby.get(playerName).destroyPing();
-                    playerBeforeJoiningLobby.remove(playerName);
-                //}
+                isAsking = false;
             }
             case AFTER_SEND_INVALID_NAME_MESSAGE -> {
                 System.out.println(ANSI_BLU + "Problem contacting " + playerName + ", dropping connection..." + ANSI_RESET);
@@ -131,17 +132,20 @@ public class Controller implements ServerReceiver
                 msg.getClientConnection().setPlayerName(message.getSenderName());
                 boolean accepted = login(msg.getSenderName(),msg.getClientConnection());
                 if(accepted) {
-                    if (waitedRequest!= null && waitedRequest.getPlayerName().equals(msg.getSenderName()))
-                        currentGame.startTimer(msg.getClientConnection());
+                    if (waitedRequest!= null && waitedRequest.getPlayerName().equals(msg.getSenderName())) {
+                        currentGame.startPingTimer(msg.getClientConnection());
+                        startWaitedRequestTimer(msg.getClientConnection());
+                    }
                     else {
                         GameController gameController = searchGameController(msg.getSenderName());
-                        gameController.startTimer(msg.getClientConnection());
+                        gameController.startPingTimer(msg.getClientConnection());
                     }
                 }
             }
             case PLAYER_NUMBER_ANSWER ->
             {
                 if (waitedRequest.getPlayerName().equals(message.getSenderName())) {
+                    stopWaitedRequestTimer();
                     waitedRequest.setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER);
                     try {
                         PlayerNumberAnswer msg = (PlayerNumberAnswer) message;
@@ -166,7 +170,7 @@ public class Controller implements ServerReceiver
                 else {
                     if(searchGameController(username)!=null)
                     {
-                        searchGameController(username).renewTimer(username);
+                        searchGameController(username).renewPingTimer(username);
                     }
                 }
             }
@@ -683,4 +687,27 @@ public class Controller implements ServerReceiver
     public void removeGame(GameController gameController) {
         games.remove(gameController);
     }
+
+
+
+    /**
+     * Starts a timer "numberRequestTimer" to get a response to PLAYER_NUMBER_ANSWER, avoid blocking the whole server when
+     * a single clients takes too long to reply.
+     */
+    private void startWaitedRequestTimer(Connection clientConnection) {
+        numberRequestTimer = new Timer();
+        numberRequestTimer.schedule(new NumberRequestTask(this,clientConnection), NUMBER_REQUEST_TIME);
+    }
+
+    /**
+     * stops the "numberRequestTimer" if it was scheduled
+     */
+    private void stopWaitedRequestTimer() {
+        if (numberRequestTimer!=null) {
+            numberRequestTimer.cancel();
+        }
+    }
+
+
+
 }
