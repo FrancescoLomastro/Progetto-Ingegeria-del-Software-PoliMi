@@ -29,6 +29,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * This class governs the GUI of the game board where libraries, object cards grid and different types of goal cards are
+ * present. It is used as an intermediary between the fixed parts of the GUI of the 'Board.fxml' file and
+ * the dynamic information that the controller sends to the graphic components of the following fxml files:
+ * "CommonGoal.fxml", "Griglia.fxml", "Libreria.fxml", "PersonalGoal.fxml" and "Punto.fxml".
+ * In addition, the class manages the interaction between players and the various graphic components of the scene.
+ *
+ * @author Alberto Aniballi, Riccardo Figini, Francesco Gregorio Lo Mastro, Andrea Ferrini
+ */
 public class Board_C implements Initializable {
     @FXML
     public Label moveLabel;
@@ -70,9 +79,14 @@ public class Board_C implements Initializable {
      double left_gridRatio;
      private Timeline animationChatButton;
 
+    /**
+     * This method is used to manage players' clicks on libraries.
+     *
+     * @param username: the name of the player owning the library;
+     * @author Andrea Ferrini
+     */
     @FXML
     private void handleLibrariesClick(String username) {
-
         ViewFactory.getInstance().onLibraryClick(username);
     }
 
@@ -123,19 +137,35 @@ public class Board_C implements Initializable {
 
     }
 
-
-
+    /**
+     * This method is used to manage players' clicks on common goal cards currently present in the board.
+     *
+     * @param description: common goal card description;
+     * @param num: common goal card number;
+     * @author Andrea Ferrini
+     */
     @FXML
     private void handleCommonGoalCardClick(String description, int num){
         ViewFactory.getInstance().onCommonGoalCardClick(description, num);
     }
 
+    /**
+     * This method is used to manage players' clicks on their personal goal card.
+     *
+     * @author Andrea Ferrini
+     */
     @FXML
     private void handlePersonalGoalCardClick(){
 
         ViewFactory.getInstance().onPersonalGoalCardClick();
     }
 
+    /**
+     * This method is used to set up the correct common goal cards and personal goal cards that were assigned during
+     * initialization of the game. Listeners and event handlers are set for the goal card components.
+     *
+     * @author Francesco Gregorio Lo Mastro, Riccardo Figini
+     */
     private void setupGoals() {
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
         loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/CommonGoal.fxml"));
@@ -196,6 +226,13 @@ public class Board_C implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method is used to initialize each player library on the main board.
+     * Listeners and event handlers are set for library components.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     private void initializeLibraries() {
         libraries= new HashMap<>();
         points= new HashMap<>();
@@ -254,6 +291,11 @@ public class Board_C implements Initializable {
 
     }
 
+    /**
+     * This method is used to make each board component maintain its proportion in case the stage is resized.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     private void maintainProportion() {
         left.setPrefWidth(anchor.getWidth()*leftRatio);
         right.setPrefWidth(anchor.getWidth()*rightRatio);
@@ -262,6 +304,12 @@ public class Board_C implements Initializable {
         left_grid.setPrefWidth(left.getPrefWidth()*left_gridRatio);
         left_points.setPrefWidth(left.getPrefWidth()*left_pointsRatio);
     }
+
+    /**
+     * This method is used to initialize object cards grid on the main board.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
      private void initializeGrid() {
          loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Griglia.fxml"));
          try {
@@ -291,9 +339,13 @@ public class Board_C implements Initializable {
         }
     }
 
-
-
-
+    /**
+     * This method is used to update object cards grid on the main board, its main responsibilities are to set
+     * object card to cell of the grid and to update the grid once a player choose object cards from the grid.
+     *
+     * @param grid: the current grid;
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void updateGrid(ObjectCard[][] grid) {
         for (Node node : centralGrid.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
@@ -307,6 +359,14 @@ public class Board_C implements Initializable {
         }
     }
 
+    /**
+     * This method is used to update player libraries of the main board, its main responsibilities is to set
+     * to update the library once a player choose object cards from the grid.
+     *
+     * @param library: the current library of the player;
+     * @param username: the name of the library owner;
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void updateLibrary(ObjectCard[][] library, String username) {
         GridPane libraryPane= libraries.get(username).getGrid();
         for (Node node : libraryPane.getChildren()) {
@@ -321,7 +381,13 @@ public class Board_C implements Initializable {
         }
     }
 
-
+    /**
+     * This method is used to activate the possibility of a player to choose object cards from the grid during its turn.
+     * Once a player has chosen object cards two cases are possible: the case in which an invalid number of object cards
+     * is chosen or the case in which the player is directed to the "ColumnInsertionQuestion" stage.
+     *
+     * @author Alberto Aniballi, Riccardo Figini
+     */
     public void onAskMove() {
         doneButton.setVisible(true);
         doneButton.requestFocus();
@@ -425,6 +491,16 @@ public class Board_C implements Initializable {
 
     }
 
+    /**
+     * This method is used in the case the player make a valid object cards choice from the grid.
+     * In particular, the method manages the transition of chosen object cards from the grid to the player library.
+     *
+     * @param library: the player library;
+     * @param name: player name;
+     * @param oldInGrid: the positions of the cards chosen from the grid;
+     * @param newInLibrary: the positions of the cards inserted in the library;
+     * @author Riccardo Figini
+     */
     public void runAMove(ObjectCard[][] library, String name, Position[] oldInGrid, Position[] newInLibrary) {
         GridPane playerLibrary = libraries.get(name).getGrid();
         Point2D tmp;
@@ -493,6 +569,11 @@ public class Board_C implements Initializable {
         }
     }
 
+    /**
+     * This method is used to reset object cards border to black in the grid.
+     *
+     * @author Riccardo Figini, Alberto Aniballi
+     */
     public void resetBorderInGrid() {
         for (Node node : centralGrid.getChildren()) {
             node.setStyle("-fx-border-color: BLACK;" +
@@ -500,16 +581,35 @@ public class Board_C implements Initializable {
         }
     }
 
+    /**
+     * This method is used to manage players' clicks on the "open chat" button present in the board.
+     * It makes the chat appear.
+     *
+     * @author Alberto Aniballi, Riccardo Figini
+     */
     public void openChat() {
         if(animationChatButton!=null)
             animationChatButton.stop();
         openChatButton.setStyle("-fx-border-color: transparent;");
         ViewFactory.getInstance().showChat();
     }
+
+    /**
+     * This method is used to show central points in the "centralPointCard".
+     *
+     * @param centralPoints: the number of points;
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void showCentralPoints(int centralPoints) {
         centralPointCard.getStyleClass().add("centralPointCard_"+centralPoints);
     }
 
+    /**
+     * This method is used to enter the phase in which the game is almost over.
+     *
+     * @param arg: the almost over message;
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void almostOver(AlmostOverMessage arg) {
         int updatedPoints= ViewFactory.getInstance().getClientModel().getPointsMap().get(arg.getFillerName());
         centralPointCard.getStyleClass().removeAll(centralPointCard.getStyleClass());
@@ -522,6 +622,13 @@ public class Board_C implements Initializable {
         fillerLabel.setStyle("-fx-text-fill: black;");
     }
 
+    /**
+     * This method is used to set common goal cards points.
+     *
+     * @param card1: first common goal card points;
+     * @param card2: second common goal card points;
+     * @author Riccardo Figini
+     */
     public void initCommonGoalPoints(int card1, int card2){
         cardPoint1.getStyleClass().removeAll();
         cardPoint2.getStyleClass().removeAll();
@@ -529,6 +636,12 @@ public class Board_C implements Initializable {
         cardPoint2.getStyleClass().add("point"+card2);
     }
 
+    /**
+     * This method is used to update common goal cards points in the case a player reaches common goal objective.
+     *
+     * @param arg: common goal message;
+     * @author Riccardo Figini, Francesco Gregorio Lo Mastro
+     */
     public void updatePoints(CommonGoalMessage arg) {
         Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();
         points.get(arg.getPlayerWhoScored()).getPointsLabel().setText(""+map.get(arg.getPlayerWhoScored()));
@@ -543,12 +656,23 @@ public class Board_C implements Initializable {
         }
     }
 
+    /**
+     * This method is used to set each player points.
+     *
+     * @param playersPoints: the array containing the mapping of each player to its points;
+     * @author Riccardo Figini
+     */
     public void setPlayersPoints(ArrayList<Couple<String, Integer>> playersPoints) {
         for (Couple<String, Integer> playersPoint : playersPoints) {
             points.get(playersPoint.getFirst()).getPointsLabel().setText("" + playersPoint.getSecond());
         }
     }
 
+    /**
+     * This method is used to set up the chat button animation.
+     *
+     * @author Riccardo Figini
+     */
     public void setupAnimationChatButton(){
         openChatButton.setStyle("-fx-border-color: transparent;-fx-border-width: 10;");
         Duration duration = Duration.seconds(2);
@@ -560,6 +684,11 @@ public class Board_C implements Initializable {
         animationChatButton.setCycleCount(Animation.INDEFINITE);
     }
 
+    /**
+     * This method is used to activate the chat button animation.
+     *
+     * @author Riccardo Figini
+     */
     public void notifyMessage() {
         if(animationChatButton==null)
             setupAnimationChatButton();
