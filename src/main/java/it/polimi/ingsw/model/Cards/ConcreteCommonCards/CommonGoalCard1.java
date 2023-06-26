@@ -8,10 +8,7 @@ import it.polimi.ingsw.model.Player.Library;
 public class CommonGoalCard1 extends CommonGoalCard {
 
     ObjectCard[][] matrix;
-    private boolean result = false;
-    private int i, j, k;
-    private  int counter = 1;
-
+    private int i;
     public CommonGoalCard1(){
         num=1;
         setDescription("Five tiles of the same type forming a " +
@@ -24,12 +21,9 @@ public class CommonGoalCard1 extends CommonGoalCard {
         matrix = lib.getMatrix();
 
         for(i = 0; i < 4; i++){
-
             Color thisColor;
-
             switch (i){
 
-                // da 0,0 a 4,4
                 case 0: {
 
                     if(matrix[0][0] != null) thisColor = matrix[0][0].getColor();
@@ -41,7 +35,6 @@ public class CommonGoalCard1 extends CommonGoalCard {
                             return true;
                     }
                 }
-                /* da 1,0 a 5,4*/
                 case 1: {
 
                     if(matrix[1][0] != null) thisColor = matrix[1][0].getColor();
@@ -53,7 +46,6 @@ public class CommonGoalCard1 extends CommonGoalCard {
                             return true;
                     }
                 }
-                // da 0,4 a 4,0
                 case 2: {
 
                     if(matrix[0][4] != null) thisColor = matrix[0][4].getColor();
@@ -65,7 +57,6 @@ public class CommonGoalCard1 extends CommonGoalCard {
                             return true;
                     }
                 }
-                // da 1,4 a 5,0
                 case 3: {
 
                     if(matrix[1][4] != null) thisColor = matrix[1][4].getColor();

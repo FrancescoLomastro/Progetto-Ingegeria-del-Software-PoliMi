@@ -21,7 +21,11 @@ public abstract class CommonGoalCard extends Card implements Serializable {
      * @param lib player's library
      * @return boolean: true if the library respect common goal features */
     public abstract boolean isSatisfied(Library lib);
-
+    /**It sets score point card after creation because it needs number of players, during
+     * creation card does not have it
+     * @author: Riccardo Figini
+     * @param scorePointCard Score point card with proper number of players
+     * */
     public void setScorePointCard(ScorePointCard scorePointCard) {
         this.scorePointCard = scorePointCard;
     }

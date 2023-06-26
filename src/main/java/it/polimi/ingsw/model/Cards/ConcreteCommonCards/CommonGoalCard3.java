@@ -29,9 +29,6 @@ public class CommonGoalCard3 extends CommonGoalCard {
      * */
     @Override
     public boolean isSatisfied(Library library) {
-        /*Alberto, se guardi questa classe l'ho modificata. Non hai escluso il caso in cui
-        * alcune righe non fossero completamente riempiete, queste non possono essere considerate
-        * quando fai la somma*/
         int count_row = 0;
         for(int row=0;row<library.getNumberOfRows();row++) {
             if(rowIsFull(library.getMatrix()[row])) {
@@ -46,7 +43,10 @@ public class CommonGoalCard3 extends CommonGoalCard {
 
         return count_row >= 4;
     }
-
+    /**This method check is a row is full
+     * @author: Riccardo Figini
+     * @return {@code boolean} true if a row is full
+     * */
     private boolean rowIsFull(ObjectCard[] objectCards){
         for (ObjectCard objectCard : objectCards)
             if (objectCard == null)

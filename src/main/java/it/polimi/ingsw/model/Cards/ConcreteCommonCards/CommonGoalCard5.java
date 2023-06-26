@@ -39,9 +39,15 @@ public class CommonGoalCard5 extends CommonGoalCard {
         }
         return count_col == 2;
     }
+    /**This method verifies if a column is full
+     * @author: Riccardo Figini
+     * @param objectCards library
+     * @param colum column to check
+     * @return {@code boolean} true if it is full
+     * */
     private boolean columnIsFull(ObjectCard[][] objectCards, int colum){
-        for(int i=0; i<objectCards.length; i++)
-            if(objectCards[i][colum]==null)
+        for (ObjectCard[] objectCard : objectCards)
+            if (objectCard[colum] == null)
                 return false;
         return true;
     }

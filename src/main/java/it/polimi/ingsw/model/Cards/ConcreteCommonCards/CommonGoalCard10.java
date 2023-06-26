@@ -25,12 +25,11 @@ public class CommonGoalCard10 extends CommonGoalCard {
     /**
      * the main algorithm that checks this common goal
      * @param library the turn player's library
-     * @return boolean : true if satisfied, false if not satisfied
+     * @return boolean: true if satisfied, false if not satisfied
      */
     @Override
     public boolean isSatisfied(Library library) {
         ObjectCard[][] lib = library.getMatrix();
-        // istanzio e inizializzo l'array delle occorrenze
         HashMap<Color,Integer> occurencesTypeCounter = new HashMap<>();
 
         for(int row = 0; row<library.getNumberOfRows(); row++) {
