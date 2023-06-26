@@ -151,8 +151,7 @@ public class Cli extends View implements Runnable {
      * */
     @Override
     public void lobbyUpdate(String string) {
-        /*TODO: update della lobby quando esce un giocatore, fa uscire
-        un nuovo messaggio con i giocatori presenti*/
+        System.out.println(string);
     }
 
     /**It writes that player has been accepted
@@ -270,13 +269,7 @@ public class Cli extends View implements Runnable {
     {
         System.out.println("\n>> "+s);
     }
-    /**It prints a message
-     * */
-    @Override
-    public void printMessage(String s, Message msg)
-    {
-        this.printMessage(s);
-    }
+
 
 
     /**
@@ -683,5 +676,14 @@ public class Cli extends View implements Runnable {
         Scanner in = new Scanner(System.in);
         in.nextLine();
         System.exit(0);
+    }
+
+    /**
+     *
+     * @param msg
+     */
+    @Override
+    public void onBadMoveAnswer(BadMoveMessage msg) {
+        printMessage(msg.getMoveError());
     }
 }

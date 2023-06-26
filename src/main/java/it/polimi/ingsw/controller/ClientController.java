@@ -138,7 +138,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case BAD_MOVE_ANSWER -> {
                 BadMoveMessage msg = (BadMoveMessage) message;
-                view.printMessage(msg.getMoveError(), msg);
+                view.onBadMoveAnswer(msg);
                 view.askMove();
             }
             case WINNER_MESSAGE -> {

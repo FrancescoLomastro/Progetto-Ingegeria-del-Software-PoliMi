@@ -512,28 +512,22 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     /**
-     * This method create a new stage "Invalid Move" after a player has chosen an invalid combination of object cards
-     * from the grid or it simply calls the "printMessage" function to display a message from the serve in the chat.
+     * This method create a new stage "Invalid Move" after a player has chosen an invalid combination of object cards from the grid.
      *
-     * @param s: the string to print
      * @param msg: the message type
      * @author: Riccardo Figini
      * */
     @Override
-    public void printMessage(String s, Message msg){
-        if(msg.getType()==MessageType.BAD_MOVE_ANSWER){
+    public void onBadMoveAnswer(BadMoveMessage msg){
             Platform.runLater(()->{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidMove.fxml"));
                 loader.setControllerFactory((con)->{
                     InvalidMoveController invalidMoveController = new InvalidMoveController();
-                    invalidMoveController.setText(s);
+                    invalidMoveController.setText(msg.getMoveError());
                     return invalidMoveController;
                 });
                 createStage_old(loader,200,320,true,false);
             });
-        }
-        else
-            printMessage(s);
     }
 
     /**
