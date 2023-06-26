@@ -183,9 +183,9 @@ public class Cli extends View implements Runnable {
     @Override
     public void printAll() {
         showGrid(clientModel.getGrid(), GridMessage.TypeOfGridMessage.NEED_TO_BE_PRINTED);
-        System.out.println("\nFirst common goal: " + clientModel.getDescriptionFirstCommonGoal());
-        System.out.println("\nSecond common goal: " + clientModel.getDescriptionSecondCommonGoal());
-        printPersonalGoal(clientModel.getGoalList());
+        System.out.println("\nFirst common goal: " + clientModel.getFirstCommonGoalDescription());
+        System.out.println("\nSecond common goal: " + clientModel.getSecondCommonGoalDescription());
+        printPersonalGoal(clientModel.getPersonalGoalCardMatrix());
         Map<String, ObjectCard[][]> map = clientModel.getAllLibrary();
         for(Map.Entry<String, ObjectCard[][]> entry : map.entrySet() ){
             showLibrary(clientModel.getLibrary(entry.getKey()), entry.getKey(), null, null );
@@ -638,9 +638,9 @@ public class Cli extends View implements Runnable {
                 SetupMessage msg = (SetupMessage) arg;
 
                 showGrid(msg.getGrid(), GridMessage.TypeOfGridMessage.INIT);
-                for (int i=0; i<msg.getPlayersName().length;i++)
+                for (int i = 0; i<msg.getPlayerNames().length; i++)
                 {
-                    showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
+                    showLibrary(msg.getPlayersLibraries()[i],msg.getPlayerNames()[i],null,null);
                 }
                 showCentralPoints(msg.getCentralPointCard());
             }
