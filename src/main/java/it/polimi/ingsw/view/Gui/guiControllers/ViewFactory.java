@@ -3,7 +3,6 @@ package it.polimi.ingsw.view.Gui.guiControllers;
 import it.polimi.ingsw.network.Client.ClientModel;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.network.ObserverImplementation.*;
-import it.polimi.ingsw.view.Cli.Cli;
 import it.polimi.ingsw.view.Gui.GuiApplication;
 import it.polimi.ingsw.view.OBSMessages.OBS_Message;
 import it.polimi.ingsw.view.OBSMessages.OBS_MessageType;
@@ -487,7 +486,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**This method is called to print points when game is over (in cli version), here prints in chat
      * that the game is over*/
     @Override
-    public void printFinalRank(MessageWinner msg) {
+    public void printFinalRank(WinnerMessage msg) {
         chatMessage("Server", "Game is over");
         showWinnerScene(msg.getFinalRanking());
     }
@@ -640,7 +639,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 ObjectCard[][] obs = ((LibraryMessage) arg).getLibrary();
-                showLibrary(obs, ((LibraryMessage) arg).getOwnerOfLibrary(),((LibraryMessage) arg).getCardInGrid(), ((LibraryMessage) arg).getCardInLibr() );
+                showLibrary(obs, ((LibraryMessage) arg).getLibraryOwner(),((LibraryMessage) arg).getGridCardRemoved(), ((LibraryMessage) arg).getLibraryCardAdded() );
             }
             case ALMOST_OVER_MESSAGE -> {
                 AlmostOverMessage msg = (AlmostOverMessage) arg;

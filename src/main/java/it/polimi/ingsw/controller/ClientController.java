@@ -141,9 +141,9 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case WINNER_MESSAGE -> {
                 pingHandler.shutDown();
-                MessageWinner msg = (MessageWinner) message;
+                WinnerMessage msg = (WinnerMessage) message;
                 view.printFinalRank(msg);
-                view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getWinnerGame());
+                view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getFinalRanking().get(0));
             }
             case ALMOST_OVER_MESSAGE -> {
                 clientModel.onAlmostOver((AlmostOverMessage) message);
@@ -177,7 +177,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 LibraryMessage msg = (LibraryMessage) message;
-                clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary(), msg.getCardInGrid(), msg.getCardInLibr());
+                clientModel.setLibrary(msg.getLibraryOwner(), msg.getLibrary(), msg.getGridCardRemoved(), msg.getLibraryCardAdded());
             }
             case RETURN_TO_OLD_GAME_MESSAGE -> {
                 view.printMessage("You are joining in your old game");

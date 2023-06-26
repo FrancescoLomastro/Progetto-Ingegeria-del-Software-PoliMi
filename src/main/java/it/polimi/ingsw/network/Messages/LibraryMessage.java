@@ -8,33 +8,49 @@ import it.polimi.ingsw.utility.Position;
 public class LibraryMessage extends Message {
     private final ObjectCard[][] library;
     private final String libraryOwner;
-    private Position[] cardInGrid=null;
-    private Position[] cardInLibr=null;
-    public LibraryMessage(ObjectCard[][]library, String libraryOwner, Position[] cardInGrid, Position[] cardInLibr){
+    private Position[] gridCardRemoved =null;
+    private Position[] libraryCardAdded =null;
+
+    /**
+     * Contructor: Creates a update message for a library.
+     * @param library a matrix of object cards representing an updated library
+     * @param libraryOwner the owner of the library that is updated
+     * @param gridCardRemoved vector of positions representing cards removed from central grid with the move (used for GUI animation)
+     * @param LibraryCardAdded vector of positions representing cards added in the library with the move (used for GUI animation)
+     */
+    public LibraryMessage(ObjectCard[][]library, String libraryOwner, Position[] gridCardRemoved, Position[] LibraryCardAdded){
         super(MessageType.UPDATE_LIBRARY_MESSAGE);
         this.library=library;
         this.libraryOwner = libraryOwner;
-        this.cardInGrid=cardInGrid;
-        this.cardInLibr=cardInLibr;
+        this.gridCardRemoved = gridCardRemoved;
+        this.libraryCardAdded = LibraryCardAdded;
     }
-    public LibraryMessage(ObjectCard[][]library, String libraryOwner){
-        super(MessageType.UPDATE_LIBRARY_MESSAGE);
-        this.library=library;
-        this.libraryOwner = libraryOwner;
-    }
-    public String getOwnerOfLibrary() {
-        return libraryOwner;
-    }
-    public ObjectCard[][] getLibrary() {
-        return library;
-    }
+
+    /**
+     * @return the username of the updated library owner
+     */
     public String getLibraryOwner() {
         return libraryOwner;
     }
-    public Position[] getCardInGrid() {
-        return cardInGrid;
+
+    /**
+     * @return a matrix of object cards representing an updated library
+     */
+    public ObjectCard[][] getLibrary() {
+        return library;
     }
-    public Position[] getCardInLibr() {
-        return cardInLibr;
+
+    /**
+     * @return a vector of positions representing cards removed from central grid with the move (used for GUI animation)
+     */
+    public Position[] getGridCardRemoved() {
+        return gridCardRemoved;
+    }
+
+    /**
+     * @return a vector of positions representing cards added in the library with the move (used for GUI animation)
+     */
+    public Position[] getLibraryCardAdded() {
+        return libraryCardAdded;
     }
 }

@@ -188,9 +188,10 @@ public class TurnController implements Runnable, Serializable {
         gameController.notifyAllMessage(new GameMessage(MessageType.GAME_OVER_MESSAGE));
         gameController.notifyAllMessage(new ScoreMessage(countActualPointAndShare()));
         for (Couple<String, Integer> stringIntegerCouple : list) {
-            gameController.sendMessageToASpecificUser(new MessageWinner(
-                            list.get(0).getFirst(),
-                            stringIntegerCouple.getSecond(), list),
+            gameController.sendMessageToASpecificUser(
+                    new WinnerMessage(
+                            stringIntegerCouple.getSecond(),
+                            list),
                     stringIntegerCouple.getFirst());
         }
         gameController.closeGame();

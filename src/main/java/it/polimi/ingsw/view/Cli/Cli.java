@@ -234,7 +234,7 @@ public class Cli extends View implements Runnable {
         }
     }
     @Override
-    public void printFinalRank(MessageWinner msg) {
+    public void printFinalRank(WinnerMessage msg) {
         ArrayList<Couple<String, Integer>> list = msg.getFinalRanking();
         System.out.println("The final ranking is: \n");
         for(int i=0; i<list.size();i++)
@@ -650,7 +650,7 @@ public class Cli extends View implements Runnable {
             }
             case UPDATE_LIBRARY_MESSAGE -> {
                 ObjectCard[][] obs = ((LibraryMessage) arg).getLibrary();
-                showLibrary(obs, ((LibraryMessage) arg).getOwnerOfLibrary(),((LibraryMessage) arg).getCardInGrid(), ((LibraryMessage) arg).getCardInLibr() );
+                showLibrary(obs, ((LibraryMessage) arg).getLibraryOwner(),((LibraryMessage) arg).getGridCardRemoved(), ((LibraryMessage) arg).getLibraryCardAdded() );
             }
             case COMMON_GOAL_REACHED_MESSAGE -> showPoint( (CommonGoalMessage) arg);
             case ALMOST_OVER_MESSAGE -> almostOver((AlmostOverMessage) arg);

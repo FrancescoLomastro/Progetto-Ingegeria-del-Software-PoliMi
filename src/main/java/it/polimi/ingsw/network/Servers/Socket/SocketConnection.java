@@ -115,7 +115,7 @@ public class SocketConnection extends Connection implements Runnable {
         if(out!=null) {
             if(message.getType()==MessageType.NEW_GAME_SERVER_MESSAGE){
                 NewGameServerMessage msg = (NewGameServerMessage) message;
-                serverReceiver =msg.getGameController();
+                serverReceiver =msg.getServerReceiver();
             }
             synchronized (outLock) {
                 out.writeObject(message);

@@ -46,7 +46,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
      * */
     public void changeServer(NewGameServerMessage message){
         String serverName = message.getServerName();
-        int port = message.getPort();
+        int port = message.getRMIServerPort();
         try {
             Registry registry = LocateRegistry.getRegistry(getServerAddress(), port);
             server = (RMISharedInterface) registry.lookup(serverName);

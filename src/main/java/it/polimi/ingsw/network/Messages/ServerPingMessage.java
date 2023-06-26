@@ -1,8 +1,15 @@
 package it.polimi.ingsw.network.Messages;
 
+/**
+ * This message is used as a ping message between network interfaces
+ */
 public class ServerPingMessage extends Message{
 
-    public ServerPingMessage(String playerUsername){
-        super(playerUsername,MessageType.PING_MESSAGE);
+    /**
+     * Constructor: Creates a ping message
+     * @param username it's the sender username
+     */
+    public ServerPingMessage(String username){
+        super(username,MessageType.PING_MESSAGE);
     }
 }
