@@ -1,6 +1,13 @@
 package it.polimi.ingsw.utility;
 
+/**
+ * utility class useful to print proportioned grids in CLI
+ */
 public class PrinterUtils {
+    /**
+     * @param string a referent string
+     * @return a string entirely made of space with the same length of the string in the parameter
+     */
     public static String printEquivalentSpace(String string)
     {
         String s="";

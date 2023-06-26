@@ -4,7 +4,6 @@ import com.google.gson.*;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.network.Servers.Connection;
 import it.polimi.ingsw.network.StatusNetwork;
-import it.polimi.ingsw.utility.Request;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -24,7 +23,7 @@ public class Controller implements ServerReceiver
     private final ArrayList<GameController> games;
     private GameController currentGame;
     private final Map<String, Connection> playerBeforeJoiningLobby;
-    private Request waitedRequest;
+    private Connection waitedRequest;
     private boolean isAsking;
     private static final int minimumPlayers = 2;
     private static final int maximumPlayers = 4;
@@ -132,7 +131,7 @@ public class Controller implements ServerReceiver
                 msg.getClientConnection().setPlayerName(message.getSenderName());
                 boolean accepted = login(msg.getSenderName(),msg.getClientConnection());
                 if(accepted) {
-                    if (waitedRequest!= null && waitedRequest.getUsername().equals(msg.getSenderName()))
+                    if (waitedRequest!= null && waitedRequest.getPlayerName().equals(msg.getSenderName()))
                         currentGame.startTimer(msg.getClientConnection());
                     else {
                         GameController gameController = searchGameController(msg.getSenderName());
@@ -142,18 +141,18 @@ public class Controller implements ServerReceiver
             }
             case PLAYER_NUMBER_ANSWER ->
             {
-                if (waitedRequest.getUsername().equals(message.getSenderName())) {
-                    waitedRequest.getConnection().setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER);
+                if (waitedRequest.getPlayerName().equals(message.getSenderName())) {
+                    waitedRequest.setStatusNetwork(StatusNetwork.AFTER_SEND_ACCEPT_MESSAGE_WITH_NUMBER_PLAYER);
                     try {
                         PlayerNumberAnswer msg = (PlayerNumberAnswer) message;
                         currentGame.setLimitOfPlayers(msg.getPlayerNumber());
-                        waitedRequest.getConnection().sendMessage(new AcceptedLoginMessage(msg.getSenderName()));
+                        waitedRequest.sendMessage(new AcceptedLoginMessage(msg.getSenderName()));
                         isAsking=false;
-                        addPlayer(waitedRequest.getUsername(), waitedRequest.getConnection());
+                        addPlayer(waitedRequest.getPlayerName(), waitedRequest);
                     } catch (IOException e) {
-                        System.out.println(ANSI_BLU + "Couldn't contact client " + waitedRequest.getUsername() + ANSI_RESET);
-                        tryToDisconnect(waitedRequest.getConnection(),
-                                waitedRequest.getUsername());
+                        System.out.println(ANSI_BLU + "Couldn't contact client " + waitedRequest.getPlayerName() + ANSI_RESET);
+                        tryToDisconnect(waitedRequest,
+                                waitedRequest.getPlayerName());
                         waitedRequest = null;
                     }
                 }
@@ -196,7 +195,7 @@ public class Controller implements ServerReceiver
                         return false;
                     }
                     else {
-                        waitedRequest = new Request(username, connection);
+                        waitedRequest = connection;
                         isAsking = true;
                         connection.setStatusNetwork(StatusNetwork.AFTER_REQUEST_NUMBER_PLAYER);
                         try {

@@ -2,9 +2,9 @@ package it.polimi.ingsw.utility;
 
 import java.io.Serializable;
 
-/*TODO non capisco perché couple ha due oggetti generici, tanto sappiamo esattamente che si andrà
-*  sicuramente colore posizioni, tanto vale segnarle direttamente
-*  In personalCard ho dovuto far un cast esplicito (non che crei problemi)*/
+/**
+ * A generic class that includes two generic objects
+ */
 public class Couple<E1,E2> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -16,28 +16,34 @@ public class Couple<E1,E2> implements Serializable {
         this.second = second;
     }
 
+    /**
+     * @return the first generic object in the couple
+     */
     public E1 getFirst() {
         return first;
     }
 
+    /**
+     * @return the second generic object in the couple
+     */
     public E2 getSecond() {
         return second;
     }
 
+    /**
+     * Sets the first object in the couple
+     * @param first a generic object
+     */
     public void setFirst(E1 first) {
         this.first = first;
     }
 
+    /**
+     * Sets the second object in the couple
+     * @param second a generic object
+     */
     public void setSecond(E2 second) {
         this.second = second;
     }
-    public void set(E1 first, E2 second) {
-        this.first = first;
-        this.second = second;
-    }
-    public boolean equalCoordinates(Integer x, Integer y)
-    {
 
-        return x.equals(this.first) && y.equals(this.second);
-    }
 }
