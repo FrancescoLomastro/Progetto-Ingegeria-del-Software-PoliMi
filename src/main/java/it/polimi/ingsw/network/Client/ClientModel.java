@@ -28,6 +28,7 @@ public class ClientModel extends Observable<Message> {
     private final ObjectCard[][] defaultLibrary;
     private String myName;
     public ClientModel(){
+        super();
         librariesMap = new HashMap<>();
         pointsMap = new HashMap<>();
         commonGoalPointsVector = new int[] {8,8};

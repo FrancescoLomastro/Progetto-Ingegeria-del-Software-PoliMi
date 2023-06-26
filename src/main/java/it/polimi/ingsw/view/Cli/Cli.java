@@ -5,7 +5,7 @@ import it.polimi.ingsw.view.OBSMessages.*;
 import it.polimi.ingsw.view.*;
 import it.polimi.ingsw.exceptions.ResetMoveException;
 import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.enums.ClientState;
+import it.polimi.ingsw.enums.InputStateCLI;
 import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.enums.Type;
 import it.polimi.ingsw.utility.Couple;
@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class Cli extends View implements Runnable {
     private final Scanner scanner;
     private boolean chatAvailable;
-    private ClientState state;
+    private InputStateCLI state;
     private String inputRequestBuffer;
     private final String divisor="\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
 
@@ -31,7 +31,7 @@ public class Cli extends View implements Runnable {
         clientModel.addObserver(this);
         scanner = new Scanner(System.in);
         chatAvailable=false;
-        state=ClientState.CHAT;
+        state= InputStateCLI.CHAT;
     }
 
 
@@ -432,7 +432,7 @@ public class Cli extends View implements Runnable {
     {
         synchronized (this)
         {
-            state=ClientState.REQUEST;
+            state= InputStateCLI.REQUEST;
             try {
                 this.wait();
             } catch (InterruptedException e) {
@@ -605,7 +605,7 @@ public class Cli extends View implements Runnable {
             input=scanner.nextLine();
             synchronized (this)
             {
-                if (state == ClientState.CHAT)
+                if (state == InputStateCLI.CHAT)
                 {
                     if(chatAvailable)
                     {
@@ -614,11 +614,11 @@ public class Cli extends View implements Runnable {
                         notifyObservers(msg);
                     }
                 }
-                else if (state == ClientState.REQUEST)
+                else if (state == InputStateCLI.REQUEST)
                 {
                     inputRequestBuffer=input;
                     this.notifyAll();
-                    state=ClientState.CHAT;
+                    state= InputStateCLI.CHAT;
                 }
             }
         }

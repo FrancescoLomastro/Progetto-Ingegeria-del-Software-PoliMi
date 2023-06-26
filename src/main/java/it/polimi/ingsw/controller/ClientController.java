@@ -17,7 +17,9 @@ import it.polimi.ingsw.utility.Couple;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * The logical controller of a client
+ */
 public class ClientController implements Observer<View, OBS_Message> {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_RESET = "\u001B[0m";

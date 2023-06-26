@@ -1,5 +1,8 @@
 package it.polimi.ingsw.enums;
 
+/**
+ * Enum representation of the possible direction that a depth search algorithm can use
+ */
 public enum Direction {
     UP(-1,0),
     DOWN(+1,0),
@@ -12,9 +15,15 @@ public enum Direction {
         this.columnDirection = columnDirection;
     }
 
+    /**
+     * @return the row direction value of the enum
+     */
     public int getRowDirection() {
         return rowDirection;
     }
+    /**
+     * @return the column direction value of the enum
+     */
     public int getColumnDirection() {
         return columnDirection;
     }

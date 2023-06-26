@@ -13,6 +13,9 @@ import java.util.*;
 
 import static it.polimi.ingsw.controller.GameController.ANSI_RESET;
 
+/**
+ * Controller responsible for login and game creations
+ */
 public class Controller implements ServerReceiver
 {
     public final static String ANSI_BLU ="\u001B[34m ";

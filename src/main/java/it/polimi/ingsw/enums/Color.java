@@ -2,6 +2,9 @@ package it.polimi.ingsw.enums;
 
 import java.io.Serializable;
 
+/**
+ * Enum representation of the color of an object card
+ */
 public enum Color implements Serializable {
     BLUE(0,"\033[34mB\033[0m"),
     GREEN(1,"\033[32mG\033[0m"),
@@ -18,15 +21,25 @@ public enum Color implements Serializable {
         this.string = string;
     }
 
+    /**
+     * @return a colored string representation for the color
+     */
     @Override
     public String toString() {
         return string;
     }
 
+    /**
+     * @return the relative int of a color
+     */
     public int getRelativeInt() {
         return relativeInt;
     }
 
+    /**
+     * @param relativeInt an integer corresponding to a certain color
+     * @return the enum that owns the relativeInt parameter
+     */
     public static Color getEnumFromRelativeInt(int relativeInt)
     {
         for (Color color : Color.values()) {

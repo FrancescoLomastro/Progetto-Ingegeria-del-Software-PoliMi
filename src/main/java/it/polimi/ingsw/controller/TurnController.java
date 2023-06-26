@@ -12,10 +12,9 @@ import java.util.ArrayList;
 
 import static it.polimi.ingsw.network.Messages.MessageType.*;
 
-/*
-class TurnController
-*@author Andrea Ferrini
-*/
+/**
+ * A controller created each time a turn needs to be handled
+ */
 public class TurnController implements Runnable, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

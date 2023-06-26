@@ -52,14 +52,19 @@ public class PersonalGoalCard extends Card {
      * @return {@code ArrayList<Couple>} it returns arraylist containing information about cells (position and color)
      * */
     public ArrayList<Couple> getGoalVector() {
-
         return goalVector;
     }
 
+    /**
+     * @return the id of the card
+     */
     public int getCardId() {
         return cardId;
     }
 
+    /**
+     * @return the description of the card
+     */
     @Override
     public String getDescription() {
         return "Persona Goal Card";

@@ -2,12 +2,14 @@ package it.polimi.ingsw.network.ObserverImplementation;
 
 import java.util.Vector;
 
+
 public class Observable<Event> {
     private boolean changed = false;
     private Vector<Observer<? extends Observable<Event>, Event>> obs;
 
-    /** Construct an org.example.Ob.Observable with zero Observers. */
-
+    /**
+     * Builds an observable object
+     */
     public Observable() {
         obs = new Vector<>();
     }
@@ -19,16 +21,6 @@ public class Observable<Event> {
         if (!obs.contains(o)) {
             obs.addElement(o);
         }
-    }
-
-
-    public synchronized void deleteObserver(Observer<? extends Observable<Event>, Event> o) {
-        obs.removeElement(o);
-    }
-
-
-    public void notifyObservers() {
-        notifyObservers(null);
     }
 
 
@@ -48,12 +40,6 @@ public class Observable<Event> {
             ((Observer<Observable<Event>, Event>)arrLocal[i]).update(this, arg);
     }
 
-
-    public synchronized void deleteObservers() {
-        obs.removeAllElements();
-    }
-
-
     protected synchronized void setChanged() {
         changed = true;
     }
@@ -63,13 +49,4 @@ public class Observable<Event> {
         changed = false;
     }
 
-
-    public synchronized boolean hasChanged() {
-        return changed;
-    }
-
-
-    public synchronized int countObservers() {
-        return obs.size();
-    }
 }

@@ -2,6 +2,9 @@ package it.polimi.ingsw.enums;
 
 import java.io.Serializable;
 
+/**
+ * Enum representation of the color of an object card, each card can have 3 different skin called types
+ */
 public enum Type implements Serializable {
     FIRST(0),
     SECOND(1),
@@ -13,10 +16,17 @@ public enum Type implements Serializable {
         this.relativeInt = relativeInt;
     }
 
+    /**
+     * @return the relative int of a color
+     */
     public int getRelativeInt() {
         return relativeInt;
     }
 
+    /**
+     * @param relativeInt an integer corresponding to a certain color
+     * @return the enum that owns the relativeInt parameter
+     */
     public static Type getEnumFromRelativeInt(int relativeInt)
     {
         for (Type type : Type.values()) {
