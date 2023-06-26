@@ -26,7 +26,10 @@ public class Socket_Client extends Client implements Runnable{
     {
         super(username, address, port);
     }
-
+    /**
+     * It sends a message to server with new name chosen and try to join in a game with it
+     * @author: Francesco Lo Mastro
+     * */
     @Override
     public void newUsernameProposal() {
         try {

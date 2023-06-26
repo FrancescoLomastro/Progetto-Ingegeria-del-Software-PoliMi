@@ -26,7 +26,11 @@ public abstract class Client extends UnicastRemoteObject {
         this.serverAddress = address;
         this.serverPort = port;
     }
-
+    /**This method returs ad arraylist with messages from server, and clear the queue where messages
+     * were contained
+     * @author: Francesco Lo Mastro
+     * @return {@code ArrayList<Message>} An array with messages
+     * */
     public ArrayList<Message> getCommunicationMessageQueue() {
         ArrayList<Message> list;
         synchronized (communicationMessageQueue)
@@ -36,6 +40,10 @@ public abstract class Client extends UnicastRemoteObject {
         }
         return list;
     }
+    /**It returns a ping message if exists, then deletes the ping
+     * @author: Francesco Lo Mastro
+     * @return {@code Message}
+     * */
     public Message getPingMessage() {
         Message msg;
         synchronized (pingMessage)

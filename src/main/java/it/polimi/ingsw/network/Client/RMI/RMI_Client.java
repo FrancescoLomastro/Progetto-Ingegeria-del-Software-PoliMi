@@ -28,7 +28,10 @@ public class RMI_Client extends Client implements RMIClientConnection {
     {
         super(username, address, port);
     }
-
+    /**
+     * It sends a message to server with new name chosen and try to join in a game with it
+     * @author: Francesco Lo Mastro
+     * */
     @Override
     public void newUsernameProposal() {
         Message message = new RMILoginMessage(getUsername(),this);

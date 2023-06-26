@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.CardGenerator.*;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 
 
@@ -12,12 +13,13 @@ import java.io.Serializable;
  * the central grid, the card generator and the extracted commonGoalCard.
  */
 public class LivingRoom implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private Grid grid;
+    private final Grid grid;
     private int centralScorePoints=1;
-    private CommonGoalCard[] commonGoalCards;
-    private int numCommonGoalCards;
-    private CardGenerator cardGenerator;
+    private final CommonGoalCard[] commonGoalCards;
+    private final int numCommonGoalCards;
+    private final CardGenerator cardGenerator;
 
 
 

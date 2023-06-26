@@ -13,6 +13,9 @@ public class TerminatorTask extends TimerTask {
         this.server = server;
         this.connection = connection;
     }
+    /**This method is called when a specific timer ends. It will destroy a connection with
+     * a specific user because he did not answer to ping
+     * */
     @Override
     public void run()
     {

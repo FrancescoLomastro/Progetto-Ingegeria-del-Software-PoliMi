@@ -146,11 +146,17 @@ public class Cli extends View implements Runnable {
         notifyObservers(msg);
     }
 
+    /**It writes a new message on cli with new player in the game
+     * @param string Well formatted message to be printed
+     * */
     @Override
     public void lobbyUpdate(String string) {
-
+        /*TODO: update della lobby quando esce un giocatore, fa uscire
+        un nuovo messaggio con i giocatori presenti*/
     }
 
+    /**It writes that player has been accepted
+     * */
     @Override
     public void acceptedLogin() {
         System.out.println("Connection accepted, waiting for other players");
@@ -225,6 +231,7 @@ public class Cli extends View implements Runnable {
 
 
     /**
+     * It prints points of every player
      * @author: Riccardo Figini
      * */
     private void printPointss() {
@@ -233,6 +240,8 @@ public class Cli extends View implements Runnable {
             System.out.println("- "+entry.getKey()+": "+entry.getValue());
         }
     }
+    /**It prints final raking
+     * */
     @Override
     public void printFinalRank(WinnerMessage msg) {
         ArrayList<Couple<String, Integer>> list = msg.getFinalRanking();
@@ -261,6 +270,8 @@ public class Cli extends View implements Runnable {
     {
         System.out.println("\n>> "+s);
     }
+    /**It prints a message
+     * */
     @Override
     public void printMessage(String s, Message msg)
     {
@@ -426,7 +437,7 @@ public class Cli extends View implements Runnable {
 
     /**
      * Method used to ask a generic input to a user
-     * @return
+     * @return: input from user
      */
     private String getInputRequest()
     {
@@ -445,7 +456,7 @@ public class Cli extends View implements Runnable {
 
     /**
      * Asks the username for the client
-     * @return
+     * @return: username
      */
     public String askUsername() {
         System.out.print(">> Type your username: ");
@@ -454,8 +465,8 @@ public class Cli extends View implements Runnable {
 
 
     /**
-     * Asks the technology to use for the game
-     * @return
+     * Asks the technology to use it for the game
+     * @return: a number that identifies technology
      */
     public int askTechnology() {
         String input;
@@ -486,7 +497,7 @@ public class Cli extends View implements Runnable {
 
     /**
      * Asks the remote server IP
-     * @return
+     * @return: string with ip address
      */
     public String askAddress() {
         String input;
@@ -502,7 +513,7 @@ public class Cli extends View implements Runnable {
     /**
      * Asks the remote server port number
      * @param defaultPort
-     * @return
+     * @return: port's number
      */
     public int askPort(int defaultPort) {
         String input;
@@ -582,11 +593,15 @@ public class Cli extends View implements Runnable {
     }
 
 
+    /**It warns player that the game is almost over
+     * */
     @Override
     public void almostOver(AlmostOverMessage arg) {
         System.out.println(">> "+arg.getFillerName()+"is the first player to complete his library, "+arg.getFillerPoints()+" will be assigned to him");
     }
 
+    /**it prints that someone gains center point, he has finished his library
+     * */
     private void showCentralPoints(int centralPointCard) {
         System.out.println("First player to complete his library gets "+centralPointCard+"points");
     }

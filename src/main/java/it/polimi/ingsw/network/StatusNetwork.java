@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
-
+/**This enum-class is used to handle error-connection. It can identify the status of connection
+ * when an error occurs */
 public enum StatusNetwork {
     AFTER_ACCEPTION_SOCKET_BEFORE_LOGIN_MESSAGE,
     ARRIVED_LOGIN_MESSAGE,

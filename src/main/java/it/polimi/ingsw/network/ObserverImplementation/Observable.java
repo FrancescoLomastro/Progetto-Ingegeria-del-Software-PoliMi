@@ -14,7 +14,8 @@ public class Observable<Event> {
         obs = new Vector<>();
     }
 
-
+    /**It adds an observer into a list of specific class observer
+     * */
     public synchronized void addObserver(Observer<? extends Observable<Event>, Event> o) {
         if (o == null)
             throw new NullPointerException();
@@ -23,7 +24,8 @@ public class Observable<Event> {
         }
     }
 
-
+    /**It calls update on every registered observer
+     * */
     public void notifyObservers(Event arg) {
 
         Object[] arrLocal;

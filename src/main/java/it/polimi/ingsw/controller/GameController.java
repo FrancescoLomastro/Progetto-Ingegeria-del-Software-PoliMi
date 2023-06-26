@@ -158,7 +158,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             }
         }
     }
-    /**It handles message from player
+    /**It handles messages from player
      * @author: Andrea Ferrini
      * @param message Message from player
      * */
