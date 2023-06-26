@@ -4,9 +4,10 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
 <AnchorPane prefHeight="250" prefWidth="350.0" styleClass="external_invalid_numPlayers_container" stylesheets="@../styles/InvalidNumObjCards.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.guiControllers.ErrorGameController">
     <children>
-        <VBox prefHeight="240" prefWidth="340" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox fx:id="vbox" prefHeight="240" prefWidth="340" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
                 <ImageView fitHeight="90.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -14,6 +15,7 @@
                     </image>
                 </ImageView>
                 <Label styleClass="internal_vbox_container_label1" fx:id="title_label" />
+                <Label styleClass="internal_vbox_container_label2" fx:id="message" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0"/>
             </children>
         </VBox>
     </children>

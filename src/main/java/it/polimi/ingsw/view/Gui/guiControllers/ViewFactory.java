@@ -760,10 +760,6 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void onPersonalGoalCardClick() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PersonalGoalCardPopUp.fxml"));
-            loader.setControllerFactory(controllerClass -> {
-                PersonalGoalCardPopUpController personalGoalCardPopUpController= new PersonalGoalCardPopUpController();
-                return personalGoalCardPopUpController;
-            });
             createStage_old(loader, 200, 320, true, false);
         });
     }
@@ -796,6 +792,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void closeGame(String string) {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ErrorGame.fxml"));
+            loader.setControllerFactory(cntr ->{
+                ErrorGameController errorGameController = new ErrorGameController();
+                errorGameController.setMessage_error(string);
+                return errorGameController;
+            });
             createStage_old(loader, 200, 320, true, true);
         });
     }
