@@ -4,19 +4,22 @@ import it.polimi.ingsw.utility.Couple;
 
 import java.util.ArrayList;
 
+/**
+ * This is a message used by server to all players about the winner of the game, providing also a sorted
+ * ranking in decreasing order
+ */
 public class MessageWinner extends Message{
-    private final String winner;
+    private final String winnerGame;
     private final int myPoints;
-
     private ArrayList<Couple<String, Integer>> finalRanking;
     public MessageWinner(String first, Integer second, ArrayList<Couple<String, Integer>> finalRanking) {
         super(MessageType.WINNER_MESSAGE);
-        this.winner=first;
+        this.winnerGame =first;
         this.myPoints = second;
         this.finalRanking = finalRanking;
     }
-    public String getWinner() {
-        return winner;
+    public String getWinnerGame() {
+        return winnerGame;
     }
 
     public int getMyPoints() {

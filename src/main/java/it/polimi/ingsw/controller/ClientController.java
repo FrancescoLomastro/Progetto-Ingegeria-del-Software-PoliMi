@@ -142,11 +142,8 @@ public class ClientController implements Observer<View, OBS_Message> {
             case WINNER_MESSAGE -> {
                 pingHandler.shutDown();
                 MessageWinner msg = (MessageWinner) message;
-                view.printPoints();
-                view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getWinner());
-                if (!(view instanceof Cli)) {
-                    view.showWinnerScene(msg.getFinalRanking());
-                }
+                view.printFinalRank(msg);
+                view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getWinnerGame());
             }
             case ALMOST_OVER_MESSAGE -> {
                 clientModel.onAlmostOver((AlmostOverMessage) message);
@@ -176,17 +173,17 @@ public class ClientController implements Observer<View, OBS_Message> {
                 clientModel.setup(msg);
             }
             case UPDATE_GRID_MESSAGE -> {
-                clientModel.setGrid(((MessageGrid) message).getGrid(), ((MessageGrid) message).getTypeOfGridMessage() );
+                clientModel.setGrid(((GridMessage) message).getGrid(), ((GridMessage) message).getTypeOfGridMessage() );
             }
             case UPDATE_LIBRARY_MESSAGE -> {
-                MessageLibrary msg = (MessageLibrary) message;
+                LibraryMessage msg = (LibraryMessage) message;
                 clientModel.setLibrary(msg.getOwnerOfLibrary(), msg.getLibrary(), msg.getCardInGrid(), msg.getCardInLibr());
             }
             case RETURN_TO_OLD_GAME_MESSAGE -> {
                 view.printMessage("You are joining in your old game");
             }
-            case POINTS_MESSAGE -> {
-                ArrayList<Couple<String, Integer>> list = ((MessagePoints) message).getList();
+            case FINAL_POINTS_MESSAGE -> {
+                ArrayList<Couple<String, Integer>> list = ((ScoreMessage) message).getList();
                 for (Couple<String, Integer> stringIntegerCouple : list) {
                     clientModel.setPointToPlayer(stringIntegerCouple.getFirst(), stringIntegerCouple.getSecond());
                 }
@@ -234,7 +231,7 @@ public class ClientController implements Observer<View, OBS_Message> {
             case MOVE -> {
                 OBS_MoveMessage message = (OBS_MoveMessage) arg;
                 try {
-                    client.sendMessage(new MessageMove(message.getMove(), message.getColumn()));
+                    client.sendMessage(new MoveMessage(message.getMove(), message.getColumn()));
                 } catch (IOException e) {
                     System.out.println("Impossible send move to server, " + e);
                 }

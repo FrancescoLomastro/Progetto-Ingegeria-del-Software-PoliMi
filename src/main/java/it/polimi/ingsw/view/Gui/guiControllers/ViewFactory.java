@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.Gui.guiControllers;
 import it.polimi.ingsw.network.Client.ClientModel;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.network.ObserverImplementation.*;
+import it.polimi.ingsw.view.Cli.Cli;
 import it.polimi.ingsw.view.Gui.GuiApplication;
 import it.polimi.ingsw.view.OBSMessages.OBS_Message;
 import it.polimi.ingsw.view.OBSMessages.OBS_MessageType;
@@ -408,7 +409,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * @author: Francesco Gregorio Lo Mastro
      */
     @Override
-    public void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
+    public void showGrid(ObjectCard[][] grid, GridMessage.TypeOfGridMessage typeOfGridMessage) {
         Platform.runLater(() ->
         {
             Board_C boardSceneController = (Board_C) currentController;
@@ -486,8 +487,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**This method is called to print points when game is over (in cli version), here prints in chat
      * that the game is over*/
     @Override
-    public void printPoints() {
+    public void printFinalRank(MessageWinner msg) {
         chatMessage("Server", "Game is over");
+        showWinnerScene(msg.getFinalRanking());
     }
 
 
@@ -633,12 +635,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 showBoard(arg);
             }
             case UPDATE_GRID_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
-                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage());
+                ObjectCard[][] obs = ((GridMessage) arg).getGrid();
+                showGrid(obs, ((GridMessage) arg).getTypeOfGridMessage());
             }
             case UPDATE_LIBRARY_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
+                ObjectCard[][] obs = ((LibraryMessage) arg).getLibrary();
+                showLibrary(obs, ((LibraryMessage) arg).getOwnerOfLibrary(),((LibraryMessage) arg).getCardInGrid(), ((LibraryMessage) arg).getCardInLibr() );
             }
             case ALMOST_OVER_MESSAGE -> {
                 AlmostOverMessage msg = (AlmostOverMessage) arg;
@@ -668,7 +670,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             primaryStage.setResizable(true);
         });
         SetupMessage msg = (SetupMessage) arg;
-        showGrid(msg.getGrid(), MessageGrid.TypeOfGridMessage.INIT);
+        showGrid(msg.getGrid(), GridMessage.TypeOfGridMessage.INIT);
         for (int i = 0; i < msg.getPlayersName().length; i++) {
             showLibrary(msg.getPlayersLibraries()[i], msg.getPlayersName()[i], null, null);
         }
@@ -729,7 +731,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
-    public void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking){
+    private void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking){
         Platform.runLater(() -> {
             showPointsPlayers(finalRanking);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/WinnerScene.fxml"));

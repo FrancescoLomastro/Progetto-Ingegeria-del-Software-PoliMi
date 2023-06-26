@@ -499,7 +499,7 @@ public class Controller implements ServerReceiver
         connection.setStatusNetwork(StatusNetwork.AFTER_JOIN_LOBBY_OLD_PLAYER);
         try {
             gameController.addPlayer(username, connection);
-            connection.sendMessage(new MessageReturnToGame(MessageType.RETURN_TO_OLD_GAME_MESSAGE));
+            connection.sendMessage(new ReturnToGameMessage(MessageType.RETURN_TO_OLD_GAME_MESSAGE));
             connection.sendMessage(new AcceptedLoginMessage(username));
         } catch (IOException e) {
             tryToDisconnect(connection, username);

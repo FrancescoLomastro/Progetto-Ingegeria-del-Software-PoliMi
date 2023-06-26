@@ -43,10 +43,10 @@ public class ClientModel extends Observable<Message> {
      * @param grid new grid
      * @param typeOfGridMessage Type of update. It can be "initialized" or "after_move"
      * */
-    public void setGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage) {
+    public void setGrid(ObjectCard[][] grid, GridMessage.TypeOfGridMessage typeOfGridMessage) {
         this.grid = getObjectCards(grid);
         setChanged();
-        notifyObservers(new MessageGrid(this.grid, typeOfGridMessage) );
+        notifyObservers(new GridMessage(this.grid, typeOfGridMessage) );
     }
     /**It updates a player's library. If the last two parameters are null, this update is an initialization, otherwise
      * it is a movement after move. The Last two parameters are useful for the view
@@ -60,7 +60,7 @@ public class ClientModel extends Observable<Message> {
         ObjectCard[][] obs = getObjectCards(library);
         librariesMap.replace(name, obs);
         setChanged();
-        notifyObservers(new MessageLibrary(obs, name, oldInGrid, newInLibrary));
+        notifyObservers(new LibraryMessage(obs, name, oldInGrid, newInLibrary));
     }
     /**It returns a new grid of ObjectCard with card "empty" instead of null
      * @author: Francesco Gregorio Lo Mastro

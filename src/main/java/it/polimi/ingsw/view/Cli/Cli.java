@@ -182,7 +182,7 @@ public class Cli extends View implements Runnable {
      * */
     @Override
     public void printAll() {
-        showGrid(clientModel.getGrid(), MessageGrid.TypeOfGridMessage.NEED_TO_BE_PRINTED);
+        showGrid(clientModel.getGrid(), GridMessage.TypeOfGridMessage.NEED_TO_BE_PRINTED);
         System.out.println("\nFirst common goal: " + clientModel.getDescriptionFirstCommonGoal());
         System.out.println("\nSecond common goal: " + clientModel.getDescriptionSecondCommonGoal());
         printPersonalGoal(clientModel.getGoalList());
@@ -191,7 +191,7 @@ public class Cli extends View implements Runnable {
             showLibrary(clientModel.getLibrary(entry.getKey()), entry.getKey(), null, null );
         }
         System.out.println("Points:\n");
-        printPoints();
+        printPointss();
     }
 
 
@@ -227,11 +227,19 @@ public class Cli extends View implements Runnable {
     /**
      * @author: Riccardo Figini
      * */
-    @Override
-    public void printPoints() {
+    private void printPointss() {
         Map<String, Integer> map1 = clientModel.getPointsMap();
         for(Map.Entry<String, Integer> entry : map1.entrySet()){
             System.out.println("- "+entry.getKey()+": "+entry.getValue());
+        }
+    }
+    @Override
+    public void printFinalRank(MessageWinner msg) {
+        ArrayList<Couple<String, Integer>> list = msg.getFinalRanking();
+        System.out.println("The final ranking is: \n");
+        for(int i=0; i<list.size();i++)
+        {
+            System.out.println(list.get(i).getFirst()+": "+list.get(i).getSecond());
         }
     }
 
@@ -265,12 +273,12 @@ public class Cli extends View implements Runnable {
      * @author: Riccardo Figini
      * */
     @Override
-    public void showGrid(ObjectCard[][] matrice, MessageGrid.TypeOfGridMessage typeOfGridMessage)
+    public void showGrid(ObjectCard[][] matrice, GridMessage.TypeOfGridMessage typeOfGridMessage)
     {
         String action;
-        if(typeOfGridMessage == MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE)
+        if(typeOfGridMessage == GridMessage.TypeOfGridMessage.UPDATE_AFTER_MOVE)
             action="is updated";
-        else if(typeOfGridMessage == MessageGrid.TypeOfGridMessage.INIT)
+        else if(typeOfGridMessage == GridMessage.TypeOfGridMessage.INIT)
             action="is initialized";
         else
             action="";
@@ -629,7 +637,7 @@ public class Cli extends View implements Runnable {
             case INITIAL_SETUP_MESSAGE -> {
                 SetupMessage msg = (SetupMessage) arg;
 
-                showGrid(msg.getGrid(),MessageGrid.TypeOfGridMessage.INIT);
+                showGrid(msg.getGrid(), GridMessage.TypeOfGridMessage.INIT);
                 for (int i=0; i<msg.getPlayersName().length;i++)
                 {
                     showLibrary(msg.getPlayersLibraries()[i],msg.getPlayersName()[i],null,null);
@@ -637,12 +645,12 @@ public class Cli extends View implements Runnable {
                 showCentralPoints(msg.getCentralPointCard());
             }
             case UPDATE_GRID_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageGrid) arg).getGrid();
-                showGrid(obs, ((MessageGrid) arg).getTypeOfGridMessage());
+                ObjectCard[][] obs = ((GridMessage) arg).getGrid();
+                showGrid(obs, ((GridMessage) arg).getTypeOfGridMessage());
             }
             case UPDATE_LIBRARY_MESSAGE -> {
-                ObjectCard[][] obs = ((MessageLibrary) arg).getLibrary();
-                showLibrary(obs, ((MessageLibrary) arg).getOwnerOfLibrary(),((MessageLibrary) arg).getCardInGrid(), ((MessageLibrary) arg).getCardInLibr() );
+                ObjectCard[][] obs = ((LibraryMessage) arg).getLibrary();
+                showLibrary(obs, ((LibraryMessage) arg).getOwnerOfLibrary(),((LibraryMessage) arg).getCardInGrid(), ((LibraryMessage) arg).getCardInLibr() );
             }
             case COMMON_GOAL_REACHED_MESSAGE -> showPoint( (CommonGoalMessage) arg);
             case ALMOST_OVER_MESSAGE -> almostOver((AlmostOverMessage) arg);

@@ -6,10 +6,7 @@ import it.polimi.ingsw.network.ObserverImplementation.Observable;
 import it.polimi.ingsw.network.ObserverImplementation.Observer;
 import it.polimi.ingsw.view.OBSMessages.OBS_Message;
 import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.utility.Couple;
 import it.polimi.ingsw.utility.Position;
-
-import java.util.ArrayList;
 
 public abstract class View extends Observable<OBS_Message> implements Runnable, Observer<ClientModel,Message> {
     protected ClientModel clientModel;
@@ -24,11 +21,11 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     public abstract void acceptedLogin();
     public abstract void printMessage(String string);
     public abstract void printMessage(String string, Message msg);
-    public abstract void showGrid(ObjectCard[][] grid, MessageGrid.TypeOfGridMessage typeOfGridMessage);
+    public abstract void showGrid(ObjectCard[][] grid, GridMessage.TypeOfGridMessage typeOfGridMessage);
     public abstract void showLibrary(ObjectCard[][] library, String username, Position[] old, Position[] inTable);
     public abstract void printAll();
     public abstract void startChat();
-    public abstract void printPoints();
+    public abstract void printFinalRank(MessageWinner msg);
     public abstract void errorCreatingClient(String chosenAddress, int chosenPort);
     public abstract void chatMessage(String username, String text);
     public abstract void startGame();
@@ -44,7 +41,5 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
         return defaultSocketPort;
     }
     public abstract void closeGame(String string);
-    public void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking) {
-    }
 
 }

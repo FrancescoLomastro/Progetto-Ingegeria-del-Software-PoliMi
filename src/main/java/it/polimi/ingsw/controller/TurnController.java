@@ -21,7 +21,7 @@ public class TurnController implements Runnable, Serializable {
     private static final long serialVersionUID = 1L;
     private final Game game;
     private final GameController gameController;
-    private MessageMove message;
+    private MoveMessage message;
     private int currPlayerIndex;
     private String currentPlayer;
     private boolean flagCountdown;
@@ -38,9 +38,9 @@ public class TurnController implements Runnable, Serializable {
         currPlayerIndex = 0;
         currentPlayer = game.getPlayers()[0].getName();
         initClientObjectInPlayer();
-        gameController.notifyAllMessage(new MessageGame(START_GAME_MESSAGE));
+        gameController.notifyAllMessage(new GameMessage(START_GAME_MESSAGE));
         gameController.sendMessageToASpecificUser(
-                new MessageMove(), game.getPlayers()[0].getName());
+                new MoveMessage(), game.getPlayers()[0].getName());
     }
     /**It shares initial information with player at the beginning of the game
      * @author: Francesco Gregorio Lo Mastro
@@ -94,13 +94,13 @@ public class TurnController implements Runnable, Serializable {
      * a method to call to start the turn thread, it saves the message and runs the new thread
      * @param message : the message to save
      * */
-    public void startTheTurn(MessageMove message){
+    public void startTheTurn(MoveMessage message){
         if(message!= null && message.getSenderName().equals(currentPlayer)){
             this.message = message;
             new Thread(this).start();
         }
         else {
-            gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer);
+            gameController.sendMessageToASpecificUser(new MoveMessage(), currentPlayer);
         }
     }
 
@@ -116,11 +116,11 @@ public class TurnController implements Runnable, Serializable {
             gameController.sendMessageToASpecificUser(moveResult, message.getSenderName());
 
             ObjectCard[][] oldLibrary = game.getLibrary(message.getSenderName());
-            MessageLibrary messageLibrary = new MessageLibrary(game.getLibrary(message.getSenderName()), message.getSenderName(),
+            LibraryMessage messageLibrary = new LibraryMessage(game.getLibrary(message.getSenderName()), message.getSenderName(),
                     message.getMove(), findFilledPositionInLibrary(message.getColumn(), message.getMove(), oldLibrary) );
             gameController.notifyAllMessage(messageLibrary);
 
-            MessageGrid messageGrid = new MessageGrid(game.getGrid(), MessageGrid.TypeOfGridMessage.UPDATE_AFTER_MOVE);
+            GridMessage messageGrid = new GridMessage(game.getGrid(), GridMessage.TypeOfGridMessage.UPDATE_AFTER_MOVE);
             gameController.notifyAllMessage(messageGrid);
 
             if (game.checkEndLibrary(message.getSenderName()) && !flagCountdown) {
@@ -153,7 +153,7 @@ public class TurnController implements Runnable, Serializable {
                 handleEndGame();
                 return;
             }
-            gameController.sendMessageToASpecificUser(new MessageMove(), currentPlayer); // richiedo la mossa al giocatore successivo
+            gameController.sendMessageToASpecificUser(new MoveMessage(), currentPlayer); // richiedo la mossa al giocatore successivo
             gameController.updateFile();
         } else if (moveResult.getType() == BAD_MOVE_ANSWER) {
             gameController.sendMessageToASpecificUser(moveResult, message.getSenderName()); // avviso il giocatore che la mossa non è andata a buon fine
@@ -185,8 +185,8 @@ public class TurnController implements Runnable, Serializable {
      * */
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findRanking();
-        gameController.notifyAllMessage(new MessageGame(MessageType.GAME_OVER_MESSAGE));
-        gameController.notifyAllMessage(new MessagePoints(countActualPointAndShare()));
+        gameController.notifyAllMessage(new GameMessage(MessageType.GAME_OVER_MESSAGE));
+        gameController.notifyAllMessage(new ScoreMessage(countActualPointAndShare()));
         for (Couple<String, Integer> stringIntegerCouple : list) {
             gameController.sendMessageToASpecificUser(new MessageWinner(
                             list.get(0).getFirst(),

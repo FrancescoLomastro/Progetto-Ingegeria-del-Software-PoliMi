@@ -169,7 +169,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
         if(statusGame!=StatusGame.ABORT) {
             switch (message.getType()) {
-                case PLAYER_MOVE_ANSWER -> turnController.startTheTurn((MessageMove) message);
+                case PLAYER_MOVE_ANSWER -> turnController.startTheTurn((MoveMessage) message);
                 case CHAT_MESSAGE -> manageChatMessage(message);
                 case PING_MESSAGE -> {
                     String username = message.getSenderName();
@@ -363,7 +363,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         String player;
         setUpOldServerGame();
         newServerMessages();
-        notifyAllMessage(new MessageGame(MessageType.START_GAME_MESSAGE));
+        notifyAllMessage(new GameMessage(MessageType.START_GAME_MESSAGE));
         turnController.initClientObjectInPlayer();
         for(Map.Entry<String, Connection> entry: clients.entrySet()){
             entry.getValue().setPlayerName(entry.getKey());
@@ -371,7 +371,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
         player = turnController.getPlayerAfterReload();
         statusGame = StatusGame.IN_GAME;
-        sendMessageToASpecificUser(new MessageMove(), player);
+        sendMessageToASpecificUser(new MoveMessage(), player);
     }
     /**Set server game when a game is restarted
      *  @author: Riccardo Figini
