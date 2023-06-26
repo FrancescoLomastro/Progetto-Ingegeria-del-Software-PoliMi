@@ -6,6 +6,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * This class governs the GUI of obect cards grid so that it maintain its initial proportion in the case the main board
+ * stage is resized.
+ *
+ * @author Francesco Gregorio Lo Mastro
+ */
 public class Griglia_C {
     @FXML
     AnchorPane anchor;
@@ -19,6 +25,14 @@ public class Griglia_C {
     double pointlayoutXRatio;
     double pointlayoutYRatio;
     double pointRatio;
+
+    /**
+     * This method is used to set up correct ratios to the different components of the common goal card.
+     * A listener is set to height and width property to make component responsive.
+     *
+     * @param father: border pane containing the components;
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void setListeners(BorderPane father) {
         gridRatio= grid.getPrefHeight()/anchor.getPrefHeight();
         layoutXRatio= grid.getLayoutX()/anchor.getPrefWidth();
@@ -51,6 +65,11 @@ public class Griglia_C {
         ));
     }
 
+    /**
+     * This method is used to make each component keep its proportion in the case the stage is resized.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     private void maintainProportion() {
         grid.setPrefSize(anchor.getWidth()*gridRatio,anchor.getHeight()*gridRatio);
         grid.setLayoutX(anchor.getWidth()*layoutXRatio);
@@ -60,15 +79,34 @@ public class Griglia_C {
         centralPointCard.setLayoutY(anchor.getHeight()* pointlayoutYRatio);
     }
 
+    /**
+     * This method is used to scale components dimension.
+     *
+     * @param width: the component width;
+     * @param height: the component height;
+     * @author Francesco Gregorio Lo Mastro
+     */
     private void scaleDimension(double width,double height) {
         double min = Math.min(width,height);
         anchor.setPrefSize(min,min);
         anchor.setMaxSize(min,min);
     }
+
+    /**
+     * This method is used to get the grid.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     public GridPane getGrid()
     {
         return grid;
     }
+
+    /**
+     * This method is used to get the central point card.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     public Pane getCentralPointCard(){ return centralPointCard;}
 }
 

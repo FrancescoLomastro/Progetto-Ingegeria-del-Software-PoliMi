@@ -5,6 +5,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+/**
+ * This class governs the GUI of each player library so that it maintain its initial proportion in the case the main board
+ * stage is resized.
+ *
+ * @author Francesco Gregorio Lo Mastro
+ */
 public class Libreria_C {
     @FXML
     AnchorPane anchor;
@@ -31,6 +37,14 @@ public class Libreria_C {
     double hGapRatio;
     int i=0;
 
+    /**
+     * This method is used to set up correct ratios to the different components of the common goal card.
+     * A listener is set to height and width property to make component responsive.
+     *
+     * @param father: vbox containing the components;
+     * @param parts: number of parts;
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void setListeners(VBox father,double parts)
     {
         fatherParts = parts;
@@ -67,6 +81,13 @@ public class Libreria_C {
         ));
     }
 
+    /**
+     * This method is used to scale components dimension.
+     *
+     * @param width: the component width;
+     * @param height: the component height;
+     * @author Francesco Gregorio Lo Mastro
+     */
     private void scaleDimension(double width,double height) {
 
         double min = Math.min(width,height/fatherParts);
@@ -78,6 +99,11 @@ public class Libreria_C {
         grid.setHgap(min*hGapRatio);
     }
 
+    /**
+     * This method is used to make each component keep its proportion in the case the stage is resized.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     private void maintainProportion() {
         bottom.setPrefHeight(anchor.getPrefHeight()*bottomRatio);
         nameLabel.setFont(Font.font(anchor.getPrefHeight()*bottomRatio));
@@ -85,15 +111,33 @@ public class Libreria_C {
         left.setPrefWidth(anchor.getPrefWidth()*leftRatio);
         right.setPrefWidth(anchor.getPrefWidth()*rightRatio);
     }
+
+    /**
+     * This method is used to get the grid.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     public GridPane getGrid()
     {
         return grid;
     }
+
+    /**
+     * This method is used to set the name of the library owner.
+     *
+     * @param text: name of the library owner;
+     * @author Francesco Gregorio Lo Mastro
+     */
     public void setText(String text)
     {
         nameLabel.setText(text);
     }
 
+    /**
+     * This method is used to get the anchor pane.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     public AnchorPane getAnchor() {
         return anchor;
     }
