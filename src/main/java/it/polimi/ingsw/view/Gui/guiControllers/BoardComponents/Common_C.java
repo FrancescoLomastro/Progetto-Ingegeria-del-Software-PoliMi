@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
  * @author Francesco Gregorio Lo Mastro
  */
 public class Common_C {
-
     @FXML
     AnchorPane anchor;
     @FXML

@@ -400,7 +400,7 @@ public class Board_C implements Initializable {
         sequentialTransition.setAutoReverse(true);
         sequentialTransition.play();
 
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), moveLabel);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), moveLabel);
         fadeTransition.setFromValue(1.0);
         fadeTransition.setToValue(0.0);
         fadeTransition.setCycleCount(sequentialTransition.INDEFINITE);
@@ -443,7 +443,7 @@ public class Board_C implements Initializable {
                 } else {
                     if(!node.getStyleClass().get(0).equals("invisibleCells")) {
                         node.setStyle("-fx-border-color: RED;" +
-                                "-fx-border-width: 1.5;");
+                                "-fx-border-width: 3;");
 
                         Position position = new Position(rowIndex, columnIndex);
                         positions.add(position);
