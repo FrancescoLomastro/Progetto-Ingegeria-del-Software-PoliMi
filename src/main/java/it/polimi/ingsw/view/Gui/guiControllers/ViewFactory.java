@@ -315,10 +315,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**This method prints a message in cli version, here it is not necessary
+     * */
     @Override
-    public void acceptedLogin() {
-        //da aggiornare il Accept
-    }
+    public void acceptedLogin() {}
 
     /**
      * This method is used to print a message in the players chat.
@@ -504,10 +504,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
 
-
+    /**In cli version of gui this method starts scanner input. In gui it is not necessary
+     * */
     @Override
     public void run() {
-        //per ora lascialo stare
     }
 
 
