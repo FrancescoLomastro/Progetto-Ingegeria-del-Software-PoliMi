@@ -604,11 +604,23 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to notify all observers of the view.
+     *
+     * @param msg: the message to send;
+     * @author: Francesco Gregorio Lo Mastro
+     */
     public void notifyAllOBS(OBS_Message msg) {
         setChanged();
         notifyObservers(msg);
     }
 
+    /**
+     * This method is used to handle players clicks on libraries.
+     *
+     * @param username: the name of the library owner;
+     * @author: Andrea Ferrini
+     */
     public void onLibraryClick(String username) {
 
         ObjectCard[][] lib = clientModel.getLibrary(username);
@@ -631,7 +643,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
-
+    /**
+     * This method is used to handle updates of the board stage.
+     *
+     * @param o: the client model;
+     * @param arg : the message sent;
+     * @author: Francesco Gregorio Lo Mastro
+     */
     @Override
     public void update(ClientModel o, Message arg) {
         switch (arg.getType())
@@ -658,6 +676,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         }
     }
 
+    /**
+     * This method is used to update players points.
+     *
+     * @param arg : the common goal message sent;
+     * @author: Francesco Gregorio Lo Mastro
+     */
     private void updatePoints(CommonGoalMessage arg)
     {
         Platform.runLater(() ->
@@ -668,7 +692,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
-
+    /**
+     * This method is used to initialize the game main board.
+     *
+     * @param arg : the message sent;
+     * @author: Francesco Gregorio Lo Mastro
+     */
     private void showBoard(Message arg) {
         createBoard();
         Platform.runLater(()->{
@@ -711,7 +740,11 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
-
+    /**
+     * This method is used to create the game main board.
+     *
+     * @author: Francesco Gregorio Lo Mastro
+     */
     private void createBoard() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
         loader.setControllerFactory(controllerClass -> {
@@ -736,6 +769,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to display the scene showing the player who won the game.
+     *
+     * @param finalRanking : the final players ranking of the game;
+     * @author: Andrea Ferrini
+     */
     private void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking){
         Platform.runLater(() -> {
             showPointsPlayers(finalRanking);
@@ -750,6 +789,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to handle players clicks on common goal cards present in the game board.
+     *
+     * @param description: the common goal card description;
+     * @param num : the common goal card number;
+     * @author: Andrea Ferrini
+     */
     public void onCommonGoalCardClick(String description, int num) {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CommonGoalCardDescription.fxml"));
@@ -763,15 +809,20 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * This method is used to handle players clicks on their personal goal cards present in the game board.
+     *
+     * @author: Andrea Ferrini
+     */
     public void onPersonalGoalCardClick() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PersonalGoalCardPopUp.fxml"));
             createStage_old(loader, 200, 320, true, false);
         });
     }
-    public Stage getChatStage() {
+    /*public Stage getChatStage() {
         return chatStage;
-    }
+    }*/
 
     /**
      * This method is used to make the chat visible to players.
@@ -795,6 +846,13 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
             boardSceneController.showCentralPoints(centralPoints);
         });
     }
+
+    /**
+     * This method is used to close the game in the case of some error.
+     *
+     * @param string: the string to be displayed;
+     * @author: Riccardo Figini
+     */
     public void closeGame(String string) {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ErrorGame.fxml"));
