@@ -256,6 +256,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         });
     }
 
+    /**
+     * Method for entering the ending phase of the game.
+     *
+     * @param arg: the message;
+     * @author: Francesco Gregorio Lo Mastro
+     */
     @Override
     public void almostOver(AlmostOverMessage arg) {
         Platform.runLater(() ->
@@ -405,6 +411,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is to show and update the grid.
      *
+     * @param grid: the current grid;
+     * @param typeOfGridMessage: the message sent by the grid;
      * @author: Francesco Gregorio Lo Mastro
      */
     @Override
@@ -419,6 +427,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * Update library in board. If update is after a move, it calls an animation.
      *
+     * @param library: previous library;
+     * @param username: the player username;
+     * @param oldGrid: the old grid;
+     * @param newLibrary: updated library;
     * @author: Riccardo Figini
      * */
     @Override
