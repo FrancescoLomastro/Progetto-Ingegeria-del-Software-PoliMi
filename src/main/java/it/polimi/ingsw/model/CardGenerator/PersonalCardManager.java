@@ -20,11 +20,12 @@ import java.util.ArrayList;
  * @author: Francesco Lo Mastro
  */
 public class PersonalCardManager implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private int numCards;
-    private boolean[] usedCards;
+    private final int numCards;
+    private final boolean[] usedCards;
     private final String filePath= "/json/PersonalCards.json";
-    private transient JsonArray jsonArrayOfCards;
+    private final transient JsonArray jsonArrayOfCards;
 
 
 

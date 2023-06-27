@@ -24,13 +24,14 @@ import static it.polimi.ingsw.controller.GameController.ANSI_RESET;
  * In the grid will be managed all the logic that involves the draws and the refills.
  */
 public class Grid implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private final int numColumns = 9;
     private final int numRows = 9;
-    private int numPlayers;
-    private ObjectCard[][] matrix;
-    private Set<Position> notAvailablePositions;
-    private CardGenerator cardGenerator;
+    private final int numPlayers;
+    private final ObjectCard[][] matrix;
+    private final Set<Position> notAvailablePositions;
+    private final CardGenerator cardGenerator;
     private final String filePath= "/json/Grid.json";
 
     /**

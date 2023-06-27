@@ -4,6 +4,7 @@ import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.enums.Type;
 import it.polimi.ingsw.model.Cards.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
@@ -12,10 +13,22 @@ import java.io.Serializable;
  * @author: Francesco Lo Mastro
  */
 public class ObjectCardManager implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private final int numCardsForTypes[] = {8,7,7};
+    private final int[] numCardsForTypes = {8,7,7};
     private final int numColors=6;
     private final int[][] deck;
+
+    /**
+     * Constructor: creates an ObjectCardManager and build a deck of ObjectCards
+     * @author: Francesco Lo Mastro
+     */
+    public ObjectCardManager()
+    {
+        deck= new int[numColors][numCardsForTypes.length];
+        fillDeck();
+    }
+
 
 
 
@@ -42,17 +55,6 @@ public class ObjectCardManager implements Serializable {
     }
 
 
-
-
-    /**
-     * Constructor: creates an ObjectCardManager and build a deck of ObjectCards
-     * @author: Francesco Lo Mastro
-     */
-    public ObjectCardManager()
-    {
-        deck= new int[numColors][numCardsForTypes.length];
-        fillDeck();
-    }
 
 
 

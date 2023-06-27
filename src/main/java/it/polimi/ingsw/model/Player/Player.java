@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.CardGenerator.CardGenerator;
 import it.polimi.ingsw.model.Cards.PersonalGoalCard;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -10,13 +11,12 @@ import java.io.Serializable;
  * The player class is used to reach libraries, personal cards and player points
  */
 public class Player implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private String name;
+    private final String name;
     private int points;
-    private Library library;
-    private PersonalGoalCard personalGoalCard;
-    private CardGenerator cardGenerator;
-
+    private final Library library;
+    private final PersonalGoalCard personalGoalCard;
 
 
     /**
@@ -25,7 +25,6 @@ public class Player implements Serializable {
      * @param cardGenerator The game card generator
      */
     public Player(String name, CardGenerator cardGenerator) {
-        this.cardGenerator = cardGenerator;
         this.name = name;
         this.points = 0;
         this.library = new Library();

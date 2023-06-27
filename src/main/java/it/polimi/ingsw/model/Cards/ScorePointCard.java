@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model.Cards;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class ScorePointCard implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private int score;
     private final int numberOfPlayer;

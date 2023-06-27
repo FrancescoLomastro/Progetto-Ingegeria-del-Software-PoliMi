@@ -155,8 +155,7 @@ public class Controller implements ServerReceiver
                         addPlayer(waitedRequest.getPlayerName(), waitedRequest);
                     } catch (IOException e) {
                         System.out.println(ANSI_BLU + "Couldn't contact client " + waitedRequest.getPlayerName() + ANSI_RESET);
-                        tryToDisconnect(waitedRequest,
-                                waitedRequest.getPlayerName());
+                        tryToDisconnect(waitedRequest, waitedRequest.getPlayerName());
                         waitedRequest = null;
                     }
                 }

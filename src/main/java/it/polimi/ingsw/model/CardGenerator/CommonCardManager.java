@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.CardGenerator;
 import it.polimi.ingsw.model.Cards.*;
 import it.polimi.ingsw.model.Cards.ConcreteCommonCards.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @author: Francesco Lo Mastro
  */
 public class CommonCardManager implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private final int numCards;
     private final transient CustomizedFunction<CommonGoalCard>[] factoryMethodArray =
@@ -17,9 +19,7 @@ public class CommonCardManager implements Serializable {
                     CommonGoalCard5::new, CommonGoalCard6::new, CommonGoalCard7::new, CommonGoalCard8::new, CommonGoalCard9::new,
                     CommonGoalCard10::new, CommonGoalCard11::new};
     private final int numOfPlayer;
-    private boolean usedCards[];
-
-
+    private final boolean[] usedCards;
 
 
     /**

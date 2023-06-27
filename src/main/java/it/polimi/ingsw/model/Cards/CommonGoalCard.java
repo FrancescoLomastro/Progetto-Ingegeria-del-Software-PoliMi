@@ -2,9 +2,11 @@ package it.polimi.ingsw.model.Cards;
 
 import it.polimi.ingsw.model.Player.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public abstract class CommonGoalCard extends Card implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     protected int num;
     private ScorePointCard scorePointCard;
