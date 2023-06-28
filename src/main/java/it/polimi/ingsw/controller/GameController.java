@@ -235,7 +235,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             default -> {
                 System.out.println(Controller.ANSI_BLU + "Somethings goes wrong. Game will be closed" + ANSI_RESET);
                 System.out.println(Controller.ANSI_BLU + "Player: " + playerName + ", Status:  " + connection.getStatusNetwork() + ANSI_RESET);
-                gameNeedToBeClosed(playerName, "Problem with a player, game will be closed and destroy");
+                gameNeedToBeClosed("Problem with a player, game will be closed and destroy", playerName);
             }
         }
     }
