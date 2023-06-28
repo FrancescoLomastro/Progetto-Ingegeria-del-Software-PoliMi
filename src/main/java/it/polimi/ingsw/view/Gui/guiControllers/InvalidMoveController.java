@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * This class used as an intermediary between the fixed parts of the GUI of the 'InvalidMove.fxml' file and
  * the dynamic information that the controller sends to the graphic components of the associated fxml file.
  *
- * @author Riccardo Figini
+ * @author Riccardo Figini, Alberto Aniballi
  */
 public class InvalidMoveController implements Initializable {
     @FXML
@@ -30,7 +30,7 @@ public class InvalidMoveController implements Initializable {
      *
      * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
-     * @author Riccardo Figini
+     * @author Riccardo Figini, Alberto Aniballi
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -42,7 +42,7 @@ public class InvalidMoveController implements Initializable {
      * This method is used to close the "InvalidMove" stage and reactivate the previous stage.
      *
      * @param event the event that triggers the activation of the method;
-     * @author Riccardo Figini
+     * @author Riccardo Figini, Alberto Aniballi
      */
     private void onRetry(ActionEvent event) {
         Node node = (Node) event.getSource();

@@ -8,6 +8,11 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller associated to the "PersonalGoalCardPopUp.fxml" file.
+ *
+ * @author Andrea Ferrini
+ */
 public class PersonalGoalCardPopUpController implements Initializable {
 
     @FXML

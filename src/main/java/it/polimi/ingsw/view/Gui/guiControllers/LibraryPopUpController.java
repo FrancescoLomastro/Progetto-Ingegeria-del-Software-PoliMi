@@ -12,6 +12,11 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller associated to the "libraryPopUp.fxml" file.
+ *
+ * @author Andrea Ferrini
+ */
 public class LibraryPopUpController implements Initializable {
 
     private ObjectCard[][] library;
@@ -65,18 +70,40 @@ public class LibraryPopUpController implements Initializable {
 
     }
 
+    /**
+     * This method get the library.
+     *
+     * @author Andrea Ferrini
+     */
     public ObjectCard[][] getLibrary() {
         return library;
     }
 
+    /**
+     * This method set the library.
+     *
+     * @param library : library matrix;
+     * @author Andrea Ferrini
+     */
     public void setLibrary(ObjectCard[][] library) {
         this.library = library;
     }
 
+    /**
+     * This method get the username.
+     *
+     * @author Andrea Ferrini
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * This method set the username.
+     *
+     * @param username : username to be displayed;
+     * @author Andrea Ferrini
+     */
     public void setUsername(String username) {
         this.username = username;
     }
