@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.Gui.guiControllers;
 
+import it.polimi.ingsw.view.OBSMessages.OBS_MessageType;
+import it.polimi.ingsw.view.OBSMessages.OBS_OnlyTypeMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -63,7 +65,6 @@ public class ErrorClientCreationController implements Initializable {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
-        errorConnection_label.setStyle("-fx-text-alignment: center");
         errorConnection_label.setText("WARNING: \n It was impossible to create a client \n and contact the server at ["+chosenAddress+","+chosenPort+"]");
         retry_btn.setOnAction(event -> onRetry(event));
     }
@@ -75,6 +76,6 @@ public class ErrorClientCreationController implements Initializable {
      * @author Alberto Aniballi
      */
     private void onRetry(ActionEvent event) {
-        ViewFactory.getInstance().askInitialInfo();
+        ViewFactory.getInstance().notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START));
     }
 }

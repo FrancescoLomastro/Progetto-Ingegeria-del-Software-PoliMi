@@ -45,8 +45,7 @@ public class Cli extends View implements Runnable {
     public void startView() {
         new Thread(this).start();
         printTitle();
-        setChanged();
-        notifyObservers(new OBS_OnlyTypeMessage(OBS_MessageType.START));
+        notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START));
     }
 
 
@@ -87,8 +86,7 @@ public class Cli extends View implements Runnable {
         System.out.println("\n>> Connection to server...");
 
         OBS_Message msg = new OBS_InitialInfoMessage(chosenUsername,chosenTechnology,chosenAddress,chosenPort);
-        setChanged();
-        notifyObservers(msg);
+        notifyAllOBS(msg);
     }
 
 
@@ -128,8 +126,7 @@ public class Cli extends View implements Runnable {
         }while(badInput);
 
         OBS_Message msg = new OBS_NumberOfPlayerMessage(value);
-        setChanged();
-        notifyObservers(msg);
+        notifyAllOBS(msg);
     }
 
 
@@ -142,8 +139,7 @@ public class Cli extends View implements Runnable {
         System.out.println(">> The typed username was already used, please type another username or try later");
         OBS_Message msg = new OBS_ChangedUsernameMessage(askUsername());
 
-        setChanged();
-        notifyObservers(msg);
+        notifyAllOBS(msg);
     }
 
     /**It writes a new message on cli with new player in the game
@@ -224,8 +220,7 @@ public class Cli extends View implements Runnable {
         }while(reset);
 
         OBS_Message msg = new OBS_MoveMessage(position, column);
-        setChanged();
-        notifyObservers(msg);
+        notifyAllOBS(msg);
     }
 
 
@@ -394,6 +389,9 @@ public class Cli extends View implements Runnable {
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
         System.out.println("Error >> It was impossible to create a client and contact the server at [" + chosenAddress + "," + chosenPort + "]");
+        System.out.println(">> Press ENTER to retry... ");
+        getInputRequest();
+        notifyAllOBS(new OBS_OnlyTypeMessage(OBS_MessageType.START));
     }
 
 
@@ -619,7 +617,7 @@ public class Cli extends View implements Runnable {
                     {
                         msg = new OBS_ChatMessage(input);
                         setChanged();
-                        notifyObservers(msg);
+                        notifyAllOBS(msg);
                     }
                 }
                 else if (state == InputStateCLI.REQUEST)
@@ -685,5 +683,10 @@ public class Cli extends View implements Runnable {
     @Override
     public void onBadMoveAnswer(BadMoveMessage msg) {
         printMessage(msg.getMoveError());
+    }
+
+    public void notifyAllOBS(OBS_Message msg) {
+        setChanged();
+        notifyObservers(msg);
     }
 }

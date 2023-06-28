@@ -14,18 +14,25 @@
             <children>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="229.0" minWidth="338.0" prefHeight="300.0" prefWidth="400.0" styleClass="external_invalid_port_container">
                     <children>
-                        <VBox prefHeight="300.0" prefWidth="400.0" styleClass="internal_vbox_container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                            <children>
-                                <ImageView fitHeight="80.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../images/originals/publisherMaterial/Title_2000x618px.png" />
-                                    </image>
-                                </ImageView>
-                                <Label fx:id="errorConnection_label" prefHeight="117.0" prefWidth="343.0" styleClass="internal_vbox_container_label2" text="testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova testo di prova" wrapText="true" />
-                                <Button fx:id="retry_btn" prefWidth="75" text="Retry" />
-                            </children>
-                        </VBox>
+                  <BorderPane prefHeight="300.0" prefWidth="388.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                              <VBox prefHeight="300.0" prefWidth="400.0" styleClass="internal_vbox_container" BorderPane.alignment="CENTER">
+                                  <children>
+                                      <ImageView fitHeight="80.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                              <Image url="@../images/originals/publisherMaterial/Title_2000x618px.png" />
+                                          </image>
+                                      </ImageView>
+                                      <Label fx:id="errorConnection_label" alignment="CENTER" prefHeight="117.0" prefWidth="343.0" styleClass="internal_vbox_container_label2" text="WARNING:  It was impossible to create a client  and contact the server at" textAlignment="CENTER" wrapText="true" />
+                                      <Button fx:id="retry_btn" prefWidth="75" text="Retry" />
+                                  </children>
+                              </VBox>
+                     </center>
+                  </BorderPane>
                     </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
                 </AnchorPane>
             </children>
         </StackPane>
