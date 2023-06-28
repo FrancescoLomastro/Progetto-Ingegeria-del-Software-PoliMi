@@ -10,6 +10,11 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller associated to the "CommonGoalCardDescription.fxml" file.
+ *
+ * @author Andrea Ferrini
+ */
 public class CommonGoalCardDescriptionController implements Initializable {
 
     @FXML
@@ -39,6 +44,11 @@ public class CommonGoalCardDescriptionController implements Initializable {
         //picture_pane.getStyleClass().add("common1");
     }
 
+    /**
+     * This method set the correct common goal card picture in the dedicated pane.
+     *
+     * @author Andrea Ferrini
+     */
     private void setPicture(){
 
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
@@ -51,18 +61,40 @@ public class CommonGoalCardDescriptionController implements Initializable {
         }
     }
 
+    /**
+     * This method get the common goal card description.
+     *
+     * @author Andrea Ferrini
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * This method set the common goal card description.
+     *
+     * @param description : description to be displayed;
+     * @author Andrea Ferrini
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * This method get the common goal card number.
+     *
+     * @author Andrea Ferrini
+     */
     public int getNum() {
         return num;
     }
 
+    /**
+     * This method get the common goal card number.
+     *
+     * @param num : number to be displayed;
+     * @author Andrea Ferrini
+     */
     public void setNum(int num) {
         this.num = num;
     }
