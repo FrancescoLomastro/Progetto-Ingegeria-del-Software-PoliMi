@@ -106,7 +106,7 @@ public class Library_C {
      */
     private void maintainProportion() {
         bottom.setPrefHeight(anchor.getPrefHeight()*bottomRatio);
-        nameLabel.setFont(Font.font(anchor.getPrefHeight()*bottomRatio));
+        nameLabel.setFont(Font.font("Monotype Corsiva",anchor.getPrefHeight()*bottomRatio));
         top.setPrefHeight(anchor.getPrefHeight()*topRatio);
         left.setPrefWidth(anchor.getPrefWidth()*leftRatio);
         right.setPrefWidth(anchor.getPrefWidth()*rightRatio);
