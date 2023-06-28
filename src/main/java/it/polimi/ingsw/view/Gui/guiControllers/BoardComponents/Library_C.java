@@ -11,7 +11,7 @@ import javafx.scene.text.Font;
  *
  * @author Francesco Gregorio Lo Mastro
  */
-public class Libreria_C {
+public class Library_C {
     @FXML
     AnchorPane anchor;
     @FXML

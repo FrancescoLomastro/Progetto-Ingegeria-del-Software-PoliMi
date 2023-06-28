@@ -33,7 +33,7 @@ import java.util.*;
  * This class governs the GUI of the game board where libraries, object cards grid and different types of goal cards are
  * present. It is used as an intermediary between the fixed parts of the GUI of the 'Board.fxml' file and
  * the dynamic information that the controller sends to the graphic components of the following fxml files:
- * "CommonGoal.fxml", "Griglia.fxml", "Libreria.fxml", "PersonalGoal.fxml" and "Punto.fxml".
+ * "CommonGoal.fxml", "Grid.fxml", "Library.fxml", "PersonalGoal.fxml" and "Point.fxml".
  * In addition, the class manages the interaction between players and the various graphic components of the scene.
  *
  * @author Alberto Aniballi, Riccardo Figini, Francesco Gregorio Lo Mastro, Andrea Ferrini
@@ -71,8 +71,8 @@ public class Board_C implements Initializable {
     AnchorPane son;
     GridPane centralGrid;
     Pane centralPointCard;
-    Map<String,Libreria_C> libraries;
-    Map<String,Punto_C> points;
+    Map<String, Library_C> libraries;
+    Map<String, Point_C> points;
     private Pane cardPoint1;
     private Pane cardPoint2;
      double left_pointsRatio;
@@ -237,11 +237,11 @@ public class Board_C implements Initializable {
         libraries= new HashMap<>();
         points= new HashMap<>();
         String[] players= ViewFactory.getInstance().getClientModel().getPlayerNames();
-        Libreria_C controllerL=null;
-        Punto_C controllerP=null;
+        Library_C controllerL=null;
+        Point_C controllerP=null;
         for (int i=0;i<players.length;i++)
         {
-            loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Libreria.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Library.fxml"));
             try
             {
                 son = loader.load();
@@ -275,7 +275,7 @@ public class Board_C implements Initializable {
                     libraryGrid.getChildren().add(pane);
                 }
             }
-           loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Punto.fxml"));
+           loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Point.fxml"));
             try
             {
                 son = loader.load();
@@ -311,10 +311,10 @@ public class Board_C implements Initializable {
      * @author Francesco Gregorio Lo Mastro
      */
      private void initializeGrid() {
-         loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Griglia.fxml"));
+         loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Grid.fxml"));
          try {
              son = loader.load();
-             Griglia_C controller = loader.getController();
+             Grid_C controller = loader.getController();
              center.setCenter(son);
              controller.setListeners(center);
              centralGrid=controller.getGrid();
