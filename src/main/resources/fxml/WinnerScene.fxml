@@ -17,7 +17,7 @@
                   <Pane fx:id="winner_image_pane" layoutX="41.0" layoutY="119.0" prefHeight="253.0" prefWidth="235.0" />
                   <VBox fx:id="ranking" layoutX="312.0" layoutY="150.0" prefHeight="230.0" prefWidth="336.0">
                      <children>
-                        <Label fx:id="first_label" prefHeight="54.0" prefWidth="316.0" text="--" textFill="#f8dc07">
+                        <Label fx:id="first_label" prefHeight="54.0" prefWidth="316.0" text="--sadasdasdsad" textFill="#0747f7">
                            <font>
                               <Font name="Calibri Bold" size="18.0" />
                            </font>
