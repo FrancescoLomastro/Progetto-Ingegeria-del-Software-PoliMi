@@ -11,6 +11,7 @@ import it.polimi.ingsw.utility.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -25,19 +26,12 @@ public class ClientModel extends Observable<Message> {
     private int personalGoalId;
     private String secondCommonGoalDescription;
     private final int[] commonGoalPointsVector;
-    private final ObjectCard[][] defaultLibrary;
     private String myName;
     public ClientModel(){
         super();
-        librariesMap = new HashMap<>();
+        librariesMap = new LinkedHashMap<>();
         pointsMap = new HashMap<>();
         commonGoalPointsVector = new int[] {8,8};
-        defaultLibrary = new ObjectCard[6][5];
-        for(int i=0; i<6; i++){
-            for(int j=0; j<5; j++){
-                defaultLibrary[i][j] = new ObjectCard("Empty", Color.EMPTY, Type.FIRST);
-            }
-        }
     }
     /**It sets a new grid. This method is used to update central grid
      * @author: Francesco Gregorio Lo Mastro
@@ -134,14 +128,7 @@ public class ClientModel extends Observable<Message> {
     {
         return librariesMap.get(name);
     }
-    /**It adds a player in game. It will be added to all lists with player
-     * @author: Francesco Gregorio Lo Mastro
-     * @param name name of player
-     * */
-    public void addPlayer(String name){
-        librariesMap.put(name, defaultLibrary);
-        pointsMap.put(name, 0);
-    }
+
     public void setFirstCommonGoalDescription(String firstCommonGoalDescription) {
         this.firstCommonGoalDescription = firstCommonGoalDescription;
     }
@@ -190,8 +177,8 @@ public class ClientModel extends Observable<Message> {
         setPersonalGoalCard(msg.getPersonalGoalCard());
         for(int i = 0; i<msg.getPlayerNames().length; i++)
         {
-            addPlayer(msg.getPlayerNames()[i]);
-            librariesMap.replace(msg.getPlayerNames()[i],getObjectCards(msg.getPlayersLibraries()[i]));
+            librariesMap.put(msg.getPlayerNames()[i],getObjectCards(msg.getPlayersLibraries()[i]));
+            pointsMap.put(msg.getPlayerNames()[i], 0);
         }
         this.grid=msg.getGrid();
         setChanged();
