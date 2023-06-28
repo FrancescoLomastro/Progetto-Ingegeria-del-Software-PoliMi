@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Francesco Gregorio Lo Mastro
  */
-public class Griglia_C {
+public class Grid_C {
     @FXML
     AnchorPane anchor;
     @FXML

@@ -13,10 +13,9 @@ import java.util.ResourceBundle;
 
 
 public class WinnerSceneController implements Initializable {
-
     private String winner;
     @FXML
-    public Label winner_label;
+    public Label first_label;
     @FXML
     public Label second_label;
     @FXML
@@ -24,15 +23,8 @@ public class WinnerSceneController implements Initializable {
     @FXML
     public Label fourth_label;
 
-    @FXML
-    Button button_show_library;
-    ObjectCard[][] winnerLibrary;
     ArrayList<Couple<String, Integer>> finalRanking;
-    @FXML
-    private void handleButtonAction(String winner) {
 
-        ViewFactory.getInstance().onLibraryClick(winner);
-    }
 
     /**
      * This method is used to initialize the controller of the "WinnerScene.fxml" GUI.
@@ -44,12 +36,8 @@ public class WinnerSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        winner_label.setText(winner + " won! (" + finalRanking.get(0).getSecond() + " pts)");
 
-        button_show_library.setOnMouseClicked(mouseEvent -> {
-
-            handleButtonAction(winner);
-        });
+        first_label.setText("1st: " + finalRanking.get(0).getFirst() + " (" + finalRanking.get(0).getSecond() + " pts)");
 
         if(finalRanking.size() > 1) {
 
@@ -73,14 +61,6 @@ public class WinnerSceneController implements Initializable {
 
     public void setWinner(String winner) {
         this.winner = winner;
-    }
-
-    public ObjectCard[][] getWinnerLibrary() {
-        return winnerLibrary;
-    }
-
-    public void setWinnerLibrary(ObjectCard[][] winnerLibrary) {
-        this.winnerLibrary = winnerLibrary;
     }
 
     public ArrayList<Couple<String, Integer>> getFinalRanking() {

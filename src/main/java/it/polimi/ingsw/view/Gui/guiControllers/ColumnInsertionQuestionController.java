@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view.Gui.guiControllers;
 
-import it.polimi.ingsw.view.Gui.guiControllers.BoardComponents.Libreria_C;
+import it.polimi.ingsw.view.Gui.guiControllers.BoardComponents.Library_C;
 import it.polimi.ingsw.view.OBSMessages.OBS_MoveMessage;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.enums.Color;
@@ -38,7 +38,7 @@ public class ColumnInsertionQuestionController implements Initializable {
     private ObjectCard[][] lib;
     Stage stage;
     private ViewFactory viewFactory;
-    private Libreria_C controller;
+    private Library_C controller;
 
     /**
      * This method is used to initialize the controller of the "ColumnInsertionQuestion.fxml" GUI.
@@ -60,8 +60,8 @@ public class ColumnInsertionQuestionController implements Initializable {
      * @author Riccardo Figini
      */
     public void ini(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Libreria.fxml"));
-        Libreria_C controller;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Library.fxml"));
+        Library_C controller;
         try
         {
             Pane son = loader.load();

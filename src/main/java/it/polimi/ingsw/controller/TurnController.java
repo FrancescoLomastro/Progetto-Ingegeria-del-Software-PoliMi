@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.Player.Player;
 import it.polimi.ingsw.network.Messages.*;
 import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.model.Game;
@@ -47,14 +48,15 @@ public class TurnController implements Runnable, Serializable {
     public void initClientObjectInPlayer()
     {
         String[] playerNames= new String[game.getNumPlayers()];
+        Player[] players=game.getPlayers();
         ObjectCard[][][] playerLibraries = new ObjectCard[game.getNumPlayers()][][];
         String[] commonGoals = new String[2];
         commonGoals[0] = game.getCommonGoalCard()[0].getDescription();
         commonGoals[1] = game.getCommonGoalCard()[1].getDescription();
         for(int i=0; i<game.getNumPlayers(); i++)
         {
-            playerNames[i]=game.getPlayers()[i].getName();
-            playerLibraries[i]=game.getLibrary(game.getPlayers()[i].getName());
+            playerNames[i]=players[i].getName();
+            playerLibraries[i]=game.getLibrary(players[i].getName());
         }
 
         for(int i=0; i<game.getNumPlayers(); i++)
@@ -62,13 +64,13 @@ public class TurnController implements Runnable, Serializable {
             SetupMessage message= new SetupMessage(
                     game.getCommonGoalCard()[0].getPoints(),
                     game.getCommonGoalCard()[1].getPoints(),
-                    game.getPlayers()[i].getPersonalCardId(),
+                    players[i].getPersonalCardId(),
                     game.getCommonGoalCardId(0),
                     game.getCommonGoalCardId(1),
                     game.getCentralScore(),
                     game.getGrid(),
                     playerNames,
-                    game.getPlayers()[i].getPersonalGoalCard().getGoalVector(),
+                    players[i].getPersonalGoalCard().getGoalVector(),
                     commonGoals,
                     countActualPointAndShare(),
                     playerLibraries
@@ -83,8 +85,9 @@ public class TurnController implements Runnable, Serializable {
      * */
     private ArrayList<Couple<String, Integer>> countActualPointAndShare() {
         ArrayList<Couple<String, Integer>> list = new ArrayList<>();
+        Player[] players = game.getPlayers();
         for(int i=0; i<game.getNumPlayers(); i++){
-            list.add(new Couple<>(game.getPlayers()[i].getName(), game.getPlayers()[i].getPoints()));
+            list.add(new Couple<>(players[i].getName(), players[i].getPoints()));
         }
         return list;
     }
