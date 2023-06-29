@@ -7,6 +7,12 @@ public abstract class OBS_Message {
     OBS_Message(OBS_MessageType type) {
         this.type = type;
     }
+
+    /**
+     * This method return the type of the message.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     public OBS_MessageType getType() {
         return type;
     }

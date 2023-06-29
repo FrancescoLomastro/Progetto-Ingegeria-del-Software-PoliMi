@@ -3,6 +3,12 @@ package it.polimi.ingsw.view.OBSMessages;
  * @author: Francesco gregorio Lo Mastro */
 public class OBS_ChangedUsernameMessage extends OBS_Message {
     private final String changedUsername;
+
+    /**
+     * This method return the new username chosen by the player.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     public String getChangedUsername() {
         return changedUsername;
     }
