@@ -16,6 +16,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Optional;
 
+/**
+ * This class is the RMI extension of the abstract Client class.
+ * */
 public class RMI_Client extends Client implements RMIClientConnection {
     private  RMISharedInterface server;
     /**

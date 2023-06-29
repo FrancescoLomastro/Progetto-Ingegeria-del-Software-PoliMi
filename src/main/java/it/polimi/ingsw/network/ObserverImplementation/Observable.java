@@ -2,7 +2,10 @@ package it.polimi.ingsw.network.ObserverImplementation;
 
 import java.util.Vector;
 
-
+/**
+ * Class used to handle observation of event
+ * @param <Event>
+ */
 public class Observable<Event> {
     private boolean changed = false;
     private Vector<Observer<? extends Observable<Event>, Event>> obs;

@@ -161,6 +161,7 @@ public class SocketConnection extends Connection implements Runnable {
     /**
      * It sets the player name dedicated to this socketConnection.
      *
+     * @param playerName : the name of the player;
      * @author Alberto Aniballi
      */
     @Override

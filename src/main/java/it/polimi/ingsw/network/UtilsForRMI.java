@@ -3,7 +3,18 @@ package it.polimi.ingsw.network;
 import java.net.*;
 import java.util.Enumeration;
 
+/**
+ * This class is used as utilities for RMI type of connection.
+ *
+ * @author Alberto Aniballi
+ */
 public class UtilsForRMI {
+
+    /**
+     * It gets the local ip.
+     *
+     * @author Francesco Gregorio Lo Mastro
+     */
     public static String getLocalIp() {
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();

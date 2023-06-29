@@ -10,6 +10,9 @@ public class PingTaskClient extends TimerTask {
     public PingTaskClient(ClientController clientController) {
         this.clientController=clientController;
     }
+
+    /**This method activates client controller in case of an error message from the server.
+     * */
     @Override
     public void run()
     {

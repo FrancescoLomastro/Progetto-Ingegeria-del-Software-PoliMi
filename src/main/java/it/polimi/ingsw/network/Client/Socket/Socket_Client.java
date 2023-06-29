@@ -11,6 +11,9 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.Optional;
 
+/**
+ * This class is the Socket extension of the abstract Client class.
+ * */
 public class Socket_Client extends Client implements Runnable{
     private transient Socket socket;
     private transient ObjectInputStream in;
