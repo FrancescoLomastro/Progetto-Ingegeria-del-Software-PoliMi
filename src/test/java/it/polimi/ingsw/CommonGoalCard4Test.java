@@ -34,7 +34,7 @@ public class CommonGoalCard4Test {
     }
 
     @Test
-    public void isSatisfied_correctInput_trueInOutput(){
+    public void isSatisfied_TwoColumnsGreenInCorners_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.GREEN, Type.FIRST),
@@ -51,11 +51,12 @@ public class CommonGoalCard4Test {
                     new ObjectCard("", Color.YELLOW, Type.FIRST),
                     new ObjectCard("", Color.GREEN, Type.FIRST));
             Assert.assertTrue(commonGoalCard.isSatisfied(library));
+
         });
     }
 
     @Test
-    public void isSatisfied_correctInput_FalseInOutput(){
+    public void isSatisfied_TwoColumnsGreenInNotAllCorners_FalseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.GREEN, Type.FIRST),
@@ -72,10 +73,11 @@ public class CommonGoalCard4Test {
                     new ObjectCard("", Color.YELLOW, Type.FIRST),
                     new ObjectCard("", Color.YELLOW, Type.FIRST));
             Assert.assertFalse(commonGoalCard.isSatisfied(library));
+
         });
     }
     @Test
-    public void isSatisfied_correctInput1_FalseInOutput1(){
+    public void isSatisfied_OneColumnsGreenInNotAllCorners_FalseInOutput1(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.GREEN, Type.FIRST),

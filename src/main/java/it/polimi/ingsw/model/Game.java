@@ -201,7 +201,8 @@ public class Game implements Serializable {
     private ObjectCard[] checkMove(Player player, Position[] move, int column) throws InvalidMoveException{
         Grid grid = livingRoom.getGrid();
         grid.isDrawAvailable(move);
-        player.getLibrary().isMoveAvailable(column,move.length);
+        if(!player.getLibrary().isMoveAvailable(column,move.length))
+            throw new InvalidMoveException("Insufficient space in selected column");
         return grid.draw(move);
     }
 

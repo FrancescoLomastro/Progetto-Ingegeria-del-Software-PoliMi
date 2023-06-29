@@ -19093,7 +19093,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGI/FlYbb6ho44="
 									},
-									"name": "Object"
+									"name": "Object",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -23346,7 +23347,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGI/EnFrz4zNdo="
 									},
-									"name": "connGoalCardId"
+									"name": "connGoalCardId",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",

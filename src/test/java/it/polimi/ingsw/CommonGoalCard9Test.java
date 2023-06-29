@@ -73,7 +73,7 @@ public class CommonGoalCard9Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_noCorrectInput_falseInOutput(){
+    public void isSatisfied_alternateRowsFullColored_falseInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.GREEN,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.GREEN,Type.FIRST));
@@ -118,7 +118,7 @@ public class CommonGoalCard9Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_noCorrectInputLeftUpCornerWrong_falseInOutput(){
+    public void isSatisfied_almostCorrectLeftUpCornerWrong_falseInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -148,7 +148,7 @@ public class CommonGoalCard9Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_noCorrectInputLeftDownCornerWrong_falseInOutput(){
+    public void isSatisfied_almostCorrectLeftDownCornerWrong_falseInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -178,7 +178,7 @@ public class CommonGoalCard9Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_noCorrectInputRightUpCornerWrong_falseInOutput(){
+    public void isSatisfied_almostCorrectRightUpCornerWrong_falseInOutput(){
         assertDoesNotThrow(()-> {
 
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -209,7 +209,7 @@ public class CommonGoalCard9Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_noCorrectInputRightDownCornerWrong_falseInOutput(){
+    public void isSatisfied_almostCorrectRightDownCornerWrong_falseInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));

@@ -46,7 +46,6 @@ public class CommonGoalCard0 extends CommonGoalCard {
                     if(checkedCells.add(position))
                     {
                         int same_color_neighbours = library.countNeighbours(row, col, checkedCells)+1;
-                        Color colorToCheck = library.getMatrix()[row][col].getColor();
                         if (same_color_neighbours >= 2) {
                             correctGroupCounter += 1;
                             if (correctGroupCounter == 6) {

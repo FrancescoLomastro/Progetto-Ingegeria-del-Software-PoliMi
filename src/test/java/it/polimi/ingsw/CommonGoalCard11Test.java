@@ -25,27 +25,17 @@ public class CommonGoalCard11Test {
     Type type = Type.FIRST;
 
     Library library;
-    /**Constructor
-     * @author: Riccardo Figini
-     * @throws IOException throws an exception*/
     public CommonGoalCard11Test() throws IOException {
         commonGoalCard = new CommonGoalCard11();
 
     }
 
-    /**Library's set up with null
-     * @author: Riccardo Figini
-     * */
     @Before
     public void setUp(){
         library = new Library();
     }
 
 
-    /**
-     * First Test Increasing: 1,2,3,4,5 -> answer true.
-     * @author: Alberto Aniballi
-     * */
     @Test
     public void isSatisfied_IncreasingDisposition_trueInOutput(){
         assertDoesNotThrow(()-> {
@@ -72,12 +62,8 @@ public class CommonGoalCard11Test {
         Assert.assertTrue(commonGoalCard.isSatisfied(library));});
     }
 
-    /**
-     * Second Test Increasing: 0,1,2,3,4 -> answer true.
-     * @author: Alberto Aniballi
-     * */
     @Test
-    public void isSatisfied_SecondIncreasingDisposition_trueInOutput(){
+    public void isSatisfied_IncreasingDispositionWithOnly4Columns_falseInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(1, new ObjectCard("", Color.BLUE , Type.FIRST));
 
@@ -93,15 +79,13 @@ public class CommonGoalCard11Test {
         library.insertCardsInLibrary(4, new ObjectCard("", Color.BLUE , Type.FIRST));
         library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
 
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));});
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
+
     }
 
-    /**
-     * Third Test Increasing: 2,3,4,5,6 -> answer true.
-     * @author: Alberto Aniballi
-     * */
+
     @Test
-    public void isSatisfied_ThirdIncreasingDisposition_trueInOutput(){
+    public void isSatisfied_SecondIncreasingDisposition_trueInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
         library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK , Type.FIRST));
@@ -131,10 +115,7 @@ public class CommonGoalCard11Test {
         Assert.assertTrue(commonGoalCard.isSatisfied(library));});
     }
 
-    /**
-     * First Test Decreasing: 5,4,3,2,1 -> answer true.
-     * @author: Alberto Aniballi
-     * */
+
     @Test
     public void isSatisfied_DecreasingDisposition_trueInOutput(){
         assertDoesNotThrow(()-> {
@@ -161,12 +142,9 @@ public class CommonGoalCard11Test {
         Assert.assertTrue(commonGoalCard.isSatisfied(library));});
     }
 
-    /**
-     * Second Test Decreasing: 4,3,2,1,0 -> answer true.
-     * @author: Alberto Aniballi
-     * */
+
     @Test
-    public void isSatisfied_SecondDecreasingDisposition_trueInOutput(){
+    public void isSatisfied_decreasingDispositionWithOnly4Column_falseInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(3, new ObjectCard("", Color.PINK , Type.FIRST));
 
@@ -182,15 +160,12 @@ public class CommonGoalCard11Test {
         library.insertCardsInLibrary(0, new ObjectCard("", Color.YELLOW , Type.FIRST));
         library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE , Type.FIRST));
 
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));});
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
     }
 
-    /**
-     * Third Test Decreasing: 6,5,4,3,2 -> answer true.
-     * @author: Alberto Aniballi
-     * */
+
     @Test
-    public void isSatisfied_ThirdDecreasingDisposition_trueInOutput(){
+    public void isSatisfied_SecondDecreasingDisposition_trueInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
         library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK , Type.FIRST));
@@ -292,6 +267,7 @@ public class CommonGoalCard11Test {
             library.insertCardsInLibrary(4, new ObjectCard("", Color.PINK, Type.FIRST));
 
             Assert.assertFalse(commonGoalCard.isSatisfied(library));
+
         });
     }
 
@@ -323,21 +299,15 @@ public class CommonGoalCard11Test {
         });
     }
 
-    /**
-     * Ninth Test: all rows are empty.
-     * @author: Alberto Aniballi
-     * */
+
     @Test
-    public void isSatisfied_correctInputAllColumnsEmpty_falseInOutput(){
+    public void isSatisfied_allColumnsEmpty_falseInOutput(){
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
-    /**
-     * Tenth Test: all rows full random.
-     * @author: Alberto Aniballi
-     * */
+
     @Test
-    public void isSatisfied_RandomInputAllRows_falseInOutput(){
+    public void isSatisfied_AlternateInputAllRows_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK, Type.FIRST));
             library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE, Type.FIRST));

@@ -34,7 +34,7 @@ public class CommonGoalCard2Test {
      * First test: 4 groups of 4 cards of same color -> answer true
      */
     @Test
-    public void isSatisfied_correctInputSeparateBlock_1_trueInOutput(){
+    public void isSatisfied_4SeparateColumn_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.BLUE, Type.FIRST),
@@ -72,7 +72,7 @@ public class CommonGoalCard2Test {
      * Second test: 4 groups of 4 of different color -> answer true
      */
     @Test
-    public void isSatisfied_correctInputSeparateBlock_2_trueInOutput(){
+    public void isSatisfied_4SeparateRows_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.PINK, Type.FIRST),
@@ -117,7 +117,7 @@ public class CommonGoalCard2Test {
      * Third test: 3 groups of 4 -> answer false
      */
     @Test
-    public void isSatisfied_noCorrectInputSeparateBlock_1_falseInOutput(){
+    public void isSatisfied_3SeparateGroups_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.PINK, Type.FIRST),
@@ -155,7 +155,7 @@ public class CommonGoalCard2Test {
      * Fourth test: 2 full columns of same color -> answer false
      */
     @Test
-    public void isSatisfied_noCorrectInputAdjacentCard_2_falseInOutput(){
+    public void isSatisfied_2Groups_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.WHITE, Type.FIRST),
@@ -179,7 +179,7 @@ public class CommonGoalCard2Test {
      * Fifth test: no groups of same color
      */
     @Test
-    public void isSatisfied_correctInput_falseInOutput(){
+    public void isSatisfied_noGroups_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.WHITE, Type.FIRST),
@@ -225,7 +225,7 @@ public class CommonGoalCard2Test {
      * Sixth test: empty
      */
     @Test
-    public void isSatisfied_correctInputEmptyTable_falseInOutput(){
+    public void isSatisfied_emptyLibrary_falseInOutput(){
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 

@@ -160,7 +160,8 @@ public class Library implements Serializable {
      */
     public void insertCardsInLibrary(int chosenColumn, ObjectCard... cards) throws InvalidMoveException {
         int row;
-        isMoveAvailable(chosenColumn, cards.length);
+        if(!isMoveAvailable(chosenColumn, cards.length))
+            throw new InvalidMoveException("Insufficient space in selected column");
 
         row=findNumberOfFreeCells(chosenColumn)-1;
         for (int i=0; i < cards.length; row--,i++)
@@ -176,11 +177,12 @@ public class Library implements Serializable {
      * @return true if the array of cards fits into the column selected
      * @author: Alberto Aniballi
      */
-    public void isMoveAvailable(int chosenColumn, int numOfCards)throws InvalidMoveException {
+    public boolean isMoveAvailable(int chosenColumn, int numOfCards) {
         int numberOfFreeCells = findNumberOfFreeCells(chosenColumn);
         if(chosenColumn < 0 || chosenColumn > numberOfColumns || numberOfFreeCells < numOfCards){
-            throw new InvalidMoveException("Insufficient space in selected column");
+            return false;
         }
+        return true;
     }
 
 
@@ -228,7 +230,7 @@ public class Library implements Serializable {
 
     /**
      * It counts the number of cards that are identified as neighbours of the parameter, using a recursive approach
-     * NOTE: a neighbour of a X card is a card that has the same color of X, also it needs to be close to subsequent to another neighbour of X, or X itself
+     * NOTE: a neighbour of a X card is a card that has the same color of X, also it needs to be close to  another neighbour of X, or X itself
      *
      * @param startRow      the row where the current cell is
      * @param startColumn   the column where the current cell is

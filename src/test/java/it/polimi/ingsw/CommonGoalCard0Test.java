@@ -30,7 +30,7 @@ public class CommonGoalCard0Test {
      * First test: 6 couples of same color -> answer true
      */
     @Test
-    public void isSatisfied_correctInputSeparateBlock_1_trueInOutput() {
+    public void isSatisfied_separateBlock_1_trueInOutput() {
         assertDoesNotThrow(()->{
             library.insertCardsInLibrary(0,new ObjectCard("", Color.PINK, Type.FIRST));
             library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -73,7 +73,7 @@ public class CommonGoalCard0Test {
      * Second test: 6 separate couples of different color -> answer true
      */
     @Test
-    public void isSatisfied_correctInputSeparateBlock_2_trueInOutput(){
+    public void isSatisfied_separateBlock_2_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK, Type.FIRST));
             library.insertCardsInLibrary(0, new ObjectCard("", Color.BLUE, Type.FIRST));
@@ -117,7 +117,7 @@ public class CommonGoalCard0Test {
      * Third test: 6 couples but not separate of same color -> answer false
      */
     @Test
-    public void isSatisfied_noCorrectInputSeparateBlock_1_falseInOutput(){
+    public void isSatisfied_notSeparateBlock_1_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.WHITE, Type.FIRST),
@@ -142,7 +142,7 @@ public class CommonGoalCard0Test {
      * Fourth test: 2 full columns of same color -> answer false
      */
     @Test
-    public void isSatisfied_noCorrectInputAdjacentCard_2_falseInOutput(){
+    public void isSatisfied_twoColumnsFullColored_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.WHITE, Type.FIRST),
@@ -166,7 +166,7 @@ public class CommonGoalCard0Test {
      * Fifth test: no couples of same color
      */
     @Test
-    public void isSatisfied_correctInput_falseInOutput(){
+    public void isSatisfied_noCouplesColor_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.WHITE, Type.FIRST),
@@ -207,10 +207,10 @@ public class CommonGoalCard0Test {
                     new ObjectCard("", Color.YELLOW, Type.FIRST),
                     new ObjectCard("", Color.BLUE, Type.FIRST),
                     new ObjectCard("", Color.LIGHTBLUE, Type.FIRST));
-
             Assert.assertFalse(commonGoalCard.isSatisfied(library));
         });
     }
+
 
     /**
      * Sixth test: empty

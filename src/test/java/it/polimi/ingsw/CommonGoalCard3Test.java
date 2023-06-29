@@ -31,7 +31,7 @@ public class CommonGoalCard3Test {
      * @author: Riccardo Figini
      * */
     @Test
-    public void isSatisfied_correctInputAllRowsHaveSameColor_trueInOutput(){
+    public void isSatisfied_AllRowsHaveSameColor_trueInOutput(){
         assertDoesNotThrow(()-> {
             for (int i = 0; i < library.getNumberOfRows(); i++) {
                 for (int j = 0; j < library.getNumberOfColumns(); j++) {
@@ -43,7 +43,7 @@ public class CommonGoalCard3Test {
     }
 
     @Test
-    public void isSatisfied_correctInputAllRowsHaveTwoDifferentColor_trueInOutput(){
+    public void isSatisfied_AllRowsHaveTwoDifferentColor_trueInOutput(){
         assertDoesNotThrow(()-> {
             for (int i = 0; i < library.getNumberOfRows(); i++) {
                 for (int j = 0; j < library.getNumberOfColumns(); j++) {
@@ -55,7 +55,7 @@ public class CommonGoalCard3Test {
     }
 
     @Test
-    public void isSatisfied_correctInputAllRowsHaveThreeDifferentColor_trueInOutput(){
+    public void isSatisfied_AllRowsHaveThreeDifferentColor_trueInOutput(){
         assertDoesNotThrow(()-> {
             for (int i = 0; i < library.getNumberOfRows(); i++) {
                 for (int j = 0; j < library.getNumberOfColumns(); j++) {
@@ -63,11 +63,12 @@ public class CommonGoalCard3Test {
                 }
             }
             Assert.assertTrue(commonGoalCard.isSatisfied(library));
+
         });
     }
 
     @Test
-    public void isSatisfied_correctInputAllRowsHaveAllDifferentColor_falseInOutput(){
+    public void isSatisfied_AllColumnsHaveAllDifferentColor_falseInOutput(){
         assertDoesNotThrow(()-> {
             for (int i = 0; i < library.getNumberOfRows(); i++) {
                 for (int j = 0; j < library.getNumberOfColumns(); j++) {
@@ -75,16 +76,17 @@ public class CommonGoalCard3Test {
                 }
             }
             Assert.assertFalse(commonGoalCard.isSatisfied(library));
+
         });
     }
 
     @Test
-    public void isSatisfied_correctInputEmptyTable_falseInOutput(){
+    public void isSatisfied_Emptylibrary_falseInOutput(){
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 
     @Test
-    public void isSatisfied_onlyThreeRowsWithCorrectColors_falseInOutput(){
+    public void isSatisfied_CorrectColorsOnlyThreeRowsWith_falseInOutput(){
         assertDoesNotThrow(()-> {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < library.getNumberOfColumns(); j++) {

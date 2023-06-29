@@ -18,16 +18,11 @@ public class CommonGoalCard1Test {
     CommonGoalCard commonGoalCard;
     //Type never affects this algorithm
     Library library;
-    /**Constructor
-     * @author: Riccardo Figini
-     * @throws IOException throws an exception*/
     public CommonGoalCard1Test() {
         commonGoalCard = new CommonGoalCard1();
     }
 
-    /**Library's set up with null
-     * @author: Riccardo Figini
-     * */
+
     @Before
     public void setUp() {
         library = new Library();
@@ -35,7 +30,7 @@ public class CommonGoalCard1Test {
 
 
     @Test
-    public void isSatisfied_correctInputCase0_trueInOutput(){
+    public void isSatisfied_yellowDiagonalRowElevated_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.PINK, Type.FIRST),
@@ -67,7 +62,7 @@ public class CommonGoalCard1Test {
     }
 
     @Test
-    public void isSatisfied_correctInputCase1_trueInOutput(){
+    public void isSatisfied_GreenDiagonal_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.BLUE, Type.FIRST),
@@ -95,7 +90,7 @@ public class CommonGoalCard1Test {
 
 
     @Test
-    public void isSatisfied_correctInputCase3_trueInOutput(){
+    public void isSatisfied_whiteDiagonalRowElevated_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.GREEN, Type.FIRST),
@@ -128,7 +123,7 @@ public class CommonGoalCard1Test {
     }
 
     @Test
-    public void isSatisfied_correctInputCase4_trueInOutput(){
+    public void isSatisfied_WhiteDiagonal_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.WHITE, Type.FIRST));
@@ -160,7 +155,7 @@ public class CommonGoalCard1Test {
     }
 
     @Test
-    public void isSatisfied_correctInput_falseInOutput(){
+    public void isSatisfied_maxDiagonalOf4_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0,
                     new ObjectCard("", Color.LIGHTBLUE, Type.FIRST),

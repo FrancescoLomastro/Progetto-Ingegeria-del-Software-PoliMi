@@ -10,9 +10,6 @@ public class ScorePointCardTest {
     ScorePointCard scorePointCard4Players;
     ScorePointCard scorePointCard3Players;
     ScorePointCard scorePointCard2Players;
-
-    /**Constructor
-     * @author: Riccardo Figini*/
     public ScorePointCardTest(){
         scorePointCard4Players = new ScorePointCard(4);
         scorePointCard3Players = new ScorePointCard(3);
@@ -24,6 +21,9 @@ public class ScorePointCardTest {
 
     }
 
+    /**
+     * Creates a scorePointCard for each number of players possible, and tests its decrease
+     */
     @Test
     public void getScoreWithDecrease__correctOutput(){
         Assert.assertEquals(scorePointCard4Players.getScoreWithDecrease(), 8);

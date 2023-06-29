@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class LibraryTest {
@@ -24,36 +25,49 @@ public class LibraryTest {
     public void tearDown()
     {}
 
-    private void fillVector(ObjectCard... vector)
+
+
+    /**
+     * A methos used oly for tests, fills a given array of objectcards
+     */
+    private void fillVector(ObjectCard... array)
     {
         CardGenerator cardGenerator= new CardGenerator(4);
-        for(int i=0; i<vector.length;i++)
+        for(int i=0; i<array.length;i++)
         {
-            vector[i]=cardGenerator.generateObjectCard();
+            array[i]=cardGenerator.generateObjectCard();
         }
     }
+
+    /**
+     * Verify that a new library is full of null objects
+     */
     @Test
-    public void getMatrix_noInput_nullOutput()
+    public void getMatrix_noInput_nullMatrixOutput()
     {
         ObjectCard[][] testMatrix= new ObjectCard[library.getNumberOfRows()][library.getNumberOfColumns()];
         assertArrayEquals(testMatrix,library.getMatrix());
     }
 
+    /**
+     * Fills a library inserting a full column at a time, then checks if it corresponds
+     */
     @Test
-    public void insertCardsInLibrary_correctInput_correctOutput()
-    {
+    public void insertCardsInLibrary_fromEmptyLibrary_correctlyFilledLibrary() {
         assertDoesNotThrow(() -> {
 
             ObjectCard[][] testMatrix= new ObjectCard[library.getNumberOfRows()][library.getNumberOfColumns()];
             ObjectCard[] testVector = new ObjectCard[library.getNumberOfRows()];
             fillVector(testVector);
 
-            for(int column=0;column<library.getNumberOfColumns();column++) {
+            for(int column=0;column<library.getNumberOfColumns();column++)
+            {
                 for(int row= library.getNumberOfRows()-1,i=0; row>=0;row--,i++) {
                     testMatrix[row][column]= testVector[i];
                 }
                 library.insertCardsInLibrary(column,testVector);
             }
+
             for(int i=0; i<library.getNumberOfColumns(); i++){
                 for(int j=0; j<library.getNumberOfRows(); j++){
                     assertEquals(testMatrix[j][i], library.getMatrix()[j][i]);
@@ -61,22 +75,21 @@ public class LibraryTest {
             }
         });
     }
-    @Test
-    public void insertCardsInLibrary_outOfBoundInput_falseOutput1()
-    {
-        assertThrows((InvalidMoveException.class), () -> {
 
-            ObjectCard[][] testMatrix= new ObjectCard[library.getNumberOfRows()][library.getNumberOfColumns()];
+    /**
+     * Try to insert too much object cards in the same column
+     */
+    @Test
+    public void insertCardsInLibrary_outOfBoundInput1_exceptionThrown() {
+        assertThrows((InvalidMoveException.class), () -> {
             ObjectCard[] testVector = new ObjectCard[library.getNumberOfRows()+1];
             fillVector(testVector);
-
             library.insertCardsInLibrary(0, testVector);
         });
 
     }
     @Test
-    public void insertCardsInLibrary_outOfBoundComposedInput_falseOutput2()
-    {
+    public void insertCardsInLibrary_outOfBoundInput2_exceptionThrown() {
         assertThrows(InvalidMoveException.class, () -> {
 
             ObjectCard[] testVector = new ObjectCard[library.getNumberOfRows()+1];
@@ -90,57 +103,50 @@ public class LibraryTest {
     }
 
     @Test
-    public void isMoveAvailable_correctInput_TrueOutput()
-    {
+    public void isMoveAvailable_correctInsert_TrueOutput() {
+        ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()];
+        ObjectCard[] testVector2 = new ObjectCard[1];
+        fillVector(testVector1);
+        fillVector(testVector2);
+
+        assertTrue(library.isMoveAvailable(0, testVector1.length));
+        assertTrue(library.isMoveAvailable(library.getNumberOfColumns() - 1, testVector2.length));
+
         assertDoesNotThrow(() -> {
-
-            ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()];
-            ObjectCard[] testVector2 = new ObjectCard[1];
-            fillVector(testVector1);
-            fillVector(testVector2);
-
-            library.isMoveAvailable(0,testVector1.length);
-            library.isMoveAvailable(library.getNumberOfColumns()-1,testVector2.length);
-
-            for(int i=0; i<library.getNumberOfRows()-1;i++)
-            {
-                library.insertCardsInLibrary(0,testVector2);
+            for (int i = 0; i < library.getNumberOfRows() - 1; i++) {
+                library.insertCardsInLibrary(0, testVector2);
             }
-
-            library.isMoveAvailable(0,testVector2.length);
         });
+
+
+        assertTrue(library.isMoveAvailable(0, testVector2.length));
     }
     @Test
-    public void isMoveAvailable_incorrectInput_FalseOutput()
-    {
-        assertThrows(InvalidMoveException.class, () -> {
-
-            int testNumber = library.getNumberOfRows()+1;
-            library.isMoveAvailable(0,testNumber);
-        });
-
-        assertThrows(InvalidMoveException.class, () -> {
-
-            int testNumber = 1;
-            library.isMoveAvailable(library.getNumberOfColumns(),testNumber);
-        });
+    public void isMoveAvailable_incorrectInsert_FalseOutput() {
+        int testNumber1 = library.getNumberOfRows() + 1;
+        assertFalse(library.isMoveAvailable(0, testNumber1));
 
 
-        assertThrows(InvalidMoveException.class, () -> {
+        int testNumber = 1;
+        assertFalse(library.isMoveAvailable(library.getNumberOfColumns(), testNumber));
 
-            ObjectCard[] testVector2 = new ObjectCard[1];
-            fillVector(testVector2);
 
-            for(int i=0; i<library.getNumberOfRows();i++)
-            {
-                library.insertCardsInLibrary(0,testVector2);
+        ObjectCard[] testVector2 = new ObjectCard[1];
+        fillVector(testVector2);
+
+        assertDoesNotThrow(() -> {
+            for (int i = 0; i < library.getNumberOfRows(); i++) {
+                library.insertCardsInLibrary(0, testVector2);
             }
-            library.isMoveAvailable(0,testVector2.length);
         });
+        assertFalse(library.isMoveAvailable(0, testVector2.length));
     }
+
+    /**
+     * Fills a library and than check if it is
+     */
     @Test
-    public void isFull__correctOutput()
-    {
+    public void isFull_cardFilling_trueOutput() {
         assertDoesNotThrow(() -> {
 
             ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()];
@@ -155,9 +161,11 @@ public class LibraryTest {
         });
     }
 
+    /**
+     * Fills a column and returns no free cells
+     */
     @Test
-    public void findNumberOfFreeCells_correctInput_correctOutput()
-    {
+    public void findNumberOfFreeCells_fullColumnFilling_noFreeCellsOutput() {
         assertDoesNotThrow(() -> {
 
             ObjectCard[] testVector1 = new ObjectCard[library.getNumberOfRows()];
@@ -171,10 +179,21 @@ public class LibraryTest {
         });
     }
     @Test
-    public void countAdjacentPoints_correctInput_correctOutput()
-    {
+    public void findNumberOfFreeCells_fullColumnFilling_correctFreeCellsOutput() {
         assertDoesNotThrow(() -> {
+            ObjectCard[] testVector1 = new ObjectCard[2];
+            fillVector(testVector1);
+            library.insertCardsInLibrary(0,testVector1);
+            assertSame(library.findNumberOfFreeCells(0),library.getNumberOfRows()-2);
+        });
+    }
 
+    /**
+     * Inserts some cards in the library and checks if the realized points are correct
+     */
+    @Test
+    public void countAdjacentPoints_correctLibrary_correctScore() {
+        assertDoesNotThrow(() -> {
             library.insertCardsInLibrary(0,new ObjectCard("", Color.LIGHTBLUE,Type.FIRST));
             library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
             library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -205,27 +224,22 @@ public class LibraryTest {
             library.insertCardsInLibrary(4,new ObjectCard("",Color.GREEN,Type.FIRST));
             library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
             library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
-            System.out.println(library.countAdjacentPoints());
+            assertEquals(library.countAdjacentPoints(),21);
         });
     }
     @Test
-    public void countAdjacentPoints_correctInput1_correctOutput1()
-    {
+    public void countAdjacentPoints_correctLibrary_correctScore1() {
         assertDoesNotThrow(() -> {
 
             library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
-
             library.insertCardsInLibrary(1,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
-
             library.insertCardsInLibrary(3,new ObjectCard("",Color.GREEN,Type.FIRST));
-
             library.insertCardsInLibrary(4,new ObjectCard("",Color.GREEN,Type.FIRST));
             assertSame(library.countAdjacentPoints(),0);
         });
     }
     @Test
-    public void countAdjacentPoints_correctInput2_correctOutput2()
-    {
+    public void countAdjacentPoints_correctLibrary_correctScore2() {
         assertDoesNotThrow(() -> {
 
             library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -233,7 +247,7 @@ public class LibraryTest {
             library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
             library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
             library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
-            library.insertCardsInLibrary(1,new ObjectCard("",Color.BLUE,Type.FIRST));
+            library.insertCardsInLibrary(1,new ObjectCard("",Color.YELLOW,Type.FIRST));
             library.insertCardsInLibrary(1,new ObjectCard("",Color.YELLOW,Type.FIRST));
             library.insertCardsInLibrary(1,new ObjectCard("",Color.YELLOW,Type.FIRST));
             library.insertCardsInLibrary(2,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -248,7 +262,7 @@ public class LibraryTest {
             library.insertCardsInLibrary(3,new ObjectCard("",Color.YELLOW,Type.FIRST));
             library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
             library.insertCardsInLibrary(4,new ObjectCard("",Color.WHITE,Type.FIRST));
-            assertSame(library.countAdjacentPoints(),21);
+            assertSame(library.countAdjacentPoints(),16);
         });
     }
     @Test

@@ -22,8 +22,6 @@ public class PersonalGoalCardTest {
     Type type = Type.THIRD;
     Library library;
 
-    /**Constructor
-     * @author: Riccardo Figini*/
     public PersonalGoalCardTest(){
         cardGenerator = new CardGenerator(4);
         personalGoalCard = cardGenerator.generatePersonalGoalCard();
@@ -34,8 +32,12 @@ public class PersonalGoalCardTest {
     public void setUp(){
         library = new Library();
     }
+
+    /**
+     * Replicates a random Personal goal cards anc builds a library that matches all of that positions
+     */
     @Test
-    public void countPersonalGoalCardPoints_correctInputAllMatch_correctOutput() {
+    public void countPersonalGoalCardPoints_allMatchPositions_correctPointsOutput() {
         assertDoesNotThrow(()-> {
             HashMap<Position, Color> objectCardsGoal = new HashMap<>();
             for (int objectCard_i = 0; objectCard_i < personalGoalCard.getGoalVector().size(); objectCard_i++) {
@@ -58,7 +60,7 @@ public class PersonalGoalCardTest {
         });
     }
     @Test
-    public void countPersonalGoalCardPoints_correctInput5match_correctOutput(){
+    public void countPersonalGoalCardPoints_5MatchPositions_correctPointsOutput(){
         assertDoesNotThrow(()-> {
             HashMap<Position, Color> objectCardsGoal = new HashMap<>();
             for (int objectCard_i = 0; objectCard_i < 5; objectCard_i++) {
@@ -81,7 +83,7 @@ public class PersonalGoalCardTest {
         });
     }
     @Test
-    public void countPersonalGoalCardPoints_correctInput4match_correctOutput(){
+    public void countPersonalGoalCardPoints_4MatchPositions_correctPointsOutput(){
         assertDoesNotThrow(()-> {
             HashMap<Position, Color> objectCardsGoal = new HashMap<>();
             for (int objectCard_i = 0; objectCard_i < 4; objectCard_i++) {
@@ -104,7 +106,7 @@ public class PersonalGoalCardTest {
         });
     }
     @Test
-    public void countPersonalGoalCardPoints_correctInput3match_correctOutput(){
+    public void countPersonalGoalCardPoints_3MatchPositions_correctPointsOutput(){
         assertDoesNotThrow(()-> {
             HashMap<Position, Color> objectCardsGoal = new HashMap<>();
             for (int objectCard_i = 0; objectCard_i < 3; objectCard_i++) {
@@ -127,7 +129,7 @@ public class PersonalGoalCardTest {
         });
     }
     @Test
-    public void countPersonalGoalCardPoints_correctInput2match_correctOutput(){
+    public void countPersonalGoalCardPoints_2MatchPositions_correctPointsOutput(){
         assertDoesNotThrow(()-> {
             HashMap<Position, Color> objectCardsGoal = new HashMap<>();
             for (int objectCard_i = 0; objectCard_i < 2; objectCard_i++) {
@@ -150,7 +152,7 @@ public class PersonalGoalCardTest {
         });
     }
     @Test
-    public void countPersonalGoalCardPoints_correctInput1match_correctOutput(){
+    public void countPersonalGoalCardPoints_1MatchPositions_correctPointsOutput(){
         assertDoesNotThrow(()-> {
             HashMap<Position, Color> objectCardsGoal = new HashMap<>();
             for (int objectCard_i = 0; objectCard_i < 1; objectCard_i++) {
@@ -173,7 +175,7 @@ public class PersonalGoalCardTest {
         });
     }
     @Test
-    public void countPersonalGoalCardPoints_correctInput0match_correctOutput(){
+    public void countPersonalGoalCardPoints_0MatchPositions_correctPointsOutput(){
         Assert.assertEquals(personalGoalCard.countPersonalGoalCardPoints(library), 0);
     }
     @After

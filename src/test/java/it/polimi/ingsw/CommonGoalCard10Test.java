@@ -29,9 +29,6 @@ public class CommonGoalCard10Test {
 
     }
 
-    /**Library's set up with null
-     * @author: Riccardo Figini
-     * */
     @Before
     public void setUp(){
         library = new Library();
@@ -43,7 +40,7 @@ public class CommonGoalCard10Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_oneCorrectInputOtherCellsEmpty_trueInOutput(){
+    public void isSatisfied_correctInputOtherCellsEmpty_trueInOutput(){
         assertDoesNotThrow(()-> {
         library.insertCardsInLibrary(0,new ObjectCard("", Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -59,11 +56,11 @@ public class CommonGoalCard10Test {
     }
 
     /**
-     * Second Test: 8 object cards of the same type and the other cells are filled with random filler.
+     * Second Test: 8 object cards of the same type and the other cells are filled .
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_oneCorrectInputOtherCellsRandom_trueInOutput(){
+    public void isSatisfied_correctInputOtherCellsfilled_trueInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK, Type.FIRST));
             library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK, Type.FIRST));
@@ -111,7 +108,7 @@ public class CommonGoalCard10Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_noCorrectInput_falseInOutput(){
+    public void isSatisfied_only7cards_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK, Type.FIRST));
             library.insertCardsInLibrary(0, new ObjectCard("", Color.PINK, Type.FIRST));
@@ -131,7 +128,7 @@ public class CommonGoalCard10Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInputAllColumnsEmpty_falseInOutput(){
+    public void isSatisfied_allColumnsEmpty_falseInOutput(){
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
 }

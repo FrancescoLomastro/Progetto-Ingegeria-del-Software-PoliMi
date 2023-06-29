@@ -1,278 +1,379 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.exceptions.InvalidMoveException;
-import it.polimi.ingsw.model.CardGenerator.CardGenerator;
-import it.polimi.ingsw.model.Cards.ObjectCard;
-import it.polimi.ingsw.model.LivingRoom.Grid;
-import it.polimi.ingsw.utility.Position;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
+        import it.polimi.ingsw.exceptions.InvalidMoveException;
+        import it.polimi.ingsw.model.CardGenerator.CardGenerator;
+        import it.polimi.ingsw.model.Cards.ObjectCard;
+        import it.polimi.ingsw.model.LivingRoom.Grid;
+        import it.polimi.ingsw.utility.Position;
+        import org.junit.After;
+        import org.junit.Assert;
+        import org.junit.Test;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+        import java.util.Set;
+
+        import static org.junit.Assert.*;
+        import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class GridTest {
-    Grid grid;
+    Grid grid4,grid3,grid2;
 
     public GridTest(){
-        grid = new Grid(4, new CardGenerator(4));
+        grid4 = new Grid(4, new CardGenerator(4));
+        grid3 = new Grid(3, new CardGenerator(3));
+        grid2 = new Grid(2, new CardGenerator(2));
     }
 
-    @Test
-    public void refill_EmptyGrid_filledGridInOutput(){
-        grid.refill();
-        for(int i=0; i<grid.getMatrix().length; i++){
-            for(int j=0; j<grid.getMatrix().length; j++)
+    /**
+     * Method used only in the test, to consume a new grid
+     * @param grid
+     */
+    private void consumeGrid(Grid grid) {
+        Position[] pos= new Position[1];
+        pos[0]=new Position(0,0);
+        for(int i=0; i<grid.getNumRows();i++)
+        {
+            for(int j=0; j<grid.getNumColumns();j++)
             {
-                if (!(((i==0) && (j==0||j==1||j==2||j==5||j==6||j==7||j==8))
-                ||((i==1) && (j==0||j==1||j==2||j==7||j==8||j==6))
-                ||((i==2) && (j==0||j==1||j==8||j==7))
-                ||((i==3) && (j==0))
-                ||((i==5) && (j==8))
-                ||((i==6) && (j==0||j==1||j==7||j==8))
-                ||((i==7) && (j==0||j==1||j==2||j==6||j==7||j==8))
-                ||((i==8) && (j==0||j==1||j==2||j==3||j==6||j==7||j==8)))) {
-                    Assert.assertNotEquals(null, grid.getMatrix()[i][j]);
+                pos[0].setRowColumn(i,j);
+                grid.draw(pos);
+            }
+        }
+    }
+
+    /**
+     * Assert that, after a refill, unavailablePositions and availablePositions are respected
+     */
+    private void checkUnavailablePositions(Grid grid) {
+        Set<Position> unavailablePositions = grid.getNotAvailablePositions();
+        ObjectCard[][] matrix = grid.getMatrix();
+        Position position=new Position(0,0);
+        for(int i = 0; i< grid.getNumRows(); i++)
+        {
+            for(int j = 0; j< grid.getNumColumns(); j++)
+            {
+                position.setRowColumn(i,j);
+                if(!unavailablePositions.contains(position))
+                {
+                    assertNotNull(matrix[i][j]);
+                } else
+                {
+                    assertNull(matrix[i][j]);
                 }
             }
         }
     }
+
+    /**
+     * Consume a new grid and then refill it
+     */
     @Test
-    public void refill_PartiallyEmptyGrid_filledGridInOutput() {
+    public void refill_emptyGrid_filledGridInOutput_grid4(){
+        assertFalse(grid4.needRefill());
+        consumeGrid(grid4);
+        assertTrue(grid4.needRefill());
+        grid4.refill();
+        assertFalse(grid4.needRefill());
+        checkUnavailablePositions(grid4);
+    }
+    @Test
+    public void refill_emptyGrid_filledGridInOutput_grid3(){
+        assertFalse(grid3.needRefill());
+        consumeGrid(grid3);
+        assertTrue(grid3.needRefill());
+        grid3.refill();
+        assertFalse(grid3.needRefill());
+        checkUnavailablePositions(grid3);
+    }
+    @Test
+    public void refill_emptyGrid_filledGridInOutput_grid2(){
+        assertFalse(grid2.needRefill());
+        consumeGrid(grid2);
+        assertTrue(grid2.needRefill());
+        grid2.refill();
+        assertFalse(grid2.needRefill());
+        checkUnavailablePositions(grid2);
+    }
+
+    /**
+     * Partially consume a new grid and then refill it
+     */
+    @Test
+    public void refill_notCompletelyEmptyGrid_filledGridInOutput() {
         assertDoesNotThrow(()->{
-            grid.refill();
-            grid.draw(new Position[]{new Position(0, 3), new Position(0, 4)});
-            grid.draw(new Position[]{new Position(1, 3), new Position(1, 4)});
-            grid.draw(new Position[]{new Position(2, 3), new Position(2, 4)});
-            grid.draw(new Position[]{new Position(3, 3), new Position(3, 4)});
-            grid.draw(new Position[]{new Position(4, 3), new Position(4, 4)});
-            grid.draw(new Position[]{new Position(5, 3), new Position(5, 4)});
-            grid.draw(new Position[]{new Position(6, 3), new Position(6, 4)});
-            grid.draw(new Position[]{new Position(7, 3), new Position(7, 4)});
-            grid.draw(new Position[]{new Position(1, 5)});
-            grid.draw(new Position[]{new Position(2, 5)});
-            grid.draw(new Position[]{new Position(3, 5)});
-            grid.draw(new Position[]{new Position(4, 5)});
-            grid.draw(new Position[]{new Position(5, 5)});
-            grid.draw(new Position[]{new Position(6, 5)});
-            grid.draw(new Position[]{new Position(7, 5)});
-            grid.draw(new Position[]{new Position(8, 5)});
-            grid.draw(new Position[]{new Position(2, 6)});
-            grid.draw(new Position[]{new Position(3, 6)});
-            grid.draw(new Position[]{new Position(4, 6)});
-            grid.draw(new Position[]{new Position(5, 6)});
-            grid.draw(new Position[]{new Position(6, 6)});
-            grid.draw(new Position[]{new Position(3, 7), new Position(3, 8)});
-            grid.draw(new Position[]{new Position(4, 7), new Position(4, 8)});
-            grid.draw(new Position[]{new Position(2, 2)});
-            grid.draw(new Position[]{new Position(3, 2)});
-            grid.draw(new Position[]{new Position(4, 2)});
-            grid.draw(new Position[]{new Position(5, 2)});
-            grid.draw(new Position[]{new Position(6, 2)});
-            grid.draw(new Position[]{new Position(3, 1)});
-            grid.draw(new Position[]{new Position(4, 1)});
-            grid.draw(new Position[]{new Position(5, 1)});
-            grid.draw(new Position[]{new Position(5, 0)});
-            ObjectCard[][] objectCard1 = new ObjectCard[9][9];
-            for(int i=0; i<9; i++){
-                for(int j=0; j<9; j++){
-                    objectCard1[i][j]=grid.getMatrix()[i][j];
-                }
-            }
-            grid.refill();
-            for(int i=0; i<grid.getMatrix().length; i++){
-                for(int j=0; j<grid.getMatrix().length; j++){
-                    if (!(((i==0) && (j==0||j==1||j==2||j==5||j==6||j==7||j==8))
-                            ||((i==1) && (j==0||j==1||j==2||j==7||j==8||j==6))
-                            ||((i==2) && (j==0||j==1||j==8||j==7))
-                            ||((i==3) && (j==0))
-                            ||((i==5) && (j==8))
-                            ||((i==6) && (j==0||j==1||j==7||j==8))
-                            ||((i==7) && (j==0||j==1||j==2||j==6||j==7||j==8))
-                            ||((i==8) && (j==0||j==1||j==2||j==3||j==6||j==7||j==8)))) {
-                        Assert.assertNotEquals(null, grid.getMatrix()[i][j]);
-                    }
-                    if(objectCard1[i][j]!=null){
-                        Assert.assertEquals(objectCard1[i][j], grid.getMatrix()[i][j]);
-                    }
-                }
-            }
+            assertFalse(grid4.needRefill());
+            grid4.draw(new Position[]{new Position(0, 3), new Position(0, 4)});
+            grid4.draw(new Position[]{new Position(1, 3), new Position(1, 4)});
+            grid4.draw(new Position[]{new Position(2, 3), new Position(2, 4)});
+            grid4.draw(new Position[]{new Position(3, 3), new Position(3, 4)});
+            grid4.draw(new Position[]{new Position(4, 3), new Position(4, 4)});
+            grid4.draw(new Position[]{new Position(5, 3), new Position(5, 4)});
+            grid4.draw(new Position[]{new Position(6, 3), new Position(6, 4)});
+            grid4.draw(new Position[]{new Position(7, 3), new Position(7, 4)});
+            grid4.draw(new Position[]{new Position(1, 5)});
+            grid4.draw(new Position[]{new Position(2, 5)});
+            grid4.draw(new Position[]{new Position(3, 5)});
+            grid4.draw(new Position[]{new Position(4, 5)});
+            grid4.draw(new Position[]{new Position(5, 5)});
+            grid4.draw(new Position[]{new Position(6, 5)});
+            grid4.draw(new Position[]{new Position(7, 5)});
+            grid4.draw(new Position[]{new Position(8, 5)});
+            grid4.draw(new Position[]{new Position(2, 6)});
+            grid4.draw(new Position[]{new Position(3, 6)});
+            grid4.draw(new Position[]{new Position(4, 6)});
+            grid4.draw(new Position[]{new Position(5, 6)});
+            grid4.draw(new Position[]{new Position(6, 6)});
+            grid4.draw(new Position[]{new Position(3, 7), new Position(3, 8)});
+            grid4.draw(new Position[]{new Position(4, 7), new Position(4, 8)});
+            grid4.draw(new Position[]{new Position(2, 2)});
+            grid4.draw(new Position[]{new Position(3, 2)});
+            grid4.draw(new Position[]{new Position(4, 2)});
+            grid4.draw(new Position[]{new Position(5, 2)});
+            grid4.draw(new Position[]{new Position(6, 2)});
+            grid4.draw(new Position[]{new Position(3, 1)});
+            grid4.draw(new Position[]{new Position(4, 1)});
+            grid4.draw(new Position[]{new Position(5, 1)});
+            grid4.draw(new Position[]{new Position(5, 0)});
+            assertTrue(grid4.needRefill());
+            grid4.refill();
+            assertFalse(grid4.needRefill());
+            checkUnavailablePositions(grid4);
         });
 
     }
+
+    /**
+     * Gradually draw cards from a filled library till a refill is needed
+     */
     @Test
-    public void needRefill__correctOutputMatrixNeedsRefill(){
+    public void needRefill__notCompletelyEmptyGrid_TrueOutput(){
         assertDoesNotThrow(()->{
-            grid.refill();
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(0, 3), new Position(0, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(1, 3), new Position(1, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 3), new Position(2, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 3), new Position(3, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 3), new Position(4, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 3), new Position(5, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 3), new Position(6, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(7, 3), new Position(7, 4)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(1, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(7, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(8, 5)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 6)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 6)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 6)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 6)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 6)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 7), new Position(3, 8)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 7), new Position(4, 8)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(2, 2)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 2)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 2)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 2)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(6, 2)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(3, 1)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(4, 1)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 1)}));
-            Assert.assertNotNull(grid.draw(new Position[]{new Position(5, 0)}));
-        /*for(int i=0; i<9; i++){
-            for(int j=0; j<9; j++){
-                if ((((i==0) && (j==0||j==1||j==2||j==5||j==6||j==7||j==8))
-                        ||((i==1) && (j==0||j==1||j==2||j==7||j==8||j==6))
-                        ||((i==2) && (j==0||j==1||j==8||j==7))
-                        ||((i==3) && (j==0))
-                        ||((i==5) && (j==8))
-                        ||((i==6) && (j==0||j==1||j==7||j==8))
-                        ||((i==7) && (j==0||j==1||j==2||j==6||j==7||j==8))
-                        ||((i==8) && (j==0||j==1||j==2||j==3||j==6||j==7||j==8)))) {
-                    System.out.print("| ");
-                }
-                else if (grid.getMatrix()[i][j]==null)
-                    System.out.print("|@");
-                else
-                    System.out.print("|"+grid.getMatrix()[i][j]);
-            }
-            System.out.println("");
-        }*/
-            Assert.assertTrue(grid.needRefill());
+            Assert.assertFalse(grid4.needRefill());
+            grid4.draw(new Position[]{new Position(0, 3), new Position(0, 4)});
+            grid4.draw(new Position[]{new Position(1, 3), new Position(1, 4)});
+            grid4.draw(new Position[]{new Position(2, 3), new Position(2, 4)});
+            grid4.draw(new Position[]{new Position(3, 3), new Position(3, 4)});
+            grid4.draw(new Position[]{new Position(4, 3), new Position(4, 4)});
+            grid4.draw(new Position[]{new Position(5, 3), new Position(5, 4)});
+            grid4.draw(new Position[]{new Position(6, 3), new Position(6, 4)});
+            grid4.draw(new Position[]{new Position(7, 3), new Position(7, 4)});
+            grid4.draw(new Position[]{new Position(1, 5)});
+            grid4.draw(new Position[]{new Position(2, 5)});
+            grid4.draw(new Position[]{new Position(3, 5)});
+            grid4.draw(new Position[]{new Position(4, 5)});
+            grid4.draw(new Position[]{new Position(5, 5)});
+            grid4.draw(new Position[]{new Position(6, 5)});
+            grid4.draw(new Position[]{new Position(7, 5)});
+            grid4.draw(new Position[]{new Position(8, 5)});
+            Assert.assertFalse(grid4.needRefill());
+            grid4.draw(new Position[]{new Position(2, 6)});
+            grid4.draw(new Position[]{new Position(3, 6)});
+            grid4.draw(new Position[]{new Position(4, 6)});
+            Assert.assertFalse(grid4.needRefill());
+            grid4.draw(new Position[]{new Position(5, 6)});
+            grid4.draw(new Position[]{new Position(6, 6)});
+            grid4.draw(new Position[]{new Position(3, 7), new Position(3, 8)});
+            grid4.draw(new Position[]{new Position(4, 7), new Position(4, 8)});
+            grid4.draw(new Position[]{new Position(2, 2)});
+            grid4.draw(new Position[]{new Position(3, 2)});
+            grid4.draw(new Position[]{new Position(4, 2)});
+            grid4.draw(new Position[]{new Position(5, 2)});
+            grid4.draw(new Position[]{new Position(6, 2)});
+            grid4.draw(new Position[]{new Position(3, 1)});
+            grid4.draw(new Position[]{new Position(4, 1)});
+            grid4.draw(new Position[]{new Position(5, 1)});
+            grid4.draw(new Position[]{new Position(5, 0)});
+            Assert.assertTrue(grid4.needRefill());
         });
 
     }
+
+    /**
+     * Consume a new grid and then checks if it needs refill
+     */
     @Test
-    public void needRefill__correctOutputMatrixDoNotNeed(){
-        grid.refill();
-        Assert.assertFalse(grid.needRefill());
+    public void needRefill__emptyGrid_TrueOutput(){
+        assertFalse(grid4.needRefill());
+        consumeGrid(grid4);
+        assertTrue(grid4.needRefill());
     }
+
+    /**
+     * Checks if invalidMoveException is thrown when a null drawn is performed
+     */
     @Test
-    public void isDrawAvailable_incorrectInputnullInInput_correctOutput(){
+    public void isDrawAvailable_nullInInput_exceptionThrown(){
         assertThrows(InvalidMoveException.class, ()->{
-            grid.isDrawAvailable(null);
+            grid4.isDrawAvailable(null);
         });
     }
+
+    /**
+     * Checks if invalidMoveException is thrown when a 0 length vector drawn is performed
+     */
     @Test
-    public void isDrawAvailable_incorrectInputTooShortLongVector_correctOutput(){
+    public void isDrawAvailable_tooShortPositionVector_exceptionThrown(){
         assertThrows(InvalidMoveException.class, ()->{
             Position[] positionShort=new Position[0];
-            grid.isDrawAvailable(positionShort);
+            grid4.isDrawAvailable(positionShort);
         });
-
     }
+
+    /**
+     * Checks if invalidMoveException is thrown when a too long vector drawn is performed
+     */
     @Test
-    public void isDrawAvailable_incorrectInputTooLongVector_correctOutput(){
+    public void isDrawAvailable_tooLongPositionVector_exceptionThrown(){
         assertThrows(InvalidMoveException.class, ()->{
             Position[] positionLong= new Position[4];
             for(int i=0; i<4;i++)
                 positionLong[i] = new Position(i, i);
-            grid.isDrawAvailable(positionLong);
+            grid4.isDrawAvailable(positionLong);
         });
 
     }
+
+    /**
+     * Checks if invalidMoveException is thrown when a position vector contains Null
+     */
     @Test
-    public void isDrawAvailable_incorrectInputVectorContainsNull_correctOutput(){
+    public void isDrawAvailable_vectorContainsNull_exceptionThrown(){
         assertThrows(InvalidMoveException.class, ()->{
             Position[] positions = new Position[3];
             positions[0] = new Position(0,0);
             positions[1] = null;
             positions[2] = new Position(1,1);
-            grid.isDrawAvailable(positions);
+            grid4.isDrawAvailable(positions);
         });
     }
+
+    /**
+     * Checks if invalidMoveException is thrown when a not aligned drawn is performed
+     */
     @Test
-    public void isDrawAvailable_incorrectInputPositionNotAligned1_correctOutput(){
+    public void isDrawAvailable_notAlignedPositionVector1_exceptionThrown(){
         assertThrows(InvalidMoveException.class, ()->{
             Position[] positions = new Position[3];
             positions[0] = new Position(0,3);
             positions[1] = new Position(1,4);
             positions[2] = new Position(2,5);
-            grid.isDrawAvailable(positions);
+            grid4.isDrawAvailable(positions);
         });
     }
+
+    /**
+     * Checks if invalidMoveException is thrown when a not aligned drawn is performed
+     */
     @Test
-    public void isDrawAvailable_incorrectInputPositionNotAligned2_correctOutput(){
+    public void isDrawAvailable_notAlignedPositionVector2_exceptionThrown(){
         assertThrows(InvalidMoveException.class, ()->{
             Position[] positions = new Position[3];
             positions[0] = new Position(0,3);
             positions[1] = new Position(2,3);
             positions[2] = new Position(3,3);
-            grid.isDrawAvailable(positions);
+            grid4.isDrawAvailable(positions);
         });
     }
 
+    /**
+     * Checks if invalidMoveException is thrown when a drawn whose cards have not free sides is performed
+     */
     @Test
-    public void isDrawAvailable_incorrectInputPositionWithoutFreeBorder_correctOutput(){
+    public void isDrawAvailable_noFreeSidesPositionVector_exceptionThrown(){
         assertThrows(InvalidMoveException.class, ()->{
-            grid.refill();
+            grid4.refill();
             Position[] positions = new Position[3];
             positions[0] = new Position(4,4);
             positions[1] = new Position(4,5);
             positions[2] = new Position(4,6);
-            grid.isDrawAvailable(positions);
-        });
-    }
-    @Test
-    public void isDrawAvailable_correctInput_correctOutput() throws InvalidMoveException {
-        assertDoesNotThrow(() -> {
-            grid.refill();
-            Position[] positions = new Position[2];
-            positions[0] = new Position(0,3);
-            positions[1] = new Position(0,4);
-            grid.isDrawAvailable(positions);
+            grid4.isDrawAvailable(positions);
         });
     }
 
+    /**
+     * Checks that no exception are thrown if a correct input is performed
+     */
     @Test
-    public void isDrawAvailable_incorrectInputOnAUsedCell_ExceptionThrown() throws InvalidMoveException {
+    public void isDrawAvailable_correctInput_exceptionNotThrown() throws InvalidMoveException {
+        assertDoesNotThrow(() -> {
+            grid4.refill();
+            Position[] positions = new Position[2];
+            positions[0] = new Position(0,3);
+            positions[1] = new Position(0,4);
+            grid4.isDrawAvailable(positions);
+        });
+    }
+
+    /**
+     * Checks if a drawn in a already used position is performable
+     */
+    @Test
+    public void isDrawAvailable_drawnOnAUsedCell_exceptionThrown() throws InvalidMoveException {
         assertThrows(InvalidMoveException.class, () -> {
-            grid.refill();
             Position[] positions = new Position[1];
             positions[0] = new Position(5,1);
-            grid.draw(positions);
-            grid.isDrawAvailable(positions);
+            grid4.draw(positions);
+            grid4.isDrawAvailable(positions);
         });
     }
 
+    /**
+     * Performs a correct drawn and then check that cells are null
+     */
     @Test
-    public void draw_correctInput_correctOutput(){
+    public void draw_correctInput_correctOutput_grid4(){
         assertDoesNotThrow(() -> {
-            grid.refill();
-            ObjectCard[][] objectCardsMatric = new ObjectCard[9][9];
-            for(int i=0; i<9; i++)
-                for(int j=0; j<9; j++)
-                    objectCardsMatric[i][j]=grid.getMatrix()[i][j];
+            ObjectCard[][] matrix = grid4.getMatrix();
+            Assert.assertNotNull(matrix[0][3]);
+            Assert.assertNotNull(matrix[0][4]);
+
             Position[] positions = new Position[2];
             positions[0] = new Position(0,3);
             positions[1] = new Position(0,4);
-            ObjectCard[] objectCards = grid.draw(positions);
-            for(int i=3; i<5; i++){
-                Assert.assertNull(grid.getMatrix()[0][i]);
-                Assert.assertEquals(objectCardsMatric[0][i],objectCards[i-3]);
-            }
+            ObjectCard[] objectCards = grid4.draw(positions);
+
+            ObjectCard[][] matrix2 = grid4.getMatrix();
+            Assert.assertNotNull(objectCards[0]);
+            Assert.assertNotNull(objectCards[1]);
+            Assert.assertNull(matrix2[0][3]);
+            Assert.assertNull(matrix2[0][4]);
         });
     }
+    @Test
+    public void draw_correctInput_correctOutput_grid3(){
+        assertDoesNotThrow(() -> {
+            ObjectCard[][] matrix = grid3.getMatrix();
+            Assert.assertNotNull(matrix[0][3]);
+
+            Position[] positions = new Position[1];
+            positions[0] = new Position(0,3);
+            ObjectCard[] objectCards = grid3.draw(positions);
+
+            ObjectCard[][] matrix2 = grid3.getMatrix();
+            Assert.assertNotNull(objectCards[0]);
+            Assert.assertNull(matrix2[0][3]);
+        });
+    }
+    @Test
+    public void draw_correctInput_correctOutput_grid2(){
+        assertDoesNotThrow(() -> {
+            ObjectCard[][] matrix = grid2.getMatrix();
+            Assert.assertNotNull(matrix[1][3]);
+            Assert.assertNotNull(matrix[1][4]);
+
+            Position[] positions = new Position[2];
+            positions[0] = new Position(1,3);
+            positions[1] = new Position(1,4);
+            ObjectCard[] objectCards = grid2.draw(positions);
+
+            ObjectCard[][] matrix2 = grid2.getMatrix();
+            Assert.assertNotNull(objectCards[0]);
+            Assert.assertNotNull(objectCards[1]);
+            Assert.assertNull(matrix2[1][3]);
+            Assert.assertNull(matrix2[1][4]);
+        });
+    }
+
     @After
     public void tearDown(){
-        grid = new Grid(4, new CardGenerator(4));
     }
 }

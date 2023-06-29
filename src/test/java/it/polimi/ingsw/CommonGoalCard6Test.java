@@ -34,7 +34,7 @@ public class CommonGoalCard6Test {
     }
 
     @Test
-    public void isSatisfied_correctInputOnlyTwoSquare_trueInOutput(){
+    public void isSatisfied_2SquareAndArectangle_trueInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("", Color.BLUE,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -56,7 +56,7 @@ public class CommonGoalCard6Test {
         Assert.assertTrue(commonGoalCard.isSatisfied(library));});
     }
     @Test
-    public void isSatisfied_IntersectedTwoSquare_trueInOutput(){
+    public void isSatisfied_IntersectedTwoSquare_falseInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -83,7 +83,7 @@ public class CommonGoalCard6Test {
     }
 
     @Test
-    public void isSatisfied_correctInputFullMatrixCorrect_trueInOutput(){
+    public void isSatisfied_FullMatrix2SquareInCorners_trueInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("",Color.PINK,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -122,7 +122,7 @@ public class CommonGoalCard6Test {
         Assert.assertTrue(commonGoalCard.isSatisfied(library));});
     }
     @Test
-    public void isSatisfied_correctInputOnlyOneSquare_falseInOutput(){
+    public void isSatisfied_FullMatrix1Square_falseInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("",Color.YELLOW,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));

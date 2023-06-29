@@ -36,42 +36,47 @@ public class CommonGoalCard5Test {
 
 
     @Test
-    public void isSatisfied_correctInputCheckFisrtLastColumn_trueInOutput(){
+    public void isSatisfied_FirstAndLastColumn_trueInOutput(){
         assertDoesNotThrow(()-> {
             for (int i = 0; i < library.getNumberOfRows(); i++)
                 library.insertCardsInLibrary(0, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
             for (int i = 0; i < library.getNumberOfRows(); i++)
                 library.insertCardsInLibrary(4, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
             Assert.assertTrue(commonGoalCard.isSatisfied(library));
+
         });
     }
 
     @Test
-    public void isSatisfied_correctInputCheckSecondFourthColumn_trueInOutput(){
+    public void isSatisfied_SecondFourthColumn_trueInOutput(){
         assertDoesNotThrow(()-> {
             for (int i = 0; i < library.getNumberOfRows(); i++)
                 library.insertCardsInLibrary(1, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
             for (int i = 0; i < library.getNumberOfRows(); i++)
                 library.insertCardsInLibrary(3, new ObjectCard("", Color.getEnumFromRelativeInt(i), Type.FIRST));
             Assert.assertTrue(commonGoalCard.isSatisfied(library));
+
         });
     }
     @Test
-    public void isSatisfied_correctInputCheckthirdFourthColumn_trueInOutput(){
+    public void isSatisfied_ThirdFourthColumn_trueInOutput(){
         assertDoesNotThrow(()->{
         for(int i=0; i<library.getNumberOfRows(); i++)
             library.insertCardsInLibrary(2,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
         for(int i=0; i<library.getNumberOfRows(); i++)
             library.insertCardsInLibrary(3,new ObjectCard("",Color.getEnumFromRelativeInt(i),Type.FIRST));
-        Assert.assertTrue(commonGoalCard.isSatisfied(library));});
+        Assert.assertTrue(commonGoalCard.isSatisfied(library));
+
+        });
+
     }
 
     @Test
-    public void isSatisfied_correctInputEmptyMatrix_falseInOutput(){
+    public void isSatisfied_EmptyMatrix_falseInOutput(){
         Assert.assertFalse(commonGoalCard.isSatisfied(library));
     }
     @Test
-    public void isSatisfied_correctInputFullMatrix_falseInOutput(){
+    public void isSatisfied_WrongFullMatrix_falseInOutput(){
         assertDoesNotThrow(()->{
         for(int i=0; i<library.getNumberOfRows()-1; i++)
             for(int j=0; j<library.getNumberOfColumns(); j++)
@@ -82,7 +87,9 @@ public class CommonGoalCard5Test {
         library.insertCardsInLibrary(4,new ObjectCard("",Color.getEnumFromRelativeInt(0),Type.FIRST));
 
         library.insertCardsInLibrary(3,new ObjectCard("",Color.getEnumFromRelativeInt(5),Type.FIRST));
-        Assert.assertFalse(commonGoalCard.isSatisfied(library));});
+        Assert.assertFalse(commonGoalCard.isSatisfied(library));
+
+        });
     }
 
 }

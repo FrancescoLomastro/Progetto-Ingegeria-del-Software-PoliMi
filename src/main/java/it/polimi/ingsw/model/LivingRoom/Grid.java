@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.utility.Position;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,6 +34,8 @@ public class Grid implements Serializable {
     private final Set<Position> notAvailablePositions;
     private final CardGenerator cardGenerator;
     private final String filePath= "/json/Grid.json";
+
+
 
     /**
      * The constructor of the grid. After the call of this constructor, the matrix will contain the right number of
@@ -302,5 +305,26 @@ public class Grid implements Serializable {
                 return false;
         }
         return true;
+    }
+
+    /**
+     * @return the columns numbers in the grid
+     */
+    public int getNumColumns() {
+        return numColumns;
+    }
+
+    /**
+     * @return the rows numbers in the grid
+     */
+    public int getNumRows() {
+        return numRows;
+    }
+
+    /**
+     * @return set of not available positions
+     */
+    public Set<Position> getNotAvailablePositions() {
+        return new HashSet<>(notAvailablePositions);
     }
 }

@@ -47,10 +47,9 @@ public class CommonGoalCard8Test {
      * First Test: three columns with 3 different types and the other cells are all empty.
      * @author: Alberto Aniballi
      * */ @Test
-    public void isSatisfied_correctInputThreeColumnsOtherEmpty_trueInOutput(){
+    public void isSatisfied_threeColumnsOtherEmpty_trueInOutput(){
         assertDoesNotThrow(()-> {
-
-                    library.insertCardsInLibrary(0,new ObjectCard("", Color.LIGHTBLUE,Type.FIRST));
+            library.insertCardsInLibrary(0,new ObjectCard("", Color.LIGHTBLUE,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
         library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -74,11 +73,11 @@ public class CommonGoalCard8Test {
     }
 
     /**
-     * Second Test: three columns with 3 different types and the other cells are all filled with random objectCards.
+     * Second Test: three columns with 3 different types and the other cells are all filled.
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInputThreeColumnsOtherRowsRandom_trueInOutput(){
+    public void isSatisfied_threeColumnsOtherRowsFilled_trueInOutput(){
         assertDoesNotThrow(()-> {
 
                     library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
@@ -123,7 +122,7 @@ public class CommonGoalCard8Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInput5ColumnsWithMoreThanThreeTypes_falseInOutput(){
+    public void isSatisfied_5ColumnsWithMoreThanThreeTypes_falseInOutput(){
         assertDoesNotThrow(()-> {
             library.insertCardsInLibrary(0, new ObjectCard("", Color.LIGHTBLUE, Type.FIRST));
             library.insertCardsInLibrary(0, new ObjectCard("", Color.LIGHTBLUE, Type.FIRST));
@@ -168,7 +167,7 @@ public class CommonGoalCard8Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInput5RowsWithFiveTypes_trueInOutput(){
+    public void isSatisfied_6RowsOnly3Colors_trueInOutput(){
         assertDoesNotThrow(()-> {
 
                     library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
@@ -214,7 +213,7 @@ public class CommonGoalCard8Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInput5ColumnsWithOnlyOneType_trueInOutput(){
+    public void isSatisfied_5ColumnsWithOnly2Types_trueInOutput(){
         assertDoesNotThrow(()-> {
 
         library.insertCardsInLibrary(4,new ObjectCard("",Color.BLUE,Type.FIRST));

@@ -31,6 +31,11 @@ public class CommonGoalCard11 extends CommonGoalCard {
     @Override
     public boolean isSatisfied(Library library) {
 
+        for(int i=0; i<5;i++)
+        {
+            if(library.findNumberOfFreeCells(i)==library.getNumberOfRows())
+                return false;
+        }
         int currentColumnFreeCells = 0;
         int previousColumnFreeCells = 0;
 

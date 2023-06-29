@@ -40,7 +40,7 @@ public class CommonGoalCard7Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInputOnlyTwoRows_trueInOutput(){
+    public void isSatisfied_2RowsCorrect_trueInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("", Color.WHITE,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.BLUE,Type.FIRST));
@@ -63,11 +63,11 @@ public class CommonGoalCard7Test {
     }
 
     /**
-     * Second Test: two rows with 5 different types and the other cells are all filled with objectCards.
+     * Second Test: two rows with 5 different types and the other cells are all filled.
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInputOnlyTwoRowsOtherRowsRandom_trueInOutput(){
+    public void isSatisfied_correctInputOnlyTwoRowsOtherRowsFilled_trueInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("",Color.BLUE,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.GREEN,Type.FIRST));
@@ -112,7 +112,7 @@ public class CommonGoalCard7Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInput5RowsWithFourTypes_falseInOutput(){
+    public void isSatisfied_5RowsWithFourTypes_falseInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
@@ -158,7 +158,7 @@ public class CommonGoalCard7Test {
      * @author: Alberto Aniballi
      * */
     @Test
-    public void isSatisfied_correctInput5RowsWithFiveTypes_trueInOutput(){
+    public void isSatisfied_5RowsWithFiveTypes_trueInOutput(){
         assertDoesNotThrow(()->{
         library.insertCardsInLibrary(0,new ObjectCard("",Color.LIGHTBLUE,Type.FIRST));
         library.insertCardsInLibrary(1,new ObjectCard("",Color.PINK,Type.FIRST));
