@@ -44,6 +44,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
+     * @author: Riccardo Figini
      * */
     public GameController(int gameId, Controller controller) {
         this.clients= new LinkedHashMap<>();
@@ -52,6 +53,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         this.controller = controller;
         statusGame = StatusGame.BEFORE_GAME;
     }
+    /**It starts the ping message. They will continue till the end of the game
+     * @author: Riccardo Figini
+     * @author: Francesco Lo mastro*/
     public void startPingTimer(Connection connection) {
         connection.startTimer(controller);
     }
@@ -93,8 +97,11 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * this method adds a player in this game
-     * @param username : Player's username
-     * @param connection : Player's connection
+     * @author: Riccardo Figini
+     * @author: Andrea Ferrini
+     * @author: Francesco Lo Mastro
+     * @param username Player's username
+     * @param connection Player's connection
      * */
     public void addPlayer(String username, Connection connection) {
         clients.put(username,connection);
@@ -111,7 +118,12 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         });
     }
     /**
-     * implementation of the method run, in Runnable interface
+     * Implementation of the method run, in Runnable interface. This method starts the game. It creates a new
+     * model for the game and stes every parameter, then shares the model with all clients. Finally,
+     * it asks the first move
+     * @author: Riccardo Figini
+     * @author: Andrea Ferrini
+     * @author: Francesco Lo Mastro
      * */
     @Override
     public void run() {
@@ -147,6 +159,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * sends a message to all the players
+     * @author: Riccardo Figini
+     * @author: Andrea Ferrini
+     *
      * */
     public void newServerMessages(){
         for(Map.Entry<String, Connection> entry : clients.entrySet()){
@@ -160,6 +175,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**It handles messages from player
      * @author: Andrea Ferrini
+     * @author: Francesco Lo Mastro
      * @param message Message from player
      * */
     @Override
@@ -262,8 +278,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         controller.destroyGame(player, message, this);
     }
     /**
-     * initialization of a game
+     * Initialization of a game, it creates the model
      * @author: Riccardo Figini
+     * @author: Andrea Ferrini
      * */
     public void initGame(){
 
@@ -273,8 +290,6 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             System.out.println(Controller.ANSI_BLU + "Error in game creation" + e + ANSI_RESET);
             gameNeedToBeClosed("Game has some problem in allocation, game will be closed");
         }
-
-        //inizializzo i giocatori nel game
         for (Map.Entry<String, Connection> entry : clients.entrySet()) {
             String key = entry.getKey();
             game.setNextPlayer(key);
@@ -286,7 +301,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     /**
      * it sends a message to all the users in the game
      *  @author: Riccardo Figini
-     * @param message : the message to send
+     * @author: Andrea Ferrini
+     * @param message the message to send
      * */
     public void notifyAllMessage(Message message){
         System.out.println(sendMessageAll + ") Message send all, Type: " + message.getType());
@@ -302,8 +318,10 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * it sends a message to a specific user
-     * @param message : the message to send
-     * @param username : the username who will receive that message
+     * @author: Riccardo Figini
+     * @author: Andrea Ferrini
+     * @param message the message to send
+     * @param username the username who will receive that message
      * */
     public void sendMessageToASpecificUser(Message message, String username){
         System.out.println(sendMessageToSpecific + ") Message send specific, Type: " + message.getType() + ", " + username);
@@ -317,6 +335,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**Save Game data on a file
      * @author: Riccardo Figini
+     * @author: Andrea Ferrini
      * */
     public void updateFile() {
         try {
@@ -331,26 +350,39 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
 
-    /**It returns an arrayList with name of player
+    /**It returns an arrayList with the name of player
      * @author: Riccardo Figini
      * @return {@code ArrayList<String>} List of player
      * */
     public ArrayList<String> getNamesOfPlayer(){
         return testArray;
     }
+    /**It returns the game's ID
+     * @author: Riccardo Figini
+     * @return int game id*/
     public int getGameId() {
         return gameId;
     }
+    /**It returns the dimension of lobby
+     * @author: Riccardo Figini
+     * @author: Francesco Lo Mastro
+     * @return int max number of players
+     * */
     public int getLimitOfPlayers()
     {
         return limitOfPlayers;
     }
-    public void setLimitOfPlayers(int value)
+    /**It sets the number of players
+     * @author: Francesco Lo Masto
+     * @author: Riccardo Figini
+     * @param maxNUmberOfPLayer number of players*/
+    public void setLimitOfPlayers(int maxNUmberOfPLayer)
     {
-        limitOfPlayers=value;
+        limitOfPlayers=maxNUmberOfPLayer;
     }
     /**
      * @return the size of the hashmap that contains the players
+     * @author: Riccardo Figini
      * */
     public int getSizeOfLobby()
     {
