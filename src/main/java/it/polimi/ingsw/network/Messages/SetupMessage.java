@@ -38,6 +38,7 @@ public class SetupMessage extends Message {
      * @param commonGoalCards the descriptions of common goal cards
      * @param playersPoints map of players point
      * @param playersLibraries a vector of players libraries
+     * @author: Francesco Gregorio Lo Mastro
      */
     public SetupMessage(int firstCommonGoalCardPoints, int secondCommonGoalCardPoints, int personalGoalNumber, int firstCommonGoalCardId, int secondCommonGoalCardId, int centralPointCard, ObjectCard[][] grid, String[] playerNames,
                         ArrayList<Couple> personalGoalCard, String[] commonGoalCards , ArrayList<Couple<String, Integer>> playersPoints , ObjectCard[][]... playersLibraries) {
@@ -57,87 +58,100 @@ public class SetupMessage extends Message {
         this.playersPoints=playersPoints;
     }
 
-    /**
+    /**It returns the central grid
      * @return the points on the grid
+     * @author: Francesco Gregorio Lo Mastro
      */
     public int getCentralPointCard() {
         return centralPointCard;
     }
 
-    /**
+    /**It returns the description of the first common goal card
      * @return the description of the first common goal card
+     * @author: Francesco Gregorio Lo Mastro
      */
     public String getFirstCommonGoalDescription() {
         return firstCommonGoalDescription;
     }
-    /**
+    /**It retunrs the description of the second common goal card
+     * @author: Francesco Gregorio Lo Mastro
      * @return the description of the second common goal card
      */
     public String getSecondCommonGoalDescription() {
         return secondCommonGoalDescription;
     }
-    /**
+    /**It returns a list with a list of player in the game
+     * @author: Francesco Gregorio Lo Mastro
      * @return a vector with all player names
      */
     public String[] getPlayerNames() {
         return playerNames;
     }
 
-    /**
+    /**It returns a list of player's library
+     * @author: Francesco Gregorio Lo Mastro
      * @return a vector of matrix, representing each library
      */
     public ObjectCard[][][] getPlayersLibraries() {
         return playersLibraries;
     }
-    /**
+    /**It returns the central grid
+     * @author: Francesco Gregorio Lo Mastro
      * @return a matrix, representing the central grid
      */
     public ObjectCard[][] getGrid() {
         return grid;
     }
-    /**
+    /**It returns the personal goal card as position's array.
+     * @author: Francesco Gregorio Lo Mastro
      * @return an arraylist of Couples, representing a personal goal card {Couple = (Color, Position)}
      */
     public ArrayList<Couple> getPersonalGoalCard() {
         return personalGoalCardMatrix;
     }
 
-    /**
+    /**It returns the ID of persoanl goal card, used to reach image
+     * @author: Francesco Gregorio Lo Mastro
      * @return the Id of the personal goal card
      */
     public int getPersonalGoalId() {
         return personalGoalId;
     }
 
-    /**
+    /**It retunrs the ID of common goal card, used to reach the card's image
+     * @author: Francesco Gregorio Lo Mastro
      * @return the Id of the first common goal card
      */
     public int getFirstCommonGoalCardId() {
         return firstCommonGoalCardId;
     }
 
-    /**
+    /**it returns the id of common goal card, used to reache the card's image
+     * @author: Francesco Gregorio Lo Mastro
      * @return the Id of the first common goal card
      */
     public int getSecondCommonGoalCardId() {
         return secondCommonGoalCardId;
     }
 
-    /**
+    /**It returns the available points of the first common goal card
+     * @author: Francesco Gregorio Lo Mastro
      * @return the points on the first common goal card
      */
     public int getFirstCommonGoalCardPoints() {
         return firstCommonGoalCardPoints;
     }
 
-    /**
+    /**It returns the points of every player
+     * @author: Francesco Gregorio Lo Mastro
      * @return an arraylist with the point of each player
      */
     public ArrayList<Couple<String, Integer>> getPlayersPoints() {
         return playersPoints;
     }
 
-    /**
+    /**It returns the available points of the second common goal card
+     * @author: Francesco Gregorio Lo Mastro
      * @return the points on the first common goal card
      */
     public int getSecondCommonGoalCardPoints() {

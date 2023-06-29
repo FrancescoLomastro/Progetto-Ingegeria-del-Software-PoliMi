@@ -17,6 +17,9 @@ public class LibraryMessage extends Message {
      * @param libraryOwner the owner of the library that is updated
      * @param gridCardRemoved vector of positions representing cards removed from central grid with the move (used for GUI animation)
      * @param LibraryCardAdded vector of positions representing cards added in the library with the move (used for GUI animation)
+     * @author: Francesco Gregorio Lo Mastro
+     * @author: Andrea Ferrini
+     * @author: Riccardo Figini
      */
     public LibraryMessage(ObjectCard[][]library, String libraryOwner, Position[] gridCardRemoved, Position[] LibraryCardAdded){
         super(MessageType.UPDATE_LIBRARY_MESSAGE);
@@ -27,27 +30,32 @@ public class LibraryMessage extends Message {
     }
 
     /**
+     * It returns the library's owner
      * @return the username of the updated library owner
+     * @author: Francesco Gregorio Lo Mastro
      */
     public String getLibraryOwner() {
         return libraryOwner;
     }
 
-    /**
+    /**It returns an updated library
      * @return a matrix of object cards representing an updated library
+     * @author: Francesco Gregorio Lo Mastro
      */
     public ObjectCard[][] getLibrary() {
         return library;
     }
 
-    /**
+    /**It returns card removed from grid
      * @return a vector of positions representing cards removed from central grid with the move (used for GUI animation)
+     * @author: Francesco Gregorio Lo Mastro
      */
     public Position[] getGridCardRemoved() {
         return gridCardRemoved;
     }
 
     /**
+     * It returns card added in library
      * @return a vector of positions representing cards added in the library with the move (used for GUI animation)
      */
     public Position[] getLibraryCardAdded() {

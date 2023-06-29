@@ -16,6 +16,7 @@ public abstract class Message implements Serializable {
      * Constructor: specifies both senderName and type
      * @param senderName sender username
      * @param type type of the message
+     *@author: Francesco Lo Mastro
      */
     Message(String senderName, MessageType type) {
         this.senderName = senderName;
@@ -24,28 +25,33 @@ public abstract class Message implements Serializable {
     /**
      * Specifies only the message type, used when the sender name will be added in a second moment
      * @param type type of the message
+     * @author: Francesco Lo Mastro
      */
     Message(MessageType type) {
         this.type = type;
     }
 
-    /**
+    /**It returns the sender of message
      * @return the sender name
+     * @author: Francesco Lo Mastro
      */
     public String getSenderName() {
         return senderName;
     }
 
-    /**
+    /**It returns the type of message
+     *
      * @return the type of the message
+     *@author: Francesco Lo Mastro
      */
     public MessageType getType() {
         return type;
     }
 
-    /**
+    /**It set the sender's name
      * Sets the sender name field of the message as the parameter
      * @param name the sender name to be set
+     * @author: Francesco Lo Mastro
      */
     public void setSenderName(String name) {
         this.senderName =name;

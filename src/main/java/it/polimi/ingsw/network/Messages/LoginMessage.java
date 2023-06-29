@@ -16,14 +16,16 @@ public class LoginMessage extends Message{
      * Constructor: creates a generic login message
      * @param userName is the sender username
      * @param connection is a connection that server will use to talk to the sender of this message
+     * @author: Francesco Lo Mastro
      */
     public LoginMessage(String userName, Connection connection) {
         super(userName, MessageType.LOGIN_REQUEST);
         this.clientConnection=connection;
     }
 
-    /**
+    /**It returns the connection, it is useful for server
      * @return the connection inside the message
+     * @author: Francesco Lo Mastro
      */
     public Connection getClientConnection() {
         return clientConnection;
