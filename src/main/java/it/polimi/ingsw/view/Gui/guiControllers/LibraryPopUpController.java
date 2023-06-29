@@ -42,7 +42,11 @@ public class LibraryPopUpController implements Initializable {
         updateLibrary(library);
     }
 
-
+    /**
+     * This method initialize the library.
+     *
+     * @author Andrea Ferrini
+     */
     public void initLibrary() {
         int rowCount = library_gridPane.getRowCount();
         int columnCount = library_gridPane.getColumnCount();
@@ -56,7 +60,12 @@ public class LibraryPopUpController implements Initializable {
     }
 
 
-
+    /**
+     * This method update the library.
+     *
+     * @param library : current library
+     * @author Andrea Ferrini
+     */
     public void updateLibrary(ObjectCard[][] library){
         for (Node node : library_gridPane.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
