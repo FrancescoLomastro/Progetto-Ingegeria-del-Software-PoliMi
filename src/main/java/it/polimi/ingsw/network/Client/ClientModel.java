@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**This class is a not complete copy of a model maintained by server.
+ * It represents the status of the game
+ * @author: Riccardo Figini
+ * @author: Francesco Lo Mastro
+ * */
 
 public class ClientModel extends Observable<Message> {
     private ObjectCard[][] grid;
@@ -114,42 +119,75 @@ public class ClientModel extends Observable<Message> {
         setChanged();
         notifyObservers(new CommonGoalMessage(score, card, msg.getPlayerWhoScored(), commonGoalPointsVector[0], commonGoalPointsVector[1]));
     }
-
-    public ObjectCard[][] getGrid()
-    {
+    /**It returns the central grid
+     * @author: Francesco Gregorio Lo Mastro
+     * */
+    public ObjectCard[][] getGrid() {
         return grid;
     }
-
+    /**It returns a vector with points available for both common goal cards
+     * @author: Francesco Gregorio Lo Mastro
+     * @return int[] vector with points
+     * */
     public int[] getCommonGoalPointsVector() {
         return commonGoalPointsVector;
     }
-
+    /**It returns the library of a player specification in input parameter
+     * @author: Francesco Gregorio Lo Mastro
+     * @param name name of player
+     * @return ObjectCard[][] matrix of object cards or null id player does not exist
+     * */
     public ObjectCard[][] getLibrary(String name)
     {
         return librariesMap.get(name);
     }
-
+    /**It sets first common goal's description
+     * @param firstCommonGoalDescription description
+     * @author: Francesco Gregorio Lo Mastro
+     * */
     public void setFirstCommonGoalDescription(String firstCommonGoalDescription) {
         this.firstCommonGoalDescription = firstCommonGoalDescription;
     }
+    /**It sets the second common goal's description
+     * @param secondCommonGoalDescription description
+     * @author: Francesco Gregorio Lo Mastro
+     * */
     public void setSecondCommonGoalDescription(String secondCommonGoalDescription) {
         this.secondCommonGoalDescription = secondCommonGoalDescription;
     }
     /**it returns a map with couple name-library
      * @author: Franscesco Gregorio Lo Mastro
-     * @return {@code Map<String, ObjectCard[][]>} return a map*/
+     * @return {@code Map<String, ObjectCard[][]>} return a map
+     * */
     public Map<String, ObjectCard[][]> getAllLibrary() {
         return librariesMap;
     }
+    /**It returns a copy of personal goal card
+     * @author: Francesco Gregorio Lo Mastro
+     * @return arrayList with persona goal card
+     * */
     public ArrayList<Couple> getPersonalGoalCardMatrix() {
         return new ArrayList<>(personalGoalCardMatrix);
     }
+    /**It returns the description of the first common goal card
+     * @author: Francesco Gregorio Lo Mastro
+     * @return description of card
+     * */
     public String getFirstCommonGoalDescription() {
         return firstCommonGoalDescription;
     }
+    /**It returns the description of the second common goal card
+     * @author: Francesco Gregorio Lo Mastro
+     * @return description of card
+     * */
     public String getSecondCommonGoalDescription() {
         return secondCommonGoalDescription;
     }
+    /**It sets points to a player
+     * @author: Francesco Gregorio Lo Mastro
+     * @param first name of player
+     * @param second points of player
+     * */
     public void setPointToPlayer(String first, Integer second) {
         pointsMap.replace(first, second);
     }
@@ -196,25 +234,48 @@ public class ClientModel extends Observable<Message> {
                 msg.getPlayersPoints(),
                 getObjectCards(msg.getPlayersLibraries())));
     }
+    /**It returns an array of string with the name of players in the game
+     * @author: Francesco Gregorio Lo Mastro
+     * @return String[] list of player
+     * */
     public String[] getPlayerNames() {
         return librariesMap.keySet().toArray(new String[0]);
     }
+    /**It returns the name of owner of this client model
+     * @author: Francesco Gregorio Lo Mastro
+     * @return String name of owner player
+     * */
     public String getMyName() {
         return myName;
     }
+    /**It sets the name of clientModel's owner
+     * @author: Francesco Gregorio Lo Mastro
+     * @param myName name of player
+     * */
     public void setMyName(String myName) {
         this.myName = myName;
     }
+    /**It returns the ID of first common goal card
+     * @author: Francesco Gregorio Lo Mastro
+     * @return int with ID number
+     * */
     public int getFirstCommonGoalId() {
         return firstCommonGoalId;
     }
+    /**It returns the number ID of personal jail card
+     * @author: Francesco gregorio Lo Mastro*/
     public int getPersonalGoalId() {
         return personalGoalId;
     }
+    /**It returns the ID of second common goal card
+     * @author: Francesco Gregorio Lo Mastro
+     * @return int with ID number
+     * */
     public int getSecondCommonGoalId() {
         return secondCommonGoalId;
     }
     /**This method is called when someone fill is a library
+     * @author: Francesco gregorio Lo Mastro
      * @param message message with player's name
      * */
     public void onAlmostOver(AlmostOverMessage message) {

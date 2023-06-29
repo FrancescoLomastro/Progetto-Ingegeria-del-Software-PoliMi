@@ -24,6 +24,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
     /**
      * Constructor
      * @author: Riccardo Figini
+     * @author: Francesco Gregorio Lo Mastro
      * @param address Server's address
      * @param port Server's port
      * @param username Client's name */
@@ -34,6 +35,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
     /**
      * It sends a message to server with new name chosen and try to join in a game with it
      * @author: Francesco Lo Mastro
+     * @author: Riccardo Figini
      * */
     @Override
     public void newUsernameProposal() {
@@ -48,6 +50,8 @@ public class RMI_Client extends Client implements RMIClientConnection {
     /**
      * This method changes reference to server, from acceptor server to Game server.
      * Thanks to this, a client can communicate directly with GameController
+     * @author: Francesco Gregorio Lo Mastro
+     * @author: Riccardo Figni
      * @param message Message contains name and port of server
      * */
     public void changeServer(NewGameServerMessage message){
@@ -64,6 +68,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
      * Client makes login on server, to join in a game.
      * It is an Override because the creation of connection depends on RMI/Socket
      * @author: Riccardo Figini
+     * @author: Francesco Gregorio Lo Mastro
      * */
     @Override
     public void connect() {
@@ -90,7 +95,8 @@ public class RMI_Client extends Client implements RMIClientConnection {
     }
     /**
      * Receive a message and put it in a queue
-     * @param message Generic Message*/
+     * @param message Generic Message
+     * */
     @Override
     public void onMessage(Message message) {
         if (message.getType() == MessageType.PING_MESSAGE) {

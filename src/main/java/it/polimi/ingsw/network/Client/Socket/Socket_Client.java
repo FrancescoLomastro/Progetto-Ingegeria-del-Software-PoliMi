@@ -22,6 +22,7 @@ public class Socket_Client extends Client implements Runnable{
     /**
      * Constructor
      * @author: Riccardo Figini
+     * @author: Francesco Gregorio Lo Mastro
      * @param address Server's address
      * @param port Server's port
      * @param username Client's name*/
@@ -32,6 +33,7 @@ public class Socket_Client extends Client implements Runnable{
     /**
      * It sends a message to server with new name chosen and try to join in a game with it
      * @author: Francesco Lo Mastro
+     * @author: Riccardo Figini
      * */
     @Override
     public void newUsernameProposal() {
@@ -44,8 +46,9 @@ public class Socket_Client extends Client implements Runnable{
 
     /**
      * Client makes login on server, to join in a game.
-     * It is an Override because the creation of connection depend on RMI/Socket
+     * It is an Override because the creation of connection depends on RMI/Socket
      * @author: Riccardo Figini
+     * @author: Francesco Gregorio Lo Mastro
      * */
     @Override
     public void connect() {
@@ -63,6 +66,7 @@ public class Socket_Client extends Client implements Runnable{
     /**
      * Send a generic message to server
      * @author: Riccardo Figini
+     * @author: Francesco Gregorio Lo Mastro
      * @param message message*/
     @Override
     public void sendMessage(Message message) throws IOException {
@@ -78,7 +82,9 @@ public class Socket_Client extends Client implements Runnable{
     /**
      * This thread is called when client calls method connection. It continues to read
      * stream with a message from server
-     * @author: Riccardo Figini*/
+     * @author: Riccardo Figini
+     * @author: Francesco Gregorio Lo Mastro
+     * */
     @Override
     public void run()
     {

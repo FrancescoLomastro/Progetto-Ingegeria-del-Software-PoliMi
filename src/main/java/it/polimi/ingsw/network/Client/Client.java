@@ -62,28 +62,38 @@ public abstract class Client extends UnicastRemoteObject {
         newUsernameProposal();
     }
     /**Abstract method that creates a new connection with server with a new name
+     * @author: Francesco Gregorio Lo Mastro
      * */
     public abstract void newUsernameProposal();
-
+    /**
+     * It returns the name of player
+     * @author: Francesco Gregorio Lo Mastro
+     * @return String with the name
+     * */
     public String getUsername() {
         return username;
     }
-
-
+    /**It returns the IP address of server
+     * @author: Francesco Gregorio Lo Mastro
+     * @return String with IP address*/
     public String getServerAddress() {
         return serverAddress;
     }
-
-
+    /**It returns and int with the number of the port of server
+     * @author: Francesco Gregorio Lo Mastro
+     * @return int with port number
+     * */
     public int getServerPort() {
         return serverPort;
     }
-
-
+    /**Abstract method implemented in an RMI and Socket version, it connects a client to the server
+     * when a client has all infromation
+     * @author: Francesco Gregorio Lo Mastro*/
     public abstract void connect();
-
-
+    /**It is an abstract method implemented in RMI and socket that send message
+     * to server
+     * @author: Francesco Gregorio Lo Mastro
+     * @param message to be sent
+     * */
     public abstract void sendMessage(Message message) throws IOException;
-
-
 }
