@@ -28,8 +28,10 @@ public class TurnController implements Runnable, Serializable {
 
     /**
      * the constructor of the class TurnController
-     * @param game : the game which the TurnController is controlling
-     * @param gameController : the Game controller associated to the game
+     * @param game the game which the TurnController is controlling
+     * @param gameController the Game controller associated to the game
+     * @author: Andrea Ferrini
+     * @author: Riccardo Figini
      * */
     public TurnController(Game game, GameController gameController){
         this.flagCountdown =false;
@@ -95,6 +97,8 @@ public class TurnController implements Runnable, Serializable {
     /**
      * a method to call to start the turn thread, it saves the message and runs the new thread
      * @param message : the message to save
+     * @author: Andrea Ferrini
+     * @author: Riccardo Figini
      * */
     public void startTheTurn(MoveMessage message){
         if(message!= null && message.getSenderName().equals(currentPlayer)){
@@ -108,6 +112,9 @@ public class TurnController implements Runnable, Serializable {
 
     /**
      * implementation of Runnable interface's method run
+     * @author: Andrea Ferrini
+     * @author: Riccardo Figini
+     * @author: Francesco Lo Mastro
      * */
     public void run()
     {

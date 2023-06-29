@@ -34,9 +34,11 @@ public class Controller implements ServerReceiver
     public static String NumOfGamesFile ="gameNumbers.json";
     private String NumOfGamesPath = NumOfGameFolder+"/"+NumOfGamesFile;
 
-
+    /**Constructor of server controller
+     * @author: Riccardo Figini
+     * @author: Francesco Lo Mastro
+     * */
     public Controller() {
-
         games = new ArrayList<>();
         currentGame= new GameController(getAvailableID(), this);
         playerBeforeJoiningLobby = new HashMap<>();
@@ -67,6 +69,7 @@ public class Controller implements ServerReceiver
     /**It handles connection-error
      * @param connection Player's connection
      * @param playerName Player's name
+     * @author: Riccardo Figini
      * */
     @Override
     public synchronized void tryToDisconnect(Connection connection, String playerName) {
@@ -115,6 +118,8 @@ public class Controller implements ServerReceiver
     }
     /**It handles messages before game
      * @param message message
+     * @author: Francesco Lo Mastro
+     * @author: Riccardo Figini
      * */
     @Override
     synchronized public void onMessage(Message message) {
@@ -233,7 +238,9 @@ public class Controller implements ServerReceiver
         playerBeforeJoiningLobby.put(username, connection);
         return true;
     }
-    /**It destroys all file game
+    /**It destroys all files of the game
+     * @author: Riccardo Figini
+     * @exception IOException When a cancellation does not work
      * */
     private void destroyAllFile() throws IOException {
         JsonObject j =  getArrayJsonWithNumberGame();
@@ -259,7 +266,9 @@ public class Controller implements ServerReceiver
         }catch (IOException ignored) {
         }
     }
-    /**It loads old player name
+    /**It loads old player name in a list. Then the controller will control this list to check if a noew
+     * player is from old game
+     * @author: Riccardo Figini
      * */
     private void manageOldPlayer(){
         JsonArray arrayOfJsonCells = Objects.requireNonNull(getArrayJsonWithNumberGame()).getAsJsonArray("numOfGame");
@@ -303,6 +312,10 @@ public class Controller implements ServerReceiver
         return gson.fromJson(reader, JsonObject.class);
     }
 
+    /**It tries to create the file where save the game's IDs
+     * @author: Francesco Lo Mastro
+     * @author: Riccardo Figini
+     * */
     private boolean tryCreateFile() {
         File folder = new File(NumOfGameFolder);
         if (!folder.exists()) {
@@ -329,6 +342,7 @@ public class Controller implements ServerReceiver
 
     /**It adds the name of player from ongoing game. It reads object "gameController" from a file indicated with path
      * @param path Game's path
+     *@author: Riccardo Figini
      * */
     private void getPlayerFromFile(String path, String gameId) {
         GameController gameController ;
@@ -457,6 +471,7 @@ public class Controller implements ServerReceiver
     /**It controls if in games exists a player with the same name in input
      * @param username player's name to verify
      * @return {@code boolean} true if name is available
+     * @author: Riccardo Figini
      * */
     private boolean isAvailableUsername(String username) {
         for (GameController gc : games) {
@@ -520,12 +535,15 @@ public class Controller implements ServerReceiver
     }
     /**It deletes game file
      * @author: Riccardo Figini
-     * @param s File's name to remove */
+     * @param s File's name to remove
+     * @exception IOException It occurs when the cancellation does not work correctly
+     * */
     private void deleteGameFile(String s) throws IOException {
         Files.delete(Paths.get(s));
     }
-    /**When old player finally restart it remove player
-     * @author: Riccardo Figini*/
+    /**When old player finally restarts it remove player
+     * @author: Riccardo Figini
+     * */
     private void removePlayerFromOldList(GameController gameController) {
         for(int i = 0; i< gameController.getNamesOfPlayer().size(); i++){
             oldPlayersMap.remove(gameController.getNamesOfPlayer().get(i));
@@ -680,18 +698,19 @@ public class Controller implements ServerReceiver
         if(connection!=null)
             connection.setStatusNetwork(statusNetwork);
     }
-    /**It removes gameController from list
+    /**It removes gameController from a list
+     * @author: Riccardo Figini
      * @param gameController gameController
      * */
     public void removeGame(GameController gameController) {
         games.remove(gameController);
     }
 
-
-
     /**
      * Starts a timer "numberRequestTimer" to get a response to PLAYER_NUMBER_ANSWER, avoid blocking the whole server when
-     * a single clients takes too long to reply.
+     *  single clients take too long to reply.
+     * @author: Riccardo Figini
+     * @author: Francesco Lo Mastro
      */
     private void startWaitedRequestTimer(Connection clientConnection) {
         numberRequestTimer = new Timer();
@@ -700,13 +719,11 @@ public class Controller implements ServerReceiver
 
     /**
      * stops the "numberRequestTimer" if it was scheduled
+     * @author: Franceso Lo Mastro
      */
     private void stopWaitedRequestTimer() {
         if (numberRequestTimer!=null) {
             numberRequestTimer.cancel();
         }
     }
-
-
-
 }
