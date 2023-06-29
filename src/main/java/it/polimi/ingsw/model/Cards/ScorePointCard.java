@@ -11,7 +11,8 @@ public class ScorePointCard implements Serializable {
 
     /**Constructor
      * @author Riccardo Figini
-     * @param numberOfPlayer number of player*/
+     * @param numberOfPlayer number of players
+     * */
     public ScorePointCard(int numberOfPlayer){
         this.numberOfPlayer=numberOfPlayer;
         this.score=8;
@@ -52,7 +53,8 @@ public class ScorePointCard implements Serializable {
         changeScore();
         return number;
     }
-
+    /**It returns the actual score of the card
+     * @author: Riccardo Figini*/
     public int getScore() {
         return score;
     }

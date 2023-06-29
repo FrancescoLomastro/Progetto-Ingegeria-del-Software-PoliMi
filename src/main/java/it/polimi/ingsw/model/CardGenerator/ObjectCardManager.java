@@ -34,6 +34,8 @@ public class ObjectCardManager implements Serializable {
 
 
     /**
+     * It returns the number of types that card can have. In the original game, for
+     * every color exists 3 different types with respectfully 8 7 7 number of cards
      * @return the number of types that cards can have in the manager
      * @author: Francesco Lo Mastro
      */
@@ -46,6 +48,7 @@ public class ObjectCardManager implements Serializable {
 
 
     /**
+     * It returns color of cards
      * @return the number of colors that cards can have in the manager
      * @author: Francesco Lo Mastro
      */
@@ -82,7 +85,7 @@ public class ObjectCardManager implements Serializable {
      * This method checks if a ObjectCard with {@code color} and {@code type} can be generated
      * @param color the color that the card will have
      * @param type the type that the card will have
-     * @return true if the card can be generated, means that the requested type of card is not out of stock yet.
+     * @return true, if the card can be generated, means that the requested type of card is not out of stock yet.
      * @author: Francesco Lo Mastro
      */
     public boolean isCardDrawable(Color color, Type type)

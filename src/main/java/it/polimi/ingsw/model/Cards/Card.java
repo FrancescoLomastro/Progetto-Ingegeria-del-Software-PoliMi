@@ -8,7 +8,7 @@ public abstract class Card implements Serializable {
 
     /**constructor
      * @uthor Riccardo figini
-     * @param description: description of the card to initialize
+     * @param description description of the card to initialize
      * */
     public Card(String description){
         this.description=description;

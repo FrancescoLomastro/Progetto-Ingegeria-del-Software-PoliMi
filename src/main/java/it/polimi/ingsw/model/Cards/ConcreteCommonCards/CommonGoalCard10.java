@@ -24,6 +24,8 @@ public class CommonGoalCard10 extends CommonGoalCard {
     }
     /**
      * the main algorithm that checks this common goal
+     * @author: Alberto Aniballi
+     * @author: Andrea Ferrini
      * @param library the turn player's library
      * @return boolean: true if satisfied, false if not satisfied
      */

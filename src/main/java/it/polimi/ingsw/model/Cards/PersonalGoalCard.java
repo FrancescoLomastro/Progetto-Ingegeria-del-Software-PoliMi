@@ -18,6 +18,8 @@ public class PersonalGoalCard extends Card {
     }
     /**This method counts and returns point of personal goal card. It will be called at the end of the game.
      * @author: Riccardo Figini
+     * @author: Francesco Lo Mastro
+     * @author: Alberto Aniballi
      * @param lib player's library, which will be tested
      * @return {@code int} count score point*/
     public int countPersonalGoalCardPoints(Library lib){
@@ -55,14 +57,16 @@ public class PersonalGoalCard extends Card {
         return goalVector;
     }
 
-    /**
+    /**Returns the ID of card
+     * @author: Francesco Lo Mastro
      * @return the id of the card
      */
     public int getCardId() {
         return cardId;
     }
 
-    /**
+    /**It returns the description, it's static because the original game does not have it
+     * @author: Francesco Lo Mastro
      * @return the description of the card
      */
     @Override

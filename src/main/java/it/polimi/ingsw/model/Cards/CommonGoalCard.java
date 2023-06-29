@@ -21,7 +21,7 @@ public abstract class CommonGoalCard extends Card implements Serializable {
      * someone has reached the common goal
      * @author Riccardo Figini
      * @param lib player's library
-     * @return boolean: true if the library respect common goal features */
+     * @return boolean: true if the library respects common goal features */
     public abstract boolean isSatisfied(Library lib);
     /**It sets score point card after creation because it needs number of players, during
      * creation card does not have it
@@ -34,16 +34,24 @@ public abstract class CommonGoalCard extends Card implements Serializable {
 
     /**This method get current common goal point
      * @author Riccardo Figini
+     * @author: Andrea Ferrini
      * @return scorePointCard.getScore() int score point*/
     public int getPoints(){
         return scorePointCard.getScore();
     }
 
 
+    /**It returns the points available, then decrease it according to rules based
+     *  on the number of players
+     * @author: Andrea ferrini
+     * @return int point
+     * */
     public int getScoreWithDecrease(){
 
         return scorePointCard.getScoreWithDecrease();
     }
+    /**It returns the num of card
+     * @author: Francesco Lo Mastro*/
     public int getCardId() {
         return num;
     }

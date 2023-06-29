@@ -14,7 +14,15 @@ public class CommonGoalCard1 extends CommonGoalCard {
         setDescription("Five tiles of the same type forming a " +
                 "diagonal. ");
     }
-
+    /**
+     * It verifies if the library satisfies the goal of this specific common goal card
+     * @author: Francesco Lo Mastro
+     * @author: Albero Aniballi
+     * @author: Riccardo Figini
+     * @author: Andrea Ferrini
+     * @param lib   the library on which we will verify if the goal is satisfied or not
+     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * */
     @Override
     public boolean isSatisfied(Library lib) {
 

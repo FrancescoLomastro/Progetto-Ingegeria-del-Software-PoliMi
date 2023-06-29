@@ -97,6 +97,7 @@ public class CommonCardManager implements Serializable {
 
 
     /**
+     * It returns the number of common goal cards
      * @return the initial number of available cards
      * @author: Francesco Lo Mastro
      */

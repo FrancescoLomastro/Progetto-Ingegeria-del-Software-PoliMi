@@ -32,7 +32,7 @@ public class PersonalCardManager implements Serializable {
 
     /**
      * Constructor: Get all the models stored in the class JSON file and creates a PersonalCardManager with 0 already generated cards.
-     * NOTE: this method don't create all the PersonalCards it reads from the file, but prepare to manage the amount of card that are written in the file
+     * NOTE: this method doesn't create all the PersonalCards it reads from the file, but prepares to manage the amount of card that are written in the file
      * @author: Francesco Lo Mastro
      */
     public PersonalCardManager(){
@@ -50,7 +50,7 @@ public class PersonalCardManager implements Serializable {
 
     /**
      * This method reads the file in the class attribute {@code filePath} and prepares to manage the number of card it read.
-     * NOTE: In case the file is unreachable it will throw a RuntimeException
+     * NOTE: In case the file is unreachable, it will throw a RuntimeException
      * @return a JsonArray representing all the personal cards that will be managed
      * @throws RuntimeException if the file is missing from the file path
      * @author: Francesco Lo Mastro
@@ -104,6 +104,7 @@ public class PersonalCardManager implements Serializable {
 
 
     /**
+     * It returns the number of cards
      * @return the initial number of available cards got from file
      * @author: Francesco Lo Mastro
      */
