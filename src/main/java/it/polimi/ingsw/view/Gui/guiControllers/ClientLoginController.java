@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.Gui.guiControllers;
 import it.polimi.ingsw.view.OBSMessages.OBS_InitialInfoMessage;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -93,6 +94,21 @@ public class ClientLoginController implements Initializable {
         rmi_button.setOnAction(actionEvent -> getServerTechnologyFromInput(rmi_button));
         socket_button.setOnAction(actionEvent -> getServerTechnologyFromInput(socket_button));
         play_button.setOnAction(event -> onLogin());
+        username_textfield.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode()== KeyCode.ENTER){
+                rmi_button.requestFocus();
+            }
+        });
+        server_textfield.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode()== KeyCode.ENTER){
+                port_number_textfield.requestFocus();
+            }
+        });
+        port_number_textfield.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode()== KeyCode.ENTER){
+                play_button.requestFocus();
+            }
+        });
     }
 
     /**
