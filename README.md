@@ -57,6 +57,7 @@ java -jar server.jar
 #### Dopo l'avvio del server
 - Il server è progettato per mantenere la persistenza delle pertite che gestisce, a tal scopo crea dei file dove memorizzare le partite.
 Durante lo svolgimento delle partite verrà creata una cartella [gameFile] dentro la quale vengono memorizzate le partite interrotte. 
+- Appena il server verrà avviato verrà mostrato un menu a doppia scelta, selezionare 0 per cancellare i file di gioco passati, 1 se invece si desidera ternerli ed utilizzare la persistenza delle partite
 
 ## Componenti del gruppo
 - [__Alberto Aniballi__](https://github.com/AlbertoAtCode)
