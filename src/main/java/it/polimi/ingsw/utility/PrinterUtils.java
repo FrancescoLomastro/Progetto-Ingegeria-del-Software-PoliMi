@@ -7,6 +7,7 @@ public class PrinterUtils {
     /**
      * @param string a referent string
      * @return a string entirely made of space with the same length of the string in the parameter
+     * @author: Francesco Lo Mastro
      */
     public static String printEquivalentSpace(String string)
     {

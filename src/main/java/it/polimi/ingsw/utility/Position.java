@@ -17,15 +17,17 @@ public class Position implements Serializable {
         this.column = column;
     }
 
-    /**
+    /**It returns the row number
      * @return the row of the position
+     * @author: RIccardo Figini
      */
     public int getRow() {
         return row;
     }
 
-    /**
+    /**It returns the column number
      * @return the column of the position
+     * @author: Riccardo Figini
      */
     public int getColumn() {
         return column;
@@ -34,6 +36,7 @@ public class Position implements Serializable {
     /**
      * Puts the parameter as row index
      * @param row the integer to be put as a row index
+     * @author: Figini Riccardo
      */
     public void setRow(int row) {
         this.row = row;
@@ -42,6 +45,7 @@ public class Position implements Serializable {
     /**
      * Puts the parameter as column index
      * @param column the integer to be put as a column index
+     * @author: RIccardo Figini
      */
     public void setColumn(int column) {
         this.column = column;
@@ -51,6 +55,7 @@ public class Position implements Serializable {
      * Puts the first parameter as row index, and the second parameter as column index.
      * @param row the integer to be put as a row index
      * @param column the integer to be put as a column index
+     * @author: RIccardo FIgini
      */
     public void setRowColumn(int row,int column) {
         this.row = row;
@@ -60,6 +65,8 @@ public class Position implements Serializable {
     /**
      * @param obj the object to be compared with "this"
      * @return true is obj equals to "this"
+     * @author: Riccardo Figini
+     * @author: Francesco Lo Mastro
      */
     @Override
     public boolean equals(Object obj) {
@@ -73,8 +80,9 @@ public class Position implements Serializable {
         return this.row == other.row && this.column == other.column;
     }
 
-    /**
-     * @return an unique hashcode calculated from row and column
+    /**It returns hash value of combined row and column.
+     * @return a unique hashcode calculated from row and column
+     * @author: Francesco Lo Mastro
      */
     @Override
     public int hashCode() {

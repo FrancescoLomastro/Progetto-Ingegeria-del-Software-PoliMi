@@ -674,12 +674,12 @@ public class Board_C implements Initializable {
      * @author Riccardo Figini
      */
     public void setupAnimationChatButton(){
-        openChatButton.setStyle("-fx-border-color: transparent;-fx-border-width: 10;");
+        openChatButton.setStyle("-fx-background-color :CRIMSON; ");
         Duration duration = Duration.seconds(2);
         animationChatButton = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(openChatButton.styleProperty(), "-fx-border-color: CRIMSON;")),
-                new KeyFrame(duration.divide(2), new KeyValue(openChatButton.styleProperty(), "-fx-border-color: TRANSPARENT;")),
-                new KeyFrame(duration, new KeyValue(openChatButton.styleProperty(), "-fx-border-color: CRIMSON;"))
+                new KeyFrame(Duration.ZERO, new KeyValue(openChatButton.styleProperty(), "-fx-background-color :CRIMSON; ")),
+                new KeyFrame(duration.divide(2), new KeyValue(openChatButton.styleProperty(), "-fx-background-color: #8B4513;")),
+                new KeyFrame(duration, new KeyValue(openChatButton.styleProperty(), "-fx-background-color :CRIMSON; "))
         );
         animationChatButton.setCycleCount(Animation.INDEFINITE);
     }

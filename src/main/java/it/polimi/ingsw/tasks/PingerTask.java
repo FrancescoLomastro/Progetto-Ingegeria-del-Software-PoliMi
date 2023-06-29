@@ -17,6 +17,8 @@ public class PingerTask extends TimerTask {
         this.connection = connection;
     }
     /**This method sends a ping message to a client, in case of error call tryDoDisconnect
+     * @author: Francesco Lo Mastro
+     * @author: Andrea Ferrini
      * */
     @Override
     public void run()
