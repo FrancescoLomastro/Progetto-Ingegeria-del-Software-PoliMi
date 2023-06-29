@@ -28,9 +28,10 @@
                                             <children>
                                                 <RadioButton fx:id="rmi_button" mnemonicParsing="false" text="RMI">
                                        <toggleGroup>
-                                          <ToggleGroup fx:id="technology" />
-                                       </toggleGroup></RadioButton>
-                                                <RadioButton fx:id="socket_button" mnemonicParsing="false" text="Socket" toggleGroup="$technology" />
+                                          <ToggleGroup fx:id="toggleGroup" />
+                                       </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="socket_button" mnemonicParsing="false" text="Socket" toggleGroup="$toggleGroup" />
                                             </children>
                                         </HBox>
                                     </children>

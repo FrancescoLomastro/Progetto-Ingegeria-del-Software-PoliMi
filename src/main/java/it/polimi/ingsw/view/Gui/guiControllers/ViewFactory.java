@@ -570,10 +570,15 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @author: Alberto Aniballi
      */
-    public void showInvalidPort() {
+    public void showInvalidPort(String error_message) {
         Platform.runLater(()->
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidPort.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidLoginInput.fxml"));
+            loader.setControllerFactory(controller->{
+                InvalidLoginInput invalidLoginInput = new InvalidLoginInput();
+                invalidLoginInput.setTextInvalid(error_message);
+                return invalidLoginInput;
+            });
             createStage_old(loader,200,320,true,false);
         });
     }
