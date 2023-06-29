@@ -9,9 +9,9 @@ public class BadMoveMessage extends Message{
     /**
      * Constructor: Creates a message with the reason of the negative move
      * @param moveErrorString a string with the reason of the negative move
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      */
     public BadMoveMessage(String moveErrorString){
         super(MessageType.BAD_MOVE_ANSWER);
@@ -20,9 +20,9 @@ public class BadMoveMessage extends Message{
 
     /**
      * @return a string with the reason of the negative move
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      */
     public String getMoveError() {
         return moveError;

@@ -37,7 +37,7 @@ public class Game implements Serializable {
 
     /**
      * constructor of the class Game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param numPlayers the number of the players in that game
      */
     public Game(int numPlayers) throws IOException {
@@ -53,7 +53,7 @@ public class Game implements Serializable {
 
     /**
      * it returns the number of players in the game
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      * @return the number of players of the game
      */
     public int getNumPlayers() {
@@ -65,7 +65,7 @@ public class Game implements Serializable {
 
     /**
      * It returns the central grid as matrix of @code ObjectCard
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      * @return a matrix representation of the central grid
      */
     public ObjectCard[][] getGrid() {
@@ -77,7 +77,7 @@ public class Game implements Serializable {
 
     /**
      * Returns a matrix representation of the passed user library
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      * @param username the username of the player who owns the library
      * @return a matrix representation of user's library
      */
@@ -90,7 +90,7 @@ public class Game implements Serializable {
 
     /**
      * It returns a vector with player in the game
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      * @return an array containing all the player in the game
      */
     public Player[] getPlayers() {
@@ -104,7 +104,7 @@ public class Game implements Serializable {
 
     /**
      * This method searches a player in a game, starting from his username
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      * @param username the player username
      * @return Player: the Player whose username matches with the parameter
      */
@@ -126,9 +126,9 @@ public class Game implements Serializable {
     /**
      * This method manages a turn.
      * Checks if a move is valid, then insert card in the player's library (and remove it from grid). Finally, it controls common goals.
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figni
-     * @author: Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figni
+     * @author Francesco Lo Mastro
      * @param username the turn player
      * @param move an array of positions to identify the cells of the grid where the player takes his object cards
      * @param column the column of the player's library in which he's going to insert the object cards he took in his move
@@ -155,9 +155,9 @@ public class Game implements Serializable {
     /**
      * Creates a message that contains the points of the passed common goal cards,
      * earned by the player's library. This method is called at the end of manageTurn
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
-     * @author: Andrea ferrini
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea ferrini
      * @param player player whose library will be checked
      * @param commonGoalCards the two common goal cards to check
      */
@@ -190,9 +190,9 @@ public class Game implements Serializable {
 
     /**
      * This method checks the validity of a user move and then runs the move itself.
-     * @author: Ricccardo Figini
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
+     * @author Ricccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
      * @param player player whose move needs to be checked and performed
      * @param move an array of positions that identifies the cells of the grid where the player takes his object cards
      * @param column the column of the player's library in which he's going to insert the object cards he took in his move
@@ -211,7 +211,7 @@ public class Game implements Serializable {
 
     /**
      * It finds the ranking of player when the game is finished
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      * @return the game ranking in the form of an arraylist. Each node of the list is a pair of Name and Points ordered
      * from higher to lower scoring.
      */
@@ -239,8 +239,8 @@ public class Game implements Serializable {
     /**
      * This method inserts in game a new player with a name. This method is necessary to maintain
      * the order of player
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
      * @param name the name of the player
      */
     public void setNextPlayer(String name){
@@ -268,7 +268,7 @@ public class Game implements Serializable {
 
     /**
      * It returns a vector with two common goals
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return an array with common goal card of the living room
      */
     public CommonGoalCard[] getCommonGoalCard(){
@@ -280,8 +280,8 @@ public class Game implements Serializable {
 
     /**
      * It returns a specific common goal
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      * @param index the index of the requested card
      * @return the card ID of the goal card in the index position
      */
@@ -298,7 +298,7 @@ public class Game implements Serializable {
     /**
      * This method is used to assign the point at the center of the living room to a specific user.
      * After this method is called, the points at the center are actually consumed.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param username the username of the player that will gain the points
      * @return the amount of points earned by the player
      */
@@ -315,8 +315,8 @@ public class Game implements Serializable {
 
     /**
      * It returns central points
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      * @return The number of points available at the center of the living room.
      */
     public int getCentralScore()

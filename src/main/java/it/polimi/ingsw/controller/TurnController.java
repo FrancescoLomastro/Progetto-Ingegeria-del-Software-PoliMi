@@ -30,8 +30,8 @@ public class TurnController implements Runnable, Serializable {
      * the constructor of the class TurnController
      * @param game the game which the TurnController is controlling
      * @param gameController the Game controller associated to the game
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      * */
     public TurnController(Game game, GameController gameController){
         this.flagCountdown =false;
@@ -45,7 +45,7 @@ public class TurnController implements Runnable, Serializable {
                 new MoveMessage(), game.getPlayers()[0].getName());
     }
     /**It shares initial information with player at the beginning of the game
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * */
     public void initClientObjectInPlayer()
     {
@@ -82,7 +82,7 @@ public class TurnController implements Runnable, Serializable {
         countActualPointAndShare();
     }
     /**It counts player's point and return it in array
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return {@code ArrayList<Couple<String, Integer>>} Array with points
      * */
     private ArrayList<Couple<String, Integer>> countActualPointAndShare() {
@@ -97,8 +97,8 @@ public class TurnController implements Runnable, Serializable {
     /**
      * a method to call to start the turn thread, it saves the message and runs the new thread
      * @param message : the message to save
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      * */
     public void startTheTurn(MoveMessage message){
         if(message!= null && message.getSenderName().equals(currentPlayer)){
@@ -112,9 +112,9 @@ public class TurnController implements Runnable, Serializable {
 
     /**
      * implementation of Runnable interface's method run
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * */
     public void run()
     {
@@ -169,7 +169,7 @@ public class TurnController implements Runnable, Serializable {
         }
     }
     /**it returns cells are be filled with the move in library
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param column Column where card are been inserted
      * @param move Move
      * @param oldLibrary Old library, before move
@@ -190,7 +190,7 @@ public class TurnController implements Runnable, Serializable {
         return tmp;
     }
     /**It handles researches of a winner and close the game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     private void handleEndGame() {
         ArrayList<Couple<String, Integer>> list = game.findRanking();
@@ -206,7 +206,7 @@ public class TurnController implements Runnable, Serializable {
         gameController.closeGame();
     }
     /**It returns first player after after reload
-     * @author: Riccardo FIgini
+     * @author Riccardo FIgini
      * @return {@code String} Player's name
      * */
     public String getPlayerAfterReload() {

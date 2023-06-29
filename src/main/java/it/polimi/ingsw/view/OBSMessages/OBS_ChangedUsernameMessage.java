@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.OBSMessages;
 
 /**
  * Message used by a View to notify client controller the new username to use
- * @author: Francesco Lo Mastro 
+ * @author Francesco Lo Mastro 
  * */
 public class OBS_ChangedUsernameMessage extends OBS_Message {
     private final String changedUsername;
@@ -16,7 +16,7 @@ public class OBS_ChangedUsernameMessage extends OBS_Message {
         return changedUsername;
     }
     /** Contructor: Creates the message
-     * @author: Franceco Lo Mastro
+     * @author Franceco Lo Mastro
      * @param changedUsername new player's name
      * */
     public OBS_ChangedUsernameMessage(String changedUsername) {

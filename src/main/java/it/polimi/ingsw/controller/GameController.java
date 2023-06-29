@@ -44,7 +44,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     /**
      * constructor
      * @param gameId : identifies the game that game controller is controlling
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     public GameController(int gameId, Controller controller) {
         this.clients= new LinkedHashMap<>();
@@ -54,13 +54,13 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         statusGame = StatusGame.BEFORE_GAME;
     }
     /**It starts the ping message. They will continue till the end of the game
-     * @author: Riccardo Figini
-     * @author: Francesco Lo mastro*/
+     * @author Riccardo Figini
+     * @author Francesco Lo mastro*/
     public void startPingTimer(Connection connection) {
         connection.startTimer(controller);
     }
     /**Reset ping according to game's status
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param username Player */
     public void renewPingTimer(String username){
         ServerReceiver serverReceiver;
@@ -72,7 +72,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         connection.resetTimer(serverReceiver);
     }
     /**Destroy every player's ping in the game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     public void destroyEveryPing(){
         for(Map.Entry<String, Connection> entry: clients.entrySet()){
@@ -80,7 +80,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
     /**It destroys a specific player's pign
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param username Player's name*/
     public void destroyPing(String username){
         Connection connection = clients.get(username);
@@ -88,7 +88,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         connection.destroyPing();
     }
     /**It creates a new map to store player when game is loaded from memory
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param controller General controller
      * */
     public void reloadPlayerCreatingNewMap(Controller controller){
@@ -97,9 +97,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * this method adds a player in this game
-     * @author: Riccardo Figini
-     * @author: Andrea Ferrini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Andrea Ferrini
+     * @author Francesco Lo Mastro
      * @param username Player's username
      * @param connection Player's connection
      * */
@@ -121,9 +121,9 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
      * Implementation of the method run, in Runnable interface. This method starts the game. It creates a new
      * model for the game and stes every parameter, then shares the model with all clients. Finally,
      * it asks the first move
-     * @author: Riccardo Figini
-     * @author: Andrea Ferrini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Andrea Ferrini
+     * @author Francesco Lo Mastro
      * */
     @Override
     public void run() {
@@ -144,7 +144,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         statusGame=StatusGame.IN_GAME;
     }
     /**Create and store game's file in memory. It uses gameId for the name of file
-     * @author: Riccardo Figini*/
+     * @author Riccardo Figini*/
     private void initGameFile() {
         gameFilePath = Controller.NumOfGameFolder+"/"+serverNameRMI+".bin";
         try {
@@ -159,8 +159,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * sends a message to all the players
-     * @author: Riccardo Figini
-     * @author: Andrea Ferrini
+     * @author Riccardo Figini
+     * @author Andrea Ferrini
      *
      * */
     public void newServerMessages(){
@@ -174,8 +174,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
     /**It handles messages from player
-     * @author: Andrea Ferrini
-     * @author: Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Francesco Lo Mastro
      * @param message Message from player
      * */
     @Override
@@ -195,7 +195,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
     /**It handles chat message
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param message Chat message
      * */
     private void manageChatMessage(Message message) {
@@ -228,7 +228,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * It manages error that can came from network
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param connection Connection that raise a problem
      * @param playerName player that causes the problem
      * */
@@ -256,7 +256,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
     /**It is called when occurs an error and game need to be closed
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param message Message with motivation of error
      * */
     private void gameNeedToBeClosed(String message){
@@ -267,7 +267,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**It is called when occurs an error and game need to be closed. It sends an warn message to every one in the lobby
      * except the player passed
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param message Message with motivation of error
      * @param player Player that left the game, it will not receive the error message
      * */
@@ -279,8 +279,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * Initialization of a game, it creates the model
-     * @author: Riccardo Figini
-     * @author: Andrea Ferrini
+     * @author Riccardo Figini
+     * @author Andrea Ferrini
      * */
     public void initGame(){
 
@@ -300,8 +300,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
 
     /**
      * it sends a message to all the users in the game
-     *  @author: Riccardo Figini
-     * @author: Andrea Ferrini
+     *  @author Riccardo Figini
+     * @author Andrea Ferrini
      * @param message the message to send
      * */
     public void notifyAllMessage(Message message){
@@ -318,8 +318,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * it sends a message to a specific user
-     * @author: Riccardo Figini
-     * @author: Andrea Ferrini
+     * @author Riccardo Figini
+     * @author Andrea Ferrini
      * @param message the message to send
      * @param username the username who will receive that message
      * */
@@ -334,8 +334,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
     /**Save Game data on a file
-     * @author: Riccardo Figini
-     * @author: Andrea Ferrini
+     * @author Riccardo Figini
+     * @author Andrea Ferrini
      * */
     public void updateFile() {
         try {
@@ -351,21 +351,21 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
 
     /**It returns an arrayList with the name of player
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return {@code ArrayList<String>} List of player
      * */
     public ArrayList<String> getNamesOfPlayer(){
         return testArray;
     }
     /**It returns the game's ID
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return int game id*/
     public int getGameId() {
         return gameId;
     }
     /**It returns the dimension of lobby
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * @return int max number of players
      * */
     public int getLimitOfPlayers()
@@ -373,8 +373,8 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         return limitOfPlayers;
     }
     /**It sets the number of players
-     * @author: Francesco Lo Masto
-     * @author: Riccardo Figini
+     * @author Francesco Lo Masto
+     * @author Riccardo Figini
      * @param maxNUmberOfPLayer number of players*/
     public void setLimitOfPlayers(int maxNUmberOfPLayer)
     {
@@ -382,14 +382,14 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * @return the size of the hashmap that contains the players
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     public int getSizeOfLobby()
     {
         return clients.size();
     }
     /**It initialized game (model and client) when a game is restarted
-     *  @author: Riccardo Figini
+     *  @author Riccardo Figini
      * */
     public void restartGameAfterReload(){
         String player;
@@ -406,7 +406,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         sendMessageToASpecificUser(new MoveMessage(), player);
     }
     /**Set server game when a game is restarted
-     *  @author: Riccardo Figini
+     *  @author Riccardo Figini
      * */
     private void setUpOldServerGame() {
         try {
@@ -420,7 +420,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
     /**Delete file game when it is over (it can be called also when game is not over). Remove gameServer from registry
-     *  @author: Riccardo Figini
+     *  @author Riccardo Figini
      * */
     public void closeGame() {
         String path = gameFilePath;
@@ -441,7 +441,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
     }
     /**
      * Remove player from lobby. This method can be called only before the beginning of game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param name Name of player to be removed
      * */
     public void removePlayer(String name){
@@ -457,7 +457,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
             notifyAllMessage(new LobbyUpdateMessage(clients.keySet().stream().toList(),limitOfPlayers));
     }
     /**It set status of the game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param statusGame Game's status
      * */
     public void setStatusGame(StatusGame statusGame) {

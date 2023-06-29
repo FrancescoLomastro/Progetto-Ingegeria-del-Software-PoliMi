@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * This class is an ObjectCard deck manager. It keeps tracks of the card to be generated and the already generated cards
- * @author: Francesco Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class ObjectCardManager implements Serializable {
     @Serial
@@ -21,7 +21,7 @@ public class ObjectCardManager implements Serializable {
 
     /**
      * Constructor: creates an ObjectCardManager and build a deck of ObjectCards
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public ObjectCardManager()
     {
@@ -37,7 +37,7 @@ public class ObjectCardManager implements Serializable {
      * It returns the number of types that card can have. In the original game, for
      * every color exists 3 different types with respectfully 8 7 7 number of cards
      * @return the number of types that cards can have in the manager
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public int getNumTypes()
     {
@@ -50,7 +50,7 @@ public class ObjectCardManager implements Serializable {
     /**
      * It returns color of cards
      * @return the number of colors that cards can have in the manager
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public int getNumColors()
     {
@@ -64,7 +64,7 @@ public class ObjectCardManager implements Serializable {
 
     /**
      * This method set the deck of ObjectCard to the construction state.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void fillDeck()
     {
@@ -86,7 +86,7 @@ public class ObjectCardManager implements Serializable {
      * @param color the color that the card will have
      * @param type the type that the card will have
      * @return true, if the card can be generated, means that the requested type of card is not out of stock yet.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public boolean isCardDrawable(Color color, Type type)
     {
@@ -101,7 +101,7 @@ public class ObjectCardManager implements Serializable {
      * @param color the color that the card will have
      * @param type the type that the card will have
      * @return if the requested card can be generated, will return it, otherwise it returns null.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public ObjectCard draw(Color color, Type type)
     {
@@ -119,7 +119,7 @@ public class ObjectCardManager implements Serializable {
     /**
      * Check if the manager can't generate any other card.
      * @return true if the manager is empty.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public boolean isEmpty()
     {

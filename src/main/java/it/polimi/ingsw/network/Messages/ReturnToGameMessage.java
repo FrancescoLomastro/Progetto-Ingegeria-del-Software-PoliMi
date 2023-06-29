@@ -6,7 +6,7 @@ package it.polimi.ingsw.network.Messages;
 public class ReturnToGameMessage extends Message {
     /**
      * Constructor: Builds a message with a type RETURN_TO_OLD_GAME_MESSAGE
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public ReturnToGameMessage(){
         super(MessageType.RETURN_TO_OLD_GAME_MESSAGE);

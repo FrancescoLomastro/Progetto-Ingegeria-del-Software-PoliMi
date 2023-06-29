@@ -11,7 +11,7 @@ public class ChatMessage extends Message
      * Constructor: Creates a chat message with text and sender name
      * @param userName is the username of the sender of the message
      * @param text is the text of the chat message
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public ChatMessage(String userName, String text) {
         super(userName, MessageType.CHAT_MESSAGE);
@@ -20,7 +20,7 @@ public class ChatMessage extends Message
 
     /**
      * It gets the message
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @return the text of the chat message
      */
     public String getText() {

@@ -16,8 +16,8 @@ public class TerminatorTask extends TimerTask {
     }
     /**This method is called when a specific timer ends. It will destroy a connection with
      * a specific user because he did not answer to ping
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
      * */
     @Override
     public void run()

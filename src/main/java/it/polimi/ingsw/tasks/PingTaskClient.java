@@ -12,8 +12,8 @@ public class PingTaskClient extends TimerTask {
     }
 
     /**This method activates client controller in case of an error message from the server.
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
      * */
     @Override
     public void run()

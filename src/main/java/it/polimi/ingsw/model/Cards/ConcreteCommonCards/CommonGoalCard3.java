@@ -11,7 +11,7 @@ import java.util.HashSet;
  * The goal is: Four lines each formed by 5 tiles of maximum three different types.
  *              One line can show the same or a different combination of another line
  *
- * @author: Alberto Aniballi
+ * @author Alberto Aniballi
  * */
 public class CommonGoalCard3 extends CommonGoalCard {
     public CommonGoalCard3(){
@@ -23,10 +23,10 @@ public class CommonGoalCard3 extends CommonGoalCard {
     }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
-     * @author: Alberto Aniballi
-     * @author: Riccardo Figini
+     * @author Alberto Aniballi
+     * @author Riccardo Figini
      * @param library   the library on which we will verify if the goal is satisfied or not
-     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * @return boolean that is true if the goal is satisfied, false otherwise
      * */
     @Override
     public boolean isSatisfied(Library library) {
@@ -45,7 +45,7 @@ public class CommonGoalCard3 extends CommonGoalCard {
         return count_row >= 4;
     }
     /**This method check is a row is full
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return {@code boolean} true if a row is full
      * */
     private boolean rowIsFull(ObjectCard[] objectCards){

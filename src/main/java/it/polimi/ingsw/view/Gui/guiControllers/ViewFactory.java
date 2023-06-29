@@ -42,8 +42,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * Returns or creates the only instance of the ViewFactory.
      *
-     * @return: static instance of View Factory
-     * @author: Alberto Aniballi
+     * @return static instance of View Factory
+     * @author Alberto Aniballi
      */
     public static ViewFactory getInstance() {
         if (instance==null) {
@@ -55,8 +55,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * It is the constructor of the class, it has the main responsibility of adding an observer to the super class "clientModel" attribute.
      *
-     * @return: static instance of View Factory
-     * @author: Francesco Lo Mastro
+     * 
+     * @author Francesco Lo Mastro
      */
     public ViewFactory() {
         clientModel=new ClientModel();
@@ -66,7 +66,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * It starts the mana java-FX thread.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     @Override
     public void startView() {
@@ -77,8 +77,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to load a new scene.
      *
      * @param loader: the FXMLLoader instance with the proper URL location
-     * @return: the loaded Scene
-     * @author: Alberto Aniballi
+     * @return the loaded Scene
+     * @author Alberto Aniballi
      */
     private Scene loadScene_old(FXMLLoader loader) {
         Scene scene = null;
@@ -95,7 +95,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to switch the scene in the primary stage.
      *
      * @param loader: the FXMLLoader instance with the proper URL location
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     private void switchScene_old(FXMLLoader loader) {
         Scene scene = loadScene_old(loader);
@@ -111,7 +111,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * @param minWidth: the minimum stage width;
      * @param lockStage: the boolean condition upon which the previous stage is locked;
      * @param closeApplicationOnClose: the boolean condition upon which the appiclation is closed.
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     private void createStage_old(FXMLLoader loader, int minHeight, int minWidth, boolean lockStage, boolean closeApplicationOnClose) {
         Stage newStage = new Stage();
@@ -138,7 +138,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to set the primary stage.
      *
      * @param primaryStage: the new primary stage.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setPrimaryStage(Stage primaryStage)
     {
@@ -149,7 +149,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to close a stage.
      *
      * @param stage: the stage to be closed.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void closeStage(Stage stage) {
         stage.close();
@@ -159,7 +159,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to create the main stage of the game and to set the correct scene.
      *
      * @param loader: the FXMLLoader instance with the proper URL location
-     * @author: Alberto Aniballi & Francesco Lo Mastro
+     * @author Alberto Aniballi & Francesco Lo Mastro
      */
     private void createMainStage(FXMLLoader loader)
     {
@@ -179,7 +179,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to change root to the primary stage scene.
      *
      * @param loader: the FXMLLoader instance with the proper URL location
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void changeRoot(FXMLLoader loader)
     {
@@ -195,7 +195,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the main stage and to load the first scene on it, the scene is the "start" scene.
      * After the scene is correctly loaded, the stage is shown.
      *
-     * @author: Alberto Aniballi & Francesco Lo Mastro
+     * @author Alberto Aniballi
+     * @author Francesco Lo Mastro
      */
     public void showStart() {
         Platform.runLater(()->{
@@ -216,7 +217,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the "ClientLogin" scene on the primary stage once
      * a new client log into the pre-game phase.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     @Override
     public void askInitialInfo() {
@@ -232,7 +233,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param min: minimum number of players;
      * @param max: maximum number of players;
-     * @author: Alberto Aniballi.
+     * @author Alberto Aniballi.
      */
     @Override
     public void askNumberOfPlayers(int min, int max) {
@@ -246,7 +247,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to instantiate a new stage that notifies user of the start of the game.
      *
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      */
     @Override
     public void startGame() {
@@ -260,7 +261,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * Method for entering the ending phase of the game.
      *
      * @param arg: the message;
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void almostOver(AlmostOverMessage arg) {
@@ -276,7 +277,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the "InvalidUsername" scene on a new stage during the pre-game phase.
      * It shows the form that collect the new username that the user will use.
      *
-     * @author: Alberto Aniballi & Francesco Lo Mastro
+     * @author Alberto Aniballi
+     * @author Francesco Lo Mastro
      */
     @Override
     public void onInvalidUsername() {
@@ -294,7 +296,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * scene.
      *
      * @param string: the string displaying current lobby's information
-     * @author: Alberto Aniballi & Francesco Lo Mastro
+     * @author Alberto Aniballi
+     * @author Francesco Lo Mastro
      */
     @Override
     public void lobbyUpdate(String string) {
@@ -325,7 +328,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param username: the player username who sent the message;
      * @param text: the message text;
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      */
     @Override
     public void chatMessage(String username, String text) {
@@ -346,7 +349,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to store the object card positions chosen by the player during his turn.
      *
      * @param positions: the array containing positions
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public void setPositions(Position[] positions) {
         this.positions = positions;
@@ -355,7 +358,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to get the object card positions chosen by the player during his turn.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public Position[] getPositions() {
         return positions;
@@ -365,7 +368,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to create "the column question" stage to the player that has just chosen object cards from grid.
      * In particular, it gives players the possibility to select the library column in which they want to insert object cards.
      *
-     * @author: Riccard Figini & Alberto Aniballi
+     * @author Riccard Figini
+     * @author Alberto Aniballi
      */
     public void showColumnQuestion() {
         Platform.runLater(()->
@@ -397,7 +401,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is to initiate a move request to a player.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     @Override
     public void askMove() {
@@ -413,7 +417,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param grid: the current grid;
      * @param typeOfGridMessage: the message sent by the grid;
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void showGrid(ObjectCard[][] grid, GridMessage.TypeOfGridMessage typeOfGridMessage) {
@@ -431,7 +435,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * @param username: the player username;
      * @param oldGrid: the old grid;
      * @param newLibrary: updated library;
-    * @author: Riccardo Figini
+    * @author Riccardo Figini
      * */
     @Override
     public void showLibrary(ObjectCard[][] library, String username, Position[] oldGrid, Position[] newLibrary) {
@@ -454,7 +458,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is necessary in CLI version because it prints everything when it's your turn. In Gui version it prints in chat
      * "is your turn"
      *
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     @Override
     public void printAll() {
@@ -464,7 +468,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
     * Create stage for chat
      *
-     * @author: Riccardo figini
+     * @author Riccardo figini
     * */
     @Override
     public void startChat() {
@@ -516,7 +520,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method print in chat message from server. Messages can be useful information about game's flow
      *
      * @param string Message from server
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     @Override
     public void printMessage(String string) {
@@ -527,7 +531,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method create a new stage "Invalid Move" after a player has chosen an invalid combination of object cards from the grid.
      *
      * @param msg: the message type
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     @Override
     public void onBadMoveAnswer(BadMoveMessage msg){
@@ -548,7 +552,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param chosenAddress : the server address chosen by the player
      * @param chosenPort : the port chosen by the player
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
@@ -568,7 +572,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the "InvalidPort" stage in the case a player chosen an invalid port.
      * This stage locks the interaction with previous stage.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public void showInvalidPort(String error_message) {
         Platform.runLater(()->
@@ -587,7 +591,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the "InvalidNumPlayers" stage in the case a player chosen an invalid number of players.
      * This stage locks the interaction with previous stage.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public void showInvalidNumPlayers() {
         Platform.runLater(()->{
@@ -600,7 +604,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the "InvalidNumObjCards" stage in the case a player chosen an invalid number
      * of object cards from the grid. This stage locks the interaction with previous stage.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public void showInvalidNumberOfCards() {
         Platform.runLater(()->{
@@ -613,7 +617,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to notify all observers of the view.
      *
      * @param msg: the message to send;
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void notifyAllOBS(OBS_Message msg) {
         setChanged();
@@ -624,7 +628,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to handle players clicks on libraries.
      *
      * @param username: the name of the library owner;
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      */
     public void onLibraryClick(String username) {
 
@@ -653,7 +657,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param o: the client model;
      * @param arg : the message sent;
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void update(ClientModel o, Message arg) {
@@ -685,7 +689,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to update players points.
      *
      * @param arg : the common goal message sent;
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void updatePoints(CommonGoalMessage arg)
     {
@@ -701,7 +705,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to initialize the game main board.
      *
      * @param arg : the message sent;
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void showBoard(Message arg) {
         createBoard();
@@ -722,7 +726,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to show player points.
      *
      * @param playersPoints: the array containing points associated to each player.
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      */
     private void showPointsPlayers(ArrayList<Couple<String, Integer>> playersPoints) {
         Platform.runLater(()->{
@@ -736,7 +740,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param pointCardCommon1: points available in common goal card 1;
      * @param pointCardCommon1: points available in common goal card 2;
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      */
     private void showCommonPoints(int pointCardCommon1, int pointCardCommon2) {
         Platform.runLater(()->{
@@ -748,7 +752,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to create the game main board.
      *
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void createBoard() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
@@ -765,7 +769,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to reset the grid.
      *
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      */
     public void resetGrid() {
         Platform.runLater(() -> {
@@ -778,7 +782,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to display the scene showing the player who won the game.
      *
      * @param finalRanking : the final players ranking of the game;
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      */
     private void showWinnerScene(ArrayList<Couple<String, Integer>> finalRanking){
         Platform.runLater(() -> {
@@ -799,7 +803,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param description: the common goal card description;
      * @param num : the common goal card number;
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      */
     public void onCommonGoalCardClick(String description, int num) {
         Platform.runLater(() -> {
@@ -817,7 +821,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to handle players clicks on their personal goal cards present in the game board.
      *
-     * @author: Andrea Ferrini
+     * @author Andrea Ferrini
      */
     public void onPersonalGoalCardClick() {
         Platform.runLater(() -> {
@@ -832,7 +836,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to make the chat visible to players.
      *
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public void showChat() {
         chatStage.setIconified(false);
@@ -843,7 +847,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to show central points to players.
      *
      * @param centralPoints: the current central points;
-     * @author: Riccardo Figini & Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      */
     public void showCentralPoints(int centralPoints) {
         Platform.runLater(()->{
@@ -856,7 +861,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to close the game in the case of some error.
      *
      * @param string: the string to be displayed;
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      */
     public void closeGame(String string) {
         Platform.runLater(()->{

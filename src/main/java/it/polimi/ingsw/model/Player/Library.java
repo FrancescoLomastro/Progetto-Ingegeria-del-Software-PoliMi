@@ -36,7 +36,7 @@ public class Library implements Serializable {
     /**
      * It gets a boolean vector that indicates which cards are already satisfied
      *
-     * @return: boolean vector with 2 cells, if the cell with index i is false means that the i card has never been satisfied by the player who owns the library
+     * @return boolean vector with 2 cells, if the cell with index i is false means that the i card has never been satisfied by the player who owns the library
      *  @author Lo Mastro Francesco
      */
     public boolean[] getSatisfiedGoal() {
@@ -56,7 +56,7 @@ public class Library implements Serializable {
     /**
      * It gets the library number of columns
      *
-     * @return: number of library columns
+     * @return number of library columns
      *  @author Alberto Aniballi
      */
     public int getNumberOfColumns() {
@@ -66,7 +66,7 @@ public class Library implements Serializable {
     /**
      * It gets the library number of rows
      *
-     * @return: number of library rows
+     * @return number of library rows
      * @author Alberto Aniballi
      */
     public int getNumberOfRows() {
@@ -77,7 +77,7 @@ public class Library implements Serializable {
     /**
      * It gets a matrix of object cards that represent the library
      *
-     * @return: matrix of object cards that represent the library
+     * @return matrix of object cards that represent the library
      * @author Lo Mastro Francesco
      */
     public ObjectCard[][] getMatrix() {
@@ -98,7 +98,7 @@ public class Library implements Serializable {
      *
      * @param row the specific row to be checked
      * @param col the specific column to be checked
-     * @return: boolean that is true if the cell is empty, otherwise false
+     * @return boolean that is true if the cell is empty, otherwise false
      * @author Alberto Aniballi
      */
     private boolean isCellEmpty(int row, int col) {
@@ -112,7 +112,7 @@ public class Library implements Serializable {
     /**
      * It checks if the library is full
      *
-     * @return: boolean that is true if the library is full, otherwise false
+     * @return boolean that is true if the library is full, otherwise false
      * @author Alberto Aniballi
      */
     public boolean isFull() {
@@ -133,7 +133,7 @@ public class Library implements Serializable {
      * It counts the number of available free cells of a specific column
      *
      * @param column the specific column where we have to count the number of free cells
-     * @return: an integer that represents the number of free cells in a column
+     * @return an integer that represents the number of free cells in a column
      * @author Alberto Aniballi
      */
     public int findNumberOfFreeCells(int column) {
@@ -155,8 +155,8 @@ public class Library implements Serializable {
 
      * @param chosenColumn          the specific column where we insert cards
      * @param cards                 array containing the object cards to be inserted in the order of insertion
-     * @return true if the cards array has been succesuflly inserted into the fibrary
-     * @author: Alberto Aniballi, Francesco Lo Mastro
+     * @throws InvalidMoveException if the cards array has not been successfully inserted into the library
+     * @author Alberto Aniballi, Francesco Lo Mastro
      */
     public void insertCardsInLibrary(int chosenColumn, ObjectCard... cards) throws InvalidMoveException {
         int row;
@@ -175,7 +175,7 @@ public class Library implements Serializable {
      *
      * @param chosenColumn the column to be checked
      * @return true if the array of cards fits into the column selected
-     * @author: Alberto Aniballi
+     * @author Alberto Aniballi
      */
     public boolean isMoveAvailable(int chosenColumn, int numOfCards) {
         int numberOfFreeCells = findNumberOfFreeCells(chosenColumn);
@@ -192,7 +192,7 @@ public class Library implements Serializable {
      *
      * @param objectCard1 the first object card to be compared
      * @param objectCard2 the second object card to be compared
-     * @return: boolean that is true if the two cards have the same color, false otherwise
+     * @return boolean that is true if the two cards have the same color, false otherwise
      */
     private boolean compareColor(ObjectCard objectCard1,ObjectCard objectCard2) {
         if (objectCard1.getColor()==objectCard2.getColor()) {
@@ -209,8 +209,8 @@ public class Library implements Serializable {
      * @param startColumn   the column where the current cell is
      * @param subsequentCellRow      the row where the subsequent cell is
      * @param subsequentCellColumn   the column where the subsequent cell is
-     * @return: boolean that is true if the two cells contains two object cards that have the same color, false otherwise
-     * @author: Alberto Aniballi
+     * @return boolean that is true if the two cells contains two object cards that have the same color, false otherwise
+     * @author Alberto Aniballi
      */
     private boolean checkIfColorIsTheSame(int startRow, int startColumn, int subsequentCellRow,int subsequentCellColumn) {
         return compareColor(matrix[startRow][startColumn], matrix[subsequentCellRow][subsequentCellColumn]);
@@ -221,7 +221,7 @@ public class Library implements Serializable {
      * @param row   the row where the current cell is
      * @param column the column where the current cell is
      * @return true if the cordinate of a cell in the library are valid
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private boolean checkPositionIsValid(int row, int column) {
         return !(column < 0 || column >= numberOfColumns || row < 0 || row >= numberOfRows);
@@ -234,8 +234,8 @@ public class Library implements Serializable {
      *
      * @param startRow      the row where the current cell is
      * @param startColumn   the column where the current cell is
-     * @return:             integer that represents the number of neighbours of the passed cell
-     * @author: Alberto Aniballi, Francesco Lo MAstro
+     * @return             integer that represents the number of neighbours of the passed cell
+     * @author Alberto Aniballi, Francesco Lo MAstro
      */
     public int countNeighbours(int startRow, int startColumn,HashSet<Position> checkedCells) {
         int numberOfSameColorNeighbours = 0;
@@ -271,8 +271,8 @@ public class Library implements Serializable {
      * It selects the correct number of points to be given, based on the size of the group of adjacent card found
      *
      * @param numberOfAdjacentCard the number of neighbours that have the same color
-     * @return: integer that represents the number of points to be given
-     * @author: Alberto Aniballi
+     * @return integer that represents the number of points to be given
+     * @author Alberto Aniballi
      */
     private int addAdjacentPoints(int numberOfAdjacentCard) {
         if (numberOfAdjacentCard==3) {
@@ -291,8 +291,8 @@ public class Library implements Serializable {
     /**
      * It returns the amount of points based on the number of groups of adjacent card found in the library
      *
-     * @return: integer that represents the number of adjacency points due to object cards in the library
-     * @author: Alberto Aniballi, Francesco Lo Mastro
+     * @return integer that represents the number of adjacency points due to object cards in the library
+     * @author Alberto Aniballi, Francesco Lo Mastro
      */
     public int countAdjacentPoints() {
 

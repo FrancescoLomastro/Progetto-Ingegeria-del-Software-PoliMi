@@ -54,7 +54,7 @@ public class ScorePointCard implements Serializable {
         return number;
     }
     /**It returns the actual score of the card
-     * @author: Riccardo Figini*/
+     * @author Riccardo Figini*/
     public int getScore() {
         return score;
     }

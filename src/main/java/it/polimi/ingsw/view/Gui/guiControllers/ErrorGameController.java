@@ -36,7 +36,7 @@ public class ErrorGameController implements Initializable {
         message.setWrapText(true);
     }
     /**It sets message errors that have to be printed
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param s Message error from server*/
     public void setMessage_error(String s){
         this.messageErrorString=s;

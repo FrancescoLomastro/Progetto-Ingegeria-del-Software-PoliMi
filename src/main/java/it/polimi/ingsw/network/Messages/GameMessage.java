@@ -12,9 +12,9 @@ public class GameMessage extends Message implements Serializable {
     /**
      * Constructor: creates a standard game message
      * @param messageType the enum that specifies the type of the message
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      */
     public GameMessage(MessageType messageType) {
         super(messageType);

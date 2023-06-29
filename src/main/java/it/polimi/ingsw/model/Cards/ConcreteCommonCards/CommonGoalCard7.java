@@ -10,7 +10,7 @@ import java.util.HashSet;
  * The goal is: Two lines each formed by 5 different types of tiles. One line can show the
  *              same or a different combination of the other line.
  *
- * @author: Alberto Aniballi
+ * @author Alberto Aniballi
  * */
 public class CommonGoalCard7 extends CommonGoalCard {
     public CommonGoalCard7(){
@@ -22,9 +22,9 @@ public class CommonGoalCard7 extends CommonGoalCard {
     }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
-     * @author: Albero Aniballi
+     * @author Albero Aniballi
      * @param library   the library on which we will verify if the goal is satisfied or not
-     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * @return boolean that is true if the goal is satisfied, false otherwise
      * */
     @Override
     public boolean isSatisfied(Library library) {

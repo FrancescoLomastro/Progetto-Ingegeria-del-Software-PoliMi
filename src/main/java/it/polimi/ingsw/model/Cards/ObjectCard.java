@@ -34,7 +34,7 @@ public class ObjectCard extends Card implements Serializable {
     }
 
     /**It verifies if this object card is equals to obj as parameter
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param obj Object card
      * @return True if cards are equal
      * */
@@ -51,7 +51,7 @@ public class ObjectCard extends Card implements Serializable {
     }
 
     /**It returns the card's color as string
-     * @author: Francesco Lo Mastro*/
+     * @author Francesco Lo Mastro*/
     @Override
     public String toString() {
             return ""+color;

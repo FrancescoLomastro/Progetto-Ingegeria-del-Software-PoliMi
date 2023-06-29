@@ -73,7 +73,8 @@ public class ChatController implements Initializable {
      *
      * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
-     * @author Riccardo Figini & Alberto Aniballi
+     * @author Riccardo Figini
+     * @author Alberto Aniballi
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)  {

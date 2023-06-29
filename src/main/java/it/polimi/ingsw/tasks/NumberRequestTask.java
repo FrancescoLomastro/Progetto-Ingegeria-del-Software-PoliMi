@@ -21,7 +21,7 @@ public class NumberRequestTask extends TimerTask {
     /**
      * This method is called when a specific timer ends. It will destroy a connection with
      * a specific user because he did not answer to ping
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void run() {

@@ -12,7 +12,7 @@ import java.util.HashMap;
  * This class contains the algorithm to verify if the following common goal is satisfied.
  * The goal is: Eight tiles of the same type. There’s no restriction about the position of these tiles.
  *
- * @author: Andrea Ferrini
+ * @author Andrea Ferrini
  * */
 public class CommonGoalCard10 extends CommonGoalCard {
 
@@ -24,8 +24,8 @@ public class CommonGoalCard10 extends CommonGoalCard {
     }
     /**
      * the main algorithm that checks this common goal
-     * @author: Alberto Aniballi
-     * @author: Andrea Ferrini
+     * @author Alberto Aniballi
+     * @author Andrea Ferrini
      * @param library the turn player's library
      * @return boolean: true if satisfied, false if not satisfied
      */

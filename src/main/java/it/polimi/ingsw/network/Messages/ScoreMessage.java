@@ -13,7 +13,7 @@ public class ScoreMessage extends Message {
     /**
      * Constructor: Creates a message containing the list of points for all players
      * @param list a list of Couples representing username and relative points
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public ScoreMessage(ArrayList<Couple<String, Integer>> list){
         super(MessageType.FINAL_POINTS_MESSAGE);
@@ -22,7 +22,7 @@ public class ScoreMessage extends Message {
 
     /**It returns points score by every player, this message is used at the end of a game
      * @return a list of Couples representing username and relative points
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public ArrayList<Couple<String, Integer>> getList() {
         return list;

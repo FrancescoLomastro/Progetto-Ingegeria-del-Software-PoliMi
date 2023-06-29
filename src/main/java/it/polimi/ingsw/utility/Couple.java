@@ -18,14 +18,14 @@ public class Couple<E1,E2> implements Serializable {
 
     /**It returns the first general element
      * @return the first generic object in the couple
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public E1 getFirst() {
         return first;
     }
 
     /**It returns the second general element
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @return the second generic object in the couple
      */
     public E2 getSecond() {
@@ -34,7 +34,7 @@ public class Couple<E1,E2> implements Serializable {
 
     /**
      * Sets the first object in the couple
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param first a generic object
      */
     public void setFirst(E1 first) {
@@ -43,7 +43,7 @@ public class Couple<E1,E2> implements Serializable {
 
     /**
      * Sets the second object in the couple
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param second a generic object
      */
     public void setSecond(E2 second) {

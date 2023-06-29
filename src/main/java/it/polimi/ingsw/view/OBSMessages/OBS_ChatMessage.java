@@ -13,7 +13,7 @@ public class OBS_ChatMessage extends OBS_Message {
     }
 
     /** Contructor: Creates the message
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param chatMessage chat's message
      * */
     public OBS_ChatMessage(String chatMessage) {

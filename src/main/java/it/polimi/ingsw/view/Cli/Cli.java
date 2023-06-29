@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 /**This class handles input and output in cli version
- * @author: Riccardo Figini*/
+ * @author Riccardo Figini*/
 public class Cli extends View implements Runnable {
     private final Scanner scanner;
     private boolean chatAvailable;
@@ -40,7 +40,7 @@ public class Cli extends View implements Runnable {
 
     /**
      * Turns on a thread to handle user input for the CLI
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void startView() {
@@ -54,8 +54,8 @@ public class Cli extends View implements Runnable {
 
     /**
      * Prints the game title
-     * @author: RIccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author RIccardo Figini
+     * @author Francesco Lo Mastro
      */
     private void printTitle()
     {
@@ -74,8 +74,8 @@ public class Cli extends View implements Runnable {
     /**
      * Asks the user for all the initial information required to connect to a server
      * notifies the controller with the information collected
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     @Override
     public void askInitialInfo()
@@ -100,8 +100,8 @@ public class Cli extends View implements Runnable {
      * the number must be between from the two parameters
      * @param min inferior limit
      * @param max superior limit
-     * @author: Riccardo Figni
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figni
+     * @author Francesco Lo Mastro
      */
     @Override
     public void askNumberOfPlayers(int min, int max)
@@ -139,8 +139,8 @@ public class Cli extends View implements Runnable {
 
     /**
      * Asks a new username to by used by the user
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     @Override
     public void onInvalidUsername()
@@ -153,8 +153,8 @@ public class Cli extends View implements Runnable {
 
     /**It writes a new message on cli with new player in the game
      * @param string Well formatted message to be printed
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * */
     @Override
     public void lobbyUpdate(String string) {
@@ -162,8 +162,8 @@ public class Cli extends View implements Runnable {
     }
 
     /**It writes that player has been accepted
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      * */
     @Override
     public void acceptedLogin() {
@@ -171,8 +171,8 @@ public class Cli extends View implements Runnable {
     }
     /**
      * Message to be printed as the game starts
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     @Override
     public void startGame() {
@@ -184,7 +184,7 @@ public class Cli extends View implements Runnable {
      * Prints the chat message
      * @param username  the username of the sender
      * @param text  the text of the mesage
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void chatMessage(String username, String text) {
@@ -195,8 +195,8 @@ public class Cli extends View implements Runnable {
 
 
     /**Prints everything in client model
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * */
     @Override
     public void printAll() {
@@ -214,8 +214,8 @@ public class Cli extends View implements Runnable {
 
 
     /** Asks user to perform his move
-     * @author: Riccardo Figini*
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini*
+     * @author Francesco Lo Mastro
      */
     @Override
     public void askMove()  {
@@ -244,8 +244,8 @@ public class Cli extends View implements Runnable {
 
     /**
      * It prints points of every player
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * */
     private void printPointss() {
         Map<String, Integer> map1 = clientModel.getPointsMap();
@@ -255,8 +255,8 @@ public class Cli extends View implements Runnable {
     }
     /**It prints final raking
      * @param msg message with final ranking
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      * */
     @Override
     public void printFinalRank(WinnerMessage msg) {
@@ -270,8 +270,8 @@ public class Cli extends View implements Runnable {
 
     /**
      * This method allows turns on chat messages input
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     @Override
     public void startChat() {
@@ -280,8 +280,8 @@ public class Cli extends View implements Runnable {
 
 
     /**Prints generic string
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * @param s String to print
      * */
     @Override
@@ -294,8 +294,8 @@ public class Cli extends View implements Runnable {
 
     /**
      * Prints the grid passed as parameter
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * */
     @Override
     public void showGrid(ObjectCard[][] matrice, GridMessage.TypeOfGridMessage typeOfGridMessage)
@@ -343,8 +343,8 @@ public class Cli extends View implements Runnable {
 
     /**
      * Show Library of specific player
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * @param library library to print
      * */
     @Override
@@ -395,8 +395,8 @@ public class Cli extends View implements Runnable {
      * @param arg Message with all information about points achieved from common goal card. It re-used an existing class to
      * pass paramter. The Player contained in arg is who has achieved common goal. Points gained are conteined in "getGainedPointsFirstCard".
      * New points available are contained in PointAvailable1 and PointAvailable2
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini*/
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini*/
     private void showPoint(CommonGoalMessage arg) {
         System.out.println("In " + arg.getPlayerWhoScored() + "'s move: ");
         if(arg.getGainedPointsSecondCard()==1)
@@ -414,8 +414,8 @@ public class Cli extends View implements Runnable {
      * Prints a message to be displayed as an error occurs when creating a client
      * @param chosenAddress
      * @param chosenPort
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     @Override
     public void errorCreatingClient(String chosenAddress, int chosenPort) {
@@ -428,8 +428,8 @@ public class Cli extends View implements Runnable {
 
 
     /**Prints a personal goal card
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * @param goalVector Personal goal card vector
      * */
     private void printPersonalGoal(ArrayList<Couple> goalVector) {
@@ -460,9 +460,9 @@ public class Cli extends View implements Runnable {
 
     /**
      * Method used to ask a generic input to a user
-     * @return: input from user
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @return input from user
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     private String getInputRequest()
     {
@@ -481,9 +481,9 @@ public class Cli extends View implements Runnable {
 
     /**
      * Asks the username for the client
-     * @return: username
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @return username
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     public String askUsername() {
         System.out.print(">> Type your username: ");
@@ -493,9 +493,9 @@ public class Cli extends View implements Runnable {
 
     /**
      * Asks the technology to use it for the game
-     * @return: a number that identifies technology
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @return a number that identifies technology
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     public int askTechnology() {
         String input;
@@ -526,9 +526,9 @@ public class Cli extends View implements Runnable {
 
     /**
      * Asks the remote server IP
-     * @return: string with ip address
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @return string with ip address
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      */
     public String askAddress() {
         String input;
@@ -544,9 +544,9 @@ public class Cli extends View implements Runnable {
     /**
      * Asks the remote server port number
      * @param defaultPort
-     * @return: port's number
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @return port's number
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     public int askPort(int defaultPort) {
         String input;
@@ -581,8 +581,8 @@ public class Cli extends View implements Runnable {
 
 
     /**Ask position in which extract cards
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * @param numberOfCards Number of card in input
      * @return {@code Position[]} Vector with position
      * */
@@ -603,8 +603,8 @@ public class Cli extends View implements Runnable {
 
 
     /**Get a generic number with lower limit = 0 and upper limit as parameter
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * @param limit Upper limit
      * @return {@code int} inseted number
      * */
@@ -629,8 +629,8 @@ public class Cli extends View implements Runnable {
 
 
     /**It warns player that the game is almost over
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      * */
     @Override
     public void almostOver(AlmostOverMessage arg) {
@@ -638,8 +638,8 @@ public class Cli extends View implements Runnable {
     }
 
     /**it prints that someone gains center point, he has finished his library
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      *
      * */
     private void showCentralPoints(int centralPointCard) {
@@ -649,7 +649,7 @@ public class Cli extends View implements Runnable {
 
     /**
      * Thread that ask input in loop, and it notifies the observers with the collected inputs
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void run()
@@ -683,7 +683,7 @@ public class Cli extends View implements Runnable {
 
     /**
      * Method handles messages coming from the model
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param o
      * @param arg
      */
@@ -714,9 +714,9 @@ public class Cli extends View implements Runnable {
         }
     }
     /**It is used when occurs an error an game will be closed
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
-     * @author: Message with error
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Message with error
      * */
     @Override
     public void closeGame(String string) {
@@ -729,8 +729,8 @@ public class Cli extends View implements Runnable {
     }
 
     /**It prints error related to attempt move
-     *@author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     *@author Francesco Lo Mastro
+     * @author Riccardo Figini
      * @param msg
      */
     @Override
@@ -739,8 +739,8 @@ public class Cli extends View implements Runnable {
     }
 
     /**It notifies changed
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini*/
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini*/
     public void notifyAllOBS(OBS_Message msg) {
         setChanged();
         notifyObservers(msg);

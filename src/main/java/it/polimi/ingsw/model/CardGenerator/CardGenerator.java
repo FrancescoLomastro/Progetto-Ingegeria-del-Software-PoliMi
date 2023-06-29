@@ -13,7 +13,7 @@ import java.util.Random;
  * The class CardGenerator is a complete manager for all game card in a single Game.
  * This class manages the generation of each type of card and avoid generating already generated cards.
  * CardGenerator has 3 sub-managers that are dedicated to each type of card
- * @author: Francesco Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class CardGenerator implements Serializable {
     @Serial
@@ -27,7 +27,7 @@ public class CardGenerator implements Serializable {
 
     /**
      * Constructor: instantiate the 3 sub-managers
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public CardGenerator(int numOfPlayer){
         objectCardManager= new ObjectCardManager();
@@ -41,7 +41,7 @@ public class CardGenerator implements Serializable {
     /**
      * This method generates an ObjectCard keeping trace of the already generated Cards.
      * @return null if all card have been already generated, otherwise it generates a random new ObjectCard
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public ObjectCard generateObjectCard()
     {
@@ -63,7 +63,7 @@ public class CardGenerator implements Serializable {
     /**
      * This method generates a CommonGoalCard keeping trace of the already generated Cards.
      * @return null if all card have been already generated, otherwise it generates a random new CommonGoalCard
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public CommonGoalCard generateCommonGoalCard()
     {
@@ -83,7 +83,7 @@ public class CardGenerator implements Serializable {
     /**
      * This method generates a PersonalGoalCard keeping trace of the already generated Cards.
      * @return null if all card have been already generated, otherwise it generates a random new PersonalGoalCard
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public PersonalGoalCard generatePersonalGoalCard() {
         Random rndNumber= new Random();

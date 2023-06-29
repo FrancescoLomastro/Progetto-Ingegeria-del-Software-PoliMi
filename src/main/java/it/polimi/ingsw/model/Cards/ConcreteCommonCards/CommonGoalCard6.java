@@ -11,7 +11,7 @@ import java.util.HashSet;
  * The goal is: Two groups each containing 4 tiles of the same type in a 2x2 square.
  *              The tiles of one square can be different from those of the other square.
  *
- * @author: Alberto Aniballi
+ * @author Alberto Aniballi
  * */
 public class CommonGoalCard6 extends CommonGoalCard {
     public CommonGoalCard6(){
@@ -23,11 +23,11 @@ public class CommonGoalCard6 extends CommonGoalCard {
     }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
-     * @author: Riccardo Figini
-     * @author: Albero Aniballi
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Albero Aniballi
+     * @author Francesco Lo Mastro
      * @param library   the library on which we will verify if the goal is satisfied or not
-     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * @return boolean that is true if the goal is satisfied, false otherwise
      * */
     @Override
     public boolean isSatisfied(Library library) {

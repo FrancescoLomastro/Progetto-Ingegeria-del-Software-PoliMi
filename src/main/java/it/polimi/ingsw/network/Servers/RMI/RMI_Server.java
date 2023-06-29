@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.Servers.RMI;
 
-import it.polimi.ingsw.network.UtilsForRMI;
 import it.polimi.ingsw.controller.ServerReceiver;
 
 import java.rmi.registry.LocateRegistry;

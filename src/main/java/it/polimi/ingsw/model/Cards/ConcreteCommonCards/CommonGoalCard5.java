@@ -11,7 +11,7 @@ import java.util.HashSet;
  * This class contains the algorithm to verify if the following common goal is satisfied.
  * The goal is: Two columns each formed by 6 different types of tiles.
  *
- * @author: Alberto Aniballi
+ * @author Alberto Aniballi
  * */
 public class CommonGoalCard5 extends CommonGoalCard {
     public CommonGoalCard5(){
@@ -21,10 +21,10 @@ public class CommonGoalCard5 extends CommonGoalCard {
     }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
-     * @author: Alberto Aniballi
-     * @author: Riccardo Figini
+     * @author Alberto Aniballi
+     * @author Riccardo Figini
      * @param library   the library on which we will verify if the goal is satisfied or not
-     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * @return boolean that is true if the goal is satisfied, false otherwise
      * */
     @Override
     public boolean isSatisfied(Library library) {
@@ -41,7 +41,7 @@ public class CommonGoalCard5 extends CommonGoalCard {
         return count_col == 2;
     }
     /**This method verifies if a column is full
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param objectCards library
      * @param colum column to check
      * @return {@code boolean} true if it is full

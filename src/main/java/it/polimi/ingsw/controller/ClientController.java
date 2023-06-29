@@ -49,7 +49,7 @@ public class ClientController implements Observer<View, OBS_Message> {
 
 
     /** This method runs generic view as it was an independent component
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void turnOnView(){
         view.startView();
@@ -57,10 +57,10 @@ public class ClientController implements Observer<View, OBS_Message> {
 
 
     /** This method handles the creation of a client contacting a remote server
-     * @author: Francesco Lo Mastro
-     * @author: RIccardo Figini
-     * @author: Alberto Aniballi
-     * @author: Andrea Ferrini
+     * @author Francesco Lo Mastro
+     * @author RIccardo Figini
+     * @author Alberto Aniballi
+     * @author Andrea Ferrini
      * @param chosenUsername the username of the client chosen by the user
      * @param chosenTechnology the technology chosen by the user
      * @param chosenAddress the remote server ip address
@@ -94,10 +94,10 @@ public class ClientController implements Observer<View, OBS_Message> {
     /**
      * This method handles all the message coming from the network
      * @param message the message coming from the network
-     * @author: Francesco Lo Mastro
-     * @author: Alberto Aniballi
-     * @author: Riccardo Figni
-     * @author: Andrea Ferrini
+     * @author Francesco Lo Mastro
+     * @author Alberto Aniballi
+     * @author Riccardo Figni
+     * @author Andrea Ferrini
      */
     public void onMessage(Message message)  {
         switch (message.getType())
@@ -206,7 +206,7 @@ public class ClientController implements Observer<View, OBS_Message> {
 
 
     /** Collects all the messages coming from the view
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param o the observable view
      * @param arg the OBS_Message coming from the view
      */

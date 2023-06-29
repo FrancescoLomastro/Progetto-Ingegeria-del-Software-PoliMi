@@ -18,7 +18,7 @@ public class NewGameServerMessage extends Message{
      * @param RMIserverName a string representing the name of the new server (needed for RMI registry in client side)
      * @param RMIServerPort an integer indicating the new game port (needed for RMI registry in client side)
      * @param serverReceiver a new server receiver where an incoming message will be forwarded. Not transmitted in the network (needed for socket server interface)
-     *                       @author: Francesco Lo Mastro
+     *                       @author Francesco Lo Mastro
      */
     public NewGameServerMessage(String RMIserverName, int RMIServerPort, GameController serverReceiver){
         super(MessageType.NEW_GAME_SERVER_MESSAGE);
@@ -29,7 +29,7 @@ public class NewGameServerMessage extends Message{
 
     /**It returns the name of server RMI to connect for the game
      * @return a string representing the name of the new server (needed for RMI registry in client side)
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public String getServerName() {
         return RMIserverName;
@@ -37,14 +37,14 @@ public class NewGameServerMessage extends Message{
 
     /**It returns the port of server RMI
      * @return an integer indicating the new game port (needed for RMI registry in client side)
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public int getRMIServerPort() {
         return RMIServerPort;
     }
 
     /**It returns a serverReceiver, it is useful in the server side this method
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @return a new server receiver where an incoming message will be forwarded (needed for socket server interface)
      */
     public ServerReceiver getServerReceiver() {

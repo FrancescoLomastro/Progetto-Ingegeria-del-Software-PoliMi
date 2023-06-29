@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.Player.Library;
  * This class contains the algorithm to verify if the following common goal is satisfied.
  * The goal is: Four tiles of the same type in the four corners of the bookshelf.
  *
- * @author: Alberto Aniballi
+ * @author Alberto Aniballi
  * */
 public class CommonGoalCard4 extends CommonGoalCard {
     public CommonGoalCard4(){
@@ -18,9 +18,9 @@ public class CommonGoalCard4 extends CommonGoalCard {
     }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param library   the library on which we will verify if the goal is satisfied or not
-     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * @return boolean that is true if the goal is satisfied, false otherwise
      * */
     @Override
     public boolean isSatisfied(Library library) {

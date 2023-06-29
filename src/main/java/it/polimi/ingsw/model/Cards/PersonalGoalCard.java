@@ -17,9 +17,9 @@ public class PersonalGoalCard extends Card {
         this.cardId = cardId;
     }
     /**This method counts and returns point of personal goal card. It will be called at the end of the game.
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
-     * @author: Alberto Aniballi
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Alberto Aniballi
      * @param lib player's library, which will be tested
      * @return {@code int} count score point*/
     public int countPersonalGoalCardPoints(Library lib){
@@ -50,7 +50,7 @@ public class PersonalGoalCard extends Card {
         return count;
     }
     /**Return an arraylist representing the goalVector of the card.
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return {@code ArrayList<Couple>} it returns arraylist containing information about cells (position and color)
      * */
     public ArrayList<Couple> getGoalVector() {
@@ -58,7 +58,7 @@ public class PersonalGoalCard extends Card {
     }
 
     /**Returns the ID of card
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @return the id of the card
      */
     public int getCardId() {
@@ -66,7 +66,7 @@ public class PersonalGoalCard extends Card {
     }
 
     /**It returns the description, it's static because the original game does not have it
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @return the description of the card
      */
     @Override

@@ -12,9 +12,9 @@ public class GridMessage extends Message {
      * Constructor: creates a grid update message
      * @param objectCards the matrix representation of the new central grid
      * @param typeOfGridMessage an enum that specifies if the update is related to a player move (used for GUI refill)
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      */
     public GridMessage(ObjectCard[][] objectCards, TypeOfGridMessage typeOfGridMessage){
         super(MessageType.UPDATE_GRID_MESSAGE);
@@ -24,9 +24,9 @@ public class GridMessage extends Message {
 
     /**It returns the updated grid
      * @return a matrix of object cards representing the actual central grid
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      */
     public ObjectCard[][] getGrid() {
         return grid;
@@ -34,9 +34,9 @@ public class GridMessage extends Message {
 
     /**
      * Subclass used to recognize when a grid update is related to a player move or its an initial update (used for GUI refill)
-     * @author: Francesco Lo Mastro
-     * @author: Andrea Ferrini
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Andrea Ferrini
+     * @author Riccardo Figini
      */
     public enum TypeOfGridMessage{
         UPDATE_AFTER_MOVE, INIT, NEED_TO_BE_PRINTED;

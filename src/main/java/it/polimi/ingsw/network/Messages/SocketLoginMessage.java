@@ -9,7 +9,7 @@ public class SocketLoginMessage extends Message {
     /**
      * Constructor: creates a login request for Socket server interfaces
      * @param username the username of the client
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
 
 

@@ -15,7 +15,7 @@ public class CommunicationQueueHandler implements Runnable {
 
     /**
      * Constructor
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     public CommunicationQueueHandler(Client client, ClientController clientController) {
         this.client=client;
@@ -23,8 +23,8 @@ public class CommunicationQueueHandler implements Runnable {
     }
     /**
      * It controls every 200 millis if exist message from server
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * */
     @Override
     public void run() {

@@ -43,7 +43,7 @@ public class OBS_InitialInfoMessage extends OBS_Message {
     }
 
     /** Contructor: Creates the message
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param chosenAddress Server's address
      * @param chosenPort Server's port
      * @param chosenTechnology Communication technology (RMI or Socket)

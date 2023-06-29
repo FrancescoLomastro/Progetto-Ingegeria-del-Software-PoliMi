@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * This class is a PersonalCard deck manager.
  * All the PersonalCard models are taken from a JSON file.
  * It keeps tracks of the card to be generated and the already generated cards
- * @author: Francesco Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class PersonalCardManager implements Serializable {
     @Serial
@@ -33,7 +33,7 @@ public class PersonalCardManager implements Serializable {
     /**
      * Constructor: Get all the models stored in the class JSON file and creates a PersonalCardManager with 0 already generated cards.
      * NOTE: this method doesn't create all the PersonalCards it reads from the file, but prepares to manage the amount of card that are written in the file
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public PersonalCardManager(){
         jsonArrayOfCards=readCardsInFile();
@@ -53,7 +53,7 @@ public class PersonalCardManager implements Serializable {
      * NOTE: In case the file is unreachable, it will throw a RuntimeException
      * @return a JsonArray representing all the personal cards that will be managed
      * @throws RuntimeException if the file is missing from the file path
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private JsonArray readCardsInFile() throws RuntimeException{
 
@@ -88,7 +88,7 @@ public class PersonalCardManager implements Serializable {
     /**
      * Check if the manager can't generate any other card.
      * @return true if the manager is empty.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public boolean isEmpty()
     {
@@ -106,7 +106,7 @@ public class PersonalCardManager implements Serializable {
     /**
      * It returns the number of cards
      * @return the initial number of available cards got from file
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public int getNumCards() {
         return numCards;
@@ -119,7 +119,7 @@ public class PersonalCardManager implements Serializable {
      * This method generates a PersonalGoalCard from the remaining card to be generated, set as unavailable the already generated cards
      * @param personalGoalCardId is the implicit ID of a personal card. {@code ID = 0} refers to the first card stored in the file
      * @return if the requested card can be generated, will return it, otherwise it returns null.
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public PersonalGoalCard draw(int personalGoalCardId)
     {
@@ -158,7 +158,7 @@ public class PersonalCardManager implements Serializable {
      * This method checks if a PersonalCard with {@code ID = personalGoalCardId} can be generated
      * @param personalGoalCardId is the implicit ID of a personal card. {@code ID = 0} refers to the first card stored in the file
      * @return true if the card can be generated, means that the requested card with {@code ID = personalGoalCardId} is not already been picked
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public boolean isCardDrawable(int personalGoalCardId)
     {

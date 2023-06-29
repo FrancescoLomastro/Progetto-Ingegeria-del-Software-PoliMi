@@ -35,8 +35,8 @@ public class Controller implements ServerReceiver
     private String NumOfGamesPath = NumOfGameFolder+"/"+NumOfGamesFile;
 
     /**Constructor of server controller
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      * */
     public Controller() {
         games = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Controller implements ServerReceiver
     /**It handles connection-error
      * @param connection Player's connection
      * @param playerName Player's name
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     @Override
     public synchronized void tryToDisconnect(Connection connection, String playerName) {
@@ -118,8 +118,8 @@ public class Controller implements ServerReceiver
     }
     /**It handles messages before game
      * @param message message
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      * */
     @Override
     synchronized public void onMessage(Message message) {
@@ -181,7 +181,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It handles messages during login. Only
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param connection Player's connection
      * @param username Player's username
      * @return {@code boolean} true if name is accepted
@@ -239,7 +239,7 @@ public class Controller implements ServerReceiver
         return true;
     }
     /**It destroys all files of the game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @exception IOException When a cancellation does not work
      * */
     private void destroyAllFile() throws IOException {
@@ -268,7 +268,7 @@ public class Controller implements ServerReceiver
     }
     /**It loads old player name in a list. Then the controller will control this list to check if a noew
      * player is from old game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     private void manageOldPlayer(){
         JsonArray arrayOfJsonCells = Objects.requireNonNull(getArrayJsonWithNumberGame()).getAsJsonArray("numOfGame");
@@ -286,7 +286,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It returns jsonArray with number of ongoing game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return {@code JsonArray} Array with number
      * */
     private JsonObject getArrayJsonWithNumberGame() {
@@ -313,8 +313,8 @@ public class Controller implements ServerReceiver
     }
 
     /**It tries to create the file where save the game's IDs
-     * @author: Francesco Lo Mastro
-     * @author: Riccardo Figini
+     * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      * */
     private boolean tryCreateFile() {
         File folder = new File(NumOfGameFolder);
@@ -342,7 +342,7 @@ public class Controller implements ServerReceiver
 
     /**It adds the name of player from ongoing game. It reads object "gameController" from a file indicated with path
      * @param path Game's path
-     *@author: Riccardo Figini
+     *@author Riccardo Figini
      * */
     private void getPlayerFromFile(String path, String gameId) {
         GameController gameController ;
@@ -369,7 +369,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It returns game's id where player is contained. If he is not "old player" return -1
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param username Player's username
      * @return {@code int} game's id or -1
      * */
@@ -383,7 +383,7 @@ public class Controller implements ServerReceiver
         return -1;
     }
     /**It adds player in currentGame and will start the game if lobby is full
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param username player's name
      * @param connection player's connection
      * */
@@ -402,7 +402,7 @@ public class Controller implements ServerReceiver
     }
 
     /**Write a new number of games into file
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param gameId Number to be written
      * */
     private void writeNewGameInExecution(int gameId) {
@@ -449,7 +449,7 @@ public class Controller implements ServerReceiver
     }
 
     /**It chose available ID for new game. It controls a file with every game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @return {@code int} Available number
      * */
     private int getAvailableID() {
@@ -471,7 +471,7 @@ public class Controller implements ServerReceiver
     /**It controls if in games exists a player with the same name in input
      * @param username player's name to verify
      * @return {@code boolean} true if name is available
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     private boolean isAvailableUsername(String username) {
         for (GameController gc : games) {
@@ -482,7 +482,7 @@ public class Controller implements ServerReceiver
     }
 
     /**It adds player if his game has been re-loaded from file, otherwise load game and then add player
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param username Player's username
      * @param connection Player's connection
      * @param gameId ID of game
@@ -534,7 +534,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It deletes game file
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param s File's name to remove
      * @exception IOException It occurs when the cancellation does not work correctly
      * */
@@ -542,7 +542,7 @@ public class Controller implements ServerReceiver
         Files.delete(Paths.get(s));
     }
     /**When old player finally restarts it remove player
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * */
     private void removePlayerFromOldList(GameController gameController) {
         for(int i = 0; i< gameController.getNamesOfPlayer().size(); i++){
@@ -550,7 +550,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It reloads game from file and create new map for plaeyey
-     * @author: RIccardo Figini
+     * @author RIccardo Figini
      * @param gameId Game's ID
      * @return {@code GameController} It returns gameController
      * */
@@ -566,7 +566,7 @@ public class Controller implements ServerReceiver
         return gameController;
     }
     /**It finds specific gameController from player's name
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param playerName player's game
      * @return {@code GameController} It returns gameController where player is contained
      * */
@@ -579,7 +579,7 @@ public class Controller implements ServerReceiver
         return null;
     }
     /**Delete number game from file
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param gameId Game's id
      * */
     public void deleteGameFromArrayContainer(int gameId) {
@@ -611,7 +611,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It destroys game and warn every player apart who creates problem
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param nameOfPlayerDown Player that throw a problem
      * @param message  Message with an error description
      * */
@@ -637,7 +637,7 @@ public class Controller implements ServerReceiver
         games.remove(gameController);
     }
     /**It destroys game controller and warn every player
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param message Message with an error description
      * */
     public void destroyGame(String message, GameController gameController) {
@@ -660,7 +660,7 @@ public class Controller implements ServerReceiver
         games.remove(gameController);
     }
     /**It removes player from specific not in execution game.
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param playerName Name of player to remove
      * */
     public void disconnectPlayerFromGame(String playerName) {
@@ -680,7 +680,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It chages status to every player in game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param statusNetwork network's status
      * @param gameController Game with connection that need to be changed
      * */
@@ -690,7 +690,7 @@ public class Controller implements ServerReceiver
         }
     }
     /**It changes status of specific player in game
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param connection Connection that need to be changed
      * @param statusNetwork Network's status
      * */
@@ -699,7 +699,7 @@ public class Controller implements ServerReceiver
             connection.setStatusNetwork(statusNetwork);
     }
     /**It removes gameController from a list
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param gameController gameController
      * */
     public void removeGame(GameController gameController) {
@@ -709,8 +709,8 @@ public class Controller implements ServerReceiver
     /**
      * Starts a timer "numberRequestTimer" to get a response to PLAYER_NUMBER_ANSWER, avoid blocking the whole server when
      *  single clients take too long to reply.
-     * @author: Riccardo Figini
-     * @author: Francesco Lo Mastro
+     * @author Riccardo Figini
+     * @author Francesco Lo Mastro
      */
     private void startWaitedRequestTimer(Connection clientConnection) {
         numberRequestTimer = new Timer();
@@ -719,7 +719,7 @@ public class Controller implements ServerReceiver
 
     /**
      * stops the "numberRequestTimer" if it was scheduled
-     * @author: Franceso Lo Mastro
+     * @author Franceso Lo Mastro
      */
     private void stopWaitedRequestTimer() {
         if (numberRequestTimer!=null) {

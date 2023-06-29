@@ -10,7 +10,7 @@ import java.util.HashSet;
  * The goal is: Three columns each formed by 6 tiles of maximum three different types.
  *              One column can show the same or a different combination of another column.
  *
- * @author: Alberto Aniballi
+ * @author Alberto Aniballi
  * */
 public class CommonGoalCard8 extends CommonGoalCard {
     public CommonGoalCard8(){
@@ -22,10 +22,10 @@ public class CommonGoalCard8 extends CommonGoalCard {
     }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
-     * @author: Alberto Aniballi
-     * @author: Francesco Lo Mastro
+     * @author Alberto Aniballi
+     * @author Francesco Lo Mastro
      * @param library   the library on which we will verify if the goal is satisfied or not
-     * @return: boolean that is true if the goal is satisfied, false otherwise
+     * @return boolean that is true if the goal is satisfied, false otherwise
      * */
     @Override
     public boolean isSatisfied(Library library) {
