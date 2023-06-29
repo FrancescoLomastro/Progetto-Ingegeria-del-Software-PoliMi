@@ -16,7 +16,7 @@ public class WinnerMessage extends Message{
      * Constructor: Creates a message with final game ranking
      * @param myPoints the total points that the receiver of the message has realized
      * @param finalRanking an arraylist with the game ranking
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public WinnerMessage(Integer myPoints, ArrayList<Couple<String, Integer>> finalRanking) {
         super(MessageType.WINNER_MESSAGE);
@@ -26,7 +26,7 @@ public class WinnerMessage extends Message{
 
     /**It returns the points that player gains during the game
      * @return the total points that the receiver of the message has realized
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public int getMyPoints() {
         return myPoints;
@@ -34,7 +34,7 @@ public class WinnerMessage extends Message{
 
     /**It returnees the final ranking. It is used to show the classification
      * @return an arraylist with the game ranking
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public ArrayList<Couple<String, Integer>> getFinalRanking() {
         return finalRanking;

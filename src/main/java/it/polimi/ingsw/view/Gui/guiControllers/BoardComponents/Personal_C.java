@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
  * This class governs the GUI of personal goal cards so that it maintain its initial proportion in the case the main board
  * stage is resized.
  *
- * @author Francesco Gregorio Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class Personal_C {
     @FXML
@@ -25,7 +25,7 @@ public class Personal_C {
      *
      * @param father: vbox containing the components;
      * @param parts: number of parts;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setListeners(VBox father, double parts)
     {
@@ -61,7 +61,7 @@ public class Personal_C {
      *
      * @param width: the component width;
      * @param height: the component height;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void scaleDimension(double width,double height) {
         double min = Math.min(width,height/fatherParts);
@@ -72,7 +72,7 @@ public class Personal_C {
     /**
      * This method is used to make each component keep its proportion in the case the stage is resized.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void maintainProportion() {
         image.setPrefWidth(anchor.getWidth()*imageRatio);
@@ -81,7 +81,7 @@ public class Personal_C {
     /**
      * This method is used to get the image.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public Pane getImage() {
         return image;

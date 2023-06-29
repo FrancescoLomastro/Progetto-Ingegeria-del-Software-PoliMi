@@ -1,19 +1,22 @@
 package it.polimi.ingsw.view.OBSMessages;
-/**This message is used to update player's name if it is not available
- * @author: Francesco gregorio Lo Mastro */
+
+/**
+ * Message used by a View to notify client controller the new username to use
+ * @author: Francesco Lo Mastro 
+ * */
 public class OBS_ChangedUsernameMessage extends OBS_Message {
     private final String changedUsername;
 
     /**
      * This method return the new username chosen by the player.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public String getChangedUsername() {
         return changedUsername;
     }
-    /**It sets a new name
-     * @author: Franceco Gregorio Lo Mastro
+    /** Contructor: Creates the message
+     * @author: Franceco Lo Mastro
      * @param changedUsername new player's name
      * */
     public OBS_ChangedUsernameMessage(String changedUsername) {

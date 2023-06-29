@@ -13,7 +13,7 @@ public class RMILoginMessage extends Message {
      * Constructor: creates a login request for RMI server interfaces
      * @param username the name of the client
      * @param clientConnection the client stub used by server to contact the RMI client in the future
-     *                         @author: Francesco Gregorio Lo Mastro
+     *                         @author: Francesco Lo Mastro
      */
     public RMILoginMessage(String username, RMIClientConnection clientConnection) {
         super(username,MessageType.RMI_LOGIN_REQUEST);
@@ -22,7 +22,7 @@ public class RMILoginMessage extends Message {
 
     /**It returns connection's object. This method is useful only in server side
      * @return a client stub used by server to contact the RMI client
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public RMIClientConnection getConnection()
     {

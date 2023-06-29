@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
  * This class governs the GUI of each player library so that it maintain its initial proportion in the case the main board
  * stage is resized.
  *
- * @author Francesco Gregorio Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class Library_C {
     @FXML
@@ -43,7 +43,7 @@ public class Library_C {
      *
      * @param father: vbox containing the components;
      * @param parts: number of parts;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setListeners(VBox father,double parts)
     {
@@ -86,7 +86,7 @@ public class Library_C {
      *
      * @param width: the component width;
      * @param height: the component height;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void scaleDimension(double width,double height) {
 
@@ -102,7 +102,7 @@ public class Library_C {
     /**
      * This method is used to make each component keep its proportion in the case the stage is resized.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void maintainProportion() {
         bottom.setPrefHeight(anchor.getPrefHeight()*bottomRatio);
@@ -115,7 +115,7 @@ public class Library_C {
     /**
      * This method is used to get the grid.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public GridPane getGrid()
     {
@@ -126,7 +126,7 @@ public class Library_C {
      * This method is used to set the name of the library owner.
      *
      * @param text: name of the library owner;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setText(String text)
     {
@@ -136,7 +136,7 @@ public class Library_C {
     /**
      * This method is used to get the anchor pane.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public AnchorPane getAnchor() {
         return anchor;

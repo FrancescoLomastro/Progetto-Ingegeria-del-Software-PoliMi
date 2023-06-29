@@ -24,7 +24,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
     /**
      * Constructor
      * @author: Riccardo Figini
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @param address Server's address
      * @param port Server's port
      * @param username Client's name */
@@ -50,7 +50,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
     /**
      * This method changes reference to server, from acceptor server to Game server.
      * Thanks to this, a client can communicate directly with GameController
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Riccardo Figni
      * @param message Message contains name and port of server
      * */
@@ -68,7 +68,7 @@ public class RMI_Client extends Client implements RMIClientConnection {
      * Client makes login on server, to join in a game.
      * It is an Override because the creation of connection depends on RMI/Socket
      * @author: Riccardo Figini
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * */
     @Override
     public void connect() {

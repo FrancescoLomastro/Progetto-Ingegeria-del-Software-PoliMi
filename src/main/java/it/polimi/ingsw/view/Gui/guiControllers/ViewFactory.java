@@ -56,7 +56,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * It is the constructor of the class, it has the main responsibility of adding an observer to the super class "clientModel" attribute.
      *
      * @return: static instance of View Factory
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public ViewFactory() {
         clientModel=new ClientModel();
@@ -138,7 +138,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to set the primary stage.
      *
      * @param primaryStage: the new primary stage.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public void setPrimaryStage(Stage primaryStage)
     {
@@ -149,7 +149,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to close a stage.
      *
      * @param stage: the stage to be closed.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public void closeStage(Stage stage) {
         stage.close();
@@ -159,7 +159,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to create the main stage of the game and to set the correct scene.
      *
      * @param loader: the FXMLLoader instance with the proper URL location
-     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
+     * @author: Alberto Aniballi & Francesco Lo Mastro
      */
     private void createMainStage(FXMLLoader loader)
     {
@@ -179,7 +179,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to change root to the primary stage scene.
      *
      * @param loader: the FXMLLoader instance with the proper URL location
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     private void changeRoot(FXMLLoader loader)
     {
@@ -195,7 +195,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the main stage and to load the first scene on it, the scene is the "start" scene.
      * After the scene is correctly loaded, the stage is shown.
      *
-     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
+     * @author: Alberto Aniballi & Francesco Lo Mastro
      */
     public void showStart() {
         Platform.runLater(()->{
@@ -260,7 +260,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * Method for entering the ending phase of the game.
      *
      * @param arg: the message;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     @Override
     public void almostOver(AlmostOverMessage arg) {
@@ -276,7 +276,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to instantiate the "InvalidUsername" scene on a new stage during the pre-game phase.
      * It shows the form that collect the new username that the user will use.
      *
-     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
+     * @author: Alberto Aniballi & Francesco Lo Mastro
      */
     @Override
     public void onInvalidUsername() {
@@ -294,7 +294,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * scene.
      *
      * @param string: the string displaying current lobby's information
-     * @author: Alberto Aniballi & Francesco Gregorio Lo Mastro
+     * @author: Alberto Aniballi & Francesco Lo Mastro
      */
     @Override
     public void lobbyUpdate(String string) {
@@ -413,7 +413,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param grid: the current grid;
      * @param typeOfGridMessage: the message sent by the grid;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     @Override
     public void showGrid(ObjectCard[][] grid, GridMessage.TypeOfGridMessage typeOfGridMessage) {
@@ -613,7 +613,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to notify all observers of the view.
      *
      * @param msg: the message to send;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public void notifyAllOBS(OBS_Message msg) {
         setChanged();
@@ -653,7 +653,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @param o: the client model;
      * @param arg : the message sent;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     @Override
     public void update(ClientModel o, Message arg) {
@@ -685,7 +685,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to update players points.
      *
      * @param arg : the common goal message sent;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     private void updatePoints(CommonGoalMessage arg)
     {
@@ -701,7 +701,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to initialize the game main board.
      *
      * @param arg : the message sent;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     private void showBoard(Message arg) {
         createBoard();
@@ -748,7 +748,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     /**
      * This method is used to create the game main board.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     private void createBoard() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
@@ -843,7 +843,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * This method is used to show central points to players.
      *
      * @param centralPoints: the current central points;
-     * @author: Riccardo Figini & Francesco Gregorio Lo Mastro
+     * @author: Riccardo Figini & Francesco Lo Mastro
      */
     public void showCentralPoints(int centralPoints) {
         Platform.runLater(()->{

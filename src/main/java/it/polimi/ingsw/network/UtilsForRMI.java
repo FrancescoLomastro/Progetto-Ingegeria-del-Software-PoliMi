@@ -13,7 +13,7 @@ public class UtilsForRMI {
     /**
      * It gets the local ip.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public static String getLocalIp() {
         try {

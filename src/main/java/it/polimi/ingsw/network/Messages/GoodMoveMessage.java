@@ -11,7 +11,7 @@ public class GoodMoveMessage extends Message{
      * Constructor: Creates a massage with the amount of points gained from the 2 common goal cards
      * @param points1 points gained from the first common goal card
      * @param points2 points gained from the second common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -23,7 +23,7 @@ public class GoodMoveMessage extends Message{
 
     /**it returns the points gained from the first common goal card
      * @return the points gained from the first common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -34,7 +34,7 @@ public class GoodMoveMessage extends Message{
 
     /**it returns the points gained from the second common goal card
      * @return the points gained from the second common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */

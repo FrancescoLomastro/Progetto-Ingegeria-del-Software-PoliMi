@@ -16,7 +16,6 @@ public class CommonGoalCard1 extends CommonGoalCard {
     }
     /**
      * It verifies if the library satisfies the goal of this specific common goal card
-     * @author: Francesco Lo Mastro
      * @author: Albero Aniballi
      * @author: Riccardo Figini
      * @author: Andrea Ferrini

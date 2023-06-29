@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
  * This class governs the GUI of the points displayer so that it maintain its initial proportion in the case the main board
  * stage is resized.
  *
- * @author Francesco Gregorio Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class Point_C {
 
@@ -29,7 +29,7 @@ public class Point_C {
      *
      * @param father: vbox containing the components;
      * @param relatedLibrary: the specific library considered;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setListeners(VBox father, AnchorPane relatedLibrary)
     {
@@ -52,7 +52,7 @@ public class Point_C {
      * This method is used to scale components dimension.
      *
      * @param width: the component width;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void scaleDimension(double width) {
         anchor.setPrefHeight(relatedLibrary.getPrefHeight());
@@ -66,7 +66,7 @@ public class Point_C {
     /**
      * This method is used to get the points label.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public Label getPointsLabel()
     {
@@ -76,7 +76,7 @@ public class Point_C {
     /**
      * This method is used to get the border pane containing points.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public BorderPane getPointsPane()
     {

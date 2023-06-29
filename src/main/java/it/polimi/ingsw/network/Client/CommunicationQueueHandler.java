@@ -24,7 +24,7 @@ public class CommunicationQueueHandler implements Runnable {
     /**
      * It controls every 200 millis if exist message from server
      * @author: Riccardo Figini
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * */
     @Override
     public void run() {

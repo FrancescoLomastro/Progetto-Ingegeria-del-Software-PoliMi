@@ -28,7 +28,7 @@ public class StartController implements Initializable {
      * This method is used to set the scene on the stage.
      *
      * @param scene the scene to be set.
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setScene(Scene scene) {
         this.scene = scene;
@@ -39,7 +39,7 @@ public class StartController implements Initializable {
      *
      * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

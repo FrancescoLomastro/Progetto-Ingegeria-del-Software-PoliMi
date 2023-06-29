@@ -26,7 +26,7 @@ public class LivingRoom implements Serializable {
 
     /**
      * Constructor: Build the central grid and generates the common goal cards.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @param numPlayers The number of players that will use the living room
      * @param numCommonGoalCards The number of common goal cards
      * @param cardGenerator is the card to be use to generate living room cards
@@ -45,7 +45,7 @@ public class LivingRoom implements Serializable {
 
     /**
      * This method is used to generate the common goal card of the living room
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     private void generateCommonGoalCards()
     {
@@ -61,7 +61,7 @@ public class LivingRoom implements Serializable {
     /**
      * Its used when the first library of the game is filled with object cards.
      * This method consumes the central score card and returns the amount of points.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @return amount of points in the central score card
      */
     public int consumeCentralPoints() {
@@ -75,7 +75,7 @@ public class LivingRoom implements Serializable {
 
     /**It returns the grid of the game (not the copy, the original)
      * @return The grid object in the living room
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public Grid getGrid() {
         return grid;
@@ -85,7 +85,7 @@ public class LivingRoom implements Serializable {
 
 
     /**It returns central point score
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @return the amount of point available at the center of the living room
      */
     public int getCentralScorePoints() {
@@ -96,7 +96,7 @@ public class LivingRoom implements Serializable {
 
 
     /**It returns a vector of common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @return the array of common goal cards in the library
      */
     public CommonGoalCard[] getCommonGoalCards() {

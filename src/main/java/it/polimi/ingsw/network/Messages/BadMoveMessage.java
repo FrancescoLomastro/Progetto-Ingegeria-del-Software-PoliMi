@@ -9,7 +9,7 @@ public class BadMoveMessage extends Message{
     /**
      * Constructor: Creates a message with the reason of the negative move
      * @param moveErrorString a string with the reason of the negative move
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -20,7 +20,7 @@ public class BadMoveMessage extends Message{
 
     /**
      * @return a string with the reason of the negative move
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */

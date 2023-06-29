@@ -11,7 +11,7 @@ import it.polimi.ingsw.utility.Position;
 /**
  * This class is the abstract class for managing the creation of stages, the succession of scenes and their changes during the game.
  *
- * @author Francesco Gregorio Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public abstract class View extends Observable<OBS_Message> implements Runnable, Observer<ClientModel,Message> {
     protected ClientModel clientModel;
@@ -21,14 +21,14 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     /**
      * Abstract method for starting the mana java-FX thread.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void startView();
 
     /**
      * Abstract method for asking initial info.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void askInitialInfo();
 
@@ -37,21 +37,21 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      *
      * @param min: minimum number of players;
      * @param max: maximum number of players;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void askNumberOfPlayers(int min, int max);
 
     /**
      * Abstract method for asking a move to players.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void askMove();
 
     /**
      * Abstract method for starting the mana java-FX thread.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void onInvalidUsername();
 
@@ -59,14 +59,14 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      * Abstract method for showing the form that collect the new username that the user will use.
      *
      * @param string: the string displaying current lobby's information
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void lobbyUpdate(String string);
 
     /**
      * Abstract method for accepting login.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void acceptedLogin();
 
@@ -74,7 +74,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      * Abstract method for printing in chat message from server.
      *
      * @param string Message from server
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void printMessage(String string);
 
@@ -83,7 +83,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      *
      * @param grid: the current grid;
      * @param typeOfGridMessage: the message sent by the grid;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void showGrid(ObjectCard[][] grid, GridMessage.TypeOfGridMessage typeOfGridMessage);
 
@@ -94,28 +94,28 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      * @param username: the player username;
      * @param old: the old grid;
      * @param inTable: updated library;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void showLibrary(ObjectCard[][] library, String username, Position[] old, Position[] inTable);
 
     /**
      * Abstract method for printing anything in the chat.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void printAll();
 
     /**
      * Abstract method for starting the chat.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void startChat();
 
     /**
      * Abstract method for printing final rank.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void printFinalRank(WinnerMessage msg);
 
@@ -125,7 +125,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      *
      * @param chosenAddress : the server address chosen by the player
      * @param chosenPort : the port chosen by the player
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void errorCreatingClient(String chosenAddress, int chosenPort);
 
@@ -134,14 +134,14 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      *
      * @param username: the player username who sent the message;
      * @param text: the message text;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void chatMessage(String username, String text);
 
     /**
      * Abstract method for starting the game.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void startGame();
 
@@ -149,7 +149,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      * Abstract method for entering the ending phase of the game.
      *
      * @param arg: the message;
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void almostOver(AlmostOverMessage arg);
 
@@ -159,7 +159,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     /**
      * Abstract method for getting client model.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public ClientModel getClientModel() {
         return clientModel;
@@ -168,7 +168,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     /**
      * Abstract method for getting default rmi port.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public int getDefaultRMIPort() {
         return defaultRMIPort;
@@ -177,7 +177,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
     /**
      * Abstract method for getting default socket port.
      *
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public int getDefaultSocketPort() {
         return defaultSocketPort;
@@ -187,7 +187,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      * Abstract method for closing the game.
      *
      * @param string: string to be printed
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void closeGame(String string);
 
@@ -195,7 +195,7 @@ public abstract class View extends Observable<OBS_Message> implements Runnable, 
      * Abstract method for signaling a bad move.
      *
      * @param msg: message to be displayed
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public abstract void onBadMoveAnswer(BadMoveMessage msg);
 }

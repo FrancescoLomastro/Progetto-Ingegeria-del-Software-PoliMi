@@ -40,7 +40,7 @@ public class Grid implements Serializable {
     /**
      * The constructor of the grid. After the call of this constructor, the matrix will contain the right number of
      * object cards in the right position and the set notAvailablePosition will contain all the unavailable positions.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @param numPlayers the grid need the number of players that will play with it, in order to prepare the game field.
      * @param cardGenerator the generator that the game uses to generate cards
      * @throws RuntimeException propagates to the caller the exception thrown by retrieveUnavailablePositionsSet.
@@ -57,7 +57,7 @@ public class Grid implements Serializable {
      * The method refill simply refills the grid with object cards.
      * It checks all the empty positions that are also available in the grid and creates an object card in those positions
      * In case the grid is not completely empty when the method is called, it will maintain the already present cards.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Riccardo Figini
      */
     public void refill(){
@@ -77,7 +77,7 @@ public class Grid implements Serializable {
 
     /**
      * This method checks if the grid needs to be refilled
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @return {@code true} if the player that will draw in this turn is forced to draw a single card.
      * This case realizes when the grid is completely empty or each of the remaining card are surrounded by empty spaces.
      */
@@ -99,7 +99,7 @@ public class Grid implements Serializable {
 
     /**
      * Method that checks if a draw is correctly formed and performable.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Riccardo Figini
      * @param drawn is a vector of positions
      * @return {@code true} if the vector is not null, has the correct length, has not empty cells in it, is a straight
@@ -192,7 +192,7 @@ public class Grid implements Serializable {
      * @param move {@code Position[]} Vector with position to remove
      * @return {@code ObjectCard[]} return removed cards
      * @author: Riccardo Figini
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      */
     public ObjectCard[] draw(Position[] move) {
         if (move == null)
@@ -210,7 +210,7 @@ public class Grid implements Serializable {
      * Inside the file are stored some vectors containing some positions.
      * {@code Default_Invalid_Positions} contains all the position that are not utilizable by default.
      * {@code i_Player_New_Positions} contains all the new positions utilizable when {@code i} players are playing.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @return a set of positions representing all the unavailable positions for the current number of players in the class.
      */
     private Set<Position> retrieveUnavailablePositionsSet()
@@ -261,7 +261,7 @@ public class Grid implements Serializable {
 
 
     /**It returs if the cell is avalable
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @param position is the position that will be checked
      * @return {@code true} if {@code position} is a not available position
      */
@@ -294,7 +294,7 @@ public class Grid implements Serializable {
 
     /**
      * Method created to check if a vector contains the same value in all of its cells.
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @param vector Is the vector to check
      * @return {@code true} if all the cells of the vector contains the same value.
      */

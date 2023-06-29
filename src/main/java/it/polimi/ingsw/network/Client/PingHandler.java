@@ -19,7 +19,7 @@ public class PingHandler implements Runnable {
     /**
      * Constructor
      * @author: Riccardo Figini
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * */
     public PingHandler(Client client, ClientController clientController) {
         this.client=client;
@@ -30,7 +30,7 @@ public class PingHandler implements Runnable {
     /**
      * It controls every 200 millis if exist message from server
      * @author: Riccardo Figini
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * */
     @Override
     public void run() {
@@ -66,7 +66,7 @@ public class PingHandler implements Runnable {
     }
     /**It is called when server sends an error and ping needs to be stopped
      * @author: Riccardo Figini
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * */
     public void shutDown() {
         pingTimer.cancel();

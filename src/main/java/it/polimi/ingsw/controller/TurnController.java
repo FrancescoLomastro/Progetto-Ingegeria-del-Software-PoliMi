@@ -45,7 +45,7 @@ public class TurnController implements Runnable, Serializable {
                 new MoveMessage(), game.getPlayers()[0].getName());
     }
     /**It shares initial information with player at the beginning of the game
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * */
     public void initClientObjectInPlayer()
     {

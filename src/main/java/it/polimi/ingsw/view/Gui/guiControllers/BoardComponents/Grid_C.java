@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
  * This class governs the GUI of obect cards grid so that it maintain its initial proportion in the case the main board
  * stage is resized.
  *
- * @author Francesco Gregorio Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class Grid_C {
     @FXML
@@ -31,7 +31,7 @@ public class Grid_C {
      * A listener is set to height and width property to make component responsive.
      *
      * @param father: border pane containing the components;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setListeners(BorderPane father) {
         gridRatio= grid.getPrefHeight()/anchor.getPrefHeight();
@@ -68,7 +68,7 @@ public class Grid_C {
     /**
      * This method is used to make each component keep its proportion in the case the stage is resized.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void maintainProportion() {
         grid.setPrefSize(anchor.getWidth()*gridRatio,anchor.getHeight()*gridRatio);
@@ -84,7 +84,7 @@ public class Grid_C {
      *
      * @param width: the component width;
      * @param height: the component height;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void scaleDimension(double width,double height) {
         double min = Math.min(width,height);
@@ -95,7 +95,7 @@ public class Grid_C {
     /**
      * This method is used to get the grid.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public GridPane getGrid()
     {
@@ -105,7 +105,7 @@ public class Grid_C {
     /**
      * This method is used to get the central point card.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public Pane getCentralPointCard(){ return centralPointCard;}
 }

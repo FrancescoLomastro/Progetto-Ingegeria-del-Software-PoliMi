@@ -36,7 +36,10 @@ import java.util.*;
  * "CommonGoal.fxml", "Grid.fxml", "Library.fxml", "PersonalGoal.fxml" and "Point.fxml".
  * In addition, the class manages the interaction between players and the various graphic components of the scene.
  *
- * @author Alberto Aniballi, Riccardo Figini, Francesco Gregorio Lo Mastro, Andrea Ferrini
+ * @author Alberto Aniballi,
+ *  @author Francesco Lo Mastro
+ *   @author Riccardo Figini
+ *   @author Andrea Ferrini
  */
 public class Board_C implements Initializable {
     @FXML
@@ -96,7 +99,7 @@ public class Board_C implements Initializable {
      *
      * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -164,7 +167,7 @@ public class Board_C implements Initializable {
      * This method is used to set up the correct common goal cards and personal goal cards that were assigned during
      * initialization of the game. Listeners and event handlers are set for the goal card components.
      *
-     * @author Francesco Gregorio Lo Mastro, Riccardo Figini
+     * @author Francesco Lo Mastro, Riccardo Figini
      */
     private void setupGoals() {
         ClientModel clientModel = ViewFactory.getInstance().getClientModel();
@@ -231,7 +234,7 @@ public class Board_C implements Initializable {
      * This method is used to initialize each player library on the main board.
      * Listeners and event handlers are set for library components.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void initializeLibraries() {
         libraries= new HashMap<>();
@@ -294,7 +297,7 @@ public class Board_C implements Initializable {
     /**
      * This method is used to make each board component maintain its proportion in case the stage is resized.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void maintainProportion() {
         left.setPrefWidth(anchor.getWidth()*leftRatio);
@@ -308,7 +311,7 @@ public class Board_C implements Initializable {
     /**
      * This method is used to initialize object cards grid on the main board.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
      private void initializeGrid() {
          loader = new FXMLLoader(getClass().getResource("/fxml/BoardComponents/Grid.fxml"));
@@ -344,7 +347,7 @@ public class Board_C implements Initializable {
      * object card to cell of the grid and to update the grid once a player choose object cards from the grid.
      *
      * @param grid: the current grid;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void updateGrid(ObjectCard[][] grid) {
         for (Node node : centralGrid.getChildren()) {
@@ -365,7 +368,7 @@ public class Board_C implements Initializable {
      *
      * @param library: the current library of the player;
      * @param username: the name of the library owner;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void updateLibrary(ObjectCard[][] library, String username) {
         GridPane libraryPane= libraries.get(username).getGrid();
@@ -598,7 +601,7 @@ public class Board_C implements Initializable {
      * This method is used to show central points in the "centralPointCard".
      *
      * @param centralPoints: the number of points;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void showCentralPoints(int centralPoints) {
         centralPointCard.getStyleClass().add("centralPointCard_"+centralPoints);
@@ -608,7 +611,7 @@ public class Board_C implements Initializable {
      * This method is used to enter the phase in which the game is almost over.
      *
      * @param arg: the almost over message;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void almostOver(AlmostOverMessage arg) {
         int updatedPoints= ViewFactory.getInstance().getClientModel().getPointsMap().get(arg.getFillerName());
@@ -640,7 +643,7 @@ public class Board_C implements Initializable {
      * This method is used to update common goal cards points in the case a player reaches common goal objective.
      *
      * @param arg: common goal message;
-     * @author Riccardo Figini, Francesco Gregorio Lo Mastro
+     * @author Riccardo Figini, Francesco Lo Mastro
      */
     public void updatePoints(CommonGoalMessage arg) {
         Map<String,Integer> map= ViewFactory.getInstance().getClientModel().getPointsMap();

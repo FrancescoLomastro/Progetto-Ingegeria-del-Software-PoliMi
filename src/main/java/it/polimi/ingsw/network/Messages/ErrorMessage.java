@@ -9,7 +9,7 @@ public class ErrorMessage extends Message {
     /**
      * Constructor: Creates the message with the error text
      * @param errorText the text of the error
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -20,7 +20,7 @@ public class ErrorMessage extends Message {
 
     /**It returns the text that specifies the error
      * @return the error text in the message
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */

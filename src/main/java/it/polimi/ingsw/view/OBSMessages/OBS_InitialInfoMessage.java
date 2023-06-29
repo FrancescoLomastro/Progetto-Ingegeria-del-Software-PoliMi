@@ -1,5 +1,5 @@
 package it.polimi.ingsw.view.OBSMessages;
-/**This message is used to create "client" rmi or socket*/
+/**This message contains initial user information to send to client controller*/
 public class OBS_InitialInfoMessage extends OBS_Message {
     private final String chosenUsername;
     private final int chosenTechnology;
@@ -9,7 +9,7 @@ public class OBS_InitialInfoMessage extends OBS_Message {
     /**
      * This method return the username chosen by the player.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public String getChosenUsername() {
         return chosenUsername;
@@ -18,7 +18,7 @@ public class OBS_InitialInfoMessage extends OBS_Message {
     /**
      * This method return the network technology chosen by the player.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public int getChosenTechnology() {
         return chosenTechnology;
@@ -27,7 +27,7 @@ public class OBS_InitialInfoMessage extends OBS_Message {
     /**
      * This method return the address chosen by the player.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public String getChosenAddress() {
         return chosenAddress;
@@ -36,14 +36,14 @@ public class OBS_InitialInfoMessage extends OBS_Message {
     /**
      * This method return the port chosen by the player.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public int getChosenPort() {
         return chosenPort;
     }
 
-    /**It sets all information used to create a new client (RMI or socket)
-     * @author: Francesco Gregorio Lo Mastro
+    /** Contructor: Creates the message
+     * @author: Francesco Lo Mastro
      * @param chosenAddress Server's address
      * @param chosenPort Server's port
      * @param chosenTechnology Communication technology (RMI or Socket)

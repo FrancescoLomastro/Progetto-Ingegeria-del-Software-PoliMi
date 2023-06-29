@@ -195,7 +195,7 @@ public class GameController implements Runnable, ServerReceiver, Serializable {
         }
     }
     /**It handles chat message
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @param message Chat message
      * */
     private void manageChatMessage(Message message) {

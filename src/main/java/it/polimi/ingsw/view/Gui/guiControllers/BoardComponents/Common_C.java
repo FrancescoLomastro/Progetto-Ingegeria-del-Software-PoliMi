@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
  * This class governs the GUI of common goal cards so that it maintain its initial proportion in the case the main board
  * stage is resized.
  *
- * @author Francesco Gregorio Lo Mastro
+ * @author Francesco Lo Mastro
  */
 public class Common_C {
     @FXML
@@ -32,7 +32,7 @@ public class Common_C {
      *
      * @param father: vbox containing the components;
      * @param parts: number of parts;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public void setListeners(VBox father, double parts)
     {
@@ -71,7 +71,7 @@ public class Common_C {
      *
      * @param width: the component width;
      * @param height: the component height;
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void scaleDimension(double width,double height) {
         double min = Math.min(width,height/fatherParts);
@@ -82,7 +82,7 @@ public class Common_C {
     /**
      * This method is used to make each component keep its proportion in the case the stage is resized.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     private void maintainProportion() {
         image.setPrefHeight(anchor.getHeight()*imageRatio);
@@ -95,7 +95,7 @@ public class Common_C {
     /**
      * This method is used to get points.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public Pane getPoint() {
         return point;
@@ -104,7 +104,7 @@ public class Common_C {
     /**
      * This method is used to get the image.
      *
-     * @author Francesco Gregorio Lo Mastro
+     * @author Francesco Lo Mastro
      */
     public Pane getImage() {
         return image;

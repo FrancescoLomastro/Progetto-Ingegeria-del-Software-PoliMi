@@ -12,7 +12,7 @@ public class CommonGoalMessage extends Message{
 
     /**
      * Constructor: Creates a message with all info for a common goal event
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      * @param gainedPointsFirstCard points gained from the first common goal card
@@ -32,7 +32,7 @@ public class CommonGoalMessage extends Message{
 
     /**It returns the player the score some points
      * @return the name of the player who scored the common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -42,7 +42,7 @@ public class CommonGoalMessage extends Message{
 
     /**It returns the point gain form first common goal
      * @return the points gained from the first common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -52,7 +52,7 @@ public class CommonGoalMessage extends Message{
 
     /**It returns the point gain from the second common goal
      * @return the points gained from the second common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -61,7 +61,7 @@ public class CommonGoalMessage extends Message{
     }
     /**It returns the points that are available from the first common goal card
      * @return the remaining points in the first common goal car
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
@@ -70,7 +70,7 @@ public class CommonGoalMessage extends Message{
     }
     /**It returns the points that are available from the second common goal card
      * @return the remaining points in the second common goal card
-     * @author: Francesco Gregorio Lo Mastro
+     * @author: Francesco Lo Mastro
      * @author: Andrea Ferrini
      * @author: Riccardo Figini
      */
