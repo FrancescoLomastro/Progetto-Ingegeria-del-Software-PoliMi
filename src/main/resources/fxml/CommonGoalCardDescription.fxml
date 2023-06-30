@@ -31,9 +31,6 @@
                                  <font>
                                     <Font name="Calibri Light" size="14.0" />
                                  </font>
-                                 <cursor>
-                                    <Cursor fx:constant="NONE" />
-                                 </cursor>
                               </Label>
                            </children>
                         </Pane>

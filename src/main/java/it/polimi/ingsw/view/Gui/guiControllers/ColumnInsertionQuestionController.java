@@ -55,8 +55,7 @@ public class ColumnInsertionQuestionController implements Initializable {
     }
 
     /**
-     *
-     *
+     * This method initializes the fxml
      * @author Riccardo Figini
      */
     public void ini(){
@@ -149,6 +148,13 @@ public class ColumnInsertionQuestionController implements Initializable {
 
     }
 
+    /**This method sets all dynamic parameters in column insertion page. It sets also a listener that
+     * active "askMove" on bord_c if the page is closed.
+     * @author: Riccardo Figini
+     * @param stage new stage to set listeners
+     * @param lib player's lib
+     * @param viewFactory viewFactory
+     * */
     public void setStageAndSetupListeners(Stage stage, ViewFactory viewFactory, ObjectCard[][] lib) {
         this.stage=stage;
         this.viewFactory=viewFactory;

@@ -11,7 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * This class governs the GUI of the phase in which the user enters the login information that will then be used to connect the player to the game or the pre-game lobby.
+ * This class governs the GUI of the phase in which the user enters the login information that will then be used to connect
+ * the player to the game or the pre-game lobby.
  * It is used as an intermediary between the fixed parts of the GUI of the 'ClientLogin.fxml' file and
  * the dynamic information that the controller sends to the graphic components of the associated fxml file.
  * In addition, the class manages the interaction between the user and the various graphic components of the scene.
@@ -112,9 +113,7 @@ public class ClientLoginController implements Initializable {
     }
 
     /**
-     * This method is used to retrieve, from the dedicated text field, the name that a new player writes. It processes the name
-     * only after the player presses enter on the keyboard. Furthermore, this method update the title label using the name
-     * that the player has just written on the text field.
+     * This method is used to retrieve, from the dedicated text field, the name that a new player writes.
      *
      * @author Alberto Aniballi
      * @return boolean: true if name is in good format
@@ -151,8 +150,7 @@ public class ClientLoginController implements Initializable {
     }
 
     /**
-     * This method is used to retrieve, from the dedicated text field, the server that a new player writes. It processes
-     * the server only after the player presses enter on the keyboard.
+     * This method is used to retrieve, from the dedicated text field, the server that a new player writes.
      *
      * @author Alberto Aniballi
      * @return boolean: true if IP is in good format
@@ -173,7 +171,6 @@ public class ClientLoginController implements Initializable {
 
     /**
      * This method is used to retrieve, from the dedicated text field, the port number that a new player writes.
-     * It processes the port number only after the player presses enter on the keyboard.
      *
      * @author Alberto Aniballi
      * @return boolean: true if port is in good format
@@ -210,7 +207,7 @@ public class ClientLoginController implements Initializable {
     /**
      * This method is used to send all the information, collected from the player, to the controller.
      * It notifies the controller by creating a new "OBS_InitialInfoMessage" message.
-     *
+     * In case some data are not correct, it shows an error pop up and ask again the data
      * @author Alberto Aniballi
      */
     public void onLogin() {

@@ -24,8 +24,8 @@ public class AcceptedLoginController implements Initializable {
     private String members;
 
     /**
-     * This method update the current number of players label when a new player connect to the initial game lobby.
-     * In this way the new number of current players will appear in the updated label text.
+     * This method updates the current number of player labels when a new player connects to the initial game lobby.
+     * In this way, the new number of current players will appear in the updated label text.
      *
      * @param current_numPlayers the updated number of players;
      * @author Alberto Aniballi
@@ -35,8 +35,8 @@ public class AcceptedLoginController implements Initializable {
     }
 
     /**
-     * This method update the current member_players label when a new player connect to the initial game lobby.
-     * In this way the name of the new player will appear in the updated label text.
+     * This method updates the current member_players label when a new player connects to the initial game lobby.
+     * In this way, the name of the new player will appear in the updated label text.
      *
      * @param members the updated number of players;
      * @author Alberto Aniballi
