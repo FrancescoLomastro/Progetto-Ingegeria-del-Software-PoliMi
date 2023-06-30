@@ -5,6 +5,11 @@ import it.polimi.ingsw.model.Player.*;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * This class is the abstract "Common goal card" class that all other common goal cards extend.
+ *
+ * @author Riccardo Figini
+ * */
 public abstract class CommonGoalCard extends Card implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

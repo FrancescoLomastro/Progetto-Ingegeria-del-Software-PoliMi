@@ -7,10 +7,21 @@ import it.polimi.ingsw.utility.Position;
 
 import java.util.ArrayList;
 
-
+/**
+ * This class is the concrete "Personal goal card" class that represent cards which are separately given to each
+ * specific player. Each card has an objective that a player can try to reach to gain points.
+ *
+ * @author Riccardo Figini
+ * */
 public class PersonalGoalCard extends Card {
     private final int cardId;
     private final ArrayList<Couple> goalVector;
+
+    /**Constructor
+     * @author Riccardo Figini
+     * @param goalVector: vector containing objectives
+     * @param cardId: the id of the card
+     * */
     public PersonalGoalCard(ArrayList<Couple> goalVector, int cardId){
         super();
         this.goalVector=goalVector;

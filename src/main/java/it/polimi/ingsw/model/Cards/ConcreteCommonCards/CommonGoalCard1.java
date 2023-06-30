@@ -5,6 +5,12 @@ import it.polimi.ingsw.model.Cards.ObjectCard;
 import it.polimi.ingsw.enums.Color;
 import it.polimi.ingsw.model.Player.Library;
 
+/**
+ * This class contains the algorithm to verify if the following common goal is satisfied.
+ * The goal is: five tiles of the same type forming a diagonal.
+ *
+ * @author Alberto Aniballi
+ * */
 public class CommonGoalCard1 extends CommonGoalCard {
 
     ObjectCard[][] matrix;

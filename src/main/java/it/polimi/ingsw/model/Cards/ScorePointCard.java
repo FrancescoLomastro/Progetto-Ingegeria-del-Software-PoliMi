@@ -3,6 +3,12 @@ package it.polimi.ingsw.model.Cards;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * This class is the concrete "Score point card" class that represent cards which display points that are awarded by
+ * achieving common goal card objectives.
+ *
+ * @author Riccardo Figini
+ * */
 public class ScorePointCard implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

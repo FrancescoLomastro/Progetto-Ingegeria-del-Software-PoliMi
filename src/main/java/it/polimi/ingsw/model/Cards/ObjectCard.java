@@ -5,6 +5,12 @@ import it.polimi.ingsw.enums.Type;
 
 import java.io.Serializable;
 
+/**
+ * This class is the concrete "Object card" class that represent cards which are placed in the board grid or in
+ * player libraries.
+ *
+ * @author Riccardo Figini
+ * */
 public class ObjectCard extends Card implements Serializable {
     private final Color color;
     private final Type type;
