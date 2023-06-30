@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.ClientController;
 
 import java.util.TimerTask;
 
+/**This method activates client controller in case of an error message from the server.
+ * */
+
 public class PingTaskClient extends TimerTask {
     ClientController clientController;
     public PingTaskClient(ClientController clientController) {

@@ -5,11 +5,18 @@ import it.polimi.ingsw.network.Servers.Connection;
 
 import java.util.TimerTask;
 
+/**This task is called to disconnect a client when he takes too long to answer with
+ * the ping message
+ * */
+
 public class TerminatorTask extends TimerTask {
 
     private final ServerReceiver server;
     private final Connection connection;
-
+    /**Constructor
+     * @param server server to forward the error (with try to disconnect)
+     * @param connection client's connection
+     * */
     public TerminatorTask(ServerReceiver server, Connection connection){
         this.server = server;
         this.connection = connection;
