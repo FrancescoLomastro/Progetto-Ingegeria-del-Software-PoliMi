@@ -64,6 +64,7 @@ public class CommonGoalCardDescriptionController implements Initializable {
     /**
      * This method get the common goal card description.
      *
+     * @return: String , description of the card
      * @author Andrea Ferrini
      */
     public String getDescription() {
@@ -83,6 +84,7 @@ public class CommonGoalCardDescriptionController implements Initializable {
     /**
      * This method get the common goal card number.
      *
+     * @return: int , number of the card
      * @author Andrea Ferrini
      */
     public int getNum() {

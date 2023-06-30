@@ -11,7 +11,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-
+/**
+ * This class is the controller associated to the "WinnerScene.fxml" file.
+ *
+ * @author Andrea Ferrini
+ */
 public class WinnerSceneController implements Initializable {
     private String winner;
     @FXML
@@ -55,18 +59,42 @@ public class WinnerSceneController implements Initializable {
         }
     }
 
+    /**
+     * This method get the winner of the game.
+     *
+     * @return: the winner
+     * @author Andrea Ferrini
+     */
     public String getWinner() {
         return winner;
     }
 
+    /**
+     * This method set the winner of the game.
+     *
+     * @param winner : the name of the winner
+     * @author Andrea Ferrini
+     */
     public void setWinner(String winner) {
         this.winner = winner;
     }
 
+    /**
+     * This method get the final ranking of the game.
+     *
+     * @return: the final ranking
+     * @author Andrea Ferrini
+     */
     public ArrayList<Couple<String, Integer>> getFinalRanking() {
         return finalRanking;
     }
 
+    /**
+     * This method get the final game ranking.
+     *
+     * @param finalRanking : the array containing each player associated to its points.
+     * @author Andrea Ferrini
+     */
     public void setFinalRanking(ArrayList<Couple<String, Integer>> finalRanking) {
         this.finalRanking = finalRanking;
     }

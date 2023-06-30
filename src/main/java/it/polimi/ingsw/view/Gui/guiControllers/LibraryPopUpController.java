@@ -82,6 +82,7 @@ public class LibraryPopUpController implements Initializable {
     /**
      * This method get the library.
      *
+     * @return: ObjectCard[][] , the library
      * @author Andrea Ferrini
      */
     public ObjectCard[][] getLibrary() {
@@ -101,6 +102,7 @@ public class LibraryPopUpController implements Initializable {
     /**
      * This method get the username.
      *
+     * @return: String , the player name
      * @author Andrea Ferrini
      */
     public String getUsername() {

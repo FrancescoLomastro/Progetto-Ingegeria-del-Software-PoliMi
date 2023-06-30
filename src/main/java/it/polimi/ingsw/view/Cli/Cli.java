@@ -25,6 +25,11 @@ public class Cli extends View implements Runnable {
     private String inputRequestBuffer;
     private final String divisor="\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
 
+    /**
+     * Constructor of Cli class
+     *
+     * @author Francesco Lo Mastro
+     */
     public Cli()
     {
         clientModel=new ClientModel();
