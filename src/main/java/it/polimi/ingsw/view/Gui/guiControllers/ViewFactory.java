@@ -53,7 +53,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     /**
-     * It is the constructor of the class, it has the main responsibility of adding an observer to the super class "clientModel" attribute.
+     * It is the constructor of the class, adds this class to the clientModel observer list
      *
      * 
      * @author Francesco Lo Mastro
@@ -64,7 +64,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     /**
-     * It starts the mana java-FX thread.
+     * It starts the main java-FX thread.
      *
      * @author Alberto Aniballi
      */
@@ -80,7 +80,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * @return the loaded Scene
      * @author Alberto Aniballi
      */
-    private Scene loadScene_old(FXMLLoader loader) {
+    private Scene loadScene(FXMLLoader loader) {
         Scene scene = null;
         try
         {
@@ -97,8 +97,8 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * @param loader: the FXMLLoader instance with the proper URL location
      * @author Alberto Aniballi
      */
-    private void switchScene_old(FXMLLoader loader) {
-        Scene scene = loadScene_old(loader);
+    private void switchScene(FXMLLoader loader) {
+        Scene scene = loadScene(loader);
         primaryStage.setScene(scene);
     }
 
@@ -113,9 +113,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      * @param closeApplicationOnClose: the boolean condition upon which the appiclation is closed.
      * @author Alberto Aniballi
      */
-    private void createStage_old(FXMLLoader loader, int minHeight, int minWidth, boolean lockStage, boolean closeApplicationOnClose) {
+    private void createStage(FXMLLoader loader, int minHeight, int minWidth, boolean lockStage, boolean closeApplicationOnClose) {
         Stage newStage = new Stage();
-        Scene scene = loadScene_old(loader);
+        Scene scene = loadScene(loader);
         newStage.setScene(scene);
         newStage.setResizable(false);
         newStage.setMinHeight(minHeight);
@@ -145,21 +145,14 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
         this.primaryStage = primaryStage;
     }
 
-    /**
-     * This method is used to close a stage.
-     *
-     * @param stage: the stage to be closed.
-     * @author Francesco Lo Mastro
-     */
-    public void closeStage(Stage stage) {
-        stage.close();
-    }
+
 
     /**
      * This method is used to create the main stage of the game and to set the correct scene.
      *
      * @param loader: the FXMLLoader instance with the proper URL location
-     * @author Alberto Aniballi & Francesco Lo Mastro
+     * @author Alberto Aniballi
+     * @author Francesco Lo Mastro
      */
     private void createMainStage(FXMLLoader loader)
     {
@@ -197,6 +190,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
      *
      * @author Alberto Aniballi
      * @author Francesco Lo Mastro
+     * @author Riccardo Figini
      */
     public void showStart() {
         Platform.runLater(()->{
@@ -253,12 +247,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void startGame() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameHasBegun.fxml"));
-            createStage_old(loader,200,320,true,false);
+            createStage(loader,200,320,true,false);
         });
     }
 
     /**
-     * Method for entering the ending phase of the game.
+     * Method is used to manage the GUI effect when the almostOverMessage is received
      *
      * @param arg: the message;
      * @author Francesco Lo Mastro
@@ -284,7 +278,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void onInvalidUsername() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidUsername.fxml"));
-            switchScene_old(loader);
+            switchScene(loader);
             primaryStage.setResizable(false);
             primaryStage.setFullScreen(false);
         });
@@ -399,7 +393,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     /**
-     * This method is to initiate a move request to a player.
+     * This method is to perform a move request to a player.
      *
      * @author Alberto Aniballi
      */
@@ -474,7 +468,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void startChat() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Chat.fxml"));
-            Scene scene = loadScene_old(loader);
+            Scene scene = loadScene(loader);
             chatStage = new Stage();
             chatStage.setOnCloseRequest((event -> {
                 event.consume();
@@ -499,8 +493,10 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
 
     }
 
-    /**This method is called to print points when game is over (in cli version), here prints in chat
-     * that the game is over*/
+    /**
+     * Prints the winner scene and writes in the chat the winner
+     * @param msg the message
+     */
     @Override
     public void printFinalRank(WinnerMessage msg) {
         chatMessage("Server", "Game is over");
@@ -542,7 +538,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                     invalidMoveController.setText(msg.getMoveError());
                     return invalidMoveController;
                 });
-                createStage_old(loader,200,320,true,false);
+                createStage(loader,200,320,true,false);
             });
     }
 
@@ -569,7 +565,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     /**
-     * This method is used to instantiate the "InvalidPort" stage in the case a player chosen an invalid port.
+     * This method is used to instantiate the "InvalidPort" stage in case a player chosen an invalid port.
      * This stage locks the interaction with previous stage.
      *
      * @author Alberto Aniballi
@@ -583,7 +579,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 invalidLoginInput.setTextInvalid(error_message);
                 return invalidLoginInput;
             });
-            createStage_old(loader,200,320,true,false);
+            createStage(loader,200,320,true,false);
         });
     }
 
@@ -596,12 +592,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void showInvalidNumPlayers() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumPlayers.fxml"));
-            createStage_old(loader,200,320,true,false);
+            createStage(loader,200,320,true,false);
         });
     }
 
     /**
-     * This method is used to instantiate the "InvalidNumObjCards" stage in the case a player chosen an invalid number
+     * This method is used to instantiate the "InvalidNumObjCards" stage in case a player choose an invalid number
      * of object cards from the grid. This stage locks the interaction with previous stage.
      *
      * @author Alberto Aniballi
@@ -609,7 +605,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void showInvalidNumberOfCards() {
         Platform.runLater(()->{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InvalidNumObjCards.fxml"));
-            createStage_old(loader,200,320,true,false);
+            createStage(loader,200,320,true,false);
         });
     }
 
@@ -648,12 +644,12 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 return libraryPopUpController;
             });
 
-            createStage_old(loader, 200, 320, true, false);
+            createStage(loader, 200, 320, true, false);
         });
     }
 
     /**
-     * This method is used to handle updates of the board stage.
+     * This method is used to handle updates from the clientModel.
      *
      * @param o: the client model;
      * @param arg : the message sent;
@@ -686,9 +682,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     /**
-     * This method is used to update players points.
+     * This method is used to update players points when a common goal message is reached.
      *
-     * @param arg : the common goal message sent;
+     * @param arg : the common goal message;
      * @author Francesco Lo Mastro
      */
     private void updatePoints(CommonGoalMessage arg)
@@ -794,7 +790,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 winnerSceneController.setFinalRanking(finalRanking);
                 return winnerSceneController;
             });
-            createStage_old(loader, 200, 320, true, true);
+            createStage(loader, 200, 320, true, true);
         });
     }
 
@@ -814,7 +810,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 commonGoalCardDescriptionController.setNum(num);
                 return commonGoalCardDescriptionController;
             });
-            createStage_old(loader, 200, 320, true, false);
+            createStage(loader, 200, 320, true, false);
         });
     }
 
@@ -826,12 +822,9 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     public void onPersonalGoalCardClick() {
         Platform.runLater(() -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PersonalGoalCardPopUp.fxml"));
-            createStage_old(loader, 200, 320, true, false);
+            createStage(loader, 200, 320, true, false);
         });
     }
-    /*public Stage getChatStage() {
-        return chatStage;
-    }*/
 
     /**
      * This method is used to make the chat visible to players.
@@ -858,7 +851,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
     }
 
     /**
-     * This method is used to close the game in the case of some error.
+     * This method is used to close the game in the case of errors.
      *
      * @param string: the string to be displayed;
      * @author Riccardo Figini
@@ -871,7 +864,7 @@ public class ViewFactory extends View implements Observer<ClientModel, Message> 
                 errorGameController.setMessage_error(string);
                 return errorGameController;
             });
-            createStage_old(loader, 200, 320, true, true);
+            createStage(loader, 200, 320, true, true);
         });
     }
 }

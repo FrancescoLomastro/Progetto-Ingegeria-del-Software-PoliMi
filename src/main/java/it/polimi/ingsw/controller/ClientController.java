@@ -149,7 +149,7 @@ public class ClientController implements Observer<View, OBS_Message> {
                 pingHandler.shutDown();
                 WinnerMessage msg = (WinnerMessage) message;
                 view.printFinalRank(msg);
-                view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getFinalRanking().get(0));
+                view.printMessage("The game is ended\nYour points: " + msg.getMyPoints() + "\nWinner: " + msg.getFinalRanking().get(0).getFirst());
             }
             case ALMOST_OVER_MESSAGE -> {
                 clientModel.onAlmostOver((AlmostOverMessage) message);

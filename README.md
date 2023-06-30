@@ -7,16 +7,16 @@ Il progetto è composto da 2 eseguibili JAR, rispettivamente per Client e Server
 ## Documentazione
 Di seguito è riportata la documentazione richiesta dalle specifiche di progetto, ovvero UML, Sequence diagrams e JavaDoc.
 
-- [UML Iniziale]
-- [UML Finale]
-- [Sequence Diagrams]
-- [JavaDoc]
+- [UML Iniziale] (https://github.com/FrancescoLomastro/ing-sw-2023-Aniballi-Ferrini-Figini-LoMastro/tree/main/deliverables/final/uml)
+- [UML Finale] (https://github.com/FrancescoLomastro/ing-sw-2023-Aniballi-Ferrini-Figini-LoMastro/tree/main/deliverables/final/uml/Final%20UML)
+- [Sequence Diagrams] (https://github.com/FrancescoLomastro/ing-sw-2023-Aniballi-Ferrini-Figini-LoMastro/tree/main/deliverables/final/uml/Network%20Sequence%20Diagram)
+- [JavaDoc] (https://github.com/FrancescoLomastro/ing-sw-2023-Aniballi-Ferrini-Figini-LoMastro/tree/main/deliverables/final/javaDoc)
 
 ### Librerie
 | Librerie   |Descrizione|
 |------------|-----------|
 | __Maven__  |strumento di gestione per software basati su Java e build automation|
-| __Gunit__  |framework dedicato a Java per unit testing|
+| __Junit__  |framework dedicato a Java per unit testing|
 | __Gson__   |libreria per il supporto al parsing di file in formato json|
 | __JavaFx__ |libreria grafica di Java|
 

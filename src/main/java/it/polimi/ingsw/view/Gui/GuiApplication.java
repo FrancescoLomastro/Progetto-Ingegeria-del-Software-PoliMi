@@ -5,7 +5,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * This class is starts the GUI application. Its responsibility is to initialize the primary stage.
+ * This class starts the GUI application. It's responsibility is to initialize the primary stage.
  *
  * @author Alberto Aniballi
  */
@@ -25,7 +25,7 @@ public class GuiApplication extends Application {
     }
 
     /**
-     * This method initialize the static viewFactory object.
+     * Constructor: This method initialize the viewFactory object.
      *
      * @author Alberto Aniballi
      */
