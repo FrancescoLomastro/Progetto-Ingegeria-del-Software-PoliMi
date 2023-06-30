@@ -8,7 +8,7 @@ import java.util.TimerTask;
 
 /**This task it activated when the first user in a lobby takes too long to choose a
  * number of players. It disconnects the player
- * @author: Francesco Lo Mastro
+ * @author Francesco Lo Mastro
  * */
 
 public class NumberRequestTask extends TimerTask {
@@ -16,7 +16,7 @@ public class NumberRequestTask extends TimerTask {
     private final Connection connection;
 
     /**Constructor
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param connection client connection
      * @param server server receiver to forward tries to disconnect
      * */

@@ -62,7 +62,7 @@ public class WinnerSceneController implements Initializable {
     /**
      * This method get the winner of the game.
      *
-     * @return: the winner
+     * @return the winner
      * @author Andrea Ferrini
      */
     public String getWinner() {
@@ -82,7 +82,7 @@ public class WinnerSceneController implements Initializable {
     /**
      * This method get the final ranking of the game.
      *
-     * @return: the final ranking
+     * @return the final ranking
      * @author Andrea Ferrini
      */
     public ArrayList<Couple<String, Integer>> getFinalRanking() {

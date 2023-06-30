@@ -15,7 +15,7 @@ public class PingerTask extends TimerTask {
     private final ServerReceiver server;
     private final Connection connection;
     /**Constructor
-     * @author: Francesco Lo Mastro
+     * @author Francesco Lo Mastro
      * @param connection client connection
      * @param server server to forward tries to disconnect
      * */

@@ -150,7 +150,7 @@ public class ColumnInsertionQuestionController implements Initializable {
 
     /**This method sets all dynamic parameters in column insertion page. It sets also a listener that
      * active "askMove" on bord_c if the page is closed.
-     * @author: Riccardo Figini
+     * @author Riccardo Figini
      * @param stage new stage to set listeners
      * @param lib player's lib
      * @param viewFactory viewFactory
