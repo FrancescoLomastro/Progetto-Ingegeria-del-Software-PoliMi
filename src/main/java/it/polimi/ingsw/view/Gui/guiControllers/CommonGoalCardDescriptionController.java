@@ -41,7 +41,6 @@ public class CommonGoalCardDescriptionController implements Initializable {
         description_label.setText(description);
         title_label.setText("Try to achieve this goal first!");
         setPicture();
-        //picture_pane.getStyleClass().add("common1");
     }
 
     /**
@@ -62,9 +61,9 @@ public class CommonGoalCardDescriptionController implements Initializable {
     }
 
     /**
-     * This method get the common goal card description.
+     * This method gets the common goal card description.
      *
-     * @return: String , description of the card
+     * @return: String, description of the card
      * @author Andrea Ferrini
      */
     public String getDescription() {
@@ -82,9 +81,9 @@ public class CommonGoalCardDescriptionController implements Initializable {
     }
 
     /**
-     * This method get the common goal card number.
+     * This method gets the common goal card number.
      *
-     * @return: int , number of the card
+     * @return: int, number of the cards
      * @author Andrea Ferrini
      */
     public int getNum() {
@@ -92,9 +91,9 @@ public class CommonGoalCardDescriptionController implements Initializable {
     }
 
     /**
-     * This method get the common goal card number.
+     * This method gets the common goal card number.
      *
-     * @param num : number to be displayed;
+     * @param num number to be displayed;
      * @author Andrea Ferrini
      */
     public void setNum(int num) {

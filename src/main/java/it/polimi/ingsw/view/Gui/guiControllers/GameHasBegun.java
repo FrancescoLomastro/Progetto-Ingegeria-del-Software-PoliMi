@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 /**
  * This class governs the GUI used to signal players the start of the game.
- * This class used as an intermediary between the fixed parts of the GUI of the 'Start.fxml' file and
+ * This class is used as an intermediary between the fixed parts of the GUI of the 'Start.fxml' file and
  * the dynamic information that the controller sends to the graphic components of the associated fxml file.
  *
  * @author Riccardo Figini

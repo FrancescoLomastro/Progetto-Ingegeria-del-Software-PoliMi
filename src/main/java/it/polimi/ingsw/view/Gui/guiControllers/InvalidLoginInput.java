@@ -23,7 +23,7 @@ public class InvalidLoginInput implements Initializable {
     private String text_error;
     /**
      * This method is used to initialize the controller of the "InvalidLoginInput.fxml" GUI. In particular,
-     *      * it sets a listener for the retry button.
+     *       it sets a listener for the retry button.
      *
      * @param url the url used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
@@ -36,7 +36,7 @@ public class InvalidLoginInput implements Initializable {
     }
 
     /**
-     * This method is used to close the "invalid port" stage and reactivate the previous stage.
+     * This method is used to close the "invalid login" stage and reactivate the previous stage.
      *
      * @param event the event that triggers the activation of the method;
      * @author Alberto Aniballi
