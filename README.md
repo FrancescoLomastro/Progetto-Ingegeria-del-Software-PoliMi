@@ -7,20 +7,25 @@ Il progetto è composto da 2 eseguibili JAR, rispettivamente per Client e Server
 
 ## Indice Analitico
 1. [Documentazione](#documentazione)
-    - [UML Iniziale](#uml-iniziale)
-    - [UML Finale](#uml-finale)
-    - [Sequence Diagrams](#sequence-diagrams)
-    - [JavaDoc](#javadoc)
+   - [UML Iniziale](#uml-iniziale)
+   - [UML Finale](#uml-finale)
+   - [Sequence Diagrams](#sequence-diagrams)
+   - [JavaDoc](#javadoc)
 2. [Librerie](#librerie)
 3. [Funzionalità Sviluppate](#funzionalità-sviluppate)
-    - [Funzionalità Aggiuntive](#funzionalità-aggiuntive)
+   - [Funzionalità Aggiuntive](#funzionalità-aggiuntive)
 4. [Esecuzione dei JAR](#esecuzione-dei-jar)
-    - [Client](#client)
-        - [CLI](#cli)
-        - [GUI](#gui)
-    - [Server](#server)
-        - [Dopo l'avvio del server](#dopo-lavvio-del-server)
-5. [Componenti del gruppo](#componenti-del-gruppo)
+   - [Client](#client)
+      - [CLI](#cli)
+      - [GUI](#gui)
+   - [Server](#server)
+      - [Dopo l'avvio del server](#dopo-lavvio-del-server)
+5. [Schermate di gioco](#schermate-di-gioco)
+   - [Login](#login)
+   - [Gioco](#gioco)
+      - [Chat](#chat)
+6. [Componenti del gruppo](#componenti-del-gruppo)
+
 
 ## Documentazione
 Di seguito è riportata la documentazione richiesta dalle specifiche di progetto, ovvero UML, Sequence diagrams e JavaDoc.
@@ -116,3 +121,9 @@ Inoltre, sempre per limitazione della CLI, un giocatore CLI può usare la chat s
 <p align="center">
    <img src="src/main/resources/images/readme/CLI_chat.png" alt="alt text" width="500"/>
 </p>
+
+## Componenti del gruppo
+- [__Alberto Aniballi__](https://github.com/AlbertoAtCode)
+- [__Andrea Ferrini__](https://github.com/AndreaFerrini3)
+- [__Riccardo Figini__](https://github.com/RiccardoFigini)
+- [__Francesco Lo Mastro__](https://github.com/FrancescoLomastro)
