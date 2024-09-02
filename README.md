@@ -127,3 +127,6 @@ Inoltre, sempre per limitazione della CLI, un giocatore CLI può usare la chat s
 - [__Andrea Ferrini__](https://github.com/AndreaFerrini3)
 - [__Riccardo Figini__](https://github.com/RiccardoFigini)
 - [__Francesco Lo Mastro__](https://github.com/FrancescoLomastro)
+
+## Valutazione
+Il seguente progetto ha conseguito una valutazione di 30.
